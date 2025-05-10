@@ -4,7 +4,6 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
   }
 
   input UserInput {
@@ -18,7 +17,6 @@ const typeDefs = `
     orgName: String
     email: String
     password: String
-    thoughts: [Thought]!
   }
 
   input OrgInput {
@@ -32,12 +30,26 @@ const typeDefs = `
     user: User
   }
 
+  type Post {
+    _id: ID
+    poster: {
+      refId: ID
+      refModel: String
+    }
+    postType: String
+    contentText: String
+    media: [String]
+  }
+
   type Query {
     users: [User]
     user(username: String!): User
     orgs: [Org]
     org(orgName: String!): Org
     me: User
+    posts: [Post]
+    post(postId: ID!): Post
+    postType(postType: String!): [Post]
   }
 
   type Mutation {
@@ -45,6 +57,7 @@ const typeDefs = `
     loginUser(email: String!, password: String!): Auth
     addOrg(input: OrgInput!): Auth
     loginOrg(email: String!, password: String!): Auth
+    addPost(postType: String!, poster: { refId: ID!, refModel: String! }, contentText: String, media: [String]): Post
   }
 `;
 

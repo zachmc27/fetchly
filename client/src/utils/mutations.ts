@@ -47,3 +47,18 @@ export const ADD_ORG = gql`
   }
 }
 `;
+
+export const ADD_POST = gql`
+  mutation Mutation($input: PostInput!) {
+  addPost(input: $input) {
+    _id
+    poster {
+      refId
+      refModel
+    }
+    postType
+    contentText
+    media
+  }
+}
+`;
