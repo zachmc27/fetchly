@@ -8,7 +8,6 @@ const seedDatabase = async (): Promise<void> => {
     await db();
     await cleanDB();
 
-    // await Thought.insertMany(thoughtData);
     // await User.create(userData);
     console.log('Seeding completed successfully!');
     process.exit(0);
