@@ -1,4 +1,4 @@
-import { Schema, type Document } from 'mongoose';
+import { Schema, model type Document } from 'mongoose';
 
 export interface TypeDocument extends Document {
   id: string;
@@ -17,4 +17,6 @@ const typeSchema = new Schema<TypeDocument>({
   }
 });
 
-export default typeSchema;
+const Type = model<TypeDocument>('Type', typeSchema);
+
+export default Type;

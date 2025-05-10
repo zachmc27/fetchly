@@ -1,4 +1,4 @@
-import { Schema, type Document } from 'mongoose';
+import { Schema, model, type Document } from 'mongoose';
 
 export interface LocationDocument extends Document {
   id: string;
@@ -29,4 +29,6 @@ const locationSchema = new Schema<LocationDocument>({
   }
 });
 
-export default locationSchema;
+const Location = model<LocationDocument>('Location', locationSchema);
+
+export default Location;

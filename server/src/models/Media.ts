@@ -34,4 +34,5 @@ const mediaSchema = new Schema<MediaDocument>({
 });
 
 const Media = model<MediaDocument>('Media', mediaSchema);
+
 export default Media;
