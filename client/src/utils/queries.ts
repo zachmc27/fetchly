@@ -1,29 +1,21 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USERS = gql`
-  query users {
+  query Users {
     users {
       _id
-      username
       email
-      pet {
-        _id
-        name
-      }
+      username
     }
   }
 `;
 
 export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
+  query User($userId: String!) {
+    user(userId: $userId) {
       _id
-      username
       email
-      pet {
-        _id
-        name
-      }
+      username
     }
   }
 `;
@@ -34,10 +26,6 @@ export const QUERY_ORGS = gql`
       _id
       orgName
       email
-      pet {
-        _id
-        name
-      }
     }
   }
 `;
@@ -48,10 +36,6 @@ export const QUERY_ORG = gql`
       _id
       orgName
       email
-      pet {
-        _id
-        name
-      }
     }
   }
 `;
@@ -62,10 +46,6 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      pet {
-        _id
-        name
-      }
     }
   }
 `;

@@ -31,5 +31,5 @@ const avatarSchema = new Schema<AvatarDocument>({
   }
 });
 
-const Avatar = model<AvatarDocument>('Media', avatarSchema);
+const Avatar = model<AvatarDocument>('Avatar', avatarSchema);
 export default Avatar;

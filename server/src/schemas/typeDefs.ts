@@ -1,4 +1,7 @@
 const typeDefs = `
+
+# -------------------- User TypeDefs ------------------------
+
   type User {
     _id: ID
     username: String
@@ -11,6 +14,8 @@ const typeDefs = `
     email: String!
     password: String!
   }
+
+# -------------------- Org TypeDefs ------------------------
 
   type Org {
     _id: ID
@@ -30,20 +35,39 @@ const typeDefs = `
     user: User
   }
 
+# -------------------- Post TypeDefs ------------------------
+
+  type Poster {
+    refId: ID!
+    refModel: String!
+  }
+
+  input PosterInput {
+    refId: ID!
+    refModel: String!
+  }
+
   type Post {
     _id: ID
-    poster: {
-      refId: ID
-      refModel: String
-    }
+    poster: Poster!
     postType: String
     contentText: String
     media: [String]
   }
 
+  input AddPostInput {
+    postId: String!
+    poster: PosterInput!
+    postType: String!
+    contentText: String
+    media: [String]
+  }
+
+# -------------------- Query TypeDefs ------------------------
+
   type Query {
     users: [User]
-    user(username: String!): User
+    user(userId: String!): User
     orgs: [Org]
     org(orgName: String!): Org
     me: User
@@ -52,12 +76,14 @@ const typeDefs = `
     postType(postType: String!): [Post]
   }
 
+# -------------------- Mutation TypeDefs ------------------------
+
   type Mutation {
     addUser(input: UserInput!): Auth
     loginUser(email: String!, password: String!): Auth
     addOrg(input: OrgInput!): Auth
     loginOrg(email: String!, password: String!): Auth
-    addPost(postType: String!, poster: { refId: ID!, refModel: String! }, contentText: String, media: [String]): Post
+    addPost(input: AddPostInput!): Post
   }
 `;
 

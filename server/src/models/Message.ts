@@ -47,6 +47,6 @@ messageSchema.virtual('isRead').get(function (this: MessageDocument) {
   return this.readUser.length > 0;
 });
 
-const Message = model<MessageDocument>('Conversation', messageSchema);
+const Message = model<MessageDocument>('Message', messageSchema);
 
 export default Message;

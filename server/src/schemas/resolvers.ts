@@ -18,7 +18,7 @@ interface LoginUserArgs {
 }
 
 interface UserArgs {
-  username: string;
+  userId: string;
 }
 
 //OrgArgs
@@ -69,8 +69,8 @@ const resolvers = {
     users: async () => {
       return User.find().populate('pet');
     },
-    user: async (_parent: any, { username }: UserArgs) => {
-      return User.findOne({ username }).populate('pet');
+    user: async (_parent: any, { userId }: UserArgs) => {
+      return User.findById(userId).populate('pet');
     },
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {

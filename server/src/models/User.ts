@@ -45,7 +45,6 @@ const userSchema = new Schema<UserDocument>(
     password: {
         type: String,
         required: true,
-        select: false,
     },
     avatar: {
         type: Schema.Types.ObjectId,
