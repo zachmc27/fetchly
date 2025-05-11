@@ -23,7 +23,6 @@ const petSchema = new Schema<PetDocument>({
   type: {
     type: Schema.Types.ObjectId,
     ref: 'Type',
-    required: true,
   },
   gender: {
     type: String,
@@ -37,7 +36,6 @@ const petSchema = new Schema<PetDocument>({
   profilePhoto: {
     type: Schema.Types.ObjectId,
     ref: 'Media',
-    required: true,
   },
   vaccination: {
     type: String,

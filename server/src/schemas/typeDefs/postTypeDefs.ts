@@ -18,10 +18,15 @@ const postTypeDefs = `
     postType: String
     contentText: String
     media: [String]
+    responses: [String]
+    responseCount: Int
+    createdAt: String
+    updatedAt: String
+    parentPost: String
+    isResponse: Boolean
   }
 
   input AddPostInput {
-    postId: String!
     poster: PosterInput!
     postType: String!
     contentText: String

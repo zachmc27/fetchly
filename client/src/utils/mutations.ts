@@ -13,6 +13,13 @@ export const LOGIN_USER = gql`
   }
 `;
 
+// LOGIN_USER input should look like this:
+// {
+//   "userId": "<userId>",
+//   "email": "test@email.com",
+//   "password": "password"
+// }
+
 export const ADD_USER = gql`
   mutation Mutation($input: UserInput!) {
   addUser(input: $input) {
@@ -24,6 +31,15 @@ export const ADD_USER = gql`
   }
 }
 `;
+
+// ADD_USER input should look like this:
+// {
+//   "input": {
+//     "email": "test5@email.com",
+//     "password": "password",
+//     "username": "test5",
+//   }
+// }
 
 export const LOGIN_ORG = gql`
   mutation login($email: String!, $password: String!) {
@@ -49,17 +65,54 @@ export const ADD_ORG = gql`
 }
 `;
 
-export const ADD_POST = gql`
-  mutation Mutation($input: PostInput!) {
-  addPost(input: $input) {
-    _id
-    poster {
-      refId
-      refModel
+export const ADD_PET = gql`
+  mutation Mutation($input: PetInput!) {
+    addPet(input: $input) {
+      _id
+      name
+      type
+      gender
+      age
+      about
+      profilePhoto
+      vaccination
     }
-    postType
-    contentText
-    media
   }
-}
 `;
+
+// ADD_PET input should look like this:
+// {
+//   "input": {
+//     "about": "A cute dog",
+//     "age": 3,
+//     "gender": "female",
+//     "name": "Lulu",
+//   }
+// }
+
+
+export const ADD_POST = gql`
+  mutation Mutation($input: AddPostInput!) {
+    addPost(input: $input) {
+      _id
+      postType
+      contentText    
+      poster {
+        refId
+        refModel
+      }
+    }
+  }
+`;
+
+// ADD_POST input should look like this:
+// { 
+//   "input": {
+//     "poster": {
+//       "refId": "<userId>", // or "<orgId>"
+//       "refModel": "User"  // or "Org"
+//     },
+//     "postType": "announcement",
+//     "contentText": "This is a test post!",
+//   }
+// }

@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+//Return all users
 export const QUERY_USERS = gql`
   query Users {
     users {
@@ -10,6 +11,7 @@ export const QUERY_USERS = gql`
   }
 `;
 
+//Pass in a userId to get a specific user
 export const QUERY_USER = gql`
   query User($userId: String!) {
     user(userId: $userId) {
@@ -20,6 +22,7 @@ export const QUERY_USER = gql`
   }
 `;
 
+//Return all organizations
 export const QUERY_ORGS = gql`
   query orgs {
     orgs {
@@ -30,6 +33,7 @@ export const QUERY_ORGS = gql`
   }
 `;
 
+//Pass in a orgId to get a specific organization
 export const QUERY_ORG = gql`
   query org($orgName: String!) {
     org(orgName: $orgName) {
@@ -40,6 +44,7 @@ export const QUERY_ORG = gql`
   }
 `;
 
+//Returns logged in user
 export const QUERY_ME = gql`
   query me {
     me {
@@ -50,6 +55,7 @@ export const QUERY_ME = gql`
   }
 `;
 
+//Returns all posts
 export const QUERY_POSTS = gql`
   query posts {
     posts {
@@ -64,6 +70,8 @@ export const QUERY_POSTS = gql`
     }
   }
 `;
+
+//Pass in a postId to get a specific post
 export const QUERY_POST = gql`
   query post($postId: ID!) {
     post(postId: $postId) {
@@ -78,6 +86,8 @@ export const QUERY_POST = gql`
     }
   }
 `;
+
+//Pass in a postType to get a specific post
 export const QUERY_POST_TYPE = gql`
   query postType($postType: String!) {
     postType(postType: $postType) {
@@ -93,3 +103,34 @@ export const QUERY_POST_TYPE = gql`
   }
 `;
 
+//Returns all pets
+export const QUERY_PETS = gql`
+  query Pets {
+    pets {
+      _id
+      name
+      type
+      gender
+      age
+      about
+      profilePhoto
+      vaccination
+    }
+  }
+`;
+
+//Pass in a petId to get a specific pet
+export const QUERY_PET = gql`
+  query Pet($petId: String!) {
+    pet(petId: $petId) {
+      _id
+      name
+      type
+      gender
+      age
+      about
+      profilePhoto
+      vaccination
+    }
+  }
+`;

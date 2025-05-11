@@ -1,7 +1,7 @@
 import { Org } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js'; 
 
-//OrgArgs
+// OrgArgs
 interface AddOrgArgs {
   input:{
     orgName: string;
