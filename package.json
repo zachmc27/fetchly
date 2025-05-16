@@ -13,13 +13,17 @@
     "client:dev": "cd client && npm run dev",
     "seed": "cd server && npm run seed",
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
-    "render-build": "npm install && npm run build"
+    "render-build": "npm install && npm run build",
+    "lint": "cd client && npm run lint"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "wait-on": "^7.2.0"
+    "wait-on": "^7.2.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3"
   }
 }
