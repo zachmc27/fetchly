@@ -7,7 +7,7 @@ interface ExtendedJwt extends JwtPayload {
     email:string,
     id:string
   }
-};
+}
 
 class AuthService {
   // TODO: What is this method supposed to do?
