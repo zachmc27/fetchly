@@ -1,5 +1,6 @@
 import db from '../config/connection.js';
 import createTypes from './seed_types.js';
+import {createOrgs} from './seed_orgs.js';
 
 // import cleanDB from './cleanDB.js';
 
