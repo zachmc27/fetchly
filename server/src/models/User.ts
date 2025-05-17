@@ -18,9 +18,9 @@ export interface UserDocument extends Document {
   avatar: Types.ObjectId | AvatarDocument;
   about: string;
   location: Types.ObjectId | LocationDocument;
-  pet: Types.ObjectId[] | PetDocument[];
+  pets: Types.ObjectId[] | PetDocument[];
   petCount: number;
-  post: Types.ObjectId[] | PostDocument[];
+  posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
   following: UserDocument[];
   conversation: Types.ObjectId[] | ConversationDocument[];
@@ -57,13 +57,13 @@ const userSchema = new Schema<UserDocument>(
         type: Schema.Types.ObjectId,
         ref: 'Location'
     },
-    pet: [  
+    pets: [  
         {
             type: Schema.Types.ObjectId,
             ref: 'Pet'
         }
     ],
-    post: [  
+    posts: [  
         {
             type: Schema.Types.ObjectId,
             ref: 'Post'
@@ -115,12 +115,12 @@ userSchema.methods.isCorrectPassword = async function (password: string) {
 
 // when we query a user, we'll also get another field called `petCount` with the number of pets we have
 userSchema.virtual('petCount').get(function () {
-  return this.pet.length;
+  return this.pets.length;
 });
 
 // when we query a user, we'll also get another field called `postCount` with the number of posts we have
 userSchema.virtual('postCount').get(function () {
-  return this.post.length;
+  return this.posts.length;
 });
 
 // when we query a user, we'll also get another field called `conversationCount` with the number of conversations we have

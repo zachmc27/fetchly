@@ -7,6 +7,12 @@ const orgTypeDefs = `
     orgName: String
     email: String
     password: String
+    avatar: String
+    about: String
+    location: String
+    employees: [User]
+    pets: [Pet]
+    posts: [Post]
   }
 
   input OrgInput {
@@ -15,19 +21,33 @@ const orgTypeDefs = `
     password: String!
   }
 
+  input UpdateOrgInput {
+    orgName: String
+    email: String
+    avatar: String
+    about: String
+    location: String
+    employees: [ID]
+  }
+
+  type OrgAuth {
+    token: ID!
+    org: Org
+  }
 
 # -------------------- Query TypeDefs ------------------------
 
   type Query {
     orgs: [Org]
-    org(orgName: String!): Org
+    org(orgId: String!): Org
   }
 
 # -------------------- Mutation TypeDefs ------------------------
 
   type Mutation {
-    addOrg(input: OrgInput!): Auth
-    loginOrg(email: String!, password: String!): Auth
+    addOrg(input: OrgInput!): OrgAuth
+    updateOrg(orgId: String!, input: UpdateOrgInput!): OrgAuth
+    loginOrg(email: String!, password: String!): OrgAuth
   }
 `;
 

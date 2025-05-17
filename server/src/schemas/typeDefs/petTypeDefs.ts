@@ -2,9 +2,20 @@ const petTypeDefs = `
 
 # -------------------- Pet TypeDefs ------------------------
 
+    type Owner {
+        refId: ID!
+        refModel: String!
+    }
+
+    input OwnerInput {
+        refId: ID!
+        refModel: String!
+    }
+
     type Pet {
         _id: ID
         name: String
+        owner: Owner!
         type: String
         gender: String
         age: Int
@@ -14,7 +25,9 @@ const petTypeDefs = `
     }
 
     input PetInput {
+        _id: ID
         name: String!
+        owner: OwnerInput!
         type: String
         gender: String
         age: Int
@@ -34,6 +47,7 @@ const petTypeDefs = `
 
     type Mutation {
         addPet(input: PetInput!): Pet
+        updateOwner(petId: String!, input: OwnerInput!): Pet
         updatePet(petId: String!, input: PetInput!): Pet
         deletePet(petId: String!): Pet
     }

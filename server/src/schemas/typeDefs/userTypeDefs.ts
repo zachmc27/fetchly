@@ -10,8 +10,8 @@ const userTypeDefs = `
     avatar: String
     about: String
     location: String
-    pet: [Pet]
-    post: [Post]
+    pets: [Pet]
+    posts: [Post]
     following: [User]
     conversation: [Conversation]
     conversationCount: Int
@@ -23,7 +23,15 @@ const userTypeDefs = `
     password: String!
   }
 
-  type Auth {
+  input UpdateUserInput {
+    username: String
+    email: String
+    avatar: String
+    about: String
+    location: String
+  }
+
+  type UserAuth {
     token: ID!
     user: User
   }
@@ -39,8 +47,9 @@ const userTypeDefs = `
 # -------------------- Mutation TypeDefs ------------------------
 
   type Mutation {
-    addUser(input: UserInput!): Auth
-    loginUser(email: String!, password: String!): Auth
+    addUser(input: UserInput!): UserAuth
+    updateUser(userId: String!, input: UpdateUserInput!): UserAuth
+    loginUser(email: String!, password: String!): UserAuth
   }
 `;
 

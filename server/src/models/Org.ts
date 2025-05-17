@@ -18,11 +18,11 @@ export interface OrgDocument extends Document {
   avatar: Types.ObjectId | AvatarDocument;
   about: string;
   location: Types.ObjectId | LocationDocument;
-  employee: Types.ObjectId[] | UserDocument[];
+  employees: Types.ObjectId[] | UserDocument[];
   employeeCount: number;
-  pet: Types.ObjectId[] | PetDocument[];
+  pets: Types.ObjectId[] | PetDocument[];
   petCount: number;
-  post: Types.ObjectId[] | PostDocument[];
+  posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
 }
 
@@ -43,7 +43,6 @@ const orgSchema = new Schema<OrgDocument>(
     password: {
         type: String,
         required: true,
-        select: false,
     },
     avatar: {
         type: Schema.Types.ObjectId,
@@ -56,19 +55,19 @@ const orgSchema = new Schema<OrgDocument>(
         type: Schema.Types.ObjectId,
         ref: 'Location'
     },
-    employee: [  
+    employees: [  
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
     ],
-    pet: [  
+    pets: [  
         {
             type: Schema.Types.ObjectId,
             ref: 'Pet'
         }
     ],
-    post: [  
+    posts: [  
         {
             type: Schema.Types.ObjectId,
             ref: 'Post'
@@ -108,17 +107,17 @@ orgSchema.methods.isCorrectPassword = async function (password: string) {
 
 // when we query an org, we'll also get another field called `employeeCount` with the number of employees we have
 orgSchema.virtual('employeeCount').get(function () {
-  return this.employee.length;
+  return this.employees.length;
 });
 
 // when we query an org, we'll also get another field called `petCount` with the number of pets we have
 orgSchema.virtual('petCount').get(function () {
-  return this.pet.length;
+  return this.pets.length;
 });
 
 // when we query an org, we'll also get another field called `bookCount` with the number of saved books we have
 orgSchema.virtual('postCount').get(function () {
-  return this.post.length;
+  return this.posts.length;
 });
 
 const Org = model<OrgDocument>('Org', orgSchema);

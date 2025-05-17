@@ -1,4 +1,4 @@
-import { Post } from '../../models/index.js';
+import { Post, User, Org } from '../../models/index.js';
 
 // PostArgs
 interface AddPostArgs {
@@ -41,6 +41,18 @@ const postResolvers = {
     Mutation: {
       addPost: async (_parent: any, { input }: AddPostArgs) => {
         const post = await Post.create({ ...input });
+
+        const { refId, refModel } = input.poster;
+
+        if(refModel === 'User') {
+          await User.findByIdAndUpdate(refId, {
+            $addToSet: {posts: post._id }
+          });
+        } else if (refModel === 'Org') {
+          await Org.findByIdAndUpdate(refId, {
+            $addToSet: {posts: post._id }
+          });
+        }
         return post;
       }
     },
