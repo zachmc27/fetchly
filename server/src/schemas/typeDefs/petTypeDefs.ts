@@ -16,7 +16,7 @@ const petTypeDefs = `
         _id: ID
         name: String
         owner: Owner!
-        type: String
+        type: Type
         gender: String
         age: Int
         about: String
@@ -28,7 +28,19 @@ const petTypeDefs = `
         _id: ID
         name: String!
         owner: OwnerInput!
-        type: String
+        type: ID!
+        gender: String
+        age: Int
+        about: String
+        profilePhoto: String
+        vaccination: String
+    }
+
+    input UpdatePetInput {
+        _id: ID
+        name: String
+        owner: OwnerInput
+        type: ID
         gender: String
         age: Int
         about: String
@@ -48,7 +60,7 @@ const petTypeDefs = `
     type Mutation {
         addPet(input: PetInput!): Pet
         updateOwner(petId: String!, input: OwnerInput!): Pet
-        updatePet(petId: String!, input: PetInput!): Pet
+        updatePet(petId: String!, input: UpdatePetInput!): Pet
         deletePet(petId: String!): Pet
     }
 `;
