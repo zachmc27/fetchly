@@ -11,10 +11,9 @@ export interface PostDocument extends Document {
     refId: Types.ObjectId | UserDocument | OrgDocument;
     refModel: 'User' | 'Org';
   };
-  postType: string;
   contentText: string;
   media: Types.ObjectId[] | MediaDocument[];
-  response: Types.ObjectId[] | PostDocument[];
+  responses: Types.ObjectId[] | PostDocument[];
   responseCount: number;
   parentPost: Types.ObjectId | PostDocument;
   isResponse: boolean;
@@ -34,10 +33,6 @@ const postSchema = new Schema<PostDocument>(
                 enum: ['User', 'Org'] // model names
             }
         },
-        postType: {
-            type: String,
-            required: true,
-        },
         contentText: {
             type: String,
         },
@@ -47,7 +42,7 @@ const postSchema = new Schema<PostDocument>(
                 ref: 'Media'
             }
         ],
-        response: [
+        responses: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Post'
@@ -67,7 +62,7 @@ const postSchema = new Schema<PostDocument>(
 });
 
 postSchema.virtual('responseCount').get(function () {
-  return this.response.length;
+  return this.responses.length;
 });
 
 postSchema.virtual('isResponse').get(function () {

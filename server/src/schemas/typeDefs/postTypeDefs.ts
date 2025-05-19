@@ -15,10 +15,9 @@ const postTypeDefs = `
   type Post {
     _id: ID
     poster: Poster!
-    postType: String
     contentText: String
     media: [String]
-    responses: [String]
+    responses: [Post]
     responseCount: Int
     createdAt: String
     updatedAt: String
@@ -28,9 +27,19 @@ const postTypeDefs = `
 
   input AddPostInput {
     poster: PosterInput!
-    postType: String!
     contentText: String
     media: [String]
+  }
+
+  input AddPostResponseInput {
+    poster: PosterInput!
+    contentText: String
+    media: [String]
+  }
+
+  input UpdatePostInput {
+    contentText: String
+    media: [String]  
   }
 
 # -------------------- Query TypeDefs ------------------------
@@ -38,13 +47,15 @@ const postTypeDefs = `
   type Query {
     posts: [Post]
     post(postId: ID!): Post
-    postType(postType: String!): [Post]
   }
 
 # -------------------- Mutation TypeDefs ------------------------
 
   type Mutation {
     addPost(input: AddPostInput!): Post
+    addPostResponse(postId: String!, input: AddPostResponseInput!): Post
+    updatePost(postId: String!, input: UpdatePostInput!): Post
+    deletePost(postId: String!): Post
   }
 `;
 

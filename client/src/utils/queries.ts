@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client';
 
+//-------------- USER QUERIES ------------- //
+
 //Return all users
 export const QUERY_USERS = gql`
   query Users {
@@ -7,6 +9,19 @@ export const QUERY_USERS = gql`
       _id
       email
       username
+      avatar
+      about
+      conversations {
+        _id
+      }
+      pets {
+        _id
+        name
+      }
+      posts {
+        _id
+        contentText}
+      }
     }
   }
 `;
@@ -18,28 +33,20 @@ export const QUERY_USER = gql`
       _id
       email
       username
-    }
-  }
-`;
-
-//Return all organizations
-export const QUERY_ORGS = gql`
-  query orgs {
-    orgs {
-      _id
-      orgName
-      email
-    }
-  }
-`;
-
-//Pass in a orgId to get a specific organization
-export const QUERY_ORG = gql`
-  query org($orgName: String!) {
-    org(orgName: $orgName) {
-      _id
-      orgName
-      email
+      password
+      avatar
+      about
+      conversations {
+        _id
+      }
+      pets {
+        _id
+        name
+      }
+      posts {
+        _id
+        contentText}
+      }
     }
   }
 `;
@@ -49,59 +56,83 @@ export const QUERY_ME = gql`
   query me {
     me {
       _id
-      username
       email
+      username
+      password
+      avatar
+      about
+      conversations {
+        _id
+      }
+      pets {
+        _id
+        name
+      }
+      posts {
+        _id
+        contentText}
+      }
     }
   }
 `;
 
-//Returns all posts
-export const QUERY_POSTS = gql`
-  query posts {
-    posts {
+//-------------- ORG QUERIES ------------- //
+
+//Return all organizations
+export const QUERY_ORGS = gql`
+  query orgs {
+    orgs {
       _id
-      poster {
-        refId
-        refModel
+      orgName
+      email
+      password
+      avatar
+      about
+      location
+      employees {
+        _id
+        username
       }
-      postType
-      contentText
-      media
+      pets {
+        _id
+        name
+      }
+      posts {
+        _id
+        contentText
+      }
     }
   }
 `;
 
-//Pass in a postId to get a specific post
-export const QUERY_POST = gql`
-  query post($postId: ID!) {
-    post(postId: $postId) {
+//Pass in a orgId to get a specific organization
+export const QUERY_ORG = gql`
+  query org($orgId: String!) {
+    org(orgId: $orgId) {
       _id
-      poster {
-        refId
-        refModel
+      orgName
+      email
+      password
+      avatar
+      about
+      location
+      employees {
+        _id
+        username
       }
-      postType
-      contentText
-      media
+      pets {
+        _id
+        name
+      }
+      posts {
+        _id
+        contentText
+      }
     }
   }
 `;
 
-//Pass in a postType to get a specific post
-export const QUERY_POST_TYPE = gql`
-  query postType($postType: String!) {
-    postType(postType: $postType) {
-      _id
-      poster {
-        refId
-        refModel
-      }
-      postType
-      contentText
-      media
-    }
-  }
-`;
+//-------------- PET QUERIES ------------- //
 
 //Returns all pets
 export const QUERY_PETS = gql`
@@ -109,6 +140,10 @@ export const QUERY_PETS = gql`
     pets {
       _id
       name
+      owner {
+        refId
+        refModel
+      }
       type
       gender
       age
@@ -125,12 +160,78 @@ export const QUERY_PET = gql`
     pet(petId: $petId) {
       _id
       name
+      owner {
+        refId
+        refModel
+      }
       type
       gender
       age
       about
       profilePhoto
       vaccination
+    }
+  }
+`;
+
+//-------------- POST QUERIES ------------- //
+
+//Returns all posts
+export const QUERY_POSTS = gql`
+  query Posts {
+    posts {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      contentText
+      media
+      responses {
+        _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
+        media
+        responses {
+          _id
+        }
+        responseCount
+        createdAt
+        updatedAt
+        parentPost
+        isResponse
+      }
+      responseCount
+      createdAt
+      updatedAt
+      parentPost
+      isResponse
+    }
+  }
+`;
+
+// Pass in a postId to get a specific post
+export const QUERY_POST = gql`
+  query post($postId: ID!) {
+    post(postId: $postId) {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      contentText
+      media
+      responses {
+        _id
+      }
+      responseCount
+      createdAt
+      updatedAt
+      parentPost
+      isResponse
     }
   }
 `;
