@@ -200,13 +200,11 @@ export const QUERY_POSTS = gql`
         }
         responseCount
         createdAt
-        updatedAt
         parentPost
         isResponse
       }
       responseCount
       createdAt
-      updatedAt
       parentPost
       isResponse
     }
@@ -229,7 +227,6 @@ export const QUERY_POST = gql`
       }
       responseCount
       createdAt
-      updatedAt
       parentPost
       isResponse
     }

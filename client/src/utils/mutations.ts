@@ -319,7 +319,6 @@ export const UPDATE_POST = gql`
       }
       responseCount
       createdAt
-      updatedAt
       parentPost
       isResponse
     }
@@ -349,7 +348,6 @@ export const ADD_POST_RESPONSE = gql`
       }
       responseCount
       createdAt
-      updatedAt
       parentPost
       isResponse
     }

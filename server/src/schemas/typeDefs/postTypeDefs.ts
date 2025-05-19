@@ -20,7 +20,6 @@ const postTypeDefs = `
     responses: [Post]
     responseCount: Int
     createdAt: String
-    updatedAt: String
     parentPost: String
     isResponse: Boolean
   }

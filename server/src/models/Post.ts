@@ -17,6 +17,8 @@ export interface PostDocument extends Document {
   responseCount: number;
   parentPost: Types.ObjectId | PostDocument;
   isResponse: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const postSchema = new Schema<PostDocument>(
@@ -53,6 +55,10 @@ const postSchema = new Schema<PostDocument>(
             ref: 'Post',
             default: null, // null means it's a top-level post
         },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        }
     },
     {
         toJSON: {
