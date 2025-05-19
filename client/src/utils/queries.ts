@@ -235,3 +235,27 @@ export const QUERY_POST = gql`
     }
   }
 `;
+
+//-------------- TYPE QUERIES ------------- //
+
+// Returns all types
+export const QUERY_TYPES = gql`
+  query Types {
+    types {
+      _id
+      type
+      breed
+    }
+  }
+`;
+
+// Pass in a typeId to get a specific type
+export const QUERY_TYPE = gql`
+  query Type($typeId: String!) {
+    type(typeId: $typeId) {
+      _id
+      type
+      breed
+    }
+  }
+`;

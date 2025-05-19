@@ -28,21 +28,40 @@ interface UpdateOwnerArgs {
   }
 }
 
+interface UpdatePetArgs {
+    petId: string;
+    input: {
+        name: string;
+        owner: {
+            refId: string;
+            refModel: string;
+        };
+        type: string
+        gender: string;
+        age: number;
+        about: string;
+        profilePhoto: string;
+        vaccination: string;
+    }
+}
+
 const petResolvers = {
     Query: {
         // Pet Queries
         pets: async () => {
-            return await Pet.find();
+            return await Pet.find()
+                .populate('type');
         },
         pet: async (_parent: any, { petId }: PetArgs) => {
-            return Pet.findById(petId);
+            return Pet.findById(petId)
+                .populate('type');
         }
     },
 
     Mutation: {
         //Pet Mutations
         addPet: async (_parent: any, { input }: PetArgs) => {
-            const pet = await Pet.create({ ...input });
+            const pet = await Pet.create({ ...input, type: input.type });
 
             const { refId, refModel } = input.owner;
 
@@ -102,7 +121,7 @@ const petResolvers = {
 
             return updatedPet;
         },
-        updatePet: async (_parent: any, { petId, input }: PetArgs) => {
+        updatePet: async (_parent: any, { petId, input }: UpdatePetArgs) => {
             const pet = await Pet.findByIdAndUpdate(petId, { ...input }, { new: true });
             return pet;
         },

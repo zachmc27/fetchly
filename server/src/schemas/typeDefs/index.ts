@@ -5,13 +5,15 @@ import orgTypeDefs from "./orgTypeDefs.js";
 import petTypeDefs from "./petTypeDefs.js";
 import postTypeDefs from "./postTypeDefs.js";
 import userTypeDefs from "./userTypeDefs.js";
+import typeTypeDefs from "./typeTypeDefs.js";
 
 const typeDefs = mergeTypeDefs([
     conversationTypeDefs,
     petTypeDefs,
     postTypeDefs,
     userTypeDefs,
-    orgTypeDefs
+    orgTypeDefs,
+    typeTypeDefs
 ]);
 
 export default typeDefs;

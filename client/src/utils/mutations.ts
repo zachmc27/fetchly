@@ -145,7 +145,11 @@ export const ADD_PET = gql`
         refId
         refModel
       }
-      type
+      type {
+        _id
+        type
+        breed
+      }
       gender
       age
       about
@@ -167,7 +171,7 @@ export const ADD_PET = gql`
 //       "refModel": "User" or "Org"
 //     },
 //     "profilePhoto": "https://example.com/photo.jpg",
-//     "type": "dog",
+//     "type": <typeId>,
 //     "vaccination": [
 //       {
 //         "name": "Rabies",
@@ -182,7 +186,7 @@ export const ADD_PET = gql`
 // }
 
 export const UPDATE_PET = gql`
-  mutation Mutation($petId: String!, $input: PetInput!) {
+  mutation Mutation($petId: String!, $input: UpdatePetInput!) {
     updatePet(petId: $petId, input: $input) {
       _id
       name
@@ -190,7 +194,11 @@ export const UPDATE_PET = gql`
         refId
         refModel
       }
-      type
+      type {
+        _id
+        type
+        breed
+      }
       gender
       age
       about
@@ -209,7 +217,7 @@ export const UPDATE_PET = gql`
 //     "gender": "male",
 //     "name": "Lulu 2",
 //     "profilePhoto": "https://example.com/photo.jpg",
-//     "type": "dog",
+//     "type": <typeId>,
 //     "vaccination": [
 //       {
 //         "name": "Rabies",
@@ -232,7 +240,11 @@ export const UPDATE_OWNER = gql`
         refId
         refModel
       }
-      type
+      type {
+        _id
+        type
+        breed
+      }
       gender
       age
       about
@@ -354,4 +366,57 @@ export const ADD_POST_RESPONSE = gql`
 //     },
 //     "contentText": "I agree, she is super adorable!",
 //   },
+// }
+
+// ------------- TYPE MUTATIONS ------------- //
+export const ADD_TYPE = gql`
+  mutation Mutation($input: TypeInput!) {
+    addType(input: $input) {
+      _id
+      type
+      breed
+    }
+  }
+`;
+
+// ADD_TYPE input should look like this:
+// {
+//   "input": {
+//     "type": "dog",
+//     "breed": "golden retriever"
+//   }
+// }
+
+export const UPDATE_TYPE = gql`
+  mutation Mutation($typeId: String!, $input: TypeInput!) {
+    updateType(typeId: $typeId, input: $input) {
+      _id
+      type
+      breed
+    }
+  }
+`;
+
+// UPDATE_TYPE input should look like this:
+// {
+//    "typeId": "<typeId>",
+//    "input": {
+//      "type": "dog",
+//      "breed": "golden retriever"
+//    }
+// }
+
+export const DELETE_TYPE = gql`
+  mutation Mutation($typeId: String!) {
+    deleteType(typeId: $typeId) {
+      _id
+      type
+      breed
+    }
+  }
+`;
+
+// DELETE_TYPE input should look like this:
+// {
+//   "typeId": "<typeId>"
 // }

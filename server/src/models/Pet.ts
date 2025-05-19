@@ -41,6 +41,7 @@ const petSchema = new Schema<PetDocument>({
   type: {
     type: Schema.Types.ObjectId,
     ref: 'Type',
+    required: true,
   },
   gender: {
     type: String,
