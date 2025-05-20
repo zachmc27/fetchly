@@ -50,13 +50,13 @@ const messageResolvers = {
         // Message Queries
         messages: async () => {
             return await Message.find()
-                .populate('sender')
+                .populate('messageUsER')
                 .populate('conversation')
                 .populate('readUser');
         },
         message: async (_parent: any, { messageId }: MessageArgs) => {
             return Message.findById(messageId)
-                .populate('sender')
+                .populate('messageUser')
                 .populate('conversation')
                 .populate('readUser');
         }
