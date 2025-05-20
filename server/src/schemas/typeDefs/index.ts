@@ -7,6 +7,8 @@ import postTypeDefs from "./postTypeDefs.js";
 import userTypeDefs from "./userTypeDefs.js";
 import typeTypeDefs from "./typeTypeDefs.js";
 import messageTypeDefs from "./messageTypeDefs.js";
+import meetUpCommentTypeDefs from './meetUpComments.js';
+import meetUpTypeDefs from './meetUpTypeDefs.js';
 
 const typeDefs = mergeTypeDefs([
     conversationTypeDefs,
@@ -15,7 +17,9 @@ const typeDefs = mergeTypeDefs([
     userTypeDefs,
     orgTypeDefs,
     typeTypeDefs,
-    messageTypeDefs
+    messageTypeDefs,
+    meetUpTypeDefs,
+    meetUpCommentTypeDefs
 ]);
 
 export default typeDefs;

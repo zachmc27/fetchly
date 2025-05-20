@@ -4,19 +4,33 @@ import { Schema, model, type Document, type Types } from 'mongoose';
 import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
 import type { MediaDocument } from './Media.js';
+import type { MeetUpCommentDocument } from './MeetUpComment.js';
 
 export interface MeetUpDocument extends Document {
   id: string;
+  title: string;
   poster: {
     refId: Types.ObjectId | UserDocument | OrgDocument;
     refModel: 'User' | 'Org';
   };
-  contentText: string;
+  description: string;
+  location: string;
+  date: Date;
+  time: string;
+  attendees: Types.ObjectId[] | UserDocument[];
+  numberOfAttendees: number;
+  comments: Types.ObjectId[] | MeetUpCommentDocument[];
+  numberOfComments: number;
   media: Types.ObjectId[] | MediaDocument[];
+  createdAt: Date;
 }
 
 const postSchema = new Schema<MeetUpDocument>(
-    {
+    {   
+        title: {
+            type: String,
+            required: true,
+        },
         poster: {
             refId: {
                 type: Schema.Types.ObjectId,
@@ -29,21 +43,58 @@ const postSchema = new Schema<MeetUpDocument>(
                 enum: ['User', 'Org'] // model names
             }
         },
-        contentText: {
+        description: {
             type: String,
+            required: true,
         },
+        location: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true,
+        },
+        time: {
+            type: String,
+            required: true,
+        },
+        attendees: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
+        comments: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'MeetUpComment'
+            }
+        ],
         media: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Media'
             }
         ],
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        }
     },
     {
         toJSON: {
             virtuals: true,
             getters: true,
         },
+});
+
+postSchema.virtual('numberOfAttendees').get(function () {
+  return this.attendees.length;
+});
+
+postSchema.virtual('numberOfComments').get(function () {
+  return this.comments.length;
 });
 
 const Meetup = model<MeetUpDocument>('MeetUp', postSchema);

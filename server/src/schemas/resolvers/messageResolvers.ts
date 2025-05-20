@@ -8,8 +8,6 @@ interface Media {
     refModel: string;
 }
 
-
-
 interface MessageArgs {
     messageId: string;
     input: {
@@ -26,8 +24,6 @@ interface MessageArgs {
         media: Media[];
     }
 }
-
-
 
 interface UpdateMessageInputArgs{
     input:{

@@ -26,8 +26,8 @@ interface addConversationUserArgs{
     input:{
         userId: string;
     }
-
 }
+
 interface removeConversationUserArgs{
 
     conversationId: string;

@@ -5,6 +5,7 @@ import userResolvers from './userResolvers.js';
 import typeResolvers from './typeResolvers.js';
 import conversationResolvers from './conversationResolvers.js';
 import messageResolvers from './messageResolvers.js';
+import meetUpResolvers from './meetUpResolvers.js';
 
 const resolvers = {
 
@@ -16,6 +17,7 @@ const resolvers = {
         ...typeResolvers.Query,
         ...conversationResolvers.Query,
         ...messageResolvers.Query,
+        ...meetUpResolvers.Query,
     },
     Mutation: {
         ...orgResolvers.Mutation, 
@@ -25,6 +27,7 @@ const resolvers = {
         ...typeResolvers.Mutation,
         ...conversationResolvers.Mutation,
         ...messageResolvers.Mutation,
+        ...meetUpResolvers.Mutation,
     },
 
 }

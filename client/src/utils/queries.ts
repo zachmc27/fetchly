@@ -7,21 +7,34 @@ export const QUERY_USERS = gql`
   query Users {
     users {
       _id
+      username      
       email
-      username
       avatar
       about
-      conversations {
-        _id
-      }
+      location
       pets {
         _id
         name
       }
+      petCount
+      meetUps {
+        _id
+        title
+      }
+      meetUpCount
       posts {
         _id
         contentText}
       }
+      postCount
+      following {
+        _id
+        username
+      }
+      conversation {
+        _id
+      }
+      conversationCount
     }
   }
 `;
