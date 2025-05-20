@@ -54,7 +54,7 @@ const meetUpTypeDefs = `
 # -------------------- Mutation TypeDefs ------------------------
 
   type Mutation {
-    addMeetUp(input: UpdateMeetUpInput!): MeetUp
+    addMeetUp(input: AddMeetUpInput!): MeetUp
     updateMeetUp(meetUpId: String!, input: UpdateMeetUpInput!): MeetUp
     deleteMeetUp(meetUpId: String!): MeetUp
   }

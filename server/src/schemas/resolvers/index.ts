@@ -6,6 +6,7 @@ import typeResolvers from './typeResolvers.js';
 import conversationResolvers from './conversationResolvers.js';
 import messageResolvers from './messageResolvers.js';
 import meetUpResolvers from './meetUpResolvers.js';
+import meetUpCommentResolvers from './meetUpCommentResolvers.js';
 
 const resolvers = {
 
@@ -18,6 +19,7 @@ const resolvers = {
         ...conversationResolvers.Query,
         ...messageResolvers.Query,
         ...meetUpResolvers.Query,
+        ...meetUpCommentResolvers.Query,
     },
     Mutation: {
         ...orgResolvers.Mutation, 
@@ -28,6 +30,7 @@ const resolvers = {
         ...conversationResolvers.Mutation,
         ...messageResolvers.Mutation,
         ...meetUpResolvers.Mutation,
+        ...meetUpCommentResolvers.Mutation,
     },
 
 }

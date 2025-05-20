@@ -2,16 +2,6 @@ const postTypeDefs = `
 
 # -------------------- Post TypeDefs ------------------------
 
-  type Poster {
-    refId: ID!
-    refModel: String!
-  }
-
-  input PosterInput {
-    refId: ID!
-    refModel: String!
-  }
-
   type Post {
     _id: ID
     poster: Poster!

@@ -418,3 +418,208 @@ export const DELETE_TYPE = gql`
 // {
 //   "typeId": "<typeId>"
 // }
+
+
+// ------------- MEETUP MUTATIONS ------------- //
+
+export const ADD_MEETUP = gql`
+  mutation AddMeetUp($input: AddMeetUpInput!) {
+    addMeetUp(input: $input) {
+      _id
+      title
+      poster {
+        refId
+        refModel
+      }
+      description
+      location
+      date
+      time
+      attendees
+      numberOfAttendees
+      comments {
+        _id
+      }
+      numberOfComments
+      media
+      createdAt
+    }
+  }
+`;
+
+// ADD_MEETUP input should look like this:
+// {
+//   "input": {
+//     "title": "Lakeside Dog Walk",
+//     "poster": {
+//       "refId": <userId>,
+//       "refModel": "User" | "Org"
+//     },
+//     "description": "Let's go for a walk along the river with our dogs.",
+//     "location": "Hamilton, Ontario, Canada",
+//     "date": "2025-10-22",
+//     "time": "12:00am",
+//   },
+// }
+
+export const UPDATE_MEETUP = gql`
+  mutation UpdateMeetUp($updateMeetUpMeetUpId: String!, $input: UpdateMeetUpInput!) {
+    addMeetUp(meetUpId: $updateMeetUpMeetUpId, input: $input) {
+      _id
+      title
+      poster {
+        refId
+        refModel
+      }
+      description
+      location
+      date
+      time
+      attendees
+      numberOfAttendees
+      comments {
+        _id
+      }
+      numberOfComments
+      media
+      createdAt
+    }
+  }
+`;
+
+// UPDATE_MEETUP input should look like this:
+// {
+//   "updateMeetUpMeetUpId": "<meetUpId>",
+//   "input": {
+//     "title": "Lakeside Dog Walk",
+//     "description": "Let's go for a walk along the river with our dogs.",
+//     "location": "Hamilton, Ontario, Canada",
+//     "date": "2025-10-22",
+//     "time": "12:00am",
+//   },
+// }
+
+export const DELETE_MEETUP = gql`
+  mutation DeleteMeetUp($deleteMeetUpMeetUpId: String!) {
+    deleteMeetUp(meetUpId: $deleteMeetUpMeetUpId) {
+      _id
+    }
+  }
+`;
+
+// DELETE_MEETUP input should look like this:
+// {
+//   "deleteMeetUpMeetUpId": "<meetUpId>"
+// }
+
+// ------------- MEETUP COMMENT MUTATIONS ------------- //
+
+export const ADD_MEETUP_COMMENT = gql`
+  mutation CreateMeetUpComment($input: MeetUpCommentInput!) {
+    createMeetUpComment(input: $input) {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      contentText
+      meetUpId
+      media
+      responses {
+        _id
+      }
+      responseCount
+      parentComment
+      isResponse
+      createdAt
+    }
+  }
+`;
+
+// ADD_MEETUP_COMMENT input should look like this:
+// {
+// "input": {
+//   "meetUpId": "<meetUpId>",
+//   "poster": {
+//     "refId": "<userId>",
+//     "refModel": "User" | "Org"
+//   },
+//   "contentText": "This is a test comment!",
+// }
+
+export const UPDATE_MEETUP_COMMENT = gql`
+  mutation UpdateMeetUpComment($meetUpCommentId: String!, $input: UpdateMeetUpCommentInput!) {
+    updateMeetUpComment(meetUpCommentId: $meetUpCommentId, input: $input) {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      contentText
+      meetUpId
+      media
+      responses {
+        _id
+      }
+      responseCount
+      parentComment
+      isResponse
+      createdAt
+    }
+  }
+`;
+
+// UPDATE_MEETUP_COMMENT input should look like this:
+// {
+//   "meetUpCommentId": "<meetUpCommentId>",
+//   "input": {
+//     "contentText": "This is an updated test comment!",
+//   }
+// }
+
+export const DELETE_MEETUP_COMMENT = gql`
+  mutation DeleteMeetUpComment($meetUpCommentId: String!) {
+    deleteMeetUpComment(meetUpCommentId: $meetUpCommentId) {
+      _id
+    }
+  }
+`;
+
+// DELETE_MEETUP_COMMENT input should look like this:
+// {
+//   "meetUpCommentId": "<meetUpCommentId>"
+// }
+
+export const RESPOND_MEETUP_COMMENT = gql`
+  mutation CreateMeetUpCommentResponse($meetUpCommentId: String!, $input: MeetUpCommentResponseInput!) {
+    createMeetUpCommentResponse(meetUpCommentId: $meetUpCommentId, input: $input) {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      contentText
+      meetUpId
+      media
+      responses {
+        _id
+      }
+      responseCount
+      parentComment
+      isResponse
+      createdAt
+    }
+  }
+`;
+
+// RESPOND_MEETUP_COMMENT input should look like this:
+// {
+//   "meetUpCommentId": "<meetUpCommentId>",
+//   "input": {
+//     "poster": {
+//       "refId": "<userId>",
+//       "refModel": "User" | "Org"
+//     },
+//     "contentText": "This is a test response to another comment!",
+//   }
+// }

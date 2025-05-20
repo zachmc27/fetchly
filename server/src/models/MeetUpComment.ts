@@ -4,6 +4,7 @@ import { Schema, model, type Document, type Types } from 'mongoose';
 import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
 import type { MediaDocument } from './Media.js';
+import type { MeetUpDocument } from './MeetUp.js';
 
 export interface MeetUpCommentDocument extends Document {
   id: string;
@@ -11,11 +12,12 @@ export interface MeetUpCommentDocument extends Document {
     refId: Types.ObjectId | UserDocument | OrgDocument;
     refModel: 'User' | 'Org';
   };
+  meetUpId: Types.ObjectId | MeetUpDocument;
   contentText: string;
   media: Types.ObjectId[] | MediaDocument[];
   responses: Types.ObjectId[] | MeetUpCommentDocument[];
   responseCount: number;
-  parentPost: Types.ObjectId | MeetUpCommentDocument;
+  parentComment: Types.ObjectId | MeetUpCommentDocument;
   isResponse: boolean;
   createdAt: Date;
 }
@@ -34,6 +36,11 @@ const meetUpCommentSchema = new Schema<MeetUpCommentDocument>(
                 enum: ['User', 'Org'] // model names
             }
         },
+        meetUpId: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'MeetUp'
+        },
         contentText: {
             type: String,
         },
@@ -46,12 +53,12 @@ const meetUpCommentSchema = new Schema<MeetUpCommentDocument>(
         responses: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Post'
+                ref: 'MeetUpComment'
             }
         ],
-        parentPost: {
+        parentComment: {
             type: Schema.Types.ObjectId,
-            ref: 'Post',
+            ref: 'MeetUpComment',
             default: null, // null means it's a top-level post
         },
         createdAt: {
@@ -71,7 +78,7 @@ meetUpCommentSchema.virtual('responseCount').get(function () {
 });
 
 meetUpCommentSchema.virtual('isResponse').get(function () {
-  return !!this.parentPost;
+  return !!this.parentComment;
 });
 
 const MeetUpComment = model<MeetUpCommentDocument>('MeetUpComment', meetUpCommentSchema);
