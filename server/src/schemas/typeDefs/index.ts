@@ -6,6 +6,7 @@ import petTypeDefs from "./petTypeDefs.js";
 import postTypeDefs from "./postTypeDefs.js";
 import userTypeDefs from "./userTypeDefs.js";
 import typeTypeDefs from "./typeTypeDefs.js";
+import messageTypeDefs from "./messageTypeDefs.js";
 
 const typeDefs = mergeTypeDefs([
     conversationTypeDefs,
@@ -13,7 +14,8 @@ const typeDefs = mergeTypeDefs([
     postTypeDefs,
     userTypeDefs,
     orgTypeDefs,
-    typeTypeDefs
+    typeTypeDefs,
+    messageTypeDefs
 ]);
 
 export default typeDefs;

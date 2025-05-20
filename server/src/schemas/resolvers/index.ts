@@ -3,6 +3,8 @@ import petResolvers from './petResolvers.js';
 import postResolvers from './postResolvers.js';
 import userResolvers from './userResolvers.js';
 import typeResolvers from './typeResolvers.js';
+import conversationResolvers from './conversationResolvers.js';
+import messageResolvers from './messageResolvers.js';
 
 const resolvers = {
 
@@ -12,6 +14,8 @@ const resolvers = {
         ...postResolvers.Query,
         ...userResolvers.Query,
         ...typeResolvers.Query,
+        ...conversationResolvers.Query,
+        ...messageResolvers.Query,
     },
     Mutation: {
         ...orgResolvers.Mutation, 
@@ -19,6 +23,8 @@ const resolvers = {
         ...postResolvers.Mutation,
         ...userResolvers.Mutation,
         ...typeResolvers.Mutation,
+        ...conversationResolvers.Mutation,
+        ...messageResolvers.Mutation,
     },
 
 }
