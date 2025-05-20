@@ -8,7 +8,10 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 
-
+// ****** Each of these will render on each page ******
+// import NavBar from './components/Navbar/Bar';
+// import PostBubble from './components/Navbar/PostBubble';
+// ****** Post bubble conditionally renders with a passed back link prop corresponding to the respective route ******
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
