@@ -7,21 +7,34 @@ export const QUERY_USERS = gql`
   query Users {
     users {
       _id
+      username      
       email
-      username
       avatar
       about
-      conversations {
-        _id
-      }
+      location
       pets {
         _id
         name
       }
+      petCount
+      meetUps {
+        _id
+        title
+      }
+      meetUpCount
       posts {
         _id
         contentText}
       }
+      postCount
+      following {
+        _id
+        username
+      }
+      conversation {
+        _id
+      }
+      conversationCount
     }
   }
 `;
@@ -253,6 +266,107 @@ export const QUERY_TYPE = gql`
       _id
       type
       breed
+    }
+  }
+`;
+
+//-------------- MEETUP QUERIES ------------- //
+// Returns all meetups
+export const QUERY_MEETUPS = gql`
+  query MeetUps {
+    meetUps {
+      _id
+      title
+      poster {
+        refId
+        refModel
+      }
+      description
+      location
+      date
+      time
+      attendees
+      numberOfAttendees
+      comments {
+        _id
+      }
+      numberOfComments
+      media
+      createdAt
+    }
+  }
+`;
+
+// Returns specific meetup by id
+export const QUERY_MEETUP = gql`
+  query MeetUp($meetUpId: ID!) {
+    meetUp(meetUpId: $meetUpId) {
+      _id
+      title
+      poster {
+        refId
+        refModel
+      }
+      description
+      location
+      date
+      time
+      attendees
+      numberOfAttendees
+      comments {
+        _id
+      }
+      numberOfComments
+      media
+      createdAt
+    }
+  }
+`;
+
+//-------------- MEETUP COMMENT QUERIES ------------- //
+
+// Returns all meetup comments
+export const QUERY_MEETUP_COMMENTS = gql`
+  query MeetUpComments {
+    meetUpComments {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      contentText
+      media
+      responses {
+        _id
+      }
+      responseCount
+      parentComment
+      isResponse
+      createdAt
+      meetUpId
+    }
+  }
+`;
+
+// Returns specific meetup comment by id
+export const QUERY_MEETUP_COMMENT = gql`
+  query MeetUpComment($meetUpCommentId: ID!) {
+    meetUpComment(meetUpCommentId: $meetUpCommentId) {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      contentText
+      media
+      responses {
+        _id
+      }
+      responseCount
+      parentComment
+      isResponse
+      createdAt
+      meetUpId
     }
   }
 `;

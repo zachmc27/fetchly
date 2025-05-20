@@ -6,12 +6,17 @@ import type { MessageDocument } from './Message.js';
 
 export interface ConversationDocument extends Document {
   id: string;
+  conversationName: string;
   conversationUser: Types.ObjectId[] | UserDocument[];
   messages: Types.ObjectId[] | MessageDocument[];
   lastMessage: Types.ObjectId | MessageDocument;
 }
 
 const conversationSchema = new Schema<ConversationDocument>({
+  conversationName: {  
+        type: String,
+        required: true
+  },
   conversationUser: [  
         {
             type: Schema.Types.ObjectId,

@@ -4,33 +4,26 @@ import { Schema, model, type Document, type Types } from 'mongoose';
 import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
 import type { MediaDocument } from './Media.js';
-import type { MeetUpCommentDocument } from './MeetUpComment.js';
+import type { MeetUpDocument } from './MeetUp.js';
 
-export interface MeetUpDocument extends Document {
+export interface MeetUpCommentDocument extends Document {
   id: string;
-  title: string;
   poster: {
     refId: Types.ObjectId | UserDocument | OrgDocument;
     refModel: 'User' | 'Org';
   };
-  description: string;
-  location: string;
-  date: Date;
-  time: string;
-  attendees: Types.ObjectId[] | UserDocument[];
-  numberOfAttendees: number;
-  comments: Types.ObjectId[] | MeetUpCommentDocument[];
-  numberOfComments: number;
+  meetUpId: Types.ObjectId | MeetUpDocument;
+  contentText: string;
   media: Types.ObjectId[] | MediaDocument[];
+  responses: Types.ObjectId[] | MeetUpCommentDocument[];
+  responseCount: number;
+  parentComment: Types.ObjectId | MeetUpCommentDocument;
+  isResponse: boolean;
   createdAt: Date;
 }
 
-const postSchema = new Schema<MeetUpDocument>(
-    {   
-        title: {
-            type: String,
-            required: true,
-        },
+const meetUpCommentSchema = new Schema<MeetUpCommentDocument>(
+    {
         poster: {
             refId: {
                 type: Schema.Types.ObjectId,
@@ -43,40 +36,31 @@ const postSchema = new Schema<MeetUpDocument>(
                 enum: ['User', 'Org'] // model names
             }
         },
-        description: {
+        meetUpId: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'MeetUp'
+        },
+        contentText: {
             type: String,
-            required: true,
         },
-        location: {
-            type: String,
-            required: true,
-        },
-        date: {
-            type: Date,
-            required: true,
-        },
-        time: {
-            type: String,
-            required: true,
-        },
-        attendees: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'User'
-            }
-        ],
-        comments: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'MeetUpComment'
-            }
-        ],
         media: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Media'
             }
         ],
+        responses: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'MeetUpComment'
+            }
+        ],
+        parentComment: {
+            type: Schema.Types.ObjectId,
+            ref: 'MeetUpComment',
+            default: null, // null means it's a top-level post
+        },
         createdAt: {
             type: Date,
             default: Date.now,
@@ -89,14 +73,14 @@ const postSchema = new Schema<MeetUpDocument>(
         },
 });
 
-postSchema.virtual('numberOfAttendees').get(function () {
-  return this.attendees.length;
+meetUpCommentSchema.virtual('responseCount').get(function () {
+  return this.responses.length;
 });
 
-postSchema.virtual('numberOfComments').get(function () {
-  return this.comments.length;
+meetUpCommentSchema.virtual('isResponse').get(function () {
+  return !!this.parentComment;
 });
 
-const Meetup = model<MeetUpDocument>('MeetUp', postSchema);
+const MeetUpComment = model<MeetUpCommentDocument>('MeetUpComment', meetUpCommentSchema);
 
-export default Meetup;
+export default MeetUpComment;

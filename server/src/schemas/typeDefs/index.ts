@@ -2,18 +2,24 @@ import { mergeTypeDefs } from '@graphql-tools/merge'; // This program helps merg
 
 import conversationTypeDefs from "./conversationTypeDefs.js";
 import orgTypeDefs from "./orgTypeDefs.js";
+import meetUpCommentTypeDefs from './meetUpCommentsTypeDefs.js';
+import meetUpTypeDefs from './meetUpTypeDefs.js';
 import petTypeDefs from "./petTypeDefs.js";
 import postTypeDefs from "./postTypeDefs.js";
 import userTypeDefs from "./userTypeDefs.js";
 import typeTypeDefs from "./typeTypeDefs.js";
+import messageTypeDefs from "./messageTypeDefs.js";
 
 const typeDefs = mergeTypeDefs([
     conversationTypeDefs,
+    meetUpTypeDefs,
+    meetUpCommentTypeDefs, 
     petTypeDefs,
     postTypeDefs,
     userTypeDefs,
     orgTypeDefs,
-    typeTypeDefs
+    typeTypeDefs,
+    messageTypeDefs
 ]);
 
 export default typeDefs;

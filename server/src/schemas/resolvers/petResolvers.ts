@@ -118,7 +118,6 @@ const petResolvers = {
                     });
                 }
             }
-
             return updatedPet;
         },
         updatePet: async (_parent: any, { petId, input }: UpdatePetArgs) => {
@@ -131,4 +130,5 @@ const petResolvers = {
         }
     }
 };
+
 export default petResolvers;

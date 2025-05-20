@@ -8,7 +8,6 @@ interface AddPostArgs {
             refId: string;
             refModel: string;
         };
-        postType: string;
         contentText?: string;
         media?: string[];
     }

@@ -7,6 +7,7 @@ import type { PetDocument } from './Pet.js';
 import type { LocationDocument } from './Location.js';
 import type { PostDocument } from './Post.js';
 import type { ConversationDocument } from './Conversation.js';
+import type { MeetUpDocument } from './MeetUp.js';
 
 // User schema
 export interface UserDocument extends Document {
@@ -20,6 +21,8 @@ export interface UserDocument extends Document {
   location: Types.ObjectId | LocationDocument;
   pets: Types.ObjectId[] | PetDocument[];
   petCount: number;
+  meetUps: Types.ObjectId[] | MeetUpDocument[];
+  meetUpCount: number;
   posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
   following: UserDocument[];
@@ -126,6 +129,10 @@ userSchema.virtual('postCount').get(function () {
 // when we query a user, we'll also get another field called `conversationCount` with the number of conversations we have
 userSchema.virtual('conversationCount').get(function () {
   return this.conversation.length;
+});
+
+userSchema.virtual('meetUpCount').get(function () {
+  return this.meetUps.length;
 });
 
 const User = model<UserDocument>('User', userSchema);
