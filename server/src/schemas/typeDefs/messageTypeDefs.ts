@@ -1,71 +1,60 @@
 const messageTypeDefs = `
-#-------------Message TyepeDefs-------------
+#-------------Message TypeDefs-------------
 
-type User{
-    refId: ID!
-    refModel: String!
-}
-
-input MediaInput{
-    refId: ID!
-    refModel: String!
-}
-    
-input UserInput{
-    refId: ID!
-    refModel: String!
-}
-
-type Message{
+type Message {
     _id: ID
     messageUser: User!
     textContent: String
-    media: [Media]
+    media: Media
     readUser: [User]
     isRead: Boolean
 }
 
-input addMessage{
-    _id: ID
+input AddMessageInput {
+    conversationId: String!
     messageUser: UserInput!
-    textContent: String
-    media: [MediaInput]
+    textContent: String!
+    media: String
     readUser: [UserInput]
 }
 
-input MessageInput {
-    _id: ID
-    messageUser: UserInput!
-    textContent: String
-    media: [MediaInput]
-    readUser: [UserInput]
-}
-
-input UpdateMessageInput{
+input UpdateMessageInput {
     _id: ID
     messageUser: UserInput
     textContent: String
-    media: [MediaInput]
+    media: String
     readUser: [UserInput]
 }
 
-input DeleteMessageInput{
+input DeleteMessageInput {
     _id: ID
-    messageUser: UserInput
-    }
+}
 
 #--------------Query TypeDefs----------------
 
-type Query{
+type Query {
     messages: [Message]
     message(messageId: String!): Message
 }
 
 #--------------Mutation TypeDefs----------------
-type Mutation{
-    addMessage(message: MessageInput!): Message
-    updateMessage(messageId: String!, message: MessageInput!): Message
-    deleteMessage(messageId: String!): Message
+
+type Mutation {
+    addMessage(conversationId: ID!, input: AddMessageInput!): Message
+    updateMessage(input: UpdateMessageInput): Message
+    deleteMessage(input: DeleteMessageInput!): Message
+}
+
+#-------------Supporting TypeDefs-------------
+
+type Media {
+    url: String!
+    type: String
+}
+
+input UserInput {
+    _id: ID!
+    username: String
 }
 `;
 
