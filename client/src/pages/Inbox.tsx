@@ -9,7 +9,7 @@ export default function Inbox() {
 
   // *** for action modal ***
   function cancel() {
-    console.log('this will close the modal');
+    console.log('this will close the modal.');
   }
 
   function confirm() {
