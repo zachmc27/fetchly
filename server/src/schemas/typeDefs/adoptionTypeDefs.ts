@@ -18,6 +18,7 @@ type Adoption {
     adoptionStatus: Boolean
     adoptedBy: Adopter
     createdAt: String
+    itemType: String
 }
 
 input AdoptionInput {

@@ -8,6 +8,7 @@ type Message {
     media: Media
     readUser: [User]
     isRead: Boolean
+    itemType: String
 }
 
 input AddMessageInput {

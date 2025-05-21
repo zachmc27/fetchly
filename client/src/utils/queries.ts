@@ -220,6 +220,7 @@ export const QUERY_POSTS = gql`
       createdAt
       parentPost
       isResponse
+      itemType
     }
   }
 `;
@@ -242,6 +243,7 @@ export const QUERY_POST = gql`
       createdAt
       parentPost
       isResponse
+      itemType
     }
   }
 `;
@@ -293,6 +295,7 @@ export const QUERY_MEETUPS = gql`
       numberOfComments
       media
       createdAt
+      itemType
     }
   }
 `;
@@ -319,6 +322,7 @@ export const QUERY_MEETUP = gql`
       numberOfComments
       media
       createdAt
+      itemType
     }
   }
 `;
@@ -344,6 +348,7 @@ export const QUERY_MEETUP_COMMENTS = gql`
       isResponse
       createdAt
       meetUpId
+      itemType
     }
   }
 `;
@@ -367,6 +372,7 @@ export const QUERY_MEETUP_COMMENT = gql`
       isResponse
       createdAt
       meetUpId
+      itemType
     }
   }
 `;
@@ -413,6 +419,7 @@ export const QUERY_ADOPTIONS = gql`
         refModel
       }
       createdAt
+      itemType
     }
   }
 `;
@@ -457,6 +464,7 @@ export const QUERY_ADOPTION = gql`
         refModel
       }
       createdAt
+      itemType
     }
   }
 `;

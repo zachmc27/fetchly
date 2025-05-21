@@ -20,6 +20,7 @@ export interface AdoptionDocument extends Document {
   adoptionStatus: boolean;
   adoptedBy: Types.ObjectId | UserDocument | OrgDocument;
   createdAt: Date;
+  itemType: string;
 }
 
 const postSchema = new Schema<AdoptionDocument>(
@@ -74,6 +75,10 @@ const postSchema = new Schema<AdoptionDocument>(
         createdAt: {
             type: Date,
             default: Date.now,
+        },
+        itemType: {
+            type: String,
+            default: 'adoption'
         }
     },
     {

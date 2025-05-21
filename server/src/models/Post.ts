@@ -19,6 +19,7 @@ export interface PostDocument extends Document {
   isResponse: boolean;
   createdAt: Date;
   updatedAt: Date;
+  itemType: string;
 }
 
 const postSchema = new Schema<PostDocument>(
@@ -58,6 +59,10 @@ const postSchema = new Schema<PostDocument>(
         createdAt: {
             type: Date,
             default: Date.now,
+        },
+        itemType: {
+            type: String,
+            default: 'post' 
         }
     },
     {
