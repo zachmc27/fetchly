@@ -220,6 +220,7 @@ export const QUERY_POSTS = gql`
       createdAt
       parentPost
       isResponse
+      itemType
     }
   }
 `;
@@ -242,6 +243,7 @@ export const QUERY_POST = gql`
       createdAt
       parentPost
       isResponse
+      itemType
     }
   }
 `;
@@ -293,6 +295,7 @@ export const QUERY_MEETUPS = gql`
       numberOfComments
       media
       createdAt
+      itemType
     }
   }
 `;
@@ -319,6 +322,7 @@ export const QUERY_MEETUP = gql`
       numberOfComments
       media
       createdAt
+      itemType
     }
   }
 `;
@@ -344,6 +348,7 @@ export const QUERY_MEETUP_COMMENTS = gql`
       isResponse
       createdAt
       meetUpId
+      itemType
     }
   }
 `;
@@ -367,6 +372,99 @@ export const QUERY_MEETUP_COMMENT = gql`
       isResponse
       createdAt
       meetUpId
+      itemType
+    }
+  }
+`;
+
+//-------------- ADOPTION QUERIES ------------- //
+
+// Returns all Adoptions
+export const QUERY_ADOPTIONS = gql`
+  query Adoptions {
+    adoptions {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      pet {
+        _id
+        name
+        owner {
+          refId
+          refModel
+        }
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        about
+        profilePhoto
+        vaccination
+      }
+      goodWithPets
+      description
+      location
+      media {
+        refId
+        refModel
+      }
+      adoptionStatus
+      adoptedBy {
+        refId
+        refModel
+      }
+      createdAt
+      itemType
+    }
+  }
+`;
+
+// Returns a single Adoption based on ID passed in
+export const QUERY_ADOPTION = gql`
+  query Adoption($adoptionId: ID!) {
+    adoption(adoptionId: $adoptionId) {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      pet {
+        _id
+        name
+        owner {
+          refId
+          refModel
+        }
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        about
+        profilePhoto
+        vaccination
+      }
+      goodWithPets
+      description
+      location
+      media {
+        refId
+        refModel
+      }
+      adoptionStatus
+      adoptedBy {
+        refId
+        refModel
+      }
+      createdAt
+      itemType
     }
   }
 `;

@@ -23,6 +23,7 @@ export interface MeetUpDocument extends Document {
   numberOfComments: number;
   media: Types.ObjectId[] | MediaDocument[];
   createdAt: Date;
+  itemType: string;
 }
 
 const postSchema = new Schema<MeetUpDocument>(
@@ -80,6 +81,10 @@ const postSchema = new Schema<MeetUpDocument>(
         createdAt: {
             type: Date,
             default: Date.now,
+        },
+        itemType: {
+            type: String,
+            default: 'meetup'
         }
     },
     {

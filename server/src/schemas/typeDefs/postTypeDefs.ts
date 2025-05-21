@@ -12,6 +12,7 @@ const postTypeDefs = `
     createdAt: String
     parentPost: String
     isResponse: Boolean
+    itemType: String
   }
 
   input AddPostInput {
