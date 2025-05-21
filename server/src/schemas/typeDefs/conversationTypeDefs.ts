@@ -2,57 +2,38 @@ const conversationTypeDefs = `
 
 # -------------------- Conversation TypeDefs ------------------------
 
-type User {
-    _id: ID
-    username: String
-    email: String
-    profilePhoto: String
-    conversations: [Conversation]
-}
-type Media {
-    refId: ID!
-    refModel: String!
-}
-type Message {
-    id: String
-    messageUser: User
-    textContent: String
-    media: [Media]
-    readUser: [User]
-    isRead: Boolean
-}
 type Conversation {
     _id: ID
     conversationName: String
-    conversationUser: [User]
+    conversationUsers: [ConversationUser]
     messages: [Message]
     lastMessage: Message
-    createdAt: String
+    }
+
+type ConversationUser{
+    _id: ID!
 }
 
-input ConversationInput {
-    _id: ID
-    conversationName: String
-    conversationUser: [ID]
-}
-input addConversationUser {
+input ConversationUserInput{
     _id: ID!
-    conversationUser: [ID]!
 }
-input removeConversationUser {
-    _id: ID!
-    conversationUser: [ID]!
+input CreateConversationInput {
+    conversationName: String!
+    conversationUsers: [ConversationUserInput!]! 
 }
+
+#----------Query TypeDefs------------------------
 
 type Query {
     conversations: [Conversation]
-    conversation(conversationId: ID!): Conversation
+    conversation(conversationId: String!): Conversation
 }
-type Mutation {
-    addConversation(input: ConversationInput): Conversation
-    addConversationUser(conversationId: ID!, input: addConversationUser): Conversation
-    removeConversationUser(conversationId: ID!, input: removeConversationUser): Conversation
-}
-`;
 
+#----------Mutation TypeDefs------------------------
+
+type Mutation{
+CreateConversationInput(input: CreateConversationInput!): Conversation
+}
+
+`;
 export default conversationTypeDefs;

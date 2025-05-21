@@ -1,109 +1,54 @@
-import { Conversation, User} from '../../models/index.js';
+import { Conversation, User } from '../../models/index.js';
+import { Types } from 'mongoose';
+
 
 interface ConversationArgs {
     conversationId: string;
-    ConversationName: string;
+    conversationName: string;
+    conversationUsers: string[]; // Array of user IDs
+    messages: string[]; // Array of message IDs
+    lastMessage: string; // ID of the last message
+}
+
+interface CreateConversationArgs{
     input: {
-        users: {
-            refId: string;
-            refModel: string;
-        }[];
-    messages?: {
-        refID: string;
-        refModel: string;
-    }[];
-        lastMessage?: {
-            sender: string;
-            text: string;
-        };
-
-    }
+        conversationName: string;
+        conversationUsers: string[]; // Array of user IDs
+    };
 }
-
-interface addConversationUserArgs{
-    conversationId: string;
-    input:{
-        userId: string;
-    }
-}
-
-interface removeConversationUserArgs{
-
-    conversationId: string;
-    input:{
-        userId: string;
-    }
-}
-
-
+// Define the resolvers for the Conversation model
 const conversationResolvers = {
-
-Query: {
-    conversations: async () => {
-        return await Conversation.find()
-            .populate('users')
-            .populate('messages');
+    Query: {
+        conversations: async () => {
+            return await Conversation.find()
+                .populate('conversationUsers')
+                .populate('messages')
+                .populate('lastMessage');
+        },
+        conversation: async (_parent: any, { conversationId }: ConversationArgs) => {
+            return await Conversation.findById(conversationId)
+                .populate('conversationUsers')
+                .populate('messages')
+                .populate('lastMessage');
+        }
     },
-    conversation: async (_parent: any, { conversationId }: ConversationArgs) => {
-        return await Conversation.findById(conversationId)
-            .populate('users')
-            .populate('messages');
+    Mutation: {
+        CreateConversationInput: async (_parent: any, { input }: CreateConversationArgs) => {
+            const userIds = input.conversationUsers; // Use user IDs directly
+            const newConversation = await Conversation.create({
+                conversationName: input.conversationName,
+                conversationUsers: userIds,
+            });
+
+            // Populate the conversation ID into each user's conversation list
+            const users = await User.find({ _id: { $in: userIds } });
+            for (const user of users) {
+                (user.conversation as Types.ObjectId[]).push(newConversation._id as Types.ObjectId);
+                await user.save();
+            }
+
+            return newConversation.populate('conversationUsers');
+        },
     }
-},
-Mutation:{
-    addConversation: async (_parent: any, { input }: ConversationArgs) => {
-        const conversation = await Conversation.create({ ...input});
-
-        // add the conversation id for each user
-
-       for(let i = 0; i < input.users.length; i++){
-        const { refId } = input.users[i];
-        await User.findByIdAndUpdate(refId, {
-            $push: { conversation: conversation._id }
-        });
-         }
-
-        return conversation;
-    },
-        addConversationUser: async (_parent: any, { conversationId, input }: addConversationUserArgs) => {
-        const conversation = await Conversation.findByIdAndUpdate(conversationId, {
-                $push: { users: input.userId }
-            }, { new: true });
-
-        if (!conversation) {
-            throw new Error('Conversation not found');
-        }
-
-        const user = await User.findByIdAndUpdate(input.userId, {
-            $push: { conversation: conversation._id }
-        });
-        if (!user) {
-            throw new Error('User not found');
-        }
-
-        return conversation;
-    },
-
-    removeConversationUser: async (_parent: any, { conversationId, input }: removeConversationUserArgs) => {
-        const conversation = await Conversation.findByIdAndUpdate(conversationId, {
-                $pull: { users: input.userId }
-            }, { new: true });
-
-        if (!conversation) {
-            throw new Error('Conversation not found');
-        }
-
-        const user = await User.findByIdAndUpdate(input.userId, {
-            $pull: { conversation: conversation._id }
-        });
-        if (!user) {
-            throw new Error('User not found');
-        }
-
-        return conversation;
-
-
-
-    },
-}};
+};
 export default conversationResolvers;

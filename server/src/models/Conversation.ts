@@ -7,7 +7,7 @@ import type { MessageDocument } from './Message.js';
 export interface ConversationDocument extends Document {
   id: string;
   conversationName: string;
-  conversationUser: Types.ObjectId[] | UserDocument[];
+  conversationUsers: Types.ObjectId[] | UserDocument[];
   messages: Types.ObjectId[] | MessageDocument[];
   lastMessage: Types.ObjectId | MessageDocument;
 }
@@ -17,7 +17,7 @@ const conversationSchema = new Schema<ConversationDocument>({
         type: String,
         required: true
   },
-  conversationUser: [  
+  conversationUsers: [  
         {
             type: Schema.Types.ObjectId,
             ref: 'User',
