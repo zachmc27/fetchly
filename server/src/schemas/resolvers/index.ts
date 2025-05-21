@@ -1,3 +1,4 @@
+import adoptionResolvers from './adoptionResolvers.js';
 import orgResolvers from './orgResolvers.js';
 import petResolvers from './petResolvers.js';
 import postResolvers from './postResolvers.js';
@@ -11,6 +12,7 @@ import meetUpCommentResolvers from './meetUpCommentResolvers.js';
 const resolvers = {
 
     Query: {
+        ...adoptionResolvers.Query,
         ...orgResolvers.Query,
         ...petResolvers.Query,
         ...postResolvers.Query,
@@ -22,6 +24,7 @@ const resolvers = {
         ...meetUpCommentResolvers.Query,
     },
     Mutation: {
+        ...adoptionResolvers.Mutation,
         ...orgResolvers.Mutation, 
         ...petResolvers.Mutation,       
         ...postResolvers.Mutation,

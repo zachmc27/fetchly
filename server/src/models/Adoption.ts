@@ -4,6 +4,7 @@ import { Schema, model, type Document, type Types } from 'mongoose';
 import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
 import type { MediaDocument } from './Media.js';
+import type { PetDocument } from './Pet.js';
 
 export interface AdoptionDocument extends Document {
   id: string;
@@ -11,8 +12,14 @@ export interface AdoptionDocument extends Document {
     refId: Types.ObjectId | UserDocument | OrgDocument;
     refModel: 'User' | 'Org';
   };
-  contentText: string;
+  pet: Types.ObjectId | PetDocument
+  goodWithPets: string;
+  description: string;
+  location: string;
   media: Types.ObjectId[] | MediaDocument[];
+  adoptionStatus: boolean;
+  adoptedBy: Types.ObjectId | UserDocument | OrgDocument;
+  createdAt: Date;
 }
 
 const postSchema = new Schema<AdoptionDocument>(
@@ -29,8 +36,20 @@ const postSchema = new Schema<AdoptionDocument>(
                 enum: ['User', 'Org'] // model names
             }
         },
-        contentText: {
+        pet: {
+            type: Schema.Types.ObjectId,
+            ref: 'Pet',
+            required: true
+        },
+        goodWithPets: {
             type: String,
+        },
+        description: {
+            type: String,
+        },
+        location: {
+            type: String,
+            required: true
         },
         media: [
             {
@@ -38,6 +57,24 @@ const postSchema = new Schema<AdoptionDocument>(
                 ref: 'Media'
             }
         ],
+        adoptionStatus: {
+            type: Boolean,
+            default: false
+        },
+        adoptedBy: {
+            refId: {
+                type: Schema.Types.ObjectId,
+                refPath: 'adoptedBy.refModel'
+            },
+            refModel: {
+                type: String,
+                enum: ['User', 'Org']
+            }
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        }
     },
     {
         toJSON: {

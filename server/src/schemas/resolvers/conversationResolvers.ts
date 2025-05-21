@@ -1,6 +1,5 @@
 import { Conversation, User} from '../../models/index.js';
 
-
 interface ConversationArgs {
     conversationId: string;
     ConversationName: string;
