@@ -1,11 +1,6 @@
 const messageTypeDefs = `
 #-------------Message TyepeDefs-------------
 
-type Media{
-    refId: ID!
-    refModel: String!
-}
-
 type User{
     refId: ID!
     refModel: String!

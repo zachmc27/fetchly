@@ -5,6 +5,7 @@ import postResolvers from './postResolvers.js';
 import userResolvers from './userResolvers.js';
 import typeResolvers from './typeResolvers.js';
 import conversationResolvers from './conversationResolvers.js';
+import mediaResolvers from './mediaResolvers.js';
 import messageResolvers from './messageResolvers.js';
 import meetUpResolvers from './meetUpResolvers.js';
 import meetUpCommentResolvers from './meetUpCommentResolvers.js';
@@ -22,6 +23,7 @@ const resolvers = {
         ...messageResolvers.Query,
         ...meetUpResolvers.Query,
         ...meetUpCommentResolvers.Query,
+        ...mediaResolvers.Query,
     },
     Mutation: {
         ...adoptionResolvers.Mutation,
@@ -34,6 +36,7 @@ const resolvers = {
         ...messageResolvers.Mutation,
         ...meetUpResolvers.Mutation,
         ...meetUpCommentResolvers.Mutation,
+        ...mediaResolvers.Mutation,
     },
 
 }
