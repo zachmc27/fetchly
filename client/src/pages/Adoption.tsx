@@ -3,8 +3,10 @@
 // 3 Feed components conditionally rendered by filtered posts and takes back array of filtered posts
 // 1 Feed component conditionally rendered by what is Searched and sends back an array of the searched posts
 
+import "../ZachTemp.css"
+
 export default function Adoption() {
   return (
-    <div>Adoption</div>
+    <div className="adoption-page-container">Adoption</div>
   )
 }
