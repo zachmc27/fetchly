@@ -59,7 +59,7 @@ export default function PostDetails({ postData, containerClass }: { postData: po
   
   function renderPost(postData: postData): JSX.Element | null {
     switch (postData.itemType) {
-      case "post":
+      case "post": {
         const post = postData as MockPostItem;
         return (
           <div key={post.id} className={containerClass}>
@@ -78,7 +78,8 @@ export default function PostDetails({ postData, containerClass }: { postData: po
             <p>{post.postDate}</p>
           </div>
         );
-      case "meetup":
+      }
+      case "meetup": {
         const meetup = postData as MockMeetupItem
         return (
           <div key={meetup.id} className={containerClass}>
@@ -98,7 +99,8 @@ export default function PostDetails({ postData, containerClass }: { postData: po
             <p>{meetup.time}</p>
           </div>
         );
-      case "adoption":
+      }
+      case "adoption": {
         const adoption = postData as MockAdoptionItem
         return (
           <div key={adoption.id} className={containerClass}>
@@ -128,6 +130,7 @@ export default function PostDetails({ postData, containerClass }: { postData: po
             </div>
           </div>
         )
+      }
       default:
         return null;
     }

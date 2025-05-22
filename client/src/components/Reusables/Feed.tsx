@@ -59,18 +59,19 @@ export default function Feed({
 }) {
   function renderFeedItem(item: FeedItem): JSX.Element | null  {
     switch (item.itemType) {
-      case "message":
-        const messageItem = item as MockMessageItem;
-        return (
-          <div key={item.id} className={itemStyle}>
-            {/* message JSX */}
-            <img src={messageItem.coverImage} alt="cover image for the convo" />
-            <h1 className="chat-title">{messageItem.chatTitle}</h1>
-            <p className= "message-title">{messageItem.latestMessage}</p>
-            <p className="chat-date">{messageItem.date}</p>
-          </div>
-        );
-      case "post":
+      case "message": {
+          const messageItem = item as MockMessageItem;
+          return (
+            <div key={item.id} className={itemStyle}>
+              {/* message JSX */}
+              <img src={messageItem.coverImage} alt="cover image for the convo" />
+              <h1 className="chat-title">{messageItem.chatTitle}</h1>
+              <p className= "message-title">{messageItem.latestMessage}</p>
+              <p className="chat-date">{messageItem.date}</p>
+            </div>
+          );
+        }
+      case "post": {
         const postItem = item as MockPostItem;
         return (
           
@@ -83,7 +84,8 @@ export default function Feed({
             <p>{postItem.postCommentCount}</p>
           </div>
         );
-      case "adoption":
+      }
+      case "adoption": {
         const adoptionItem = item as MockAdoptionItem
         return (
           <div key={adoptionItem.id} className={itemStyle}>
@@ -92,7 +94,8 @@ export default function Feed({
             <h1>{adoptionItem.postUser}</h1>
           </div>
         );
-      case "meetup":
+      }
+      case "meetup": {
         const meetupItem = item as MockMeetupItem
         return (
           <div key={meetupItem.id} className={itemStyle}>
@@ -101,8 +104,9 @@ export default function Feed({
             <h1>{meetupItem.postUser}</h1>
           </div>
         );
+      }
         // two more cases for meetup type and adoption type
-        default:
+      default:
         return null;
   }
 }
