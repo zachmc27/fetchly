@@ -1,0 +1,30 @@
+/************* COMMENT CSS *****************/
+img {
+    width: 100%;
+    border-radius: 30%;
+}
+
+.comment-container {
+  width: 90%;
+  border-bottom: 1px solid black;
+  padding: 1%;
+}
+
+.comment-row {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  
+}
+
+.comment-img {
+  width: 15%;
+  padding: 3%;
+}
+
+.comment-icon-row {
+  display: flex;
+  align-items: center;
+  width: 15%;
+  margin-top: 3%;
+}
