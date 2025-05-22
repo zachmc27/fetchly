@@ -468,3 +468,42 @@ export const QUERY_ADOPTION = gql`
     }
   }
 `;
+
+//-------------- MEDIA QUERIES ------------- //
+
+//Returns a media file by ID
+// This is used to get the media file from the database
+// Locally, you can then use the gridFsId to get the file from the server
+// Local URL should look like this: http://localhost:3001/media/<gridFsId>
+export const MEDIA = gql`
+  query Media($mediaId: ID!) {
+    media(id: $mediaId) {
+      id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+      url
+      type
+    }
+  }
+`;
+
+// Returns all media files
+export const ALL_MEDIA = gql`
+  query AllMedia {
+    allMedia {
+      id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+      url
+      type
+    }
+  }
+`;

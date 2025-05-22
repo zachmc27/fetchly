@@ -1,6 +1,7 @@
 import { Media } from '../../models/index.js';
 import { GridFSBucket } from 'mongodb';
 import mongoose from 'mongoose';
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 
 // MediaArgs
 interface UploadMediaInput {
@@ -16,6 +17,7 @@ interface FileUpload {
 }
 
 const mediaResolvers = {
+    Upload: GraphQLUpload,
     Query: {
         media: async (_parent: unknown, { id }: { id: string }) => {
             const media = await Media.findById(id);
@@ -30,7 +32,12 @@ const mediaResolvers = {
 
     Mutation: {
         uploadMedia: async (_parent: unknown, { input }: { input: UploadMediaInput }) => {
-            const { createReadStream, filename, mimetype } = await input.file;
+            console.log('Raw input file:', input.file);
+
+            const upload = input.file as unknown as { promise: Promise<FileUpload> };
+
+            const { createReadStream, filename, mimetype } = await upload.promise;
+            console.log('Parsed file:', { filename, mimetype });
 
             const bucket = new GridFSBucket(mongoose.connection.db!, {
                 bucketName: 'media',
@@ -67,7 +74,13 @@ const mediaResolvers = {
 
             return newMedia;
         }
-    }    
+    },   
+    Media: {
+        url: (media: any) => {
+
+            return `http://localhost:3001/media/${media.gridFsId}`;
+        }
+    } 
 };
 
 export default mediaResolvers;
