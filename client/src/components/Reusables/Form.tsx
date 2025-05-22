@@ -52,5 +52,5 @@ export default function Form({ fields, onSubmit, initialValues = {} }: FormProps
       <button type="submit">Submit</button>
     </form>
   );
-};
+}
 
