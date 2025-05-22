@@ -147,21 +147,32 @@ export const QUERY_ORGS = gql`
       orgName
       email
       password
-      avatar
+      avatar {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       about
       location
       employees {
         _id
         username
       }
+      employeeCount
       pets {
         _id
         name
       }
+      petCount
       posts {
         _id
         contentText
       }
+      postCount
     }
   }
 `;
@@ -174,21 +185,32 @@ export const QUERY_ORG = gql`
       orgName
       email
       password
-      avatar
+      avatar {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       about
       location
       employees {
         _id
         username
       }
+      employeeCount
       pets {
         _id
         name
       }
+      petCount
       posts {
         _id
         contentText
       }
+      postCount
     }
   }
 `;

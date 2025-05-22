@@ -11,8 +11,11 @@ const orgTypeDefs = `
     about: String
     location: String
     employees: [User]
+    employeeCount: Int
     pets: [Pet]
+    petCount: Int
     posts: [Post]
+    postCount: Int
   }
 
   input OrgInput {

@@ -107,9 +107,6 @@ export const UPDATE_ORG = gql`
     updateOrg(orgId: $orgId, input: $input) {
       _id
       orgName
-      email
-      password
-      about
     }
   }
 `;
@@ -120,7 +117,7 @@ export const UPDATE_ORG = gql`
 //   "input": {
 //     "orgName": "Fetchly 2.0",
 //     "email": "fetchly2@email.com"
-//     "password": "password",
+//    "avatar": <mediaId>,
 //     "about": "We are a pet adoption organization!",
 //     "employees": [
 //       { 

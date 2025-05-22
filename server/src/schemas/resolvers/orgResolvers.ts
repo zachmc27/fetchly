@@ -1,5 +1,6 @@
 import { Org } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js'; 
+import mongoose from 'mongoose';
 
 // OrgArgs
 interface AddOrgArgs {
@@ -42,14 +43,14 @@ const orgResolvers = {
         .populate('pets')
         .populate('employees')
         .populate('posts')
-        .populate('media');
+        .populate('avatar');
     },
     org: async (_parent: any, { orgId }: OrgArgs) => {
       return Org.findById(orgId)
         .populate('pets')
         .populate('employees')
         .populate('posts')
-        .populate('media');
+        .populate('avatar');
     },
   },
 
@@ -87,7 +88,22 @@ const orgResolvers = {
         throw new AuthenticationError('You are not authorized to update this organization.');
       }
 
-      const updatedOrg = await Org.findByIdAndUpdate(orgId, { ...input }, { new: true });
+      const updateData = {
+        ...input,
+        avatar: typeof input.avatar === 'string' && input.avatar.trim() 
+        ? new mongoose.Types.ObjectId(input.avatar) 
+        : undefined, 
+      };
+
+      const updatedOrg = await Org.findByIdAndUpdate(orgId, updateData, { new: true })
+        .populate('avatar').lean();
+
+      if (updatedOrg?.avatar?._id) {
+        updatedOrg.avatar._id = updatedOrg.avatar._id.toString();
+      }
+      if (updatedOrg?._id) {
+        updatedOrg._id = updatedOrg._id.toString();
+      }
 
       return updatedOrg;
     },

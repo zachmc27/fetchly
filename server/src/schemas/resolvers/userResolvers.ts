@@ -103,7 +103,7 @@ const userResolvers = {
       if (updatedUser?._id) {
         updatedUser._id = updatedUser._id.toString();
       }
-      console.log('updatedUser:', JSON.stringify(updatedUser, null, 2));
+      //console.log('updatedUser:', JSON.stringify(updatedUser, null, 2));
       return updatedUser;
     },
   },
