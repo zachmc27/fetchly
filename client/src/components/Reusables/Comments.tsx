@@ -10,6 +10,7 @@
 //import React, { useState } from 'react';
 import UserPlaceHolder from "../../assets/react.svg";
 import "../../SammiReusables.css";
+import BubbleButton from "./BubbleButton";
 
 
 type Comment = {
@@ -27,9 +28,16 @@ type CommentsProps = {
 };
 
 function CommentItem({ comment }: { comment: Comment }) {
+  //pass back the comment id so it can be opened as main post
+  const handleContainerClick = () => {
+    console.log("Comment clicked:", comment.id);
+    return comment.id;
+  };
+
+  
   return (
     <div >
-      <div className="comment-container">
+      <div className="comment-container" onClick={handleContainerClick}>
         <div className="comment-row">
           <div className="comment-img">
             <img src={comment.avatar || UserPlaceHolder}></img> 
@@ -38,11 +46,8 @@ function CommentItem({ comment }: { comment: Comment }) {
             <span>{comment.user}</span> <br></br>
             <span>{comment.comment}</span><br></br>
             <div className="comment-icon-row">
-              <img src={UserPlaceHolder}></img>
-              <small className="sub">{comment.likeCount}</small>
-              <img src={UserPlaceHolder}></img>
-              <small className="sub">{comment.replies.length}</small>
-
+              <BubbleButton />
+              <BubbleButton />
             </div>
         </div>
         </div>
