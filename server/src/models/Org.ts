@@ -2,7 +2,7 @@ import { Schema, model, type Document, Types, CallbackError } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 // import models
-import type { AvatarDocument } from './Avatar.js';
+import type { MediaDocument } from './Media.js';
 import type { PetDocument } from './Pet.js';
 import type { LocationDocument } from './Location.js';
 import type { PostDocument } from './Post.js';
@@ -15,7 +15,7 @@ export interface OrgDocument extends Document {
   email: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
-  avatar: Types.ObjectId | AvatarDocument;
+  avatar: Types.ObjectId | MediaDocument;
   about: string;
   location: Types.ObjectId | LocationDocument;
   employees: Types.ObjectId[] | UserDocument[];
@@ -46,7 +46,7 @@ const orgSchema = new Schema<OrgDocument>(
     },
     avatar: {
         type: Schema.Types.ObjectId,
-        ref: 'Avatar'
+        ref: 'Media'
     },
     about: {
         type: String,

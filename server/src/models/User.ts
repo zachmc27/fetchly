@@ -2,7 +2,7 @@ import { Schema, model, type Document, Types, CallbackError } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 // import models
-import type { AvatarDocument } from './Avatar.js';
+import type { MediaDocument } from './Media.js';
 import type { PetDocument } from './Pet.js';
 import type { LocationDocument } from './Location.js';
 import type { PostDocument } from './Post.js';
@@ -16,7 +16,7 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
-  avatar: Types.ObjectId | AvatarDocument;
+  avatar: Types.ObjectId | MediaDocument;
   about: string;
   location: Types.ObjectId | LocationDocument;
   pets: Types.ObjectId[] | PetDocument[];
@@ -51,7 +51,7 @@ const userSchema = new Schema<UserDocument>(
     },
     avatar: {
         type: Schema.Types.ObjectId,
-        ref: 'Avatar'
+        ref: 'Media'
     },
     about: {
         type: String,
@@ -72,6 +72,12 @@ const userSchema = new Schema<UserDocument>(
             ref: 'Post'
         }
     ],
+    meetUps: [  
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'MeetUp'
+        }
+    ],
     following: [
         {   
             type: Schema.Types.ObjectId,
@@ -85,7 +91,6 @@ const userSchema = new Schema<UserDocument>(
         }
     ]
   },
-  // set this to use virtual below
   {
     toJSON: {
       virtuals: true,

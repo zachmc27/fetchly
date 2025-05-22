@@ -11,6 +11,7 @@ interface AdoptionArgs {
     goodWithPets: string;
     description: string;
     location: string;
+    media?: string[];
     adoptionStatus: boolean;
     adoptedBy: {
         refId: string;
@@ -29,6 +30,7 @@ interface AddAdoptionArgs {
         goodWithPets: string;
         description: string;
         location: string;
+        media?: string[];
     }
 }
 
@@ -43,6 +45,7 @@ interface UpdateAdoptionArgs {
         goodWithPets: string;
         description: string;
         location: string;
+        media?: string[];
     }
 }
 

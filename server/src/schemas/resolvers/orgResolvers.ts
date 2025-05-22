@@ -41,13 +41,15 @@ const orgResolvers = {
       return await Org.find()
         .populate('pets')
         .populate('employees')
-        .populate('posts');
+        .populate('posts')
+        .populate('media');
     },
     org: async (_parent: any, { orgId }: OrgArgs) => {
       return Org.findById(orgId)
         .populate('pets')
         .populate('employees')
-        .populate('posts');
+        .populate('posts')
+        .populate('media');
     },
   },
 

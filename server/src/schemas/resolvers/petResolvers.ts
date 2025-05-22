@@ -50,11 +50,13 @@ const petResolvers = {
         // Pet Queries
         pets: async () => {
             return await Pet.find()
-                .populate('type');
+                .populate('type')
+                .populate('media');
         },
         pet: async (_parent: any, { petId }: PetArgs) => {
             return Pet.findById(petId)
-                .populate('type');
+                .populate('type')
+                .populate('media');
         }
     },
 

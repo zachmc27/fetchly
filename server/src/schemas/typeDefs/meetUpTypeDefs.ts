@@ -14,7 +14,7 @@ const meetUpTypeDefs = `
     numberOfAttendees: Int
     comments: [MeetUpComment]
     numberOfComments: Int
-    media: [String]
+    media: [Media]
     createdAt: String
     itemType: String
   }

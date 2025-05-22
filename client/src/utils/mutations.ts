@@ -49,9 +49,7 @@ export const UPDATE_USER = gql`
   mutation Mutation($userId: String!, $input: UserInput!) {
     updateUser(userId: $userId, input: $input) {
       _id
-      email
       username
-      about
     }
   }
 `;  
@@ -60,14 +58,12 @@ export const UPDATE_USER = gql`
 // {
 //   "userId": "<userId>",
 //   "input": {
-//     "email": "newemail@email.com",
-//     "password": "password",
 //     "username": "New username",
+//     "email": "newemail@email.com",
+//     "avatar": <mediaId>,
 //     "about": "I'm a fantastic person!",
 //   }
 // }
-
-
 
 // ------------- ORG MUTATIONS ------------- //
 
@@ -645,6 +641,7 @@ export const CREATE_ADOPTION = gql`
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
 //     "location": "Toronto, Ontario, Canada",
+//     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
@@ -668,6 +665,7 @@ export const UPDATE_ADOPTION = gql`
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
 //     "location": "Toronto, Ontario, Canada",
+//     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
@@ -677,7 +675,7 @@ export const DELETE_ADOPTION = gql`
   }
 `;
 
-// UPDATE_ADOPTION input should look like this:
+// DELETE_ADOPTION input should look like this:
 // {
 //   "adoptionId": <adoptionId>
 // }

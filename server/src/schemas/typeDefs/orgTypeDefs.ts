@@ -7,7 +7,7 @@ const orgTypeDefs = `
     orgName: String
     email: String
     password: String
-    avatar: String
+    avatar: Media
     about: String
     location: String
     employees: [User]
@@ -24,7 +24,7 @@ const orgTypeDefs = `
   input UpdateOrgInput {
     orgName: String
     email: String
-    avatar: String
+    avatar: ID
     about: String
     location: String
     employees: [ID]

@@ -48,11 +48,6 @@ type Mutation {
 
 #-------------Supporting TypeDefs-------------
 
-type Media {
-    url: String!
-    type: String
-}
-
 input UserInput {
     _id: ID!
     username: String

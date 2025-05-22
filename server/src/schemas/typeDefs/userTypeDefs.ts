@@ -7,7 +7,7 @@ const userTypeDefs = `
     username: String
     email: String
     password: String
-    avatar: String
+    avatar: Media
     about: String
     location: String
     pets: [Pet]
@@ -30,7 +30,7 @@ const userTypeDefs = `
   input UpdateUserInput {
     username: String
     email: String
-    avatar: String
+    avatar: ID
     about: String
     location: String
   }
