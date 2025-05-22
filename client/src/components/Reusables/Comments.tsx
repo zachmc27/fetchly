@@ -3,12 +3,17 @@
 
 // utilize bubble button components to make the replies button and like button
 
+//HOW TO CALL:
+// const commentsData = [{}]; 
+// <Comments comments={commentsData} />
+
 //import React, { useState } from 'react';
 import UserPlaceHolder from "../../assets/react.svg";
 import "../../SammiReusables.css";
 
 
 type Comment = {
+  id: number,
   user: string,
   avatar?: string,
   comment: string,
