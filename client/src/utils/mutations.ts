@@ -134,20 +134,6 @@ export const ADD_PET = gql`
     addPet(input: $input) {
       _id
       name
-      owner {
-        refId
-        refModel
-      }
-      type {
-        _id
-        type
-        breed
-      }
-      gender
-      age
-      about
-      profilePhoto
-      vaccination
     }
   }
 `;
@@ -163,18 +149,8 @@ export const ADD_PET = gql`
 //       "refId": "<userId>",
 //       "refModel": "User" or "Org"
 //     },
-//     "profilePhoto": "https://example.com/photo.jpg",
 //     "type": <typeId>,
-//     "vaccination": [
-//       {
-//         "name": "Rabies",
-//         "date": "2023-01-01"
-//       },
-//       {
-//         "name": "Parvovirus",
-//         "date": "2023-02-01"
-//       }
-//     ]
+//     "vaccination": "Vaccination details",
 //   }
 // }
 
@@ -183,20 +159,6 @@ export const UPDATE_PET = gql`
     updatePet(petId: $petId, input: $input) {
       _id
       name
-      owner {
-        refId
-        refModel
-      }
-      type {
-        _id
-        type
-        breed
-      }
-      gender
-      age
-      about
-      profilePhoto
-      vaccination
     }
   }
 `;
@@ -205,22 +167,13 @@ export const UPDATE_PET = gql`
 // {
 //   "petId": "<petId>",
 //   "input": {
-//     "about": "A cute dog",
-//     "age": 4,
-//     "gender": "male",
-//     "name": "Lulu 2",
-//     "profilePhoto": "https://example.com/photo.jpg",
+//     "name": "Lulu",
 //     "type": <typeId>,
-//     "vaccination": [
-//       {
-//         "name": "Rabies",
-//         "date": "2023-01-01"
-//       },
-//       {
-//         "name": "Parvovirus",
-//         "date": "2023-02-01"
-//       }
-//     ]
+//     "gender": "male",
+//     "age": 4,
+//     "about": "A cute dog",
+//     "profilePhoto": <mediaId>,
+//     "vaccination": "Vaccination details",
 //   }
 // }
 
@@ -233,16 +186,6 @@ export const UPDATE_OWNER = gql`
         refId
         refModel
       }
-      type {
-        _id
-        type
-        breed
-      }
-      gender
-      age
-      about
-      profilePhoto
-      vaccination
     }
   }
 `;

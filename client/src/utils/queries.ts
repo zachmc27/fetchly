@@ -227,11 +227,23 @@ export const QUERY_PETS = gql`
         refId
         refModel
       }
-      type
+      type {
+        _id
+        type
+        breed
+      }
       gender
       age
       about
-      profilePhoto
+      profilePhoto {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       vaccination
     }
   }
@@ -247,11 +259,23 @@ export const QUERY_PET = gql`
         refId
         refModel
       }
-      type
+      type {
+        _id
+        type
+        breed
+      }
       gender
       age
       about
-      profilePhoto
+      profilePhoto {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       vaccination
     }
   }
