@@ -20,6 +20,7 @@ export interface MeetUpCommentDocument extends Document {
   parentComment: Types.ObjectId | MeetUpCommentDocument;
   isResponse: boolean;
   createdAt: Date;
+  itemType: string;
 }
 
 const meetUpCommentSchema = new Schema<MeetUpCommentDocument>(
@@ -64,7 +65,11 @@ const meetUpCommentSchema = new Schema<MeetUpCommentDocument>(
         createdAt: {
             type: Date,
             default: Date.now,
-        }
+        },
+        itemType: {
+            type: String,
+            default: 'meetupcomment',
+        },
     },
     {
         toJSON: {

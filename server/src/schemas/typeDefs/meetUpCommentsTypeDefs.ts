@@ -23,6 +23,7 @@ const meetUpCommentTypeDefs = `
     parentComment: String
     isResponse: Boolean      
     createdAt: String
+    itemType: String
   }
 
   input MeetUpCommentInput {

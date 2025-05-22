@@ -1,13 +1,11 @@
-import { Media,Message, Conversation } from '../../models/index.js';
+import {Message, Conversation, Media } from '../../models/index.js';
 
-
-// MessageArgs
-
-interface Media {
+interface Media{
     refId: string;
     refModel: string;
 }
 
+// MessageArgs
 interface MessageArgs {
     messageId: string;
     input: {
@@ -24,7 +22,17 @@ interface MessageArgs {
         media: Media[];
     }
 }
-
+interface AddMessageInputArgs {
+    conversationId: string;
+    input: {
+        messageUser: {
+            refId: string;
+            refModel: string;
+        };
+        textContent: string;
+        media: Media[];
+    }
+}
 interface UpdateMessageInputArgs{
     input:{
     messageId: string;
@@ -62,27 +70,33 @@ const messageResolvers = {
         }
     },
     Mutation: {
-        // Message Mutations
-        addMessage: async (_parent: any, { input }: MessageArgs) => {
-            const message = await Message.create({ ...input });
-
-
-            const { refId: conversationRefId, refModel: conversationRefModel } = input.conversation;
-
-            if (conversationRefModel === 'Conversation') {
-                await Conversation.findByIdAndUpdate(conversationRefId, {
-                    $push: { messages: message._id }
-                });
-            }
-            return message;
+        addMessage: async (_parent: any, { conversationId, input }: AddMessageInputArgs) => {
+            const newMessage = await Message.create({
+                messageUser: input.messageUser,
+                textContent: input.textContent,
+                media: input.media,
+                readUser: [],
+            });
+            await Conversation.findByIdAndUpdate(conversationId, {
+                $push: { messages: newMessage._id },
+                $set: { lastMessage: newMessage._id },
+            });
+            return newMessage;
         },
         updateMessage: async (_parent: any, { input }: UpdateMessageInputArgs) => {
-            return await Message.findByIdAndUpdate(input.messageId, input, { new: true });
+            const updatedMessage = await Message.findByIdAndUpdate(input.messageId, {
+                messageUser: input.messageUser,
+                textContent: input.textContent,
+                media: input.media,
+                readUser: input.readUser,
+            }, { new: true });
+            return updatedMessage;
         },
         deleteMessage: async (_parent: any, { input }: DeleteMessageInputArgs) => {
-            return await Message.findByIdAndDelete(input.messageId);
-        },
-    },
+            const deletedMessage = await Message.findByIdAndDelete(input.messageId);
+            return deletedMessage;
+        }
+       },
 
     Subscription: {
         messageAdded: {

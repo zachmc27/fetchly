@@ -16,6 +16,7 @@ const meetUpTypeDefs = `
     numberOfComments: Int
     media: [String]
     createdAt: String
+    itemType: String
   }
 
   input AddMeetUpInput {

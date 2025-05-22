@@ -220,6 +220,7 @@ export const QUERY_POSTS = gql`
       createdAt
       parentPost
       isResponse
+      itemType
     }
   }
 `;
@@ -242,6 +243,7 @@ export const QUERY_POST = gql`
       createdAt
       parentPost
       isResponse
+      itemType
     }
   }
 `;
@@ -293,6 +295,7 @@ export const QUERY_MEETUPS = gql`
       numberOfComments
       media
       createdAt
+      itemType
     }
   }
 `;
@@ -319,6 +322,7 @@ export const QUERY_MEETUP = gql`
       numberOfComments
       media
       createdAt
+      itemType
     }
   }
 `;
@@ -344,6 +348,7 @@ export const QUERY_MEETUP_COMMENTS = gql`
       isResponse
       createdAt
       meetUpId
+      itemType
     }
   }
 `;
@@ -367,6 +372,138 @@ export const QUERY_MEETUP_COMMENT = gql`
       isResponse
       createdAt
       meetUpId
+      itemType
+    }
+  }
+`;
+
+//-------------- ADOPTION QUERIES ------------- //
+
+// Returns all Adoptions
+export const QUERY_ADOPTIONS = gql`
+  query Adoptions {
+    adoptions {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      pet {
+        _id
+        name
+        owner {
+          refId
+          refModel
+        }
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        about
+        profilePhoto
+        vaccination
+      }
+      goodWithPets
+      description
+      location
+      media {
+        refId
+        refModel
+      }
+      adoptionStatus
+      adoptedBy {
+        refId
+        refModel
+      }
+      createdAt
+      itemType
+    }
+  }
+`;
+
+// Returns a single Adoption based on ID passed in
+export const QUERY_ADOPTION = gql`
+  query Adoption($adoptionId: ID!) {
+    adoption(adoptionId: $adoptionId) {
+      _id
+      poster {
+        refId
+        refModel
+      }
+      pet {
+        _id
+        name
+        owner {
+          refId
+          refModel
+        }
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        about
+        profilePhoto
+        vaccination
+      }
+      goodWithPets
+      description
+      location
+      media {
+        refId
+        refModel
+      }
+      adoptionStatus
+      adoptedBy {
+        refId
+        refModel
+      }
+      createdAt
+      itemType
+    }
+  }
+`;
+
+//-------------- MEDIA QUERIES ------------- //
+
+//Returns a media file by ID
+// This is used to get the media file from the database
+// Locally, you can then use the gridFsId to get the file from the server
+// Local URL should look like this: http://localhost:3001/media/<gridFsId>
+export const MEDIA = gql`
+  query Media($mediaId: ID!) {
+    media(id: $mediaId) {
+      id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+      url
+      type
+    }
+  }
+`;
+
+// Returns all media files
+export const ALL_MEDIA = gql`
+  query AllMedia {
+    allMedia {
+      id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+      url
+      type
     }
   }
 `;
