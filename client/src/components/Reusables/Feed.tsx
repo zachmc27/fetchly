@@ -57,7 +57,7 @@ export default function Feed({
   itemStyle: string;
   containerStyle: string;
 }) {
-  function renderFeedItem(item: FeedItem) {
+  function renderFeedItem(item: FeedItem): JSX.Element | null  {
     switch (item.itemType) {
       case "message":
         const messageItem = item as MockMessageItem;

@@ -43,3 +43,20 @@
    border: 1px solid black;
    background-color: beige; 
 }
+
+/* post details */
+
+.post-container {
+    border: 1px solid black;
+    background-color: beige;
+}
+
+.meetup-container {
+    border: 1px solid black;
+    background-color: lightgreen;
+}
+
+.adoption-container {
+    border: 1px solid black;
+    background-color: lightpink;
+}
