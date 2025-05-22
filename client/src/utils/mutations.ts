@@ -623,3 +623,104 @@ export const RESPOND_MEETUP_COMMENT = gql`
 //     "contentText": "This is a test response to another comment!",
 //   }
 // }
+
+// ------------- ADOPTION MUTATIONS ------------- //
+
+export const CREATE_ADOPTION = gql`
+  mutation CreateAdoption($input: AdoptionInput!) {
+    createAdoption(input: $input) {
+      _id
+    }
+  }
+`;
+
+// CREATE_ADOPTION input should look like this:
+// {
+//   "input": {
+//     "pet": <petId>,
+//     "poster": {
+//       "refId": <posterId>,
+//       "refModel": "Org" | "User"
+//     },
+//     "goodWithPets": "Prefers to be your only pet.",
+//     "description": "A great little cat that loves to snuggle.",
+//     "location": "Toronto, Ontario, Canada",
+//   }
+// }
+
+export const UPDATE_ADOPTION = gql`
+  mutation UpdateAdoption($adoptionId: ID, $input: AdoptionInput!) {
+    updateAdoption(adoptionId: $adoptionId, input: $input) {
+      _id
+    }
+  }
+`;
+
+// UPDATE_ADOPTION input should look like this:
+// {
+//   "adoptionId": <adoptionId>,
+//   "input": {
+//     "pet": <petId>,
+//     "poster": {
+//       "refId": <posterId>,
+//       "refModel": "Org" | "User"
+//     },
+//     "goodWithPets": "Prefers to be your only pet.",
+//     "description": "A great little cat that loves to snuggle.",
+//     "location": "Toronto, Ontario, Canada",
+//   }
+// }
+
+export const DELETE_ADOPTION = gql`
+  mutation DeleteAdoption($adoptionId: ID!) {
+    deleteAdoption(adoptionId: $adoptionId)
+  }
+`;
+
+// UPDATE_ADOPTION input should look like this:
+// {
+//   "adoptionId": <adoptionId>
+// }
+
+// ------------- MEDIA MUTATIONS ------------- //
+
+export const UPLOAD_MEDIA = gql`
+  mutation UploadMedia($input: UploadMediaInput!) {
+    uploadMedia(input: $input) {
+      _id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+    }
+  }
+`;
+
+// UPLOAD_MEDIA input should look like this:
+// {
+//   "input": {
+//     "file": <file>,
+//     "tags": ["tag1", "tag2"]
+//   }
+// }
+
+export const DELETE_MEDIA = gql`
+  mutation DeleteMedia($mediaId: ID!) {
+    deleteMedia(mediaId: $mediaId) {
+      _id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+    }
+  }
+`;
+
+// DELETE_MEDIA input should look like this:
+// {
+//   "mediaId": <mediaId>
+// }

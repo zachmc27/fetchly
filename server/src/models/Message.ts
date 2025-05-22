@@ -11,6 +11,7 @@ export interface MessageDocument extends Document {
   media: Types.ObjectId[] | MediaDocument[];
   readUser: Types.ObjectId[] | UserDocument[];
   isRead: boolean;
+  itemType: string;
 }
 
 const messageSchema = new Schema<MessageDocument>({
@@ -34,6 +35,10 @@ const messageSchema = new Schema<MessageDocument>({
                         ref: 'User'
                     }
   ],
+  itemType: {
+    type: String,
+    default: 'message'
+  }
 },
 {
   timestamps: true,
