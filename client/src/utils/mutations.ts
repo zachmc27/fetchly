@@ -681,3 +681,46 @@ export const DELETE_ADOPTION = gql`
 // {
 //   "adoptionId": <adoptionId>
 // }
+
+// ------------- MEDIA MUTATIONS ------------- //
+
+export const UPLOAD_MEDIA = gql`
+  mutation UploadMedia($input: UploadMediaInput!) {
+    uploadMedia(input: $input) {
+      _id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+    }
+  }
+`;
+
+// UPLOAD_MEDIA input should look like this:
+// {
+//   "input": {
+//     "file": <file>,
+//     "tags": ["tag1", "tag2"]
+//   }
+// }
+
+export const DELETE_MEDIA = gql`
+  mutation DeleteMedia($mediaId: ID!) {
+    deleteMedia(mediaId: $mediaId) {
+      _id
+      filename
+      contentType
+      length
+      uploadDate
+      gridFsId
+      tags
+    }
+  }
+`;
+
+// DELETE_MEDIA input should look like this:
+// {
+//   "mediaId": <mediaId>
+// }

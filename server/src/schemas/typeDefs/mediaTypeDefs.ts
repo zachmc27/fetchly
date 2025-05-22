@@ -12,6 +12,7 @@ type Media {
     uploadDate: String
     gridFsId: ID
     tags: [String]
+    url: String
 }
 
 input UploadMediaInput {
