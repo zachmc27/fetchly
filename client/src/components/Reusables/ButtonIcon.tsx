@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { FaCamera, FaHeart, FaImage, FaAt, FaComment } from 'react-icons/fa';
 import ButtonBubble from './Button'; 
 
