@@ -7,7 +7,7 @@
 // example: PostBubble is pressed when a user is on the meetup page --> NewMeetupPost is rendered 
 // and the meetup option is the dropdown's default option
 
-import React, { useState } from "react";
+import { useState } from "react";
 import '../../PostDropdown.css'
 
 const postOptions = ['Post', 'Meetup Post', 'Adoption Post'];
