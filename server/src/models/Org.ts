@@ -24,6 +24,10 @@ export interface OrgDocument extends Document {
   petCount: number;
   posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
+  following: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedByCount: number;
+  followingCount: number;
 }
 
 const orgSchema = new Schema<OrgDocument>(

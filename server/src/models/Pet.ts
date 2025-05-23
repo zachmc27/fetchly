@@ -19,6 +19,8 @@ export interface PetDocument extends Document {
   about: string;
   profilePhoto: Types.ObjectId | MediaDocument;
   vaccination: string;
+  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedByCount: number;
 }
 
 const petSchema = new Schema<PetDocument>({

@@ -7,12 +7,13 @@ type Message {
     textContent: String
     media: Media
     readUser: [User]
+    conversation: Conversation
     isRead: Boolean
     itemType: String
 }
 
 input AddMessageInput {
-    conversationId: String!
+    conversation: String!
     messageUser: UserInput!
     textContent: String!
     media: String
@@ -41,7 +42,7 @@ type Query {
 #--------------Mutation TypeDefs----------------
 
 type Mutation {
-    addMessage(conversationId: ID!, input: AddMessageInput!): Message
+    addMessage(input: AddMessageInput!): Message
     updateMessage(input: UpdateMessageInput): Message
     deleteMessage(input: DeleteMessageInput!): Message
 }

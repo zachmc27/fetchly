@@ -8,6 +8,7 @@ import type { LocationDocument } from './Location.js';
 import type { PostDocument } from './Post.js';
 import type { ConversationDocument } from './Conversation.js';
 import type { MeetUpDocument } from './MeetUp.js';
+import type { OrgDocument } from './Org.js';
 
 // User schema
 export interface UserDocument extends Document {
@@ -25,7 +26,10 @@ export interface UserDocument extends Document {
   meetUpCount: number;
   posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
-  following: UserDocument[];
+  following: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedByCount: number;
+  followingCount: number;
   conversation: Types.ObjectId[] | ConversationDocument[];
   conversationCount: number;
 }
