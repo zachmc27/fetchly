@@ -7,8 +7,44 @@
 // example: PostBubble is pressed when a user is on the meetup page --> NewMeetupPost is rendered 
 // and the meetup option is the dropdown's default option
 
-export default function Dropdown() {
-  return (
-    <div>Dropdown</div>
-  )
+import { useState } from "react";
+import '../../PostDropdown.css'
+
+const postOptions = ['Post', 'Meetup Post', 'Adoption Post'];
+
+interface PostTypeDropdownProps {
+  onSelect: (type: string) => void;
 }
+
+const PostTypeDropdown = ({ onSelect }: PostTypeDropdownProps ) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState('New Post');
+
+  const toggleDropdown = () => setIsOpen(!isOpen)
+
+  const handleSelect = (type: string) => {
+    setSelectedType(type);
+    onSelect(type);
+    setIsOpen(false);
+  };
+
+
+ return (
+    <div className="dropdown-container">
+      <button className="dropdown-toggle" onClick={toggleDropdown}>
+        {selectedType} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
+      </button>
+      {isOpen && (
+        <ul className="dropdown-menu">
+          {postOptions.map((option) => (
+            <li key={option} onClick={() => handleSelect(option)}>
+              {option}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+export default PostTypeDropdown;
