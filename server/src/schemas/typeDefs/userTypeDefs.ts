@@ -35,7 +35,7 @@ const userTypeDefs = `
     location: String
   }
 
-  type UserAuth {
+  type Auth {
     token: ID!
     user: User
   }
@@ -51,9 +51,9 @@ const userTypeDefs = `
 # -------------------- Mutation TypeDefs ------------------------
 
   type Mutation {
-    addUser(input: AddUserInput!): UserAuth
-    updateUser(userId: String!, input: UpdateUserInput!): UserAuth
-    loginUser(email: String!, password: String!): UserAuth
+    addUser(input: AddUserInput!): Auth
+    updateUser(userId: String!, input: UpdateUserInput!): Auth
+    loginUser(email: String!, password: String!): Auth
   }
 `;
 

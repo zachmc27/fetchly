@@ -5,12 +5,12 @@
 
 //HOW TO CALL:
 // const commentsData = [{}]; 
-// <Comments comments={commentsData} />
+// <Comments comments={commentsData}/>
 
 //import React, { useState } from 'react';
 import UserPlaceHolder from "../../assets/react.svg";
 import "../../SammiReusables.css";
-import BubbleButton from "./BubbleButton";
+import ButtonBubble from "./Button";
 
 
 type Comment = {
@@ -37,17 +37,17 @@ function CommentItem({ comment }: { comment: Comment }) {
   
   return (
     <div >
-      <div className="comment-container" onClick={handleContainerClick}>
+      <div className="comment-container" >
         <div className="comment-row">
           <div className="comment-img">
             <img src={comment.avatar || UserPlaceHolder}></img> 
           </div>
-          <div className="comment-content">
+          <div className="comment-content" onClick={handleContainerClick}>
             <span>{comment.user}</span> <br></br>
             <span>{comment.comment}</span><br></br>
             <div className="comment-icon-row">
-              <BubbleButton />
-              <BubbleButton />
+              <ButtonBubble />
+              <ButtonBubble />
             </div>
         </div>
         </div>

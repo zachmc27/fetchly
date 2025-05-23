@@ -22,7 +22,7 @@ export const LOGIN_USER = gql`
 // }
 
 export const ADD_USER = gql`
-  mutation Mutation($input: UserInput!) {
+  mutation Mutation($input: AddUserInput!) {
     addUser(input: $input) {
       user {
         _id   
@@ -45,7 +45,7 @@ export const ADD_USER = gql`
 // }
 
 export const UPDATE_USER = gql`
-  mutation Mutation($userId: String!, $input: UserInput!) {
+  mutation Mutation($userId: String!, $input: UpdateUserInput!) {
     updateUser(userId: $userId, input: $input) {
       _id
       username
