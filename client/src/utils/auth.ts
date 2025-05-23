@@ -46,12 +46,18 @@ class AuthService {
   login(idToken: string) {
     localStorage.setItem('id_token', idToken);
     window.location.assign('/');
+
+    // Alert for testing purposes comment out when not needed
+    alert("Login successful");
   }
 
   // TODO: What is the purpose of this method?
   logout() {
     localStorage.removeItem('id_token');
     window.location.assign('/');
+
+    // Alert for testing purposes, comment out when not needed
+    alert("Logout successful");
   }
 }
 

@@ -12,6 +12,8 @@ import Auth from '../utils/auth';
 
 function Login() {
 
+  console.log("Login component rendered");
+
   const [login] = useMutation(LOGIN_USER);
 
   const fields = [
