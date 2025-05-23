@@ -15,10 +15,14 @@ export interface PostDocument extends Document {
   media: Types.ObjectId[] | MediaDocument[];
   responses: Types.ObjectId[] | PostDocument[];
   responseCount: number;
+  likes: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument;
+    refModel: 'User' | 'Org';
+  }];
+  likesCount: number;
   parentPost: Types.ObjectId | PostDocument;
   isResponse: boolean;
   createdAt: Date;
-  updatedAt: Date;
   itemType: string;
 }
 
@@ -51,6 +55,20 @@ const postSchema = new Schema<PostDocument>(
                 ref: 'Post'
             }
         ],
+        likes: [
+            {
+                refId: {
+                    type: Schema.Types.ObjectId,
+                    required: true,
+                    refPath: 'likes.refModel'
+                },
+                refModel: {
+                    type: String,
+                    required: true,
+                    enum: ['User', 'Org'] // model names
+                }
+            }
+        ],
         parentPost: {
             type: Schema.Types.ObjectId,
             ref: 'Post',
@@ -78,6 +96,10 @@ postSchema.virtual('responseCount').get(function () {
 
 postSchema.virtual('isResponse').get(function () {
   return !!this.parentPost;
+});
+
+postSchema.virtual('likesCount').get(function () {
+  return this.likes.length;
 });
 
 const Post = model<PostDocument>('Post', postSchema);

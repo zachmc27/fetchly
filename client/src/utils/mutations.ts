@@ -694,3 +694,42 @@ export const DELETE_MEDIA = gql`
 // {
 //   "mediaId": <mediaId>
 // }
+
+
+// ------------- LIKING POSTS MUTATIONS ------------- //
+
+export const LIKE_POST = gql`
+  mutation LikePost($postId: String!, $input: LikeInput!) {
+    likePost(postId: $postId, input: $input) {
+      message
+      success
+    }
+  }
+`;
+
+// LIKE_POST input should look like this:
+//  {  
+//    "postId": <postId>,
+//    "input": {
+//      "refId": <userId> or <orgId>,
+//      "refModel": "User" or "Org"
+//    }
+//  }
+
+export const UNLIKE_POST = gql`
+  mutation UnlikePost($postId: String!, $input: LikeInput!) {
+    unlikePost(postId: $postId, input: $input) {
+      message
+      success
+    }
+  }
+`;
+
+// UNLIKE_POST input should look like this:
+//  {  
+//    "postId": <postId>,
+//    "input": {
+//      "refId": <userId> or <orgId>,
+//      "refModel": "User" or "Org"
+//    }
+//  }

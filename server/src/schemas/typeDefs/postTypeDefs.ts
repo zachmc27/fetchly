@@ -2,6 +2,16 @@ const postTypeDefs = `
 
 # -------------------- Post TypeDefs ------------------------
 
+  type Like {
+    refId: ID
+    refModel: String
+  }
+
+  input LikeInput {
+    refId: ID
+    refModel: String
+  }
+
   type Post {
     _id: ID
     poster: Poster!
@@ -9,9 +19,11 @@ const postTypeDefs = `
     media: [Media]
     responses: [Post]
     responseCount: Int
-    createdAt: String
+    likes: [Like]
+    likesCount: Int
     parentPost: String
     isResponse: Boolean
+    createdAt: String    
     itemType: String
   }
 
@@ -45,6 +57,8 @@ const postTypeDefs = `
     addPost(input: AddPostInput!): Post
     addPostResponse(postId: String!, input: AddPostResponseInput!): Post
     updatePost(postId: String!, input: UpdatePostInput!): Post
+    likePost(postId: String!, input: LikeInput!): BooleanResponse
+    unlikePost(postId: String!, input: LikeInput!): BooleanResponse
     deletePost(postId: String!): Post
   }
 `;

@@ -18,6 +18,8 @@ const orgTypeDefs = `
     petCount: Int
     posts: [Post]
     postCount: Int
+    likedPosts: [Post]
+    likedPostsCount: Int
   }
 
   input OrgInput {

@@ -26,6 +26,8 @@ export interface UserDocument extends Document {
   meetUpCount: number;
   posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
+  likedPosts: Types.ObjectId[] | PostDocument[];
+  likedPostsCount: number;
   following: (Types.ObjectId | UserDocument | OrgDocument)[];
   followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
   followedByCount: number;
@@ -71,6 +73,12 @@ const userSchema = new Schema<UserDocument>(
         }
     ],
     posts: [  
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        }
+    ],
+    likedPosts: [  
         {
             type: Schema.Types.ObjectId,
             ref: 'Post'
@@ -125,23 +133,24 @@ userSchema.methods.isCorrectPassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `petCount` with the number of pets we have
 userSchema.virtual('petCount').get(function () {
   return this.pets.length;
 });
 
-// when we query a user, we'll also get another field called `postCount` with the number of posts we have
 userSchema.virtual('postCount').get(function () {
   return this.posts.length;
 });
 
-// when we query a user, we'll also get another field called `conversationCount` with the number of conversations we have
 userSchema.virtual('conversationCount').get(function () {
   return this.conversation.length;
 });
 
 userSchema.virtual('meetUpCount').get(function () {
   return this.meetUps.length;
+});
+
+userSchema.virtual('likedPostsCount').get(function () {
+  return this.likedPosts.length;
 });
 
 const User = model<UserDocument>('User', userSchema);
