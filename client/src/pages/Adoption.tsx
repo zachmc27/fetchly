@@ -11,19 +11,19 @@ export default function Adoption() {
 
   function filterBySearch() {
     console.log('This function will filter posts by the search.');
-  };
+  }
 
   function filterByAll() {
     console.log('This function will show all posts');
-  };
+  }
 
   function filterByDogs() {
     console.log('This function will filter posts by dogs');
-  };
+  }
 
   function filterByCats() {
     console.log('This function will filter posts by cats');
-  };
+  }
 
   return (
     <div className="adoption-page-container">
