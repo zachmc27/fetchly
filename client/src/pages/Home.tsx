@@ -4,6 +4,8 @@
 // import Icons from '../components/Reusables/ButtonIcon';
 // import PostTypeDropdown from '../components/Reusables/Dropdown';
 
+import AuthForm from "../pages/Login";
+
 
 export default function Home() {
  
@@ -11,13 +13,11 @@ export default function Home() {
   //   console.log('Selected post type:', type)
   // };
 
+
+
   return (
     <div>
-      <h1>Home</h1>
-      {/* <div>
-        <PostTypeDropdown onSelect={handlePostTypeChange} />
-      </div> */}
-      {/* <Icons/> */}
+      <AuthForm />
     </div>
   );
 }

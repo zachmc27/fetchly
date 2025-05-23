@@ -20,9 +20,10 @@ type FormProps = {
   fields: Field[];
   onSubmit: (data: Record<string, string>) => void;
   initialValues?: Record<string, string>;
+  buttonName?: string;
 };
 
-export default function Form({ fields, onSubmit, initialValues = {} }: FormProps) {
+export default function Form({ fields, onSubmit, buttonName, initialValues = {} }: FormProps) {
   const [formData, setFormData] = React.useState<Record<string, string>>(initialValues);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,17 +40,18 @@ export default function Form({ fields, onSubmit, initialValues = {} }: FormProps
     <form onSubmit={handleSubmit}>
       {fields.map(field => (
         <div key={field.name}>
-          <label htmlFor={field.name}>{field.label}</label>
+          <label htmlFor={field.name}>{field.label}</label> <br/>
           <input
             type={field.type}
             id={field.name}
             name={field.name}
             value={formData[field.name] || ''}
             onChange={handleChange}
-          />
+          /> 
+          
         </div>
       ))}
-      <button type="submit">Submit</button>
+      <br/> <button type="submit">{buttonName || 'Submit'}</button>
     </form>
   );
 }
