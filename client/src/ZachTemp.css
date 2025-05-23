@@ -44,6 +44,20 @@
    background-color: beige; 
 }
 
+.male-icon,
+.female-icon {
+    width: 16px; 
+    height: 16px;
+    vertical-align: middle;
+    fill: #555;
+}
+
+.calendar-icon {
+    width: 14px;
+    height: 14px;
+    fill: #555
+}
+
 /* post details */
 
 .post-container {
@@ -61,12 +75,131 @@
     background-color: lightpink;
 }
 
+/* search bar */
+.search-btn {
+    background-color: white;
+    border: none
+}
+
+.search-btn:hover {
+    background-color: rgb(156, 154, 154);
+}
+
+.search-bar {
+    background-color: white;
+    border: none
+}
+
+.search-bar:focus {
+    outline: none;
+}
 
 /* adoption page */
 
 .adoption-page-container {
     border: 1px solid black;
-    height: 100vh;
+    height: fit-content;
     width: 100vw;
     background-color: beige;
 }
+
+.search-style {
+    border: 1px solid black;
+    background-color: white;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 10px
+}
+
+.search-style:focus-within {
+    outline: 1px solid black;
+}
+.filter-buttons-container {
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.filter-button {
+    border-radius: 30px;
+    width: 7rem;
+    padding: 10px 0px;
+}
+
+.adoption-feed-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh 5%;
+    padding: 10px 0px;
+    justify-content: center;
+}
+
+.adoption-item {
+    height: 220px;
+    width: 45%;
+    background-color: white;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e0e0
+}
+
+.adoption-image-container {
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+}
+
+.adoption-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.adoption-feed-info-container {
+    background-color: lightgray;
+    width: 100%;
+    min-height: 30%;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.adoption-feed-info-container h1 {
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 5px 0;
+    line-height: 1.2;
+}
+
+.adoption-feed-details-row {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.age-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+ 
+}
+
+.age-info p {
+    margin: 0;         
+    padding: 0;         
+    line-height: 1;     
+    font-size: 0.85em; 
+    color: #555;
+}
+
