@@ -20,7 +20,7 @@ const petTypeDefs = `
         gender: String
         age: Int
         about: String
-        profilePhoto: String
+        profilePhoto: Media
         vaccination: String
     }
 
@@ -44,7 +44,7 @@ const petTypeDefs = `
         gender: String
         age: Int
         about: String
-        profilePhoto: String
+        profilePhoto: ID
         vaccination: String
     }
 

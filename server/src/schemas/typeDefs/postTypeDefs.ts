@@ -6,7 +6,7 @@ const postTypeDefs = `
     _id: ID
     poster: Poster!
     contentText: String
-    media: [String]
+    media: [Media]
     responses: [Post]
     responseCount: Int
     createdAt: String

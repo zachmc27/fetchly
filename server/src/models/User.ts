@@ -2,12 +2,13 @@ import { Schema, model, type Document, Types, CallbackError } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 // import models
-import type { AvatarDocument } from './Avatar.js';
+import type { MediaDocument } from './Media.js';
 import type { PetDocument } from './Pet.js';
 import type { LocationDocument } from './Location.js';
 import type { PostDocument } from './Post.js';
 import type { ConversationDocument } from './Conversation.js';
 import type { MeetUpDocument } from './MeetUp.js';
+import type { OrgDocument } from './Org.js';
 
 // User schema
 export interface UserDocument extends Document {
@@ -16,7 +17,7 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
-  avatar: Types.ObjectId | AvatarDocument;
+  avatar: Types.ObjectId | MediaDocument;
   about: string;
   location: Types.ObjectId | LocationDocument;
   pets: Types.ObjectId[] | PetDocument[];
@@ -25,7 +26,10 @@ export interface UserDocument extends Document {
   meetUpCount: number;
   posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
-  following: UserDocument[];
+  following: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedByCount: number;
+  followingCount: number;
   conversation: Types.ObjectId[] | ConversationDocument[];
   conversationCount: number;
 }
@@ -51,7 +55,7 @@ const userSchema = new Schema<UserDocument>(
     },
     avatar: {
         type: Schema.Types.ObjectId,
-        ref: 'Avatar'
+        ref: 'Media'
     },
     about: {
         type: String,
@@ -72,6 +76,12 @@ const userSchema = new Schema<UserDocument>(
             ref: 'Post'
         }
     ],
+    meetUps: [  
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'MeetUp'
+        }
+    ],
     following: [
         {   
             type: Schema.Types.ObjectId,
@@ -85,7 +95,6 @@ const userSchema = new Schema<UserDocument>(
         }
     ]
   },
-  // set this to use virtual below
   {
     toJSON: {
       virtuals: true,

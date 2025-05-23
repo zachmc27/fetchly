@@ -5,6 +5,7 @@ import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
 import type { MediaDocument } from './Media.js';
 import type { MeetUpCommentDocument } from './MeetUpComment.js';
+import type { LocationDocument } from './Location.js';
 
 export interface MeetUpDocument extends Document {
   id: string;
@@ -14,7 +15,7 @@ export interface MeetUpDocument extends Document {
     refModel: 'User' | 'Org';
   };
   description: string;
-  location: string;
+  location: Types.ObjectId | LocationDocument;
   date: Date;
   time: string;
   attendees: Types.ObjectId[] | UserDocument[];
@@ -49,8 +50,8 @@ const postSchema = new Schema<MeetUpDocument>(
             required: true,
         },
         location: {
-            type: String,
-            required: true,
+            type: Schema.Types.ObjectId,
+            ref: 'Location'
         },
         date: {
             type: Date,

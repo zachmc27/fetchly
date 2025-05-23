@@ -17,7 +17,7 @@ const meetUpCommentTypeDefs = `
     poster: Poster
     contentText: String
     meetUpId: ID
-    media: [String]
+    media: [Media]
     responses: [Post]
     responseCount: Int
     parentComment: String

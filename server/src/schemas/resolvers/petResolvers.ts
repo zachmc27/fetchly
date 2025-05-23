@@ -1,4 +1,5 @@
 import { Pet, User, Org } from '../../models/index.js';
+import mongoose from 'mongoose';
 
 // PetArgs
 
@@ -50,11 +51,13 @@ const petResolvers = {
         // Pet Queries
         pets: async () => {
             return await Pet.find()
-                .populate('type');
+                .populate('type')
+                .populate('profilePhoto');
         },
         pet: async (_parent: any, { petId }: PetArgs) => {
             return Pet.findById(petId)
-                .populate('type');
+                .populate('type')
+                .populate('profilePhoto');
         }
     },
 
@@ -121,8 +124,37 @@ const petResolvers = {
             return updatedPet;
         },
         updatePet: async (_parent: any, { petId, input }: UpdatePetArgs) => {
-            const pet = await Pet.findByIdAndUpdate(petId, { ...input }, { new: true });
-            return pet;
+            if (!input) {
+                throw new Error('No input provided');
+            }
+            if (!petId) {
+                throw new Error('No petId provided');
+            }
+
+            // Check if the pet exists
+            const petExists = await Pet.findById(petId);
+            if (!petExists) {
+                throw new Error('Pet not found');
+            }
+
+            const updateData = {
+                ...input,
+                avatar: typeof input.profilePhoto === 'string' && input.profilePhoto.trim() 
+                ? new mongoose.Types.ObjectId(input.profilePhoto) 
+                : undefined, 
+            };
+
+            const updatedPet = await Pet.findByIdAndUpdate(petId, updateData, { new: true })
+                .populate('profilePhoto').lean();
+
+            if (updatedPet?.profilePhoto?._id) {
+                updatedPet.profilePhoto._id = updatedPet.profilePhoto._id.toString();
+            }
+            if (updatedPet?._id) {
+                updatedPet._id = updatedPet._id.toString();
+            }
+            
+            return updatedPet;
         },
         deletePet: async (_parent: any, { petId }: any) => {
             const pet = await Pet.findByIdAndDelete(petId);

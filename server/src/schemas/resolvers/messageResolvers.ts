@@ -14,21 +14,18 @@ interface MessageArgs {
             refId: string;
             refModel: string;
         };
-        conversation: {
-            refId: string;
-            refModel: string;
-        };
+        conversation: string;
         text: string;
         media: Media[];
     }
 }
 interface AddMessageInputArgs {
-    conversationId: string;
     input: {
         messageUser: {
             refId: string;
             refModel: string;
         };
+        conversation: string;
         textContent: string;
         media: Media[];
     }
@@ -58,7 +55,7 @@ const messageResolvers = {
         // Message Queries
         messages: async () => {
             return await Message.find()
-                .populate('messageUsER')
+                .populate('messageUser')
                 .populate('conversation')
                 .populate('readUser');
         },
@@ -70,14 +67,15 @@ const messageResolvers = {
         }
     },
     Mutation: {
-        addMessage: async (_parent: any, { conversationId, input }: AddMessageInputArgs) => {
+        addMessage: async (_parent: any, { input }: AddMessageInputArgs) => {
             const newMessage = await Message.create({
                 messageUser: input.messageUser,
                 textContent: input.textContent,
+                conversation: input.conversation,
                 media: input.media,
                 readUser: [],
             });
-            await Conversation.findByIdAndUpdate(conversationId, {
+            await Conversation.findByIdAndUpdate(input.conversation, {
                 $push: { messages: newMessage._id },
                 $set: { lastMessage: newMessage._id },
             });
@@ -86,8 +84,7 @@ const messageResolvers = {
         updateMessage: async (_parent: any, { input }: UpdateMessageInputArgs) => {
             const updatedMessage = await Message.findByIdAndUpdate(input.messageId, {
                 messageUser: input.messageUser,
-                textContent: input.textContent,
-                media: input.media,
+                textContent: input.textContent,               media: input.media,
                 readUser: input.readUser,
             }, { new: true });
             return updatedMessage;

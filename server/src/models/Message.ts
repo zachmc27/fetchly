@@ -10,6 +10,7 @@ export interface MessageDocument extends Document {
   textContent: string;
   media: Types.ObjectId[] | MediaDocument[];
   readUser: Types.ObjectId[] | UserDocument[];
+  conversation: Types.ObjectId;
   isRead: boolean;
   itemType: string;
 }
@@ -35,6 +36,11 @@ const messageSchema = new Schema<MessageDocument>({
                         ref: 'User'
                     }
   ],
+  conversation: {
+    type: Schema.Types.ObjectId,
+    ref: 'Conversation',
+    required: true
+  },
   itemType: {
     type: String,
     default: 'message'

@@ -1,5 +1,6 @@
-import { Org } from '../../models/index.js';
+import { Org, Location } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js'; 
+import mongoose from 'mongoose';
 
 // OrgArgs
 interface AddOrgArgs {
@@ -22,6 +23,14 @@ interface UserInput {
   userId: string;
 }
 
+interface LocationInput {
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: string;
+}
+
 interface UpdateOrgArgs {
   orgId: string;
   input: {
@@ -29,7 +38,7 @@ interface UpdateOrgArgs {
     email: string;
     avatar: string;
     about: string;
-    location: string;
+    location: LocationInput;
     employees: [UserInput]
   }
 }
@@ -41,13 +50,17 @@ const orgResolvers = {
       return await Org.find()
         .populate('pets')
         .populate('employees')
-        .populate('posts');
+        .populate('posts')
+        .populate('avatar')
+        .populate('location');
     },
     org: async (_parent: any, { orgId }: OrgArgs) => {
       return Org.findById(orgId)
         .populate('pets')
         .populate('employees')
-        .populate('posts');
+        .populate('posts')
+        .populate('avatar')
+        .populate('location');
     },
   },
 
@@ -85,7 +98,42 @@ const orgResolvers = {
         throw new AuthenticationError('You are not authorized to update this organization.');
       }
 
-      const updatedOrg = await Org.findByIdAndUpdate(orgId, { ...input }, { new: true });
+    // --- Handle location creation or update ---
+    let locationId;
+    if (input.location) {
+      const existingLocation = await Location.findOne({
+        address: input.location.address,
+        city: input.location.city,
+        state: input.location.state,
+        country: input.location.country,
+        zip: input.location.zip,
+      });
+
+      if (existingLocation) {
+        locationId = existingLocation._id;
+      } else {
+        const newLocation = await Location.create(input.location);
+        locationId = newLocation._id;
+      }
+    }
+
+      const updateData: any = {
+        ...input,
+        avatar: typeof input.avatar === 'string' && input.avatar.trim() ? new mongoose.Types.ObjectId(input.avatar) : undefined, 
+        location: locationId ?? undefined,
+      };
+
+      const updatedOrg = await Org.findByIdAndUpdate(orgId, updateData, { new: true })
+        .populate('avatar')
+        .populate('location')
+        .lean();
+
+      if (updatedOrg?.avatar?._id) {
+        updatedOrg.avatar._id = updatedOrg.avatar._id.toString();
+      }
+      if (updatedOrg?._id) {
+        updatedOrg._id = updatedOrg._id.toString();
+      }
 
       return updatedOrg;
     },

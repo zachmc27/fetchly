@@ -48,10 +48,12 @@ const meetUpCommentResolvers = {
     // MeetUpComment Queries
   Query: {
     meetUpComments: async () => {
-      return await MeetUpComment.find();
+      return await MeetUpComment.find()
+        .populate('media');
     },
     meetUpComment: async (_parent: any, { meetUpCommentId }: MeetUpCommentArgs) => {
-      const comment = await MeetUpComment.findById(meetUpCommentId);
+      const comment = await MeetUpComment.findById(meetUpCommentId)
+        .populate('media');
       if (!comment) return null;
       return comment;
     }

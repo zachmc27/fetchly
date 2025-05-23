@@ -1,5 +1,6 @@
 import { User } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js'; 
+import mongoose from 'mongoose';
 
 //UserArgs
 interface AddUserArgs {
@@ -36,12 +37,14 @@ const userResolvers = {
     users: async () => {
       return await User.find()
         .populate('pets')
-        .populate('posts');
+        .populate('posts')
+        .populate('avatar');
     },
     user: async (_parent: any, { userId }: UserArgs) => {
       return await User.findById(userId)
         .populate('pets')
-        .populate('posts');
+        .populate('posts')
+        .populate('avatar');
     },
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
@@ -84,8 +87,23 @@ const userResolvers = {
         throw new AuthenticationError('You are not authorized to update this user.');
       }
 
-      const updatedUser = await User.findByIdAndUpdate(userId, { ...input }, { new: true });
+      const updateData = {
+        ...input,
+        avatar: typeof input.avatar === 'string' && input.avatar.trim() 
+          ? new mongoose.Types.ObjectId(input.avatar) 
+          : undefined, 
+      };
 
+      const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true })
+        .populate('avatar').lean();
+
+      if (updatedUser?.avatar?._id) {
+        updatedUser.avatar._id = updatedUser.avatar._id.toString();
+      }
+      if (updatedUser?._id) {
+        updatedUser._id = updatedUser._id.toString();
+      }
+      //console.log('updatedUser:', JSON.stringify(updatedUser, null, 2));
       return updatedUser;
     },
   },

@@ -2,6 +2,8 @@ import { Media } from '../../models/index.js';
 import { GridFSBucket } from 'mongodb';
 import mongoose from 'mongoose';
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
+import { fileTypeFromBuffer } from 'file-type';
+import { PassThrough } from 'stream';
 
 // MediaArgs
 interface UploadMediaInput {
@@ -32,26 +34,36 @@ const mediaResolvers = {
 
     Mutation: {
         uploadMedia: async (_parent: unknown, { input }: { input: UploadMediaInput }) => {
-            console.log('Raw input file:', input.file);
-
             const upload = input.file as unknown as { promise: Promise<FileUpload> };
-
             const { createReadStream, filename, mimetype } = await upload.promise;
-            console.log('Parsed file:', { filename, mimetype });
+
+            const stream = createReadStream();
+            const chunks: Buffer[] = [];
+  
+            for await (const chunk of stream) {
+                chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+            }
+
+            const buffer = Buffer.concat(chunks);
+
+            const type = await fileTypeFromBuffer(buffer);
+            const detectedMime = type?.mime || mimetype;
+
+            const bufferStream = new PassThrough();
+            bufferStream.end(buffer);
 
             const bucket = new GridFSBucket(mongoose.connection.db!, {
                 bucketName: 'media',
             });     
 
-            const gridFsStream = createReadStream();
             const uploadStream = bucket.openUploadStream(filename, {
-                contentType: mimetype,
+                contentType: detectedMime,
             });
 
             const uploadedFileId = uploadStream.id as mongoose.Types.ObjectId;
 
             await new Promise<void>((resolve, reject) => {
-                gridFsStream
+                bufferStream
                     .pipe(uploadStream)
                     .on('error', reject)
                     .on('finish', () =>  resolve());
@@ -65,9 +77,9 @@ const mediaResolvers = {
 
             const newMedia = await Media.create({
                 filename,
-                contentType: mimetype,
+                contentType: detectedMime,
                 length: fileDoc.length,
-                uploadDate: fileDoc.uploadDate,
+                uploadDate: new Date(fileDoc.uploadDate),
                 gridFsId: uploadedFileId,
                 tags: input.tags || [],
             });

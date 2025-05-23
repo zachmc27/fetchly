@@ -9,7 +9,15 @@ export const QUERY_USERS = gql`
       _id
       username      
       email
-      avatar
+      avatar {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       about
       location
       pets {
@@ -44,22 +52,42 @@ export const QUERY_USER = gql`
   query User($userId: String!) {
     user(userId: $userId) {
       _id
+      username      
       email
-      username
-      password
-      avatar
-      about
-      conversations {
-        _id
+      avatar {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
       }
+      about
+      location
       pets {
         _id
         name
       }
+      petCount
+      meetUps {
+        _id
+        title
+      }
+      meetUpCount
       posts {
         _id
         contentText}
       }
+      postCount
+      following {
+        _id
+        username
+      }
+      conversation {
+        _id
+      }
+      conversationCount
     }
   }
 `;
@@ -69,22 +97,42 @@ export const QUERY_ME = gql`
   query me {
     me {
       _id
+      username      
       email
-      username
-      password
-      avatar
-      about
-      conversations {
-        _id
+      avatar {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
       }
+      about
+      location
       pets {
         _id
         name
       }
+      petCount
+      meetUps {
+        _id
+        title
+      }
+      meetUpCount
       posts {
         _id
         contentText}
       }
+      postCount
+      following {
+        _id
+        username
+      }
+      conversation {
+        _id
+      }
+      conversationCount
     }
   }
 `;
@@ -99,21 +147,32 @@ export const QUERY_ORGS = gql`
       orgName
       email
       password
-      avatar
+      avatar {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       about
       location
       employees {
         _id
         username
       }
+      employeeCount
       pets {
         _id
         name
       }
+      petCount
       posts {
         _id
         contentText
       }
+      postCount
     }
   }
 `;
@@ -126,21 +185,32 @@ export const QUERY_ORG = gql`
       orgName
       email
       password
-      avatar
+      avatar {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       about
       location
       employees {
         _id
         username
       }
+      employeeCount
       pets {
         _id
         name
       }
+      petCount
       posts {
         _id
         contentText
       }
+      postCount
     }
   }
 `;
@@ -157,11 +227,23 @@ export const QUERY_PETS = gql`
         refId
         refModel
       }
-      type
+      type {
+        _id
+        type
+        breed
+      }
       gender
       age
       about
-      profilePhoto
+      profilePhoto {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       vaccination
     }
   }
@@ -177,11 +259,23 @@ export const QUERY_PET = gql`
         refId
         refModel
       }
-      type
+      type {
+        _id
+        type
+        breed
+      }
       gender
       age
       about
-      profilePhoto
+      profilePhoto {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       vaccination
     }
   }
@@ -403,15 +497,28 @@ export const QUERY_ADOPTIONS = gql`
         gender
         age
         about
-        profilePhoto
+        profilePhoto {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
         vaccination
       }
       goodWithPets
       description
       location
       media {
-        refId
-        refModel
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
       }
       adoptionStatus
       adoptedBy {
@@ -448,15 +555,28 @@ export const QUERY_ADOPTION = gql`
         gender
         age
         about
-        profilePhoto
+        profilePhoto {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
         vaccination
       }
       goodWithPets
       description
       location
       media {
-        refId
-        refModel
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
       }
       adoptionStatus
       adoptedBy {
@@ -485,8 +605,6 @@ export const MEDIA = gql`
       uploadDate
       gridFsId
       tags
-      url
-      type
     }
   }
 `;
@@ -502,8 +620,6 @@ export const ALL_MEDIA = gql`
       uploadDate
       gridFsId
       tags
-      url
-      type
     }
   }
 `;

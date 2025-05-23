@@ -1,6 +1,14 @@
-import { Adoption } from '../../models/index.js';
+import { Adoption, Location } from '../../models/index.js';
 
 // AdoptionArgs
+interface LocationArgs {
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: string;
+}
+
 interface AdoptionArgs {
     adoptionId: string;
     poster: {
@@ -10,7 +18,8 @@ interface AdoptionArgs {
     pet: string;
     goodWithPets: string;
     description: string;
-    location: string;
+    location: LocationArgs;
+    media?: string[];
     adoptionStatus: boolean;
     adoptedBy: {
         refId: string;
@@ -28,7 +37,8 @@ interface AddAdoptionArgs {
         pet: string;
         goodWithPets: string;
         description: string;
-        location: string;
+        location: LocationArgs;
+        media?: string[];
     }
 }
 
@@ -42,7 +52,8 @@ interface UpdateAdoptionArgs {
         pet: string;
         goodWithPets: string;
         description: string;
-        location: string;
+        location: LocationArgs;
+        media?: string[];
     }
 }
 
@@ -55,7 +66,8 @@ const adoptionResolvers = {
                     path: 'pet',
                     populate: { path: 'type' }
                 })
-                .populate('media');
+                .populate('media')
+                .populate('location');
         },
         adoption: async (_parent: any, { adoptionId }: AdoptionArgs) => {
             return await Adoption.findById(adoptionId)
@@ -63,18 +75,69 @@ const adoptionResolvers = {
                     path: 'pet',
                     populate: { path: 'type' }
                 })
-                .populate('media');
+                .populate('media')
+                .populate('location');
         }
     },
 
     // Adoption Mutations
     Mutation: {
         createAdoption: async (_parent: any, { input }: AddAdoptionArgs) => {
-            const adoption = await Adoption.create({ ...input });
+            let locationId;
+            if (input.location) {
+                const existingLocation = await Location.findOne({
+                    address: input.location.address,
+                    city: input.location.city,
+                    state: input.location.state,
+                    country: input.location.country,
+                    zip: input.location.zip,
+                });
+                if (existingLocation) {
+                    locationId = existingLocation._id;
+                } else {
+                    const newLocation = await Location.create(input.location);
+                    locationId = newLocation._id;
+                }
+            }
+
+            const { location, ...rest } = input;
+
+            const adoption = await Adoption.create({ 
+                ...rest,
+                location: locationId,
+            });
             return adoption;
         },
         updateAdoption: async (_parent: any, { adoptionId, input }: UpdateAdoptionArgs) => {
-            const adoption = await Adoption.findByIdAndUpdate(adoptionId, input, { new: true });
+
+            // --- Handle location creation or update ---
+            let locationId;
+            if (input.location) {
+                const existingLocation = await Location.findOne({
+                    address: input.location.address,
+                    city: input.location.city,
+                    state: input.location.state,
+                    country: input.location.country,
+                    zip: input.location.zip,
+                });
+
+                if (existingLocation) {
+                    locationId = existingLocation._id;
+                } else {
+                    const newLocation = await Location.create(input.location);
+                    locationId = newLocation._id;
+                }
+            }
+
+            const updateData: any = {
+                ...input,
+                location: locationId ?? undefined,
+            };
+
+            const adoption = await Adoption.findByIdAndUpdate(adoptionId, updateData, { new: true })
+                .populate('location')
+                .lean();
+                
             return adoption;
         },
         deleteAdoption: async (_parent: any, { adoptionId }: AdoptionArgs) => {

@@ -7,12 +7,15 @@ const orgTypeDefs = `
     orgName: String
     email: String
     password: String
-    avatar: String
+    avatar: Media
     about: String
-    location: String
+    location: Location
     employees: [User]
+    employeeCount: Int
     pets: [Pet]
+    petCount: Int
     posts: [Post]
+    postCount: Int
   }
 
   input OrgInput {
@@ -24,9 +27,9 @@ const orgTypeDefs = `
   input UpdateOrgInput {
     orgName: String
     email: String
-    avatar: String
+    avatar: ID
     about: String
-    location: String
+    location: LocationInput
     employees: [ID]
   }
 

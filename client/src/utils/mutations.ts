@@ -17,7 +17,6 @@ export const LOGIN_USER = gql`
 
 // LOGIN_USER input should look like this:
 // {
-//   "userId": "<userId>",
 //   "email": "test@email.com",
 //   "password": "password"
 // }
@@ -49,9 +48,7 @@ export const UPDATE_USER = gql`
   mutation Mutation($userId: String!, $input: UserInput!) {
     updateUser(userId: $userId, input: $input) {
       _id
-      email
       username
-      about
     }
   }
 `;  
@@ -60,14 +57,12 @@ export const UPDATE_USER = gql`
 // {
 //   "userId": "<userId>",
 //   "input": {
-//     "email": "newemail@email.com",
-//     "password": "password",
 //     "username": "New username",
+//     "email": "newemail@email.com",
+//     "avatar": <mediaId>,
 //     "about": "I'm a fantastic person!",
 //   }
 // }
-
-
 
 // ------------- ORG MUTATIONS ------------- //
 
@@ -82,6 +77,12 @@ export const LOGIN_ORG = gql`
     }
   }
 `;
+
+// LOGIN_ORG input should look like this:
+// {
+//   "email": "test@email.com",
+//   "password": "password"
+// }
 
 export const ADD_ORG = gql`
   mutation Mutation($input: OrgInput!) {
@@ -111,9 +112,6 @@ export const UPDATE_ORG = gql`
     updateOrg(orgId: $orgId, input: $input) {
       _id
       orgName
-      email
-      password
-      about
     }
   }
 `;
@@ -124,7 +122,7 @@ export const UPDATE_ORG = gql`
 //   "input": {
 //     "orgName": "Fetchly 2.0",
 //     "email": "fetchly2@email.com"
-//     "password": "password",
+//    "avatar": <mediaId>,
 //     "about": "We are a pet adoption organization!",
 //     "employees": [
 //       { 
@@ -141,20 +139,6 @@ export const ADD_PET = gql`
     addPet(input: $input) {
       _id
       name
-      owner {
-        refId
-        refModel
-      }
-      type {
-        _id
-        type
-        breed
-      }
-      gender
-      age
-      about
-      profilePhoto
-      vaccination
     }
   }
 `;
@@ -170,18 +154,8 @@ export const ADD_PET = gql`
 //       "refId": "<userId>",
 //       "refModel": "User" or "Org"
 //     },
-//     "profilePhoto": "https://example.com/photo.jpg",
 //     "type": <typeId>,
-//     "vaccination": [
-//       {
-//         "name": "Rabies",
-//         "date": "2023-01-01"
-//       },
-//       {
-//         "name": "Parvovirus",
-//         "date": "2023-02-01"
-//       }
-//     ]
+//     "vaccination": "Vaccination details",
 //   }
 // }
 
@@ -190,20 +164,6 @@ export const UPDATE_PET = gql`
     updatePet(petId: $petId, input: $input) {
       _id
       name
-      owner {
-        refId
-        refModel
-      }
-      type {
-        _id
-        type
-        breed
-      }
-      gender
-      age
-      about
-      profilePhoto
-      vaccination
     }
   }
 `;
@@ -212,22 +172,13 @@ export const UPDATE_PET = gql`
 // {
 //   "petId": "<petId>",
 //   "input": {
-//     "about": "A cute dog",
-//     "age": 4,
-//     "gender": "male",
-//     "name": "Lulu 2",
-//     "profilePhoto": "https://example.com/photo.jpg",
+//     "name": "Lulu",
 //     "type": <typeId>,
-//     "vaccination": [
-//       {
-//         "name": "Rabies",
-//         "date": "2023-01-01"
-//       },
-//       {
-//         "name": "Parvovirus",
-//         "date": "2023-02-01"
-//       }
-//     ]
+//     "gender": "male",
+//     "age": 4,
+//     "about": "A cute dog",
+//     "profilePhoto": <mediaId>,
+//     "vaccination": "Vaccination details",
 //   }
 // }
 
@@ -240,16 +191,6 @@ export const UPDATE_OWNER = gql`
         refId
         refModel
       }
-      type {
-        _id
-        type
-        breed
-      }
-      gender
-      age
-      about
-      profilePhoto
-      vaccination
     }
   }
 `;
@@ -645,6 +586,7 @@ export const CREATE_ADOPTION = gql`
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
 //     "location": "Toronto, Ontario, Canada",
+//     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
@@ -668,6 +610,7 @@ export const UPDATE_ADOPTION = gql`
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
 //     "location": "Toronto, Ontario, Canada",
+//     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
@@ -677,7 +620,7 @@ export const DELETE_ADOPTION = gql`
   }
 `;
 
-// UPDATE_ADOPTION input should look like this:
+// DELETE_ADOPTION input should look like this:
 // {
 //   "adoptionId": <adoptionId>
 // }
