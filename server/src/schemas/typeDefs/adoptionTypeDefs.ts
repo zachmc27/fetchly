@@ -13,7 +13,7 @@ type Adoption {
     pet: Pet
     goodWithPets: String
     description: String
-    location: String
+    location: Location
     media: [Media]
     adoptionStatus: Boolean
     adoptedBy: Adopter
@@ -26,7 +26,7 @@ input AdoptionInput {
     poster: PosterInput!
     goodWithPets: String
     description: String
-    location: String
+    location: LocationInput
     media: [String]
 }
 

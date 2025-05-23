@@ -5,6 +5,7 @@ import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
 import type { MediaDocument } from './Media.js';
 import type { PetDocument } from './Pet.js';
+import type { LocationDocument } from './Location.js';
 
 export interface AdoptionDocument extends Document {
   id: string;
@@ -15,7 +16,7 @@ export interface AdoptionDocument extends Document {
   pet: Types.ObjectId | PetDocument
   goodWithPets: string;
   description: string;
-  location: string;
+  location: Types.ObjectId | LocationDocument;
   media: Types.ObjectId[] | MediaDocument[];
   adoptionStatus: boolean;
   adoptedBy: Types.ObjectId | UserDocument | OrgDocument;
@@ -49,8 +50,8 @@ const postSchema = new Schema<AdoptionDocument>(
             type: String,
         },
         location: {
-            type: String,
-            required: true
+            type: Schema.Types.ObjectId,
+            ref: 'Location'
         },
         media: [
             {

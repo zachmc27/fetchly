@@ -7,7 +7,7 @@ const meetUpTypeDefs = `
     title: String!
     poster: Poster!
     description: String!
-    location: String!
+    location: Location!
     date: String!
     time: String!
     attendees: [ID]
@@ -23,7 +23,7 @@ const meetUpTypeDefs = `
     title: String!
     poster: PosterInput!
     description: String
-    location: String
+    location: LocationInput
     date: String
     time: String
     attendees: [ID]
@@ -34,7 +34,7 @@ const meetUpTypeDefs = `
     title: String
     poster: PosterInput
     description: String
-    location: String
+    location: LocationInput
     date: String
     time: String
     attendees: [ID]

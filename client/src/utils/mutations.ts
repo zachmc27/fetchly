@@ -17,7 +17,6 @@ export const LOGIN_USER = gql`
 
 // LOGIN_USER input should look like this:
 // {
-//   "userId": "<userId>",
 //   "email": "test@email.com",
 //   "password": "password"
 // }
@@ -78,6 +77,12 @@ export const LOGIN_ORG = gql`
     }
   }
 `;
+
+// LOGIN_ORG input should look like this:
+// {
+//   "email": "test@email.com",
+//   "password": "password"
+// }
 
 export const ADD_ORG = gql`
   mutation Mutation($input: OrgInput!) {

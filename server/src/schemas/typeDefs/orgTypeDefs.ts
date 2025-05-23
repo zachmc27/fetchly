@@ -9,7 +9,7 @@ const orgTypeDefs = `
     password: String
     avatar: Media
     about: String
-    location: String
+    location: Location
     employees: [User]
     employeeCount: Int
     pets: [Pet]
@@ -29,7 +29,7 @@ const orgTypeDefs = `
     email: String
     avatar: ID
     about: String
-    location: String
+    location: LocationInput
     employees: [ID]
   }
 
