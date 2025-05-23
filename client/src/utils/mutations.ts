@@ -579,19 +579,22 @@ export const CREATE_ADOPTION = gql`
 // {
 //   "input": {
 //     "pet": <petId>,
-//     "poster": {
-//       "refId": <posterId>,
-//       "refModel": "Org" | "User"
-//     },
+//     "poster": <orgId>,
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
-//     "location": "Toronto, Ontario, Canada",
+//    "location": {
+//      "address": "76 Peter St",
+//      "zip": "L6E 0T9",
+//      "city": "Markham",
+//      "state": "Ontario",
+//      "country": "Canada"
+//    },
 //     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
 export const UPDATE_ADOPTION = gql`
-  mutation UpdateAdoption($adoptionId: ID, $input: AdoptionInput!) {
+  mutation UpdateAdoption($adoptionId: ID, $input: UpdateAdoptionInput!) {
     updateAdoption(adoptionId: $adoptionId, input: $input) {
       _id
     }
@@ -602,21 +605,45 @@ export const UPDATE_ADOPTION = gql`
 // {
 //   "adoptionId": <adoptionId>,
 //   "input": {
-//     "pet": <petId>,
-//     "poster": {
-//       "refId": <posterId>,
-//       "refModel": "Org" | "User"
-//     },
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
-//     "location": "Toronto, Ontario, Canada",
+//     "location": {
+//       "address": "733 River Styx Dr.",
+//       "zip": "666 666",
+//       "city": "Hades",
+//       "state": "Tartarus",
+//       "country": "Underworld"
+//     },
 //     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
+
+// ADOPT_PET input should look like this:
+export const ADOPT_PET = gql`
+  mutation AdoptPet($adoptionId: ID!, $userId: ID!) {
+    adoptPet(adoptionId: $adoptionId, userId: $userId) {
+      message
+      success
+    }
+  }
+`;
+
+// MAKE SURE TO ALSO RUN UPDATE_OWNER MUTATION TO MAKE SURE THE PET IS 
+// REMOVED FROM THE OLD OWNER'S ARRAY AND ADDED TO THE NEW OWNER'S ARRAY
+
+// ADOPT_PET input should look like this:
+// {
+//   "adoptionId": <adoptionId>,
+//   "userId": <userId>
+// }
+
 export const DELETE_ADOPTION = gql`
   mutation DeleteAdoption($adoptionId: ID!) {
-    deleteAdoption(adoptionId: $adoptionId)
+    deleteAdoption(adoptionId: $adoptionId) {
+      message
+      success
+    }
   }
 `;
 

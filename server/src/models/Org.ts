@@ -13,6 +13,8 @@ export interface OrgDocument extends Document {
   id: string;
   orgName: string;
   email: string;
+  phone: string;
+  website: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
   avatar: Types.ObjectId | MediaDocument;

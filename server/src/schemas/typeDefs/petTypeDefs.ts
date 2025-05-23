@@ -19,6 +19,7 @@ const petTypeDefs = `
         type: Type
         gender: String
         age: Int
+        neuteredOrSpayed: Boolean
         about: String
         profilePhoto: Media
         vaccination: String
@@ -31,6 +32,7 @@ const petTypeDefs = `
         type: ID!
         gender: String
         age: Int
+        neuteredOrSpayed: Boolean
         about: String
         profilePhoto: String
         vaccination: String
@@ -43,6 +45,7 @@ const petTypeDefs = `
         type: ID
         gender: String
         age: Int
+        neuteredOrSpayed: Boolean
         about: String
         profilePhoto: ID
         vaccination: String

@@ -479,16 +479,25 @@ export const QUERY_ADOPTIONS = gql`
     adoptions {
       _id
       poster {
-        refId
-        refModel
+        _id
+        orgName
+        email
+        phone
+        website
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       pet {
         _id
         name
-        owner {
-          refId
-          refModel
-        }
         type {
           _id
           type
@@ -507,10 +516,18 @@ export const QUERY_ADOPTIONS = gql`
           tags
         }
         vaccination
+        neuteredOrSpayed
       }
       goodWithPets
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       media {
         id
         filename
@@ -522,8 +539,20 @@ export const QUERY_ADOPTIONS = gql`
       }
       adoptionStatus
       adoptedBy {
-        refId
-        refModel
+        _id
+        username
+        email
+        password
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       createdAt
       itemType
@@ -537,16 +566,25 @@ export const QUERY_ADOPTION = gql`
     adoption(adoptionId: $adoptionId) {
       _id
       poster {
-        refId
-        refModel
+        _id
+        orgName
+        email
+        phone
+        website
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       pet {
         _id
         name
-        owner {
-          refId
-          refModel
-        }
         type {
           _id
           type
@@ -565,10 +603,18 @@ export const QUERY_ADOPTION = gql`
           tags
         }
         vaccination
+        neuteredOrSpayed
       }
       goodWithPets
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       media {
         id
         filename
@@ -580,8 +626,20 @@ export const QUERY_ADOPTION = gql`
       }
       adoptionStatus
       adoptedBy {
-        refId
-        refModel
+        _id
+        username
+        email
+        password
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       createdAt
       itemType

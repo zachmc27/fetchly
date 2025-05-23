@@ -2,32 +2,39 @@ const adoptionTypeDefs = `
 
 # -------------------- Adoption TypeDefs ------------------------
 
-type Adopter {
-    refId: ID
-    refModel: String
-}
-
 type Adoption {
     _id: ID
-    poster: Poster
+    poster: Org
     pet: Pet
     goodWithPets: String
     description: String
     location: Location
     media: [Media]
     adoptionStatus: Boolean
-    adoptedBy: Adopter
+    adoptedBy: User
     createdAt: String
     itemType: String
 }
 
 input AdoptionInput {
     pet: ID!
-    poster: PosterInput!
+    poster: ID!
     goodWithPets: String
     description: String
     location: LocationInput
     media: [String]
+}
+
+input UpdateAdoptionInput {
+    goodWithPets: String
+    description: String
+    location: LocationInput
+    media: [String]
+}
+
+type BooleanResponse {
+  message: String!
+  success: Boolean!
 }
 
 type Query {
@@ -37,8 +44,9 @@ type Query {
 
 type Mutation {
     createAdoption(input: AdoptionInput!): Adoption
-    updateAdoption(adoptionId: ID!, input: AdoptionInput!): Adoption
-    deleteAdoption(adoptionId: ID!): Boolean
+    updateAdoption(adoptionId: ID!, input: UpdateAdoptionInput!): Adoption
+    adoptPet(adoptionId: ID!, userId: ID!): BooleanResponse!
+    deleteAdoption(adoptionId: ID!): BooleanResponse!
 }
 `;
 

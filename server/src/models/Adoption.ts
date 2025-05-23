@@ -9,17 +9,14 @@ import type { LocationDocument } from './Location.js';
 
 export interface AdoptionDocument extends Document {
   id: string;
-  poster: {
-    refId: Types.ObjectId | UserDocument | OrgDocument;
-    refModel: 'User' | 'Org';
-  };
+  poster: Types.ObjectId | OrgDocument;
   pet: Types.ObjectId | PetDocument
   goodWithPets: string;
   description: string;
   location: Types.ObjectId | LocationDocument;
   media: Types.ObjectId[] | MediaDocument[];
   adoptionStatus: boolean;
-  adoptedBy: Types.ObjectId | UserDocument | OrgDocument;
+  adoptedBy: Types.ObjectId | UserDocument;
   createdAt: Date;
   itemType: string;
 }
@@ -27,16 +24,9 @@ export interface AdoptionDocument extends Document {
 const postSchema = new Schema<AdoptionDocument>(
     {
         poster: {
-            refId: {
-                type: Schema.Types.ObjectId,
-                required: true,
-                refPath: 'poster.refModel'
-            },
-            refModel: {
-                type: String,
-                required: true,
-                enum: ['User', 'Org'] // model names
-            }
+            type: Schema.Types.ObjectId,
+            ref: 'Org',
+            required: true
         },
         pet: {
             type: Schema.Types.ObjectId,
@@ -64,14 +54,8 @@ const postSchema = new Schema<AdoptionDocument>(
             default: false
         },
         adoptedBy: {
-            refId: {
-                type: Schema.Types.ObjectId,
-                refPath: 'adoptedBy.refModel'
-            },
-            refModel: {
-                type: String,
-                enum: ['User', 'Org']
-            }
+            type: Schema.Types.ObjectId,
+            ref: 'User',
         },
         createdAt: {
             type: Date,
