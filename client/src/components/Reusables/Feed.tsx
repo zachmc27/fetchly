@@ -10,14 +10,17 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import location from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+
 import "../../ZachTemp.css"
+
 
 type MockMessageItem = {
   id: number;
-  coverImage: string;
+  coverImage?: string;
   chatTitle: string;
   latestMessage: string;
   date: string;
+  isUnread?: boolean;
   itemType: string;
 };
 
@@ -65,18 +68,46 @@ export default function Feed({
   itemStyle: string;
   containerStyle: string;
 }) {
+
+
   function renderFeedItem(item: FeedItem): JSX.Element | null  {
     switch (item.itemType) {
       case "message": {
           const messageItem = item as MockMessageItem;
           return (
             <div key={item.id} className={itemStyle}>
-              {/* message JSX */}
-              <img src={messageItem.coverImage} alt="cover image for the convo" />
-              <h1 className="chat-title">{messageItem.chatTitle}</h1>
-              <p className= "message-title">{messageItem.latestMessage}</p>
-              <p className="chat-date">{messageItem.date}</p>
-            </div>
+              {/* Unread Dot Area (takes space even if dot isn't there to keep alignment) */}
+      <div className="unread-indicator-area">
+        {messageItem.isUnread && <div className="unread-dot"></div>}
+      </div>
+
+      {/* Icon/Avatar */}
+      {
+        messageItem.coverImage ? 
+        <img
+        src={messageItem.coverImage} // Use your existing coverImage prop
+        alt="Chat icon"
+        className="message-icon"
+        /> :
+        <div className="message-icon">
+        <img
+        src={group} // Use your existing coverImage prop
+        alt="Chat icon"
+        className="default-icon"
+        />
+        </div>
+      }
+      
+
+      {/* Text Content */}
+      <div className="message-text-content">
+        <h1 className="chat-title">{messageItem.chatTitle}</h1>
+        <p className="latest-message">{messageItem.latestMessage}</p>
+      </div>
+
+      {/* Date */}
+      <p className="chat-date">{messageItem.date}</p>
+    </div>
           );
         }
       case "post": {
