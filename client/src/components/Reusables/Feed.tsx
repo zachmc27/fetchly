@@ -4,6 +4,11 @@
 // to determine what the posts will look like (varies by post type)
 // prop that passes class name for the feed container
 
+import male from "../../images/mars-stroke-solid.svg"
+import female from "../../images/venus-solid.svg"
+import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import "../../ZachTemp.css"
+
 type MockMessageItem = {
   id: number;
   coverImage: string;
@@ -38,11 +43,10 @@ type MockMeetupItem = {
 
 type MockAdoptionItem = {
   id: number;
-  postImage: string;
-  postUser: string;
-  postLikeCount: number;
-  postCommentCount: number;
-  postDate: number;
+  petCoverImage: string;
+  petName: string;
+  petAge: number;
+  petGender: string;
   itemType: string;
 };
 
@@ -90,8 +94,24 @@ export default function Feed({
         return (
           <div key={adoptionItem.id} className={itemStyle}>
             {/* adoption JSX */}
-            <img src={adoptionItem.postImage} alt="cover image for the post" />
-            <h1>{adoptionItem.postUser}</h1>
+            <div className="adoption-image-container">
+              <img src={adoptionItem.petCoverImage} alt="cover image for the post" />
+            </div>
+            <div className="adoption-feed-info-container">
+            <h1>{adoptionItem.petName}</h1>
+              <div className="adoption-feed-details-row">
+                <div className="age-info"> 
+                  <img src={calendar} alt="calendar icon" className="calendar-icon" />
+                  <p>{adoptionItem.petAge} yrs</p> {/* Added "yrs" for context */}
+                </div>
+              {adoptionItem.petGender === "male" &&
+              <img src={male} alt="male-icon" className="male-icon"/>
+              }
+              {adoptionItem.petGender === "female" &&
+              <img src={female} alt="female-icon" className="female-icon"/>
+              }
+              </div>
+            </div>
           </div>
         );
       }

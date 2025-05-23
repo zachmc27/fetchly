@@ -106,7 +106,9 @@ export default function PostDetails({ postData, containerClass }: { postData: po
           <div key={adoption.id} className={containerClass}>
             {adoption.images.length > 0 && 
               adoption.images.map((image, index) => (
+                <div>
                 <img key={index} src={image} alt="post image"></img>
+                </div>
               ))
             }
             <p>{adoption.petName}</p>
