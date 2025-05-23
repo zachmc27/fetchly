@@ -7,6 +7,9 @@
 import male from "../../images/mars-stroke-solid.svg"
 import female from "../../images/venus-solid.svg"
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import location from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import "../../ZachTemp.css"
 
 type MockMessageItem = {
@@ -35,9 +38,10 @@ type MockMeetupItem = {
   postImage?: string;
   postUser: string;
   postTitle: string;
-  postLikeCount: number;
-  postDate: number;
-  meetupTime: number
+  postLocation: string;
+  postRSVPCount: number;
+  postDate: string;
+  meetupTime: string;
   itemType: string;
 };
 
@@ -119,9 +123,35 @@ export default function Feed({
         const meetupItem = item as MockMeetupItem
         return (
           <div key={meetupItem.id} className={itemStyle}>
-            {/* meetup JSX */}
-            <img src={meetupItem.postImage} alt="cover image for the post" />
-            <h1>{meetupItem.postUser}</h1>
+            <p className="post-user">{meetupItem.postUser}</p>
+            <div className="meetup-info-row">
+              <div className="meetup-image-container">
+                <img src={meetupItem.postImage} alt="cover image for the post" />
+              </div>
+              <div className="meetup-main-text">
+                <h1>{meetupItem.postTitle}</h1> 
+                <div className="meetup-location-container">
+                  <img src={location} alt="location pin" />
+                  <p>{meetupItem.postLocation}</p>  
+                </div> 
+              </div>
+              <button className="rsvp-btn">RSVP</button>  
+            </div>
+            <div className="meetup-details-row">
+              <div className="meetup-date">
+                <img src={calendar} alt="calendar icon" className="meetup-detail-icon"/>
+                <p>{meetupItem.postDate}</p>
+              </div>
+              <div className="meetup-time">
+                <img src={clock} alt="clock icon" className="meetup-detail-icon"/>
+                <p>{meetupItem.meetupTime}</p>
+              </div>
+              <div className="rsvp-count">
+                <img src={group} alt="people icon" className="meetup-detail-icon"/>
+                <p>{meetupItem.postRSVPCount}</p>
+              </div>
+            </div>
+           
           </div>
         );
       }
