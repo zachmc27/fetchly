@@ -38,19 +38,26 @@ const userResolvers = {
       return await User.find()
         .populate('pets')
         .populate('posts')
-        .populate('avatar');
+        .populate('avatar')
+        .populate('location')
+        .populate('organizations');
     },
     user: async (_parent: any, { userId }: UserArgs) => {
       return await User.findById(userId)
         .populate('pets')
         .populate('posts')
-        .populate('avatar');
+        .populate('avatar')
+        .populate('location')
+        .populate('organizations');
     },
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id })
           .populate('pets')
-          .populate('posts');
+          .populate('posts')
+          .populate('avatar')
+          .populate('location')
+          .populate('organizations');
       }
       throw new AuthenticationError('Could not authenticate user.');
     },

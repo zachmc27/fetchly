@@ -733,3 +733,35 @@ export const UNLIKE_POST = gql`
 //      "refModel": "User" or "Org"
 //    }
 //  }
+
+// ------------- EMPLOYEE MUTATIONS ------------- //
+
+export const ADD_EMPLOYEE = gql`
+  mutation AddEmployee($orgId: String!, $userId: ID!) {
+    addEmployee(orgId: $orgId, userId: $userId) {
+      success
+      message
+    }
+  }
+`;
+
+// ADD_EMPLOYEE input should look like this:
+// {
+//   "orgId": "<orgId>",
+//   "userId": "<userId>"
+// }
+
+export const REMOVE_EMPLOYEE = gql`
+  mutation RemoveEmployee($orgId: String!, $userId: ID!) {
+    removeEmployee(orgId: $orgId, userId: $userId) {
+      success
+      message
+    }
+  }
+`;
+
+// REMOVE_EMPLOYEE input should look like this:
+// {
+//   "orgId": "<orgId>",
+//   "userId": "<userId>"
+// }

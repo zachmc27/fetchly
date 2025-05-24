@@ -1,6 +1,6 @@
-import { Org, Location } from '../../models/index.js';
-import { signToken, AuthenticationError } from '../../utils/auth.js'; 
-import mongoose from 'mongoose';
+import { Org, Location, User } from '../../models/index.js';
+import { signToken, AuthenticationError } from '../../utils/auth.js';
+import mongoose, { Types } from 'mongoose';
 
 // OrgArgs
 interface AddOrgArgs {
@@ -41,6 +41,11 @@ interface UpdateOrgArgs {
     location: LocationInput;
     employees: [UserInput]
   }
+}
+
+interface employeeArgs {
+  orgId: string;
+  userId: string;
 }
 
 const orgResolvers = {
@@ -98,24 +103,23 @@ const orgResolvers = {
         throw new AuthenticationError('You are not authorized to update this organization.');
       }
 
-    // --- Handle location creation or update ---
-    let locationId;
-    if (input.location) {
-      const existingLocation = await Location.findOne({
-        address: input.location.address,
-        city: input.location.city,
-        state: input.location.state,
-        country: input.location.country,
-        zip: input.location.zip,
-      });
+      let locationId;
+      if (input.location) {
+        const existingLocation = await Location.findOne({
+          address: input.location.address,
+          city: input.location.city,
+          state: input.location.state,
+          country: input.location.country,
+          zip: input.location.zip,
+        });
 
-      if (existingLocation) {
-        locationId = existingLocation._id;
-      } else {
-        const newLocation = await Location.create(input.location);
-        locationId = newLocation._id;
+        if (existingLocation) {
+          locationId = existingLocation._id;
+        } else {
+          const newLocation = await Location.create(input.location);
+          locationId = newLocation._id;
+        }
       }
-    }
 
       const updateData: any = {
         ...input,
@@ -137,7 +141,74 @@ const orgResolvers = {
 
       return updatedOrg;
     },
-}
+    addEmployee: async (_parent: any, { orgId, userId }: employeeArgs) => {
+      const org = await Org.findById(orgId);
+      if (!org) {
+        return {
+          success: false,
+          message: 'Organization not found',
+        }
+      }
+      const user = await User.findById(userId) as any;
+      if (!user) {
+        return {
+          success: false,
+          message: 'User not found',
+        }
+      }
+
+      if (org.employees.some(emp => emp.equals(user._id.toString()))) {
+        return {
+          success: false,
+          message: 'User is already an employee of this organization',
+        }
+      }
+      org.employees.push(user._id);
+      await org.save();
+
+      await User.findByIdAndUpdate(userId, {
+        $addToSet: { organizations: org._id },
+      });
+      return {
+        success: true,
+        message: 'User added as an employee',
+      };
+    },
+    removeEmployee: async (_parent: any, { orgId, userId }: employeeArgs) => {
+      const org = await Org.findById(orgId);
+      if (!org) {
+        return {
+          success: false,
+          message: 'Organization not found',
+        }
+      }
+      const user = await User.findById(userId) as any;
+      if (!user) {
+        return {
+          success: false,
+          message: 'User not found',
+        }
+      }
+
+      if (!org.employees.some(emp => emp.equals(user._id.toString()))) {
+        return {
+          success: false,
+          message: 'User is not an employee of this organization',
+        }
+      }
+
+      org.employees = org.employees.filter(emp => !emp.equals(user._id.toString())) as Types.ObjectId[];
+      await org.save();
+
+      await User.findByIdAndUpdate(userId, {
+        $pull: { organizations: org._id },
+      });
+      return {
+        success: true,
+        message: 'User removed as an employee',
+      };
+    },
+  }
 };
 
 export default orgResolvers;

@@ -59,6 +59,10 @@ export const QUERY_USERS = gql`
         contentText
       }
       likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
     }
   }
 `;
@@ -120,6 +124,10 @@ export const QUERY_USER = gql`
         contentText
       }
       likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
     }
   }
 `;
@@ -181,6 +189,10 @@ export const QUERY_ME = gql`
         contentText
       }
       likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
     }
   }
 `;

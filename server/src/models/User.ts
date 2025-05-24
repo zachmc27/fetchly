@@ -34,6 +34,7 @@ export interface UserDocument extends Document {
   followingCount: number;
   conversation: Types.ObjectId[] | ConversationDocument[];
   conversationCount: number;
+  organizations: Types.ObjectId[] | OrgDocument[];
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -101,7 +102,13 @@ const userSchema = new Schema<UserDocument>(
             type: Schema.Types.ObjectId,
             ref: 'Conversation'
         }
-    ]
+    ],
+    organizations: [
+        {   
+            type: Schema.Types.ObjectId,
+            ref: 'Org'
+        },
+    ],
   },
   {
     toJSON: {

@@ -56,6 +56,8 @@ const orgTypeDefs = `
   type Mutation {
     addOrg(input: OrgInput!): OrgAuth
     updateOrg(orgId: String!, input: UpdateOrgInput!): OrgAuth
+    addEmployee(orgId: String!, userId: ID!): BooleanResponse
+    removeEmployee(orgId: String!, userId: ID!): BooleanResponse
     loginOrg(email: String!, password: String!): OrgAuth
   }
 `;

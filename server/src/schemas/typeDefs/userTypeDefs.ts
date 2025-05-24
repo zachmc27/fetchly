@@ -21,6 +21,7 @@ const userTypeDefs = `
     following: [User]
     conversation: [Conversation]
     conversationCount: Int
+    organizations: [Org]
   }
 
   input AddUserInput {
