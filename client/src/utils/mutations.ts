@@ -368,22 +368,6 @@ export const ADD_MEETUP = gql`
     addMeetUp(input: $input) {
       _id
       title
-      poster {
-        refId
-        refModel
-      }
-      description
-      location
-      date
-      time
-      attendees
-      numberOfAttendees
-      comments {
-        _id
-      }
-      numberOfComments
-      media
-      createdAt
     }
   }
 `;
@@ -397,9 +381,16 @@ export const ADD_MEETUP = gql`
 //       "refModel": "User" | "Org"
 //     },
 //     "description": "Let's go for a walk along the river with our dogs.",
-//     "location": "Hamilton, Ontario, Canada",
+//    "location": {
+//      "address": "1007 Mountain Drive",
+//      "zip": "987432",
+//      "city": "Gotham",
+//      "state": "New Jersey",
+//      "country": "USA"
+//    },
 //     "date": "2025-10-22",
 //     "time": "12:00am",
+//     "media": [<mediaId1>, <mediaId2>]
 //   },
 // }
 
@@ -408,22 +399,6 @@ export const UPDATE_MEETUP = gql`
     addMeetUp(meetUpId: $updateMeetUpMeetUpId, input: $input) {
       _id
       title
-      poster {
-        refId
-        refModel
-      }
-      description
-      location
-      date
-      time
-      attendees
-      numberOfAttendees
-      comments {
-        _id
-      }
-      numberOfComments
-      media
-      createdAt
     }
   }
 `;
@@ -434,9 +409,16 @@ export const UPDATE_MEETUP = gql`
 //   "input": {
 //     "title": "Lakeside Dog Walk",
 //     "description": "Let's go for a walk along the river with our dogs.",
-//     "location": "Hamilton, Ontario, Canada",
+//    "location": {
+//      "address": "89 Go Drive",
+//      "zip": "872349",
+//      "city": "Houston",
+//      "state": "TX",
+//      "country": "USA"
+//    },
 //     "date": "2025-10-22",
 //     "time": "12:00am",
+//     "media": ["682f65d28a3c7ce49cde24a1"]
 //   },
 // }
 
@@ -451,6 +433,36 @@ export const DELETE_MEETUP = gql`
 // DELETE_MEETUP input should look like this:
 // {
 //   "deleteMeetUpMeetUpId": "<meetUpId>"
+// }
+
+export const ATTEND_MEETUP = gql`
+  mutation AttendMeetUp($meetUpId: String!, $userId: String!) {
+    attendMeetUp(meetUpId: $meetUpId, userId: $userId) {
+      message
+      success
+    }
+  }
+`;
+
+// ATTEND_MEETUP input should look like this:
+// {
+//   "meetUpId": "<meetUpId>",
+//   "userId": "<userId>"
+// }
+
+export const UNATTEND_MEETUP = gql`
+  mutation UnAttendMeetUp($meetUpId: String!, $userId: String!) {
+    unAttendMeetUp(meetUpId: $meetUpId, userId: $userId) {
+      message
+      success
+    }
+  }
+`;
+
+// UNATTEND_MEETUP input should look like this:
+// {
+//   "meetUpId": "<meetUpId>",
+//   "userId": "<userId>"
 // }
 
 // ------------- MEETUP COMMENT MUTATIONS ------------- //

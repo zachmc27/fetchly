@@ -39,6 +39,7 @@ const userResolvers = {
         .populate('pets')
         .populate('posts')
         .populate('avatar')
+        .populate('meetUps')
         .populate('location')
         .populate('organizations');
     },
@@ -47,6 +48,7 @@ const userResolvers = {
         .populate('pets')
         .populate('posts')
         .populate('avatar')
+        .populate('meetUps')
         .populate('location')
         .populate('organizations');
     },

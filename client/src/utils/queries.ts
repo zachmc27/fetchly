@@ -471,16 +471,36 @@ export const QUERY_MEETUPS = gql`
         refModel
       }
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       date
       time
       attendees
       numberOfAttendees
       comments {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       numberOfComments
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       createdAt
       itemType
     }
@@ -498,16 +518,36 @@ export const QUERY_MEETUP = gql`
         refModel
       }
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       date
       time
       attendees
       numberOfAttendees
       comments {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       numberOfComments
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       createdAt
       itemType
     }
