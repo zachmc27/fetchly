@@ -579,19 +579,22 @@ export const CREATE_ADOPTION = gql`
 // {
 //   "input": {
 //     "pet": <petId>,
-//     "poster": {
-//       "refId": <posterId>,
-//       "refModel": "Org" | "User"
-//     },
+//     "poster": <orgId>,
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
-//     "location": "Toronto, Ontario, Canada",
+//    "location": {
+//      "address": "76 Peter St",
+//      "zip": "L6E 0T9",
+//      "city": "Markham",
+//      "state": "Ontario",
+//      "country": "Canada"
+//    },
 //     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
 export const UPDATE_ADOPTION = gql`
-  mutation UpdateAdoption($adoptionId: ID, $input: AdoptionInput!) {
+  mutation UpdateAdoption($adoptionId: ID, $input: UpdateAdoptionInput!) {
     updateAdoption(adoptionId: $adoptionId, input: $input) {
       _id
     }
@@ -602,21 +605,45 @@ export const UPDATE_ADOPTION = gql`
 // {
 //   "adoptionId": <adoptionId>,
 //   "input": {
-//     "pet": <petId>,
-//     "poster": {
-//       "refId": <posterId>,
-//       "refModel": "Org" | "User"
-//     },
 //     "goodWithPets": "Prefers to be your only pet.",
 //     "description": "A great little cat that loves to snuggle.",
-//     "location": "Toronto, Ontario, Canada",
+//     "location": {
+//       "address": "733 River Styx Dr.",
+//       "zip": "666 666",
+//       "city": "Hades",
+//       "state": "Tartarus",
+//       "country": "Underworld"
+//     },
 //     "media": [<mediaId1>, <mediaId2>]
 //   }
 // }
 
+
+// ADOPT_PET input should look like this:
+export const ADOPT_PET = gql`
+  mutation AdoptPet($adoptionId: ID!, $userId: ID!) {
+    adoptPet(adoptionId: $adoptionId, userId: $userId) {
+      message
+      success
+    }
+  }
+`;
+
+// MAKE SURE TO ALSO RUN UPDATE_OWNER MUTATION TO MAKE SURE THE PET IS 
+// REMOVED FROM THE OLD OWNER'S ARRAY AND ADDED TO THE NEW OWNER'S ARRAY
+
+// ADOPT_PET input should look like this:
+// {
+//   "adoptionId": <adoptionId>,
+//   "userId": <userId>
+// }
+
 export const DELETE_ADOPTION = gql`
   mutation DeleteAdoption($adoptionId: ID!) {
-    deleteAdoption(adoptionId: $adoptionId)
+    deleteAdoption(adoptionId: $adoptionId) {
+      message
+      success
+    }
   }
 `;
 
@@ -666,4 +693,75 @@ export const DELETE_MEDIA = gql`
 // DELETE_MEDIA input should look like this:
 // {
 //   "mediaId": <mediaId>
+// }
+
+
+// ------------- LIKING POSTS MUTATIONS ------------- //
+
+export const LIKE_POST = gql`
+  mutation LikePost($postId: String!, $input: LikeInput!) {
+    likePost(postId: $postId, input: $input) {
+      message
+      success
+    }
+  }
+`;
+
+// LIKE_POST input should look like this:
+//  {  
+//    "postId": <postId>,
+//    "input": {
+//      "refId": <userId> or <orgId>,
+//      "refModel": "User" or "Org"
+//    }
+//  }
+
+export const UNLIKE_POST = gql`
+  mutation UnlikePost($postId: String!, $input: LikeInput!) {
+    unlikePost(postId: $postId, input: $input) {
+      message
+      success
+    }
+  }
+`;
+
+// UNLIKE_POST input should look like this:
+//  {  
+//    "postId": <postId>,
+//    "input": {
+//      "refId": <userId> or <orgId>,
+//      "refModel": "User" or "Org"
+//    }
+//  }
+
+// ------------- EMPLOYEE MUTATIONS ------------- //
+
+export const ADD_EMPLOYEE = gql`
+  mutation AddEmployee($orgId: String!, $userId: ID!) {
+    addEmployee(orgId: $orgId, userId: $userId) {
+      success
+      message
+    }
+  }
+`;
+
+// ADD_EMPLOYEE input should look like this:
+// {
+//   "orgId": "<orgId>",
+//   "userId": "<userId>"
+// }
+
+export const REMOVE_EMPLOYEE = gql`
+  mutation RemoveEmployee($orgId: String!, $userId: ID!) {
+    removeEmployee(orgId: $orgId, userId: $userId) {
+      success
+      message
+    }
+  }
+`;
+
+// REMOVE_EMPLOYEE input should look like this:
+// {
+//   "orgId": "<orgId>",
+//   "userId": "<userId>"
 // }

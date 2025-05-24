@@ -16,6 +16,7 @@ export interface PetDocument extends Document {
   type: Types.ObjectId | TypeDocument;
   gender: string;
   age: number;
+  neuteredOrSpayed: boolean;
   about: string;
   profilePhoto: Types.ObjectId | MediaDocument;
   vaccination: string;
@@ -50,6 +51,9 @@ const petSchema = new Schema<PetDocument>({
   },
   age: {
     type: Number,
+  },
+  neuteredOrSpayed: {
+    type: Boolean,
   },
   about: {
     type: String,

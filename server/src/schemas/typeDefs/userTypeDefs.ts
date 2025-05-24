@@ -16,9 +16,12 @@ const userTypeDefs = `
     meetUpCount: Int
     posts: [Post]
     postCount: Int
+    likedPosts: [Post]
+    likedPostsCount: Int
     following: [User]
     conversation: [Conversation]
     conversationCount: Int
+    organizations: [Org]
   }
 
   input AddUserInput {

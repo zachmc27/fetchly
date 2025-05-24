@@ -23,6 +23,16 @@ export const QUERY_USERS = gql`
       pets {
         _id
         name
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        neuteredOrSpayed
+        about
+        vaccination
       }
       petCount
       meetUps {
@@ -41,8 +51,18 @@ export const QUERY_USERS = gql`
       }
       conversation {
         _id
+        conversationName
       }
       conversationCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
     }
   }
 `;
@@ -68,6 +88,16 @@ export const QUERY_USER = gql`
       pets {
         _id
         name
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        neuteredOrSpayed
+        about
+        vaccination
       }
       petCount
       meetUps {
@@ -86,8 +116,18 @@ export const QUERY_USER = gql`
       }
       conversation {
         _id
+        conversationName
       }
       conversationCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
     }
   }
 `;
@@ -113,6 +153,16 @@ export const QUERY_ME = gql`
       pets {
         _id
         name
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        neuteredOrSpayed
+        about
+        vaccination
       }
       petCount
       meetUps {
@@ -131,8 +181,18 @@ export const QUERY_ME = gql`
       }
       conversation {
         _id
+        conversationName
       }
       conversationCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
     }
   }
 `;
@@ -173,6 +233,11 @@ export const QUERY_ORGS = gql`
         contentText
       }
       postCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
     }
   }
 `;
@@ -211,6 +276,11 @@ export const QUERY_ORG = gql`
         contentText
       }
       postCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
     }
   }
 `;
@@ -293,7 +363,15 @@ export const QUERY_POSTS = gql`
         refModel
       }
       contentText
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       responses {
         _id
         poster {
@@ -301,19 +379,16 @@ export const QUERY_POSTS = gql`
           refModel
         }
         contentText
-        media
-        responses {
-          _id
-        }
-        responseCount
-        createdAt
-        parentPost
-        isResponse
       }
       responseCount
+      likes {
+        refId
+        refModel
+      }
+      likesCount
+      parentPost  
+      isResponse          
       createdAt
-      parentPost
-      isResponse
       itemType
     }
   }
@@ -329,14 +404,32 @@ export const QUERY_POST = gql`
         refModel
       }
       contentText
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       responses {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       responseCount
+      likes {
+        refId
+        refModel
+      }
+      likesCount
+      parentPost  
+      isResponse          
       createdAt
-      parentPost
-      isResponse
       itemType
     }
   }
@@ -479,16 +572,25 @@ export const QUERY_ADOPTIONS = gql`
     adoptions {
       _id
       poster {
-        refId
-        refModel
+        _id
+        orgName
+        email
+        phone
+        website
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       pet {
         _id
         name
-        owner {
-          refId
-          refModel
-        }
         type {
           _id
           type
@@ -507,10 +609,18 @@ export const QUERY_ADOPTIONS = gql`
           tags
         }
         vaccination
+        neuteredOrSpayed
       }
       goodWithPets
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       media {
         id
         filename
@@ -522,8 +632,20 @@ export const QUERY_ADOPTIONS = gql`
       }
       adoptionStatus
       adoptedBy {
-        refId
-        refModel
+        _id
+        username
+        email
+        password
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       createdAt
       itemType
@@ -537,16 +659,25 @@ export const QUERY_ADOPTION = gql`
     adoption(adoptionId: $adoptionId) {
       _id
       poster {
-        refId
-        refModel
+        _id
+        orgName
+        email
+        phone
+        website
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       pet {
         _id
         name
-        owner {
-          refId
-          refModel
-        }
         type {
           _id
           type
@@ -565,10 +696,18 @@ export const QUERY_ADOPTION = gql`
           tags
         }
         vaccination
+        neuteredOrSpayed
       }
       goodWithPets
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       media {
         id
         filename
@@ -580,8 +719,20 @@ export const QUERY_ADOPTION = gql`
       }
       adoptionStatus
       adoptedBy {
-        refId
-        refModel
+        _id
+        username
+        email
+        password
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       createdAt
       itemType
