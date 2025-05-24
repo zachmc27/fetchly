@@ -132,4 +132,61 @@ import billie from "../images/billiewooflish.jpeg"
     }
   ]
 
+  export const mockMeetupData = [
+    {
+        id: 1,
+        postImage: flowerdog,
+        postUser: 'zachmc',
+        postTitle: 'zoomies sesh',
+        postLocation: 'Zilker Park',
+        postRSVPCount: 5,
+        postDate: '6/2/25',
+        meetupTime: '3pm',
+        itemType: 'meetup'
+    },
+    {
+        id: 2,
+        postImage: alien,
+        postUser: 'kkent',
+        postTitle: 'kitty play date',
+        postLocation: 'my apartment',
+        postRSVPCount: 2,
+        postDate: '6/2/25',
+        meetupTime: '8pm',
+        itemType: 'meetup'
+    },
+    {
+        id: 3,
+        postImage: dog,
+        postUser: 'brettmcbryde',
+        postTitle: 'walk in the park',
+        postLocation: 'big park',
+        postRSVPCount: 12,
+        postDate: '6/2/25',
+        meetupTime: '9am',
+        itemType: 'meetup'
+    },
+    {
+        id: 4,
+        postImage: billie,
+        postUser: 'teeleel',
+        postTitle: 'wicked stuff',
+        postLocation: 'alleyway',
+        postRSVPCount: 1,
+        postDate: '6/2/25',
+        meetupTime: '11pm',
+        itemType: 'meetup'
+    },
+    {
+        id: 5,
+        postImage: baller,
+        postUser: 'mishaadyer',
+        postTitle: 'cat on desk party',
+        postLocation: 'ikea',
+        postRSVPCount: 20,
+        postDate: '6/2/25',
+        meetupTime: '2pm',
+        itemType: 'meetup'
+    }
+  ]
 
