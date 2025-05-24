@@ -11,7 +11,14 @@ import meetUpResolvers from './meetUpResolvers.js';
 import meetUpCommentResolvers from './meetUpCommentResolvers.js';
 
 const resolvers = {
-
+    FollowsUnion: {
+        __resolveType(obj: any) {
+            if (obj.username) return 'User';
+            if (obj.name && obj.type) return 'Pet';
+            if (obj.orgName) return 'Org';
+            return null;
+        },
+    },
     Query: {
         ...adoptionResolvers.Query,
         ...orgResolvers.Query,

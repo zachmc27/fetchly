@@ -777,3 +777,76 @@ export const REMOVE_EMPLOYEE = gql`
 //   "orgId": "<orgId>",
 //   "userId": "<userId>"
 // }
+
+// ------------- FOLLOWING MUTATIONS ------------- //
+
+export const FOLLOW_AS_USER = gql`
+  mutation FollowUser($userId: String!, $input: FollowedProfileInput!) {
+    followUser(userId: $userId, input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+// FOLLOW_USER input should look like this:
+// {
+//   "userId": "<userId>",
+//   "input": {
+//     "refId": "<userId> or <orgId> or <petId>",
+//     "refModel": "User" or "Org" or "Pet"
+//   }
+// }
+
+export const UNFOLLOW_AS_USER = gql`
+  mutation UnFollowUser($userId: String!, $input: FollowedProfileInput!) {
+    unFollowUser(userId: $userId, input: $input) {  
+      success
+      message
+    }
+  }
+`;
+
+// UNFOLLOW_USER input should look like this:
+// {
+//   "userId": "<userId>",
+//   "input": {
+//     "refId": "<userId> or <orgId> or <petId>",
+//     "refModel": "User" or "Org" or "Pet"
+//   }
+// }
+
+export const FOLLOW_AS_ORG = gql`
+  mutation FollowOrg($orgId: String!, $input: FollowedProfileInput!) {
+    followOrg(orgId: $orgId, input: $input) {
+      success
+      message
+    }
+  }
+`;
+// FOLLOW_ORG input should look like this:
+// {
+//  "orgId": "<orgId>",
+//  "input": {
+//    "refId": "<userId> or <orgId> or <petId>",
+//    "refModel": "User" or "Org" or "Pet"
+//  }
+// }
+
+export const UNFOLLOW_AS_ORG = gql`
+  mutation UnFollowOrg($orgId: String!, $input: FollowedProfileInput!) {
+    unFollowOrg(orgId: $orgId, input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+// UNFOLLOW_ORG input should look like this:
+// {
+//   "orgId": "<orgId>",
+//   "input": {
+//     "refId": "<userId> or <orgId> or <petId>",
+//     "refModel": "User" or "Org" or "Pet"
+//   }
+// }
