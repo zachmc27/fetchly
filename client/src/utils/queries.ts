@@ -63,6 +63,40 @@ export const QUERY_USERS = gql`
         _id
         orgName
       }
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount      
     }
   }
 `;
@@ -128,6 +162,40 @@ export const QUERY_USER = gql`
         _id
         orgName
       }
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount      
     }
   }
 `;
@@ -193,6 +261,40 @@ export const QUERY_ME = gql`
         _id
         orgName
       }
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount      
     }
   }
 `;
@@ -238,6 +340,40 @@ export const QUERY_ORGS = gql`
         contentText
       }
       likedPostsCount
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount     
     }
   }
 `;
@@ -281,6 +417,40 @@ export const QUERY_ORG = gql`
         contentText
       }
       likedPostsCount
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount     
     }
   }
 `;
@@ -315,6 +485,21 @@ export const QUERY_PETS = gql`
         tags
       }
       vaccination
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount 
     }
   }
 `;
@@ -347,6 +532,21 @@ export const QUERY_PET = gql`
         tags
       }
       vaccination
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount 
     }
   }
 `;
@@ -471,16 +671,36 @@ export const QUERY_MEETUPS = gql`
         refModel
       }
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       date
       time
       attendees
       numberOfAttendees
       comments {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       numberOfComments
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       createdAt
       itemType
     }
@@ -498,16 +718,36 @@ export const QUERY_MEETUP = gql`
         refModel
       }
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       date
       time
       attendees
       numberOfAttendees
       comments {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       numberOfComments
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       createdAt
       itemType
     }

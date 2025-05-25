@@ -1,4 +1,4 @@
-import { Org, Location, User } from '../../models/index.js';
+import { Org, Location, User, Pet } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js';
 import mongoose, { Types } from 'mongoose';
 
@@ -48,6 +48,14 @@ interface employeeArgs {
   userId: string;
 }
 
+interface FollowArgs {
+  orgId: string;
+  input: {
+    refId: string;
+    refModel: string;
+  }
+}
+
 const orgResolvers = {
   Query: {
   // Org Queries
@@ -57,7 +65,13 @@ const orgResolvers = {
         .populate('employees')
         .populate('posts')
         .populate('avatar')
-        .populate('location');
+        .populate('location')        
+        .populate({
+          path: 'following.refId'
+        })
+        .populate({
+          path: 'followedBy.refId'
+        });
     },
     org: async (_parent: any, { orgId }: OrgArgs) => {
       return Org.findById(orgId)
@@ -65,7 +79,13 @@ const orgResolvers = {
         .populate('employees')
         .populate('posts')
         .populate('avatar')
-        .populate('location');
+        .populate('location')
+        .populate({
+          path: 'following.refId'
+        })
+        .populate({
+          path: 'followedBy.refId'
+        });
     },
   },
 
@@ -206,6 +226,146 @@ const orgResolvers = {
       return {
         success: true,
         message: 'User removed as an employee',
+      };
+    },
+    followOrg: async (_parent: any, { orgId, input }: FollowArgs, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to update an organization.');
+      }
+
+      const org = await Org.findById(orgId);
+      const { refId, refModel } = input;
+      if (!org) {
+        return {
+          success: false,
+          message: 'Org not found.',
+        }
+      }
+
+      // Check if the user is not following the thing to unfollow
+      const isFollowing = org.following.some(
+        (follow) =>
+          follow.refId.toString() === refId &&
+          follow.refModel === refModel
+      );
+      if (isFollowing) {
+        return {
+          success: false,
+          message: `You are already following ${refModel} with ID ${refId}.`,
+        };
+      }
+
+      if(refModel === 'User') {
+        await User.findByIdAndUpdate(refId, {
+          $addToSet: {
+            followedBy: {
+              refId: new mongoose.Types.ObjectId(orgId),
+              refModel: 'Org',
+            }
+          }
+        });
+      } else if (refModel === 'Org') {
+        await Org.findByIdAndUpdate(refId, {
+          $addToSet: {
+            followedBy: {
+              refId: new mongoose.Types.ObjectId(orgId),
+              refModel: 'Org',
+            }}
+        });
+      } else if (refModel === 'Pet') {
+        await Pet.findByIdAndUpdate(refId, {
+          $addToSet: {            
+            followedBy: {
+              refId: new mongoose.Types.ObjectId(orgId),
+              refModel: 'Org',
+            }}
+        });
+      }
+
+      await Org.findByIdAndUpdate(
+        orgId,
+        { 
+          $addToSet: { 
+            following: {
+              refId: new mongoose.Types.ObjectId(refId),
+              refModel: refModel,               
+            } 
+          }
+        }, 
+        { runValidators: true, new: true }
+      );
+
+      return {
+        success: true,
+        message: `You are now following ${refModel} with ID ${refId}.`,
+      };
+    },
+    unFollowOrg: async (_parent: any, { orgId, input }: FollowArgs, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to update an organization.');
+      }
+
+      const org = await Org.findById(orgId);
+      if (!org) {
+        return {
+          success: false,
+          message: 'Org not found.',
+        }
+      }
+      const { refId, refModel } = input;
+      // Check if the user is not following the thing to unfollow
+      const isFollowing = org.following.some(
+        (follow) =>
+          follow.refId.toString() === refId &&
+          follow.refModel === refModel
+      );
+      if (!isFollowing) {
+        return {
+          success: false,
+          message: `You are not following ${refModel} with ID ${refId}.`,
+        };
+      }
+
+      if(refModel === 'User') {
+        await User.findByIdAndUpdate(refId, {
+          $pull: {
+            followedBy: {
+              refId: new mongoose.Types.ObjectId(orgId),
+              refModel: 'Org',
+            }
+          }
+        });
+      } else if (refModel === 'Org') {
+        await Org.findByIdAndUpdate(refId, {
+          $pull: {
+            followedBy: {
+              refId: new mongoose.Types.ObjectId(orgId),
+              refModel: 'Org',
+            }
+          }
+        });
+      } else if (refModel === 'Pet') {
+        await Pet.findByIdAndUpdate(refId, {
+          $pull: {
+            followedBy: {
+              refId: new mongoose.Types.ObjectId(orgId),
+              refModel: 'Org',
+            }
+          }
+        });
+      }
+
+      await Org.findByIdAndUpdate(orgId, {
+        $pull: { 
+          following: {
+            refId: new mongoose.Types.ObjectId(refId),
+            refModel,
+          }
+      }}); 
+
+      return {
+        success: true,
+        message: `You have unfollowed ${refModel} with ID ${refId}.`,
       };
     },
   }

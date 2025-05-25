@@ -20,6 +20,10 @@ const orgTypeDefs = `
     postCount: Int
     likedPosts: [Post]
     likedPostsCount: Int
+    following: [FollowedProfile]
+    followingCount: Int
+    followedBy: [FollowedProfile]
+    followedByCount: Int
   }
 
   input OrgInput {
@@ -58,6 +62,8 @@ const orgTypeDefs = `
     updateOrg(orgId: String!, input: UpdateOrgInput!): OrgAuth
     addEmployee(orgId: String!, userId: ID!): BooleanResponse
     removeEmployee(orgId: String!, userId: ID!): BooleanResponse
+    followOrg(orgId: String!, input: FollowedProfileInput!): BooleanResponse
+    unFollowOrg(orgId: String!, input: FollowedProfileInput!): BooleanResponse
     loginOrg(email: String!, password: String!): OrgAuth
   }
 `;

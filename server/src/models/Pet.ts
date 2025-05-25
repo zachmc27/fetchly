@@ -20,7 +20,10 @@ export interface PetDocument extends Document {
   about: string;
   profilePhoto: Types.ObjectId | MediaDocument;
   vaccination: string;
-  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  followedBy: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument;
+    refModel: 'User' | 'Org';
+  }];
   followedByCount: number;
 }
 
@@ -64,7 +67,29 @@ const petSchema = new Schema<PetDocument>({
   },
   vaccination: {
     type: String,
-  }
+  },
+  followedBy: [
+      {
+          _id: false,
+          refId: {
+              type: Schema.Types.ObjectId,
+              refPath: 'followedBy.refModel',
+          },
+          refModel: {
+              type: String,
+              enum: ['User', 'Org'],
+          },
+      }
+  ],  
+},  {
+    toJSON: {
+      virtuals: true,
+      getters: true,
+    },
+  });
+
+petSchema.virtual('followedByCount').get(function (this: PetDocument) {
+  return this.followedBy.length;
 });
 
 const Pet = model<PetDocument>('Pet', petSchema);

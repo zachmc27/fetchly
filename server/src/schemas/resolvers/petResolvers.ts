@@ -54,12 +54,18 @@ const petResolvers = {
         pets: async () => {
             return await Pet.find()
                 .populate('type')
-                .populate('profilePhoto');
+                .populate('profilePhoto')
+                .populate({
+                    path: 'followedBy.refId'
+                });
         },
         pet: async (_parent: any, { petId }: PetArgs) => {
             return Pet.findById(petId)
                 .populate('type')
-                .populate('profilePhoto');
+                .populate('profilePhoto')
+                .populate({
+                    path: 'followedBy.refId'
+                });
         }
     },
 

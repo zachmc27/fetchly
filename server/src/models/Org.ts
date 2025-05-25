@@ -28,8 +28,14 @@ export interface OrgDocument extends Document {
   postCount: number;
   likedPosts: Types.ObjectId[] | PostDocument[];
   likedPostsCount: number;
-  following: (Types.ObjectId | UserDocument | OrgDocument)[];
-  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  following: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument | PetDocument;
+    refModel: 'User' | 'Org' | 'Pet';
+  }];
+  followedBy: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument;
+    refModel: 'User' | 'Org';
+  }];
   followedByCount: number;
   followingCount: number;
 }
@@ -87,6 +93,32 @@ const orgSchema = new Schema<OrgDocument>(
             ref: 'Post'
         }
     ],
+    following: [  
+        {
+            _id: false,
+            refId: {
+                type: Schema.Types.ObjectId,
+                refPath: 'following.refModel',
+            },
+            refModel: {
+                type: String,
+                enum: ['User', 'Org', 'Pet'],
+            },
+        }
+    ],
+    followedBy: [
+        {
+            _id: false,
+            refId: {
+                type: Schema.Types.ObjectId,
+                refPath: 'followedBy.refModel',
+            },
+            refModel: {
+                type: String,
+                enum: ['User', 'Org'],
+            },
+        }
+    ],
   },
   // set this to use virtual below
   {
@@ -134,6 +166,14 @@ orgSchema.virtual('postCount').get(function () {
 orgSchema.virtual('likedPostsCount').get(function () {
   return this.likedPosts.length;
 });
+
+orgSchema.virtual('followedByCount').get(function () {
+  return this.followedBy.length;
+});
+
+orgSchema.virtual('followingCount').get(function () {
+  return this.following.length;
+}); 
 
 const Org = model<OrgDocument>('Org', orgSchema);
 

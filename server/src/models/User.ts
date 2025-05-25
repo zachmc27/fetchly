@@ -1,5 +1,6 @@
 import { Schema, model, type Document, Types, CallbackError } from 'mongoose';
 import bcrypt from 'bcrypt';
+// import autopopulate from 'mongoose-autopopulate';
 
 // import models
 import type { MediaDocument } from './Media.js';
@@ -28,8 +29,14 @@ export interface UserDocument extends Document {
   postCount: number;
   likedPosts: Types.ObjectId[] | PostDocument[];
   likedPostsCount: number;
-  following: (Types.ObjectId | UserDocument | OrgDocument)[];
-  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  following: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument | PetDocument;
+    refModel: 'User' | 'Org' | 'Pet';
+  }];
+  followedBy: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument;
+    refModel: 'User' | 'Org';
+  }];
   followedByCount: number;
   followingCount: number;
   conversation: Types.ObjectId[] | ConversationDocument[];
@@ -91,12 +98,6 @@ const userSchema = new Schema<UserDocument>(
             ref: 'MeetUp'
         }
     ],
-    following: [
-        {   
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        },
-    ],
     conversation: [  
         {
             type: Schema.Types.ObjectId,
@@ -108,6 +109,34 @@ const userSchema = new Schema<UserDocument>(
             type: Schema.Types.ObjectId,
             ref: 'Org'
         },
+    ],
+    following: [  
+        {
+            _id: false,
+            refId: {
+                type: Schema.Types.ObjectId,
+                refPath: 'following.refModel',
+                //autopopulate: true,
+            },
+            refModel: {
+                type: String,
+                enum: ['User', 'Org', 'Pet'],
+            },
+        }
+    ],
+    followedBy: [
+        {
+            _id: false,
+            refId: {
+                type: Schema.Types.ObjectId,
+                refPath: 'followedBy.refModel',
+                //autopopulate: true,
+            },
+            refModel: {
+                type: String,
+                enum: ['User', 'Org'],
+            },
+        }
     ],
   },
   {
@@ -159,6 +188,16 @@ userSchema.virtual('meetUpCount').get(function () {
 userSchema.virtual('likedPostsCount').get(function () {
   return this.likedPosts.length;
 });
+
+userSchema.virtual('followingCount').get(function () {
+  return this.following.length;
+});
+
+userSchema.virtual('followedByCount').get(function () {
+  return this.followedBy.length;
+});
+
+//userSchema.plugin(autopopulate);
 
 const User = model<UserDocument>('User', userSchema);
 

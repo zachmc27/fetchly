@@ -23,6 +23,8 @@ const petTypeDefs = `
         about: String
         profilePhoto: Media
         vaccination: String
+        followedBy: [FollowedProfile]
+        followedByCount: Int
     }
 
     input PetInput {
