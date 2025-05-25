@@ -774,3 +774,71 @@ export const ALL_MEDIA = gql`
     }
   }
 `;
+
+
+
+// ------------- Conversation QUERIES ------------- //
+
+export const GET_CONVERSATIONS = gql`
+  query Conversations {
+  conversations {
+    _id
+    conversationName
+    conversationUsers {
+      _id
+    }
+    lastMessage {
+      _id
+      textContent
+    }
+    messages {
+      _id
+      messageUser {
+        _id
+      }
+      textContent
+    }
+  }
+}`;
+
+// You can expand upon the following values to include more details other than id:
+// USERS - You can grab name/uersname, email, etc.
+// MESSAGES - You can grab the message textConent, MessageUser, etc.
+
+
+// ----------- MESSAGES QUERIES ------------- //
+
+export const GET_MESSAGES = gql`
+query Messages {
+  messages {
+    _id
+    textContent
+    conversation {
+      _id
+    }
+  }
+}
+`;
+
+export const GET_MESSAGES_BY_ID = gql`
+  query Message($messageId: String!) {
+    message(messageId: $messageId) {
+      _id
+      conversation {
+        _id
+      }
+      media {
+        id
+      }
+      messageUser {
+        _id
+      }
+      textContent
+    }
+  }
+`;
+
+//INPUT
+// {
+//   "messageId": "<messageId>"
+// }

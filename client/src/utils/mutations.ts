@@ -765,3 +765,62 @@ export const REMOVE_EMPLOYEE = gql`
 //   "orgId": "<orgId>",
 //   "userId": "<userId>"
 // }
+
+
+// ------------- Conversation Mutations ------------- //
+
+
+export const CREATE_CONVERSATION = gql`
+  mutation CreateConversationInput($input: CreateConversationInput!) {
+  CreateConversationInput(input: $input) {
+    _id
+    conversationName
+    conversationUsers {
+      _id
+    }
+  }
+}`;
+
+//input:
+// {
+//   "input": {
+//     "conversationName": "Test", - {Name of the conversation in string}
+//     "conversationUsers": [
+//             { "_id": "682bd6f5c783d2ea6bddf61c" }, --- User Object {_id: "userID"}
+//             { "_id": "682bd716c783d2ea6bddf61e" }
+//         ]
+//   }
+// }
+
+
+
+// ------------- MESSAGE MUTATIONS ------------- //
+
+
+
+// Mutations
+
+export const CREATE_MESSAGE = gql`
+  mutation AddMessage($input: AddMessageInput!) {
+  addMessage(input: $input) {
+    _id
+    textContent
+    conversation {
+      _id
+    }
+  }
+}
+`;
+// input:
+// {
+//   "input": {
+//     "conversation": "682d1fa200b58b268d6e95b8",
+//     "messageUser": {
+//       "_id": "682bd6f5c783d2ea6bddf61c"
+//     },
+//     "textContent": "This is mishas first message"
+//   }
+  
+// }
+
+
