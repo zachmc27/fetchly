@@ -19,6 +19,27 @@ const resolvers = {
             return null;
         },
     },
+    OwnerUnion: {
+        __resolveType(obj: any) {
+            if (obj.username) return 'User';
+            if (obj.orgName) return 'Org';
+            return null;
+        },
+    },
+    PosterUnion: {
+        __resolveType(obj: any) {
+            if (obj.username) return 'User';
+            if (obj.orgName) return 'Org';
+            return null;
+        },
+    },
+    LikeUnion: {
+        __resolveType(obj: any) {
+            if (obj.username) return 'User';
+            if (obj.orgName) return 'Org';
+            return null;
+        },
+    },
     Query: {
         ...adoptionResolvers.Query,
         ...orgResolvers.Query,
