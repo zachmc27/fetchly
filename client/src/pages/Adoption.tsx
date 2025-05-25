@@ -27,7 +27,7 @@ export default function Adoption() {
 
   return (
     <div className="adoption-page-container">
-      <SearchBar send={filterBySearch} styling="search-style" />
+      <SearchBar send={filterBySearch} />
       <div className="filter-buttons-container">
         <button onClick={filterByAll} className="filter-button">All</button>
         <button onClick={filterByDogs} className="filter-button">Dogs</button>
