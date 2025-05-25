@@ -15,6 +15,7 @@ interface PetArgs {
         type: string;
         gender: string;
         age: number;
+        neuteredOrSpayed: boolean;
         about: string;
         profilePhoto: string;
         vaccination: string;
@@ -40,6 +41,7 @@ interface UpdatePetArgs {
         type: string
         gender: string;
         age: number;
+        neuteredOrSpayed: boolean;
         about: string;
         profilePhoto: string;
         vaccination: string;
@@ -52,12 +54,18 @@ const petResolvers = {
         pets: async () => {
             return await Pet.find()
                 .populate('type')
-                .populate('profilePhoto');
+                .populate('profilePhoto')
+                .populate({
+                    path: 'followedBy.refId'
+                });
         },
         pet: async (_parent: any, { petId }: PetArgs) => {
             return Pet.findById(petId)
                 .populate('type')
-                .populate('profilePhoto');
+                .populate('profilePhoto')
+                .populate({
+                    path: 'followedBy.refId'
+                });
         }
     },
 

@@ -12,6 +12,8 @@ import Auth from '../utils/auth';
 
 function Login() {
 
+  console.log("Login component rendered");
+
   const [login] = useMutation(LOGIN_USER);
 
   const fields = [
@@ -22,13 +24,22 @@ function Login() {
   const initialValues = { email: "", password: "" };
 
   const handleFormSubmit = async (formState: Record<string, string>) => {
+    console.log("handleformSubmit called");
     console.log(formState);
     try {
       const { data } = await login({
         variables: {  ...formState },
       });
-      console.log("token:" + data.login.token);
-      Auth.login(data.loginUser.token);
+
+      console.log("Login data:", data);
+      const token = data.loginUser.token || data.loginOrg.token;
+      
+      if (token) {
+        Auth.login(token);
+      }
+      else {
+        console.error("No token received");
+      }
     } catch (e) {
       console.error(e);
     }

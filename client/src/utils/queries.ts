@@ -23,6 +23,16 @@ export const QUERY_USERS = gql`
       pets {
         _id
         name
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        neuteredOrSpayed
+        about
+        vaccination
       }
       petCount
       meetUps {
@@ -41,8 +51,52 @@ export const QUERY_USERS = gql`
       }
       conversation {
         _id
+        conversationName
       }
       conversationCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount      
     }
   }
 `;
@@ -68,6 +122,16 @@ export const QUERY_USER = gql`
       pets {
         _id
         name
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        neuteredOrSpayed
+        about
+        vaccination
       }
       petCount
       meetUps {
@@ -86,8 +150,52 @@ export const QUERY_USER = gql`
       }
       conversation {
         _id
+        conversationName
       }
       conversationCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount      
     }
   }
 `;
@@ -113,6 +221,16 @@ export const QUERY_ME = gql`
       pets {
         _id
         name
+        type {
+          _id
+          type
+          breed
+        }
+        gender
+        age
+        neuteredOrSpayed
+        about
+        vaccination
       }
       petCount
       meetUps {
@@ -131,8 +249,52 @@ export const QUERY_ME = gql`
       }
       conversation {
         _id
+        conversationName
       }
       conversationCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      organizations {
+        _id
+        orgName
+      }
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount      
     }
   }
 `;
@@ -173,6 +335,45 @@ export const QUERY_ORGS = gql`
         contentText
       }
       postCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount     
     }
   }
 `;
@@ -211,6 +412,45 @@ export const QUERY_ORG = gql`
         contentText
       }
       postCount
+      likedPosts {
+        _id
+        contentText
+      }
+      likedPostsCount
+      following {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Pet {
+            _id
+            name
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followingCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount     
     }
   }
 `;
@@ -245,6 +485,21 @@ export const QUERY_PETS = gql`
         tags
       }
       vaccination
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount 
     }
   }
 `;
@@ -277,6 +532,21 @@ export const QUERY_PET = gql`
         tags
       }
       vaccination
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
+      followedByCount 
     }
   }
 `;
@@ -293,7 +563,15 @@ export const QUERY_POSTS = gql`
         refModel
       }
       contentText
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       responses {
         _id
         poster {
@@ -301,19 +579,16 @@ export const QUERY_POSTS = gql`
           refModel
         }
         contentText
-        media
-        responses {
-          _id
-        }
-        responseCount
-        createdAt
-        parentPost
-        isResponse
       }
       responseCount
+      likes {
+        refId
+        refModel
+      }
+      likesCount
+      parentPost  
+      isResponse          
       createdAt
-      parentPost
-      isResponse
       itemType
     }
   }
@@ -329,14 +604,32 @@ export const QUERY_POST = gql`
         refModel
       }
       contentText
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       responses {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       responseCount
+      likes {
+        refId
+        refModel
+      }
+      likesCount
+      parentPost  
+      isResponse          
       createdAt
-      parentPost
-      isResponse
       itemType
     }
   }
@@ -378,16 +671,36 @@ export const QUERY_MEETUPS = gql`
         refModel
       }
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       date
       time
       attendees
       numberOfAttendees
       comments {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       numberOfComments
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       createdAt
       itemType
     }
@@ -405,16 +718,36 @@ export const QUERY_MEETUP = gql`
         refModel
       }
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       date
       time
       attendees
       numberOfAttendees
       comments {
         _id
+        poster {
+          refId
+          refModel
+        }
+        contentText
       }
       numberOfComments
-      media
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       createdAt
       itemType
     }
@@ -479,16 +812,25 @@ export const QUERY_ADOPTIONS = gql`
     adoptions {
       _id
       poster {
-        refId
-        refModel
+        _id
+        orgName
+        email
+        phone
+        website
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       pet {
         _id
         name
-        owner {
-          refId
-          refModel
-        }
         type {
           _id
           type
@@ -507,10 +849,18 @@ export const QUERY_ADOPTIONS = gql`
           tags
         }
         vaccination
+        neuteredOrSpayed
       }
       goodWithPets
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       media {
         id
         filename
@@ -522,8 +872,20 @@ export const QUERY_ADOPTIONS = gql`
       }
       adoptionStatus
       adoptedBy {
-        refId
-        refModel
+        _id
+        username
+        email
+        password
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       createdAt
       itemType
@@ -537,16 +899,25 @@ export const QUERY_ADOPTION = gql`
     adoption(adoptionId: $adoptionId) {
       _id
       poster {
-        refId
-        refModel
+        _id
+        orgName
+        email
+        phone
+        website
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       pet {
         _id
         name
-        owner {
-          refId
-          refModel
-        }
         type {
           _id
           type
@@ -565,10 +936,18 @@ export const QUERY_ADOPTION = gql`
           tags
         }
         vaccination
+        neuteredOrSpayed
       }
       goodWithPets
       description
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       media {
         id
         filename
@@ -580,8 +959,20 @@ export const QUERY_ADOPTION = gql`
       }
       adoptionStatus
       adoptedBy {
-        refId
-        refModel
+        _id
+        username
+        email
+        password
+        avatar {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+        }
+        about
       }
       createdAt
       itemType
@@ -623,3 +1014,71 @@ export const ALL_MEDIA = gql`
     }
   }
 `;
+
+
+
+// ------------- Conversation QUERIES ------------- //
+
+export const GET_CONVERSATIONS = gql`
+  query Conversations {
+  conversations {
+    _id
+    conversationName
+    conversationUsers {
+      _id
+    }
+    lastMessage {
+      _id
+      textContent
+    }
+    messages {
+      _id
+      messageUser {
+        _id
+      }
+      textContent
+    }
+  }
+}`;
+
+// You can expand upon the following values to include more details other than id:
+// USERS - You can grab name/uersname, email, etc.
+// MESSAGES - You can grab the message textConent, MessageUser, etc.
+
+
+// ----------- MESSAGES QUERIES ------------- //
+
+export const GET_MESSAGES = gql`
+query Messages {
+  messages {
+    _id
+    textContent
+    conversation {
+      _id
+    }
+  }
+}
+`;
+
+export const GET_MESSAGES_BY_ID = gql`
+  query Message($messageId: String!) {
+    message(messageId: $messageId) {
+      _id
+      conversation {
+        _id
+      }
+      media {
+        id
+      }
+      messageUser {
+        _id
+      }
+      textContent
+    }
+  }
+`;
+
+//INPUT
+// {
+//   "messageId": "<messageId>"
+// }

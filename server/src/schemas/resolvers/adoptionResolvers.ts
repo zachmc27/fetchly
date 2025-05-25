@@ -1,4 +1,4 @@
-import { Adoption, Location } from '../../models/index.js';
+import { Adoption, Location, User } from '../../models/index.js';
 
 // AdoptionArgs
 interface LocationArgs {
@@ -11,29 +11,20 @@ interface LocationArgs {
 
 interface AdoptionArgs {
     adoptionId: string;
-    poster: {
-        refId: string;
-        refModel: string;
-    };
+    poster: string;
     pet: string;
     goodWithPets: string;
     description: string;
     location: LocationArgs;
     media?: string[];
     adoptionStatus: boolean;
-    adoptedBy: {
-        refId: string;
-        refModel: string;
-    };
+    adoptedBy: string;
     createdAt: string;
 }
 
 interface AddAdoptionArgs {
     input: {
-        poster: {
-            refId: string;
-            refModel: string;
-        };
+        poster: string;
         pet: string;
         goodWithPets: string;
         description: string;
@@ -45,16 +36,18 @@ interface AddAdoptionArgs {
 interface UpdateAdoptionArgs {
     adoptionId: string;
     input: {
-        poster: {
-            refId: string;
-            refModel: string;
-        };
+        poster: string;
         pet: string;
         goodWithPets: string;
         description: string;
         location: LocationArgs;
         media?: string[];
     }
+}
+
+interface adoptedArgs {
+    adoptionId: string;
+    userId: string;
 }
 
 const adoptionResolvers = {
@@ -64,19 +57,41 @@ const adoptionResolvers = {
             return await Adoption.find()
                 .populate({
                     path: 'pet',
-                    populate: { path: 'type' }
+                    populate: [
+                        { path: 'type' },
+                        { path: 'profilePhoto' }
+                    ]
                 })
                 .populate('media')
-                .populate('location');
+                .populate('location')
+                .populate({
+                    path: 'poster',
+                    populate: { path: 'avatar' }
+                })
+                .populate({
+                    path: 'adoptedBy',
+                    populate: { path: 'avatar' }
+                });
         },
         adoption: async (_parent: any, { adoptionId }: AdoptionArgs) => {
             return await Adoption.findById(adoptionId)
                 .populate({
                     path: 'pet',
-                    populate: { path: 'type' }
+                    populate: [
+                        { path: 'type' },
+                        { path: 'profilePhoto' }
+                    ]
                 })
                 .populate('media')
-                .populate('location');
+                .populate('location')
+                .populate({
+                    path: 'poster',
+                    populate: { path: 'avatar' }
+                })
+                .populate({
+                    path: 'adoptedBy',
+                    populate: { path: 'avatar' }
+                });
         }
     },
 
@@ -135,14 +150,55 @@ const adoptionResolvers = {
             };
 
             const adoption = await Adoption.findByIdAndUpdate(adoptionId, updateData, { new: true })
-                .populate('location')
-                .lean();
+                .populate('location');
                 
             return adoption;
         },
+        adoptPet: async (_parent: any, { adoptionId, userId }: adoptedArgs) => {
+
+            const adoptedBy = await User.findById(userId);
+
+            if (!adoptedBy) {
+                return {
+                    message: 'User not found.',
+                    success: false,
+                }
+            }
+
+            const adoption = await Adoption.findByIdAndUpdate(
+                adoptionId,
+                { adoptedBy, adoptionStatus: true },
+                { new: true }
+            )
+
+            if (!adoption) {
+                return {
+                    message: 'Adoption not found.',
+                    success: false,
+                }
+            }
+            
+            return {
+                message: 'Pet adopted successfully.',
+                success: true,
+            }
+        },
         deleteAdoption: async (_parent: any, { adoptionId }: AdoptionArgs) => {
-            const adoption = await Adoption.findByIdAndDelete(adoptionId);
-            return adoption;
+            const deleted = await Adoption.findByIdAndDelete(adoptionId);
+
+            if (!deleted) {
+                return {
+                    message: 'Adoption not found.',
+                    success: false,
+                }
+            }
+
+            console.log(`Adoption with ID ${adoptionId} deleted successfully.`);
+
+            return {
+                message: 'Adoption deleted successfully.',
+                success: true,
+            };
         }
     }
 };

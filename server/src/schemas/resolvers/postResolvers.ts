@@ -1,5 +1,6 @@
 import { Post, User, Org } from '../../models/index.js';
 import { type Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 // PostArgs
 interface AddPostArgs {
@@ -40,6 +41,14 @@ interface PostArgs {
         refModel: string;
     };
     postType: string;
+}
+
+interface LikePostArgs {
+    postId: string;
+    input: {
+        refId: string;
+        refModel: 'User' | 'Org';
+    };
 }
 
 const postResolvers = {
@@ -111,6 +120,95 @@ const postResolvers = {
           throw new Error('Post not found');
         }
         return post;
+      },
+      likePost: async (_parent: any, { postId, input }: LikePostArgs) => {
+        const post = await Post.findById(postId);
+        if (!post) {
+          return {
+            messsage: 'Post not found',
+            success: false,
+          };
+        }
+
+        const { refId, refModel } = input;
+
+        const alreadyLiked = post.likes.some(
+          (like) => like.refId.toString() === refId && like.refModel === refModel
+        );
+        if (alreadyLiked) {
+          return {
+            message: 'Post already liked',
+            success: false,
+          };
+        }
+
+        post.likes.push({
+          refId: new mongoose.Types.ObjectId(refId),
+          refModel,
+        });
+        
+        if(refModel === 'User') {
+          await User.findByIdAndUpdate(refId, {
+            $addToSet: {likedPosts: postId }
+          });
+        } else if (refModel === 'Org') {
+          await Org.findByIdAndUpdate(refId, {
+            $addToSet: {likedPosts: postId }
+          });
+        }
+
+        await post.save();
+        return {
+          message: 'Post liked successfully',
+          success: true,
+        };
+      },
+      unlikePost: async (_parent: any, { postId, input }: LikePostArgs) => {
+        const { refId, refModel } = input;        
+        const post = await Post.findById(postId);
+        if (!post) {
+          return {
+            message: 'Post not found',
+            success: false,
+          };
+        }
+
+        const existingLike = post.likes.some(
+          (like) => 
+            like.refId.toString() === refId && 
+            like.refModel === refModel
+        );
+
+        if (!existingLike) {
+          return {
+            message: 'Like not found for this post',
+            success: false,
+          };
+        }
+
+        await Post.findByIdAndUpdate(postId, {
+          $pull: {
+            likes: {
+              refId: new mongoose.Types.ObjectId(refId),
+              refModel,
+            },
+          },
+        });
+        
+        if(refModel === 'User') {
+          await User.findByIdAndUpdate(refId, {
+            $pull: {likedPosts: postId }
+          });
+        } else if (refModel === 'Org') {
+          await Org.findByIdAndUpdate(refId, {
+            $pull: {likedPosts: postId }
+          });
+        }
+
+        return {
+          message: 'Post unliked successfully',
+          success: true,
+        };
       },
       deletePost: async (_parent: any, { postId }: PostArgs) => {
         const post = await Post.findByIdAndDelete(postId);

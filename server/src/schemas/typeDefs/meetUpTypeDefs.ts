@@ -6,10 +6,10 @@ const meetUpTypeDefs = `
     _id: ID
     title: String!
     poster: Poster!
-    description: String!
-    location: Location!
-    date: String!
-    time: String!
+    description: String
+    location: Location
+    date: String
+    time: String
     attendees: [ID]
     numberOfAttendees: Int
     comments: [MeetUpComment]
@@ -57,6 +57,8 @@ const meetUpTypeDefs = `
   type Mutation {
     addMeetUp(input: AddMeetUpInput!): MeetUp
     updateMeetUp(meetUpId: String!, input: UpdateMeetUpInput!): MeetUp
+    attendMeetUp(meetUpId: String!, userId: ID!): BooleanResponse
+    unAttendMeetUp(meetUpId: String!, userId: ID!): BooleanResponse
     deleteMeetUp(meetUpId: String!): MeetUp
   }
 `;

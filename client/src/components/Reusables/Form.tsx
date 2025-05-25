@@ -33,6 +33,7 @@ export default function Form({ fields, onSubmit, buttonName, initialValues = {} 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log('Form submit triggered');
     onSubmit(formData);
   };
 

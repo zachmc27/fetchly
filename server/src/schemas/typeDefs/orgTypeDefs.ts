@@ -6,6 +6,8 @@ const orgTypeDefs = `
     _id: ID
     orgName: String
     email: String
+    phone: String
+    website: String
     password: String
     avatar: Media
     about: String
@@ -16,6 +18,12 @@ const orgTypeDefs = `
     petCount: Int
     posts: [Post]
     postCount: Int
+    likedPosts: [Post]
+    likedPostsCount: Int
+    following: [FollowedProfile]
+    followingCount: Int
+    followedBy: [FollowedProfile]
+    followedByCount: Int
   }
 
   input OrgInput {
@@ -27,6 +35,8 @@ const orgTypeDefs = `
   input UpdateOrgInput {
     orgName: String
     email: String
+    phone: String
+    website: String
     avatar: ID
     about: String
     location: LocationInput
@@ -50,6 +60,10 @@ const orgTypeDefs = `
   type Mutation {
     addOrg(input: OrgInput!): OrgAuth
     updateOrg(orgId: String!, input: UpdateOrgInput!): OrgAuth
+    addEmployee(orgId: String!, userId: ID!): BooleanResponse
+    removeEmployee(orgId: String!, userId: ID!): BooleanResponse
+    followOrg(orgId: String!, input: FollowedProfileInput!): BooleanResponse
+    unFollowOrg(orgId: String!, input: FollowedProfileInput!): BooleanResponse
     loginOrg(email: String!, password: String!): OrgAuth
   }
 `;

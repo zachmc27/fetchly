@@ -61,24 +61,32 @@ const postSchema = new Schema<MeetUpDocument>(
             type: String,
             required: true,
         },
-        attendees: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'User'
-            }
-        ],
-        comments: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'MeetUpComment'
-            }
-        ],
-        media: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Media'
-            }
-        ],
+        attendees: {
+            type: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                }
+            ],
+        },
+        comments: {
+            type: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: 'MeetUpComment'
+                }
+            ],
+            default: []
+        },
+        media: {
+            type: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Media'
+                }
+            ],
+            default: []
+        },
         createdAt: {
             type: Date,
             default: Date.now,
@@ -96,11 +104,11 @@ const postSchema = new Schema<MeetUpDocument>(
 });
 
 postSchema.virtual('numberOfAttendees').get(function () {
-  return this.attendees.length;
+  return Array.isArray(this.attendees) ? this.attendees.length : 0;
 });
 
 postSchema.virtual('numberOfComments').get(function () {
-  return this.comments.length;
+  return Array.isArray(this.comments) ? this.comments.length : 0;
 });
 
 const Meetup = model<MeetUpDocument>('MeetUp', postSchema);

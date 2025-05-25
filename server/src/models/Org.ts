@@ -13,6 +13,8 @@ export interface OrgDocument extends Document {
   id: string;
   orgName: string;
   email: string;
+  phone: string;
+  website: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
   avatar: Types.ObjectId | MediaDocument;
@@ -24,8 +26,16 @@ export interface OrgDocument extends Document {
   petCount: number;
   posts: Types.ObjectId[] | PostDocument[];
   postCount: number;
-  following: (Types.ObjectId | UserDocument | OrgDocument)[];
-  followedBy: (Types.ObjectId | UserDocument | OrgDocument)[];
+  likedPosts: Types.ObjectId[] | PostDocument[];
+  likedPostsCount: number;
+  following: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument | PetDocument;
+    refModel: 'User' | 'Org' | 'Pet';
+  }];
+  followedBy: [{
+    refId: Types.ObjectId | UserDocument | OrgDocument;
+    refModel: 'User' | 'Org';
+  }];
   followedByCount: number;
   followingCount: number;
 }
@@ -76,7 +86,39 @@ const orgSchema = new Schema<OrgDocument>(
             type: Schema.Types.ObjectId,
             ref: 'Post'
         }
-    ]
+    ],
+    likedPosts: [  
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        }
+    ],
+    following: [  
+        {
+            _id: false,
+            refId: {
+                type: Schema.Types.ObjectId,
+                refPath: 'following.refModel',
+            },
+            refModel: {
+                type: String,
+                enum: ['User', 'Org', 'Pet'],
+            },
+        }
+    ],
+    followedBy: [
+        {
+            _id: false,
+            refId: {
+                type: Schema.Types.ObjectId,
+                refPath: 'followedBy.refModel',
+            },
+            refModel: {
+                type: String,
+                enum: ['User', 'Org'],
+            },
+        }
+    ],
   },
   // set this to use virtual below
   {
@@ -109,20 +151,29 @@ orgSchema.methods.isCorrectPassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-// when we query an org, we'll also get another field called `employeeCount` with the number of employees we have
 orgSchema.virtual('employeeCount').get(function () {
   return this.employees.length;
 });
 
-// when we query an org, we'll also get another field called `petCount` with the number of pets we have
 orgSchema.virtual('petCount').get(function () {
   return this.pets.length;
 });
 
-// when we query an org, we'll also get another field called `bookCount` with the number of saved books we have
 orgSchema.virtual('postCount').get(function () {
   return this.posts.length;
 });
+
+orgSchema.virtual('likedPostsCount').get(function () {
+  return this.likedPosts.length;
+});
+
+orgSchema.virtual('followedByCount').get(function () {
+  return this.followedBy.length;
+});
+
+orgSchema.virtual('followingCount').get(function () {
+  return this.following.length;
+}); 
 
 const Org = model<OrgDocument>('Org', orgSchema);
 
