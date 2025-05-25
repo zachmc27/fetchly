@@ -85,11 +85,29 @@ const mediaResolvers = {
             });
 
             return newMedia;
+        },
+        deleteMedia: async (_parent: unknown, { mediaId }: { mediaId: string }) => {
+            const bucket = new GridFSBucket(mongoose.connection.db!, {
+                bucketName: 'media',
+            });
+
+            const media = await Media.findById(mediaId);
+            if (!media) return {
+                success: false,
+                message: 'Media not found',
+            };
+
+            await Media.deleteOne({ _id: mediaId });
+            await bucket.delete(new mongoose.Types.ObjectId(media.gridFsId));
+
+            return {
+                success: true,
+                message: 'Media deleted successfully',
+            };
         }
     },   
     Media: {
         url: (media: any) => {
-
             return `http://localhost:3001/media/${media.gridFsId}`;
         }
     } 

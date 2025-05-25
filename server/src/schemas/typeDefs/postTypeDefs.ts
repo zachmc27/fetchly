@@ -2,8 +2,22 @@ const postTypeDefs = `
 
 # -------------------- Post TypeDefs ------------------------
 
+  union PosterUnion = User | Org
+
+  type Poster {
+    refId: PosterUnion
+    refModel: String
+  }
+
+  input PosterInput {
+    refId: ID!
+    refModel: String!
+  }
+
+  union LikeUnion = User | Org
+
   type Like {
-    refId: ID
+    refId: LikeUnion
     refModel: String
   }
 

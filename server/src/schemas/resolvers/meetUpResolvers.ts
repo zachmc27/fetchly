@@ -66,14 +66,24 @@ const meetUpResolvers = {
         meetUps: async () => {
             return await MeetUp.find()
                 .populate('media')
-                .populate('comments')
-                .populate('location');
+                .populate({
+                    path: 'comments',
+                        populate: {
+                        path: 'poster.refId',
+                }})
+                .populate('location')
+                .populate('poster.refId');
         },
         meetUp: async (_parent: any, { meetUpId }: MeetUpArgs) => {
             return await MeetUp.findById(meetUpId)
                 .populate('media')
-                .populate('comments')
-                .populate('location');
+                .populate({
+                    path: 'comments',
+                        populate: {
+                        path: 'poster.refId',
+                }})
+                .populate('location')
+                .populate('poster.refId');
         },
     },
 

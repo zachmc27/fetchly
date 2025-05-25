@@ -2,9 +2,11 @@ const petTypeDefs = `
 
 # -------------------- Pet TypeDefs ------------------------
 
-    type Owner {
-        refId: ID!
-        refModel: String!
+    union OwnerUnion  = User | Org
+
+    type OwnerProfile {
+        refId: OwnerUnion
+        refModel: String
     }
 
     input OwnerInput {
@@ -15,10 +17,11 @@ const petTypeDefs = `
     type Pet {
         _id: ID
         name: String
-        owner: Owner!
+        owner: OwnerProfile!
         type: Type
         gender: String
         age: Int
+        size: String
         neuteredOrSpayed: Boolean
         about: String
         profilePhoto: Media
@@ -34,6 +37,7 @@ const petTypeDefs = `
         type: ID!
         gender: String
         age: Int
+        size: String
         neuteredOrSpayed: Boolean
         about: String
         profilePhoto: String

@@ -49,11 +49,13 @@ const meetUpCommentResolvers = {
   Query: {
     meetUpComments: async () => {
       return await MeetUpComment.find()
-        .populate('media');
+        .populate('media')
+        .populate('poster.refId');
     },
     meetUpComment: async (_parent: any, { meetUpCommentId }: MeetUpCommentArgs) => {
       const comment = await MeetUpComment.findById(meetUpCommentId)
-        .populate('media');
+        .populate('media')
+        .populate('poster.refId');
       if (!comment) return null;
       return comment;
     }

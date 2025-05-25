@@ -148,6 +148,8 @@ export const ADD_PET = gql`
 //   "input": {
 //     "about": "A cute dog",
 //     "age": 3,
+//     "size": "large",
+//     "neuteredOrSpayed": true,
 //     "gender": "female",
 //     "name": "Lulu",
 //     "owner": {
@@ -176,6 +178,8 @@ export const UPDATE_PET = gql`
 //     "type": <typeId>,
 //     "gender": "male",
 //     "age": 4,
+//     "size": "large",
+//     "neuteredOrSpayed": true,
 //     "about": "A cute dog",
 //     "profilePhoto": <mediaId>,
 //     "vaccination": "Vaccination details",
@@ -691,13 +695,8 @@ export const UPLOAD_MEDIA = gql`
 export const DELETE_MEDIA = gql`
   mutation DeleteMedia($mediaId: ID!) {
     deleteMedia(mediaId: $mediaId) {
-      _id
-      filename
-      contentType
-      length
-      uploadDate
-      gridFsId
-      tags
+      message
+      success
     }
   }
 `;

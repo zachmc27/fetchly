@@ -53,6 +53,7 @@ const petResolvers = {
         // Pet Queries
         pets: async () => {
             return await Pet.find()
+                .populate('owner.refId')
                 .populate('type')
                 .populate('profilePhoto')
                 .populate({
@@ -61,6 +62,7 @@ const petResolvers = {
         },
         pet: async (_parent: any, { petId }: PetArgs) => {
             return Pet.findById(petId)
+                .populate('owner.refId')
                 .populate('type')
                 .populate('profilePhoto')
                 .populate({

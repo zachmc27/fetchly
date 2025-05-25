@@ -2,16 +2,6 @@ const meetUpCommentTypeDefs = `
 
 # -------------------- Meet Up Comment TypeDefs ------------------------
 
-  type Poster {
-    refId: ID!
-    refModel: String!
-  }
-
-  input PosterInput {
-    refId: ID!
-    refModel: String!
-  }
-
   type MeetUpComment {
     _id: ID
     poster: Poster
