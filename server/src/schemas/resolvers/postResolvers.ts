@@ -58,12 +58,28 @@ const postResolvers = {
       posts: async () => {
         return await Post.find()
           .populate('media')
-          .populate('responses');
+          .populate({
+            path: 'responses',
+            populate: {
+              path: 'poster.refId',
+          }})
+          .populate('poster.refId')
+          .populate({
+            path: 'likes.refId'
+          });
       },
       post: async (_parent: any, { postId }: PostArgs) => {
         return await Post.findById(postId)
           .populate('media')
-          .populate('responses');
+          .populate({
+            path: 'responses',
+            populate: {
+              path: 'poster.refId',
+          }})
+          .populate('poster.refId')
+          .populate({
+            path: 'likes.refId'
+          });
       },
     },
 

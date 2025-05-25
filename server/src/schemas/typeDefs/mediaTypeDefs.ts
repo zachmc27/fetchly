@@ -26,7 +26,7 @@ type Query {
 
 type Mutation {
     uploadMedia(input: UploadMediaInput!): Media
-    deleteMedia(id: ID!): Boolean
+    deleteMedia(mediaId: ID!): BooleanResponse
 }
 `;
 

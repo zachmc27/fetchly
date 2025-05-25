@@ -464,7 +464,16 @@ export const QUERY_PETS = gql`
       _id
       name
       owner {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       type {
@@ -474,6 +483,8 @@ export const QUERY_PETS = gql`
       }
       gender
       age
+      size
+      neuteredOrSpayed
       about
       profilePhoto {
         id
@@ -511,7 +522,16 @@ export const QUERY_PET = gql`
       _id
       name
       owner {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       type {
@@ -521,6 +541,8 @@ export const QUERY_PET = gql`
       }
       gender
       age
+      size
+      neuteredOrSpayed
       about
       profilePhoto {
         id
@@ -559,7 +581,16 @@ export const QUERY_POSTS = gql`
     posts {
       _id
       poster {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       contentText
@@ -575,14 +606,32 @@ export const QUERY_POSTS = gql`
       responses {
         _id
         poster {
-          refId
-          refModel
+          refId {
+             ... on User {
+              _id
+              username
+             }
+             ... on Org {
+               _id
+              orgName
+             }
+          }
+           refModel
         }
         contentText
       }
       responseCount
       likes {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       likesCount
@@ -600,7 +649,16 @@ export const QUERY_POST = gql`
     post(postId: $postId) {
       _id
       poster {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       contentText
@@ -616,14 +674,32 @@ export const QUERY_POST = gql`
       responses {
         _id
         poster {
-          refId
-          refModel
+          refId {
+             ... on User {
+              _id
+              username
+             }
+             ... on Org {
+               _id
+              orgName
+             }
+          }
+           refModel
         }
         contentText
       }
       responseCount
       likes {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       likesCount
@@ -667,7 +743,16 @@ export const QUERY_MEETUPS = gql`
       _id
       title
       poster {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       description
@@ -686,7 +771,16 @@ export const QUERY_MEETUPS = gql`
       comments {
         _id
         poster {
-          refId
+          refId {
+            ... on User {
+              _id
+              username
+            }
+            ... on Org {
+              _id
+              orgName
+            }
+          }
           refModel
         }
         contentText
@@ -714,7 +808,16 @@ export const QUERY_MEETUP = gql`
       _id
       title
       poster {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       description
@@ -733,7 +836,16 @@ export const QUERY_MEETUP = gql`
       comments {
         _id
         poster {
-          refId
+          refId {
+            ... on User {
+              _id
+              username
+            }
+            ... on Org {
+              _id
+              orgName
+            }
+          }
           refModel
         }
         contentText
@@ -762,19 +874,50 @@ export const QUERY_MEETUP_COMMENTS = gql`
     meetUpComments {
       _id
       poster {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       contentText
-      media
+      meetUpId
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       responses {
         _id
+        poster {
+          refId {
+            ... on User {
+              _id
+              username
+            }
+            ... on Org {
+             _id
+              orgName
+            }
+          }
+          refModel
+        }
+        contentText
       }
       responseCount
       parentComment
       isResponse
       createdAt
-      meetUpId
       itemType
     }
   }
@@ -786,19 +929,50 @@ export const QUERY_MEETUP_COMMENT = gql`
     meetUpComment(meetUpCommentId: $meetUpCommentId) {
       _id
       poster {
-        refId
+        refId {
+          ... on User {
+            _id
+            username
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
         refModel
       }
       contentText
-      media
+      meetUpId
+      media {
+        id
+        filename
+        contentType
+        length
+        uploadDate
+        gridFsId
+        tags
+      }
       responses {
         _id
+        poster {
+          refId {
+            ... on User {
+              _id
+              username
+            }
+            ... on Org {
+             _id
+              orgName
+            }
+          }
+          refModel
+        }
+        contentText
       }
       responseCount
       parentComment
       isResponse
       createdAt
-      meetUpId
       itemType
     }
   }

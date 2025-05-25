@@ -24,8 +24,7 @@
     "graphql": "^16.9.0",
     "graphql-upload": "^17.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^8.4.3",
-    "mongoose-autopopulate": "^1.1.0"
+    "mongoose": "^8.4.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
