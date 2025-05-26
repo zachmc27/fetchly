@@ -51,6 +51,7 @@ const mockUser = {
 
 export default function Profile() {
   const [user, setUser] = useState(mockUser);
+  setUser(mockUser);
 
   useEffect(() => {
     // to change users with setUser based on who's saved locally

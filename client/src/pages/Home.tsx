@@ -5,7 +5,7 @@
 // import PostTypeDropdown from '../components/Reusables/Dropdown';
 
 import AuthForm from "../pages/Login";
-import Profile from "../pages/Profile";
+//import Profile from "../pages/Profile";
 
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div>
-      <Profile/>
+      <AuthForm/>
     </div>
   );
 }
