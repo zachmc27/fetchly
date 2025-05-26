@@ -55,7 +55,7 @@ export default function Feed({
       localStorage.removeItem("activeConversationId");
       localStorage.removeItem("isInfoOpen");
     }
-  }, []);
+  }, [location.pathname]);
 
   // currently expects a number with how my mock data is setup but will have to be changed to handle strings
   // additionally, if the linking IDs between convo collection and messages collection differ, the .find logic will have to be adjusted to handle that.

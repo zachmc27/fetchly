@@ -8,7 +8,7 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
   function handleClose() {
     localStorage.removeItem("isInfoOpen"); // Clear isInfoOpen from localStorage
     onClose(); // Call the onClose prop to close the component
-  };
+  }
 
   function handleDelete() {
     alert('chat deleted')
