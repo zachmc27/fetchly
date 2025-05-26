@@ -33,7 +33,7 @@ export default function Adoption() {
         <button onClick={filterByDogs} className="filter-button">Dogs</button>
         <button onClick={filterByCats} className="filter-button">Cats</button>
       </div>
-      <Feed feedArray={mockAdoptionData} itemStyle="adoption-card" containerStyle="adoption-feed-container"/>
+      <Feed initialFeedArray={mockAdoptionData} itemStyle="adoption-card" containerStyle="adoption-feed-container"/>
     </div>
   )
 }

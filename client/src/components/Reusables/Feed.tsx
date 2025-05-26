@@ -7,111 +7,125 @@
 import male from "../../images/mars-stroke-solid.svg"
 import female from "../../images/venus-solid.svg"
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import location from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-
+import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import { mockConversations } from "../../mockdata/conversation-data"
+import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import "../../ZachTemp.css"
+import MessagesPage from "../Inbox/MessagesPage"
+import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
 
 
-type MockMessageItem = {
-  id: number;
-  coverImage?: string;
-  chatTitle: string;
-  latestMessage: string;
-  date: string;
-  isUnread?: boolean;
-  itemType: string;
-};
 
-type MockPostItem = {
-  id: number;
-  userAvi: string;
-  postUser: string;
-  postContent: string
-  postLikeCount: number;
-  postCommentCount: number;
-  postDate: string;
-  itemType: string;
-
-};
-
-type MockMeetupItem = {
-  id: number;
-  postImage?: string;
-  postUser: string;
-  postTitle: string;
-  postLocation: string;
-  postRSVPCount: number;
-  postDate: string;
-  meetupTime: string;
-  itemType: string;
-};
-
-type MockAdoptionItem = {
-  id: number;
-  petCoverImage: string;
-  petName: string;
-  petAge: number;
-  petGender: string;
-  itemType: string;
-};
-
-type FeedItem = MockMessageItem | MockPostItem | MockMeetupItem | MockAdoptionItem;
+type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | MockAdoptionCard;
 
 export default function Feed({
-  feedArray,
+  initialFeedArray,
   itemStyle,
   containerStyle,
 }: {
-  feedArray: FeedItem[];
+  initialFeedArray: FeedItem[];
   itemStyle: string;
   containerStyle: string;
 }) {
+  const location = useLocation();
+  const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
+// --------------- INBOX TO MESSAGESPAGE PAGE LOGIC ---------------
+// ----------------------------------------------------------------
+
+  const [activeConversation, setActiveConversation] = useState<MockConversationObject | null>(null); 
+  const [isChatOpen, setIsChatOpen] = useState(false)
+ 
+  useEffect(() => {
+    const storedConversationId = localStorage.getItem("activeConversationId");
+    if (storedConversationId && location.pathname === '/inbox') {
+      const conversationId = parseInt(storedConversationId, 10); // Parse as integer
+      const storedConversation = mockConversations.find((convo) => convo.id === conversationId);
+      if (storedConversation) {
+        setActiveConversation(storedConversation);
+        setIsChatOpen(true);
+      }
+    }
+
+    if (location.pathname !== "/inbox") {
+      localStorage.removeItem("activeConversationId");
+      localStorage.removeItem("isInfoOpen");
+    }
+  }, []);
+
+  // currently expects a number with how my mock data is setup but will have to be changed to handle strings
+  // additionally, if the linking IDs between convo collection and messages collection differ, the .find logic will have to be adjusted to handle that.
+  
+  function handleMessagePageRender(messageId: number) { 
+    const conversationToOpen = mockConversations.find(convo => convo.id === messageId);
+
+    if (conversationToOpen) {
+      console.log('Opening chat for conversation:', conversationToOpen.conversationName);
+      setActiveConversation(conversationToOpen);
+      setIsChatOpen(true)
+      localStorage.setItem("activeConversationId", conversationToOpen.id.toString());
+    } else  {
+      console.warn('No conversation found with ID:', messageId);
+    }
+  }
+
+   function handleCloseMessagePage() {
+    setIsChatOpen(false);
+    localStorage.removeItem("activeConversationId");
+    localStorage.removeItem("isInfoOpen");
+    if (activeConversation) {
+      setFeedArray(prev =>
+        prev.map(item => 
+          item.itemType === "message" && item.id === activeConversation.id
+          ? { ...item, isUnread: false }
+          : item
+        )
+      )
+    }
+    setActiveConversation(null);
+  }
+// ----------------------------- END ------------------------------
+// ----------------------------------------------------------------
 
   function renderFeedItem(item: FeedItem): JSX.Element | null  {
+    
     switch (item.itemType) {
       case "message": {
-          const messageItem = item as MockMessageItem;
+          const messageItem = item as MockMessageCard;
           return (
-            <div key={item.id} className={itemStyle}>
-              {/* Unread Dot Area (takes space even if dot isn't there to keep alignment) */}
-      <div className="unread-indicator-area">
-        {messageItem.isUnread && <div className="unread-dot"></div>}
-      </div>
-
-      {/* Icon/Avatar */}
-      {
-        messageItem.coverImage ? 
-        <img
-        src={messageItem.coverImage} // Use your existing coverImage prop
-        alt="Chat icon"
-        className="message-icon"
-        /> :
-        <div className="message-icon">
-        <img
-        src={group} // Use your existing coverImage prop
-        alt="Chat icon"
-        className="default-icon"
-        />
-        </div>
-      }
-      
-
-      {/* Text Content */}
-      <div className="message-text-content">
-        <h1 className="chat-title">{messageItem.chatTitle}</h1>
-        <p className="latest-message">{messageItem.latestMessage}</p>
-      </div>
-
-      {/* Date */}
-      <p className="chat-date">{messageItem.date}</p>
-    </div>
+            <div key={item.id} className={itemStyle} onClick={() => handleMessagePageRender(messageItem.id)}>   
+              <div className="unread-indicator-area">
+                {messageItem.isUnread && <div className="unread-dot"></div>}
+              </div>
+              {
+                messageItem.coverImage ? 
+                <img
+                src={messageItem.coverImage} 
+                alt="Chat icon"
+                className="message-icon"
+                /> :
+                <div className="message-icon">
+                <img
+                src={group}
+                alt="Chat icon"
+                className="default-icon"
+                />
+                </div>
+              }
+              <div className="message-text-content">
+                <h1 className="chat-title">{messageItem.chatTitle}</h1>
+                <p className="latest-message">{messageItem.latestMessage}</p>
+              </div>
+              <p className="chat-date">{messageItem.date}</p>
+            </div>
           );
         }
       case "post": {
-        const postItem = item as MockPostItem;
+        const postItem = item as MockPostCard;
         return (
           
           <div key={postItem.id} className={itemStyle}>
@@ -123,9 +137,9 @@ export default function Feed({
             <p>{postItem.postCommentCount}</p>
           </div>
         );
-      }
+        }
       case "adoption": {
-        const adoptionItem = item as MockAdoptionItem
+        const adoptionItem = item as MockAdoptionCard
         return (
           <div key={adoptionItem.id} className={itemStyle}>
             {/* adoption JSX */}
@@ -149,9 +163,9 @@ export default function Feed({
             </div>
           </div>
         );
-      }
+        }
       case "meetup": {
-        const meetupItem = item as MockMeetupItem
+        const meetupItem = item as MockMeetupCard
         return (
           <div key={meetupItem.id} className={itemStyle}>
             <p className="post-user">{meetupItem.postUser}</p>
@@ -162,7 +176,7 @@ export default function Feed({
               <div className="meetup-main-text">
                 <h1>{meetupItem.postTitle}</h1> 
                 <div className="meetup-location-container">
-                  <img src={location} alt="location pin" />
+                  <img src={locationimg} alt="location pin" />
                   <p>{meetupItem.postLocation}</p>  
                 </div> 
               </div>
@@ -185,16 +199,25 @@ export default function Feed({
            
           </div>
         );
-      }
-        // two more cases for meetup type and adoption type
+        }
+
       default:
         return null;
   }
+}
+
+if (isChatOpen && activeConversation) {
+      return (
+        <MessagesPage 
+        conversation={activeConversation}
+        onClose={handleCloseMessagePage}/>
+      )
 }
 
 return (
     <div className={containerStyle}>
       {feedArray.map(renderFeedItem)}
     </div>
+
   );
 }
