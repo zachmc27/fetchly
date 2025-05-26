@@ -8,6 +8,7 @@
 // <Form fields={fields} onSubmit={handleSubmit} />
 
 import React from 'react';
+import "../../SammiReusables.css";
 
 // typing for form fields
 type Field = {
@@ -38,10 +39,11 @@ export default function Form({ fields, onSubmit, buttonName, initialValues = {} 
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div >
+    <form className="form-ctn" onSubmit={handleSubmit}>
       {fields.map(field => (
         <div key={field.name}>
-          <label htmlFor={field.name}>{field.label}</label> <br/>
+          <label className="profile-md-fnt" htmlFor={field.name}>{field.label}</label> <br/>
           <input
             type={field.type}
             id={field.name}
@@ -52,8 +54,9 @@ export default function Form({ fields, onSubmit, buttonName, initialValues = {} 
           
         </div>
       ))}
-      <br/> <button type="submit">{buttonName || 'Submit'}</button>
+      <button className="btn-fill btn-form" type="submit">{buttonName || 'Submit'}</button>
     </form>
+    </div>
   );
 }
 

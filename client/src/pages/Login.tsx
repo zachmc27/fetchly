@@ -9,6 +9,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER, ADD_USER, ADD_ORG } from '../utils/mutations';
 import Form from "../components/Reusables/Form";
 import Auth from '../utils/auth';
+import "../SammiReusables.css";
 
 function Login() {
 
@@ -127,11 +128,13 @@ function SignupOrg() {
 function Signup() {
   const [showSignupUser, setShowSignupUser] = useState(true);
 
+  console.log(showSignupUser);
+
   return (
     <div>
-      <div>
-        <button onClick={() => setShowSignupUser(showSignupUser)}>Personal</button>
-        <button onClick={() => setShowSignupUser(!showSignupUser)}>Organization</button>
+      <div className='signup-btn-cnt profile-sm-fnt'>
+        <button className= {showSignupUser ? 'btn-fill signup-btn' : 'btn-line signup-btn'} onClick={() => setShowSignupUser(true)}>Personal</button>
+        <button className={showSignupUser ? 'btn-line signup-btn' : 'btn-fill signup-btn'} onClick={() => setShowSignupUser(false)}>Organization</button>
       </div>
       {showSignupUser ? (
         <SignupUser />
@@ -147,14 +150,20 @@ export default function AuthForm() {
 
   return (
     <div>
+      <span className='form-title-ctn'> Fetchly </span>
       {showLogin ? (
         <Login />
       ) : (
         <Signup />
       )}
-      <button onClick={() => setShowLogin(!showLogin)}>
-        {showLogin ? 'Switch to Signup' : 'Switch to Login'}
-      </button>
+      <div className='form-switch-ctn'>
+        <span >
+          {showLogin ? 'Need an account? ' : 'Already have an account? '}
+        </span>
+        <span className="form-switch-text" onClick={() => setShowLogin(!showLogin)}>
+          {showLogin ? ' Sign up here' : ' Log in here'}
+        </span>
+      </div>
     </div>
   );
 }
