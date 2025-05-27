@@ -136,6 +136,14 @@ img {
   
 }
 
+.profile-btn-ctn {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  flex: 2;
+  justify-content: end;
+}
+
 .profile-user-title{
   display: flex;
   flex-direction: column;
@@ -166,11 +174,11 @@ img {
   font-size: 20px;
 }
 
-.profile-md-fnt{
+.profile-md-fnt, h1{
   font-size: 16px;
 }
 
-.profile-sm-fnt{
+.profile-sm-fnt, p{
   font-size: 14px;
 }
 
