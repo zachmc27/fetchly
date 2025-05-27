@@ -51,14 +51,14 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
   return (
     <form onSubmit={handleSubmit} className="adoption-post-form">
       <ImageUpload
-      onImageSelect={(file) => {
-        console.log('selected Image', file)
-      }}
+        onImageSelect={(file) => {
+          console.log("selected Image", file);
+        }}
         previewImage={previewImage}
         setPreviewImage={setPreviewImage}
       />
       <div>
-        <label>What's Their Name</label>
+        <label>What&apos;s Their Name?</label>
         <input
           type="text"
           value={name}
@@ -84,7 +84,7 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
       </div>
 
       <div>
-        <label>What's their breed</label>
+        <label>What&apos;s their breed?</label>
         <input
           type="text"
           value={breed}
