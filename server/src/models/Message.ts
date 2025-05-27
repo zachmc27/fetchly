@@ -13,28 +13,30 @@ export interface MessageDocument extends Document {
   conversation: Types.ObjectId;
   isRead: boolean;
   itemType: string;
+  createdAt: Date;
+  formattedCreatedAt: string;
 }
 
 const messageSchema = new Schema<MessageDocument>({
   messageUser: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   textContent: {
     type: String,
   },
   media: [
-                {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Media'
-                }
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Media'
+    }
   ],
   readUser: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        ref: 'User'
-                    }
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   ],
   conversation: {
     type: Schema.Types.ObjectId,
@@ -44,9 +46,13 @@ const messageSchema = new Schema<MessageDocument>({
   itemType: {
     type: String,
     default: 'message'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    
   }
-},
-{
+}, {
   timestamps: true,
   toJSON: {
     virtuals: true,
@@ -56,6 +62,20 @@ const messageSchema = new Schema<MessageDocument>({
 
 messageSchema.virtual('isRead').get(function (this: MessageDocument) {
   return this.readUser.length > 0;
+});
+
+messageSchema.virtual('formattedCreatedAt').get(function (this: MessageDocument) {
+  const pad = (n: number) => n.toString().padStart(2, '0');
+  const date = new Date(this.createdAt);
+
+  const MM = pad(date.getMonth() + 1);
+  const DD = pad(date.getDate());
+  const YYYY = date.getFullYear();
+  const HH = pad(date.getHours());
+  const mm = pad(date.getMinutes());
+  const ss = pad(date.getSeconds());
+
+  return `${MM}-${DD}-${YYYY} ${HH}:${mm}:${ss}`;
 });
 
 const Message = model<MessageDocument>('Message', messageSchema);
