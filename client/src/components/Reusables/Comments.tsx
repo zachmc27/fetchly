@@ -57,8 +57,9 @@ function CommentItem({ comment }: { comment: Comment }) {
                 <button>{comment.replies.length}</button>
               </div>
             </div>
-          </div>
         </div>
+        </div>
+        
       </div>
     </div>
   );
