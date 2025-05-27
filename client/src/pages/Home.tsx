@@ -1,23 +1,20 @@
-// Feed component that takes an array of post objects to rendeer on the page
-// import Button from '../components/Reusables/Button';
-// import userPhoto from '../assets/userPhoto.png';
-// import Icons from '../components/Reusables/ButtonIcon';
-// import PostTypeDropdown from '../components/Reusables/Dropdown';
-
-
+import PostTypeDropdown from "../components/Reusables/Dropdown";
+import AuthForm from "../pages/Login";
+import PostButton from "../components/Navbar/PostButton";
+import { usePostModal } from "../components/Reusables/usePostModal";
 
 export default function Home() {
- 
-  // const handlePostTypeChange = (type: string) => {
-  //   console.log('Selected post type:', type)
-  // };
+  const { openModalWithType } = usePostModal();
 
   return (
     <div>
-
+      <AuthForm />
+      <h1>Home</h1>
+      <PostButton
+      />
+      <div>
+        <PostTypeDropdown onSelect={openModalWithType} />
+      </div>
     </div>
   );
 }
-
-
-
