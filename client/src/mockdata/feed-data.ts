@@ -4,48 +4,96 @@ import baller from "../images/baller.jpeg"
 import alien from "../images/alienkitty.jpeg"
 import flowerdog from "../images/flowerdog.jpeg"
 import billie from "../images/billiewooflish.jpeg"
+import batdog from "../images/batdog.jpeg"
 
   export const mockMessageData = [
     {
         id: 1,
-        coverImage: "image",
+        coverImage: alien,
         chatTitle: "Dream team",
         latestMessage: "Let's be great",
-        date: "JUNE 2ND",
+        date: "6/2/25",
+        isUnread: true,
         itemType: "message"
     },
     {
         id: 2,
-        coverImage: "image",
-        chatTitle: "Dream team",
+        chatTitle: "Mystery Gang",
         latestMessage: "Let's continue to be great",
-        date: "JUNE 2ND",
+        date: "6/2/25",
+        isUnread: false,
         itemType: "message"
     },
     {
         id: 3,
-        coverImage: "image",
-        chatTitle: "Dream team",
+        coverImage: batdog,
+        chatTitle: "Family",
         latestMessage: "Still being great",
-        date: "JUNE 2ND",
+        date: "6/2/25",
+        isUnread: false,
         itemType: "message"
     },
     {
         id: 4,
-        coverImage: "image",
-        chatTitle: "Dream team",
+        coverImage: batdog,
+        chatTitle: "Ginyu Force",
         latestMessage: "Let's be great",
-        date: "JUNE 2ND",
+        date: "6/2/25",
+        isUnread: true,
         itemType: "message"
     },
     {
         id: 5,
-        coverImage: "image",
-        chatTitle: "Dream team",
+        coverImage: batdog,
+        chatTitle: "Straw hats",
         latestMessage: "Let's be great...",
-        date: "JUNE 2ND",
+        date: "6/2/25",
+        isUnread: true,
         itemType: "message"
-    }
+    },
+    {
+        id: 6,
+        coverImage: batdog,
+        chatTitle: "Straw hats",
+        latestMessage: "Let's be great...",
+        date: "6/2/25",
+        isUnread: false,
+        itemType: "message"
+    },
+    {
+        id: 7,
+        chatTitle: "Dudes",
+        latestMessage: "Let's be great...",
+        date: "6/2/25",
+        isUnread: true,
+        itemType: "message"
+    },
+    {
+        id: 8,
+        coverImage: batdog,
+        chatTitle: "Fellas",
+        latestMessage: "Let's be great...",
+        date: "6/2/25",
+        isUnread: false,
+        itemType: "message"
+    },
+    {
+        id: 9,
+        coverImage: batdog,
+        chatTitle: "Girlypops",
+        latestMessage: "Let's be great...",
+        date: "6/2/25",
+        isUnread: false,
+        itemType: "message"
+    },
+    {
+        id: 10,
+        chatTitle: "Stop scrolling",
+        latestMessage: ">:(",
+        date: "6/2/25",
+        isUnread: true,
+        itemType: "message"
+    },
   ]
 
   export const mockPostData = [
