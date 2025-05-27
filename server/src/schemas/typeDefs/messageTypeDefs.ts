@@ -10,6 +10,8 @@ type Message {
     conversation: Conversation
     isRead: Boolean
     itemType: String
+    createdAt: String
+    formattedCreatedAt: String
 }
 
 input AddMessageInput {

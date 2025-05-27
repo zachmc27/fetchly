@@ -17,6 +17,8 @@ interface MessageArgs {
         conversation: string;
         text: string;
         media: Media[];
+        createdAt: Date;
+        formattedCreatedAt: string;
     }
 }
 interface AddMessageInputArgs {
