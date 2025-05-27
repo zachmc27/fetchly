@@ -4,19 +4,31 @@
 // to determine what the posts will look like (varies by post type)
 // prop that passes class name for the feed container
 
+// icons and css
 import male from "../../images/mars-stroke-solid.svg"
 import female from "../../images/venus-solid.svg"
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import "../../ZachTemp.css"
+
+// testing data, can be deleted after integrations implementation
 import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
-import "../../ZachTemp.css"
+import { mockMeetupPosts } from "../../mockdata/post-data";
+
+// components
 import MessagesPage from "../Inbox/MessagesPage"
+import PostDetails from "./PostDetails"
+import Comments from "./Comments"
+
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
+import SearchBar from "./SearchBar"
+import Goinglist from "../Meetup/Goinglist"
+import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 
 
 
@@ -34,7 +46,7 @@ export default function Feed({
   const location = useLocation();
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
-// --------------- INBOX TO MESSAGESPAGE PAGE LOGIC ---------------
+// --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
 // ----------------------------------------------------------------
 
   const [activeConversation, setActiveConversation] = useState<MockConversationObject | null>(null); 
@@ -88,16 +100,76 @@ export default function Feed({
     }
     setActiveConversation(null);
   }
-// ----------------------------- END ------------------------------
 // ----------------------------------------------------------------
+// --------------- MEETUP PAGE TO POST VIEW LOGIC -----------------
+// ----------------------------------------------------------------
+  const [activeMeetupPost, setActiveMeetupPost] = useState<MockMeetupItem | null>(null); 
+  const [isMeetupPostOpen, setIsMeetupPostOpen] = useState(false)
+  const [isGoingListOpen, setIsGoingListOpen] = useState(false)
+  const [isMeetupCommentsOpen, setIsMeetupCommentsOpen] = useState(true)
+  const [activeTab, setActiveTab] = useState<'going' | 'comments'>('comments')
 
-  function renderFeedItem(item: FeedItem): JSX.Element | null  {
+  useEffect(() => {
+    const storedMeetupId = localStorage.getItem("activeMeetupId");
+    if (storedMeetupId && location.pathname === '/meetup') {
+      const meetupId = parseInt(storedMeetupId, 10); // Parse as integer
+      const storedMeetup = mockMeetupPosts.find((meetup) => meetup.id === meetupId);
+      if (storedMeetup) {
+        setActiveMeetupPost(storedMeetup);
+        setIsMeetupPostOpen(true);
+      }
+    }
+
+    if (location.pathname !== "/meetup") {
+      localStorage.removeItem("activeMeetupId");
+    }
+  }, [location.pathname]);
+
+  function handleMeetupViewRender(meetupId: number) {
+    const meetupToOpen = mockMeetupPosts.find(post => post.id === meetupId);
+
+    if (meetupToOpen) {
+      console.log('Opening chat for conversation:', meetupToOpen.title);
+      setActiveMeetupPost(meetupToOpen);
+      setIsMeetupPostOpen(true)
+      localStorage.setItem("activeMeetupId", meetupToOpen.id.toString());
+    } else  {
+      console.warn('No conversation found with ID:', meetupId);
+    }
+    setIsMeetupPostOpen(true)
+  }
+
+  function handleCloseMeetupView() {
+    setIsMeetupPostOpen(false);
+    localStorage.removeItem("activeMeetupId");
+    setActiveMeetupPost(null);
+  }
+
+  function filterBySearch() {
+    console.log('This function will filter posts by the search.');
+  }
+
+  function handleGoingListRender() {
+    console.log('toggle going list');
+    setIsMeetupCommentsOpen(false)
+    setIsGoingListOpen(true)
+    setActiveTab('going')
+  }
+
+  function handleCommentsRender() {
+    console.log('toggle comments render');
+    setIsGoingListOpen(false)
+    setIsMeetupCommentsOpen(true)
+    setActiveTab('comments')
+  }
+// ----------------------------------------------------------------
+  function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
     
     switch (item.itemType) {
       case "message": {
           const messageItem = item as MockMessageCard;
           return (
-            <div key={item.id} className={itemStyle} onClick={() => handleMessagePageRender(messageItem.id)}>   
+            <div key={index} className={itemStyle} onClick={() => handleMessagePageRender(messageItem.id)}>   
               <div className="unread-indicator-area">
                 {messageItem.isUnread && <div className="unread-dot"></div>}
               </div>
@@ -167,7 +239,7 @@ export default function Feed({
       case "meetup": {
         const meetupItem = item as MockMeetupCard
         return (
-          <div key={meetupItem.id} className={itemStyle}>
+          <div key={index} className={itemStyle} onClick={() => handleMeetupViewRender(meetupItem.id)}>
             <p className="post-user">{meetupItem.postUser}</p>
             <div className="meetup-info-row">
               <div className="meetup-image-container">
@@ -214,10 +286,37 @@ if (isChatOpen && activeConversation) {
       )
 }
 
+if (isMeetupPostOpen && activeMeetupPost) {
+  return (
+    <>
+    <PostDetails 
+     postData={activeMeetupPost} 
+     containerClass="meetup-details-container"
+     onClose={handleCloseMeetupView}
+     />
+    <div className="tab-switcher">
+    <button onClick={handleGoingListRender} className={activeTab === 'going' ? 'active' : ''}>Going</button>
+    <button onClick={handleCommentsRender} className={activeTab === 'comments' ? 'active' : ''}>Comments</button>
+    </div>
+    {
+      isMeetupCommentsOpen &&
+      <Comments comments={activeMeetupPost.comments}/>
+    }
+    {
+      isGoingListOpen &&
+      <Goinglist rsvpList={activeMeetupPost.rsvpList}/>
+    }
+    </>
+  )
+}
 return (
+  <>
+    {
+      !isMeetupPostOpen && <SearchBar send={filterBySearch} />
+    }
     <div className={containerStyle}>
       {feedArray.map(renderFeedItem)}
     </div>
-
+  </>
   );
 }

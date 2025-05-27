@@ -60,17 +60,17 @@
 
 /* post details */
 
-.post-container {
+.post-details-container {
     border: 1px solid black;
     background-color: beige;
 }
 
-.meetup-container {
+.meetup-details-container {
     border: 1px solid black;
     background-color: lightgreen;
 }
 
-.adoption-container {
+.adoption-details-container {
     border: 1px solid black;
     background-color: lightpink;
 }
@@ -110,7 +110,6 @@
     height: fit-content;
     width: 100vw;
     border: .1px solid black;
-    background-color: beige;
 }
 
 .search-style:focus-within {
@@ -217,7 +216,7 @@
     height: fit-content;
     width: 100vw;
     border: .1px solid black;
-    background-color: beige;
+
 }
 
 .meetup-card {
@@ -347,7 +346,7 @@
     height: fit-content;
     width: 100vw;
     border: .1px solid black;
-    background-color: beige;
+
 }
 
 .inbox-feed-container {
@@ -764,4 +763,420 @@
 /* If there's no group chat editing container, adjust margin for the user list */
 .msg-info-container > .user-list-wrapper:first-child {
   margin-top: 30px; /* If the group editing section is hidden, give space */
+}
+
+/* Viewing Meetup Post Page */
+
+.meetup-details-container { /* Assuming this will be the containerClass prop for PostDetails */
+  background-color: #fff;
+  border-radius: 0px 0px 8px 8px;
+  border-color: #eee;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px; /* Adjust as needed for width */
+  box-sizing: border-box;
+}
+
+/* User Info (Avatar and Username) */
+.user-info-row { /* Add this class to a div wrapping user avi and username in PostDetails */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.user-info-row button:first-child {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.user-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-info-container p {
+ margin-bottom: 3px;
+}
+
+.user-info-row img[alt="users avatar"],
+.comment-img img,
+.going-user-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 1px solid #eee; /* Light border for avatars */
+}
+
+.post-username {
+  color: #333;
+  font-size: 1.1em;
+}
+
+/* RSVP Button in PostDetails */
+.rsvp-btn { /* Targeting the RSVP button in meetup */
+  background-color: #007bff; /* Blue button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1;
+  margin-top: 5px;
+}
+
+.meetup-details-container button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+
+/* Post Content and Image */
+.post-content, .meetup-title, .meetup-text, .adoption-description {
+  margin-bottom: 10px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.meetup-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #333;
+}
+
+.img-container {
+  width: 100%;
+  background-color: #f0f0f0; /* Placeholder background for image */
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px; /* Minimum height for the image container */
+}
+
+.img-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  max-height: 350px; /* Limit height of post images */
+  border-radius: 8px; /* Apply border-radius to the image itself if not fully contained */
+}
+
+/* Post Details - Dates, Time, Location */
+.meetup-details-container p:has(img[alt="location-icon"]),
+.meetup-details-container p:has(img[alt="calendar-icon"]),
+.meetup-details-container p:has(img[alt="time-icon"]) {
+  display: flex;
+  align-items: center;
+  color: #777;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+/* Adjustments for the icons for location, time, date */
+.meetup-details-container p img {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Comment and Like Buttons in PostDetails (for freeflow posts) */
+.post-details-container button:not(:first-of-type) { /* Target comment and like buttons */
+  background: none;
+  border: none;
+  color: #777;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.post-details-container button:not(:first-of-type) img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.post-details-container .post-date {
+  font-size: 0.8em;
+  color: #999;
+  text-align: right;
+  margin-top: 10px;
+}
+
+/* --- Adoption Post Specific Styles --- */
+.adoption-details-container { /* Assuming this is the containerClass for adoption posts */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.adoption-details-container .img-container { /* If you render multiple images for adoption, style their containers */
+    margin-bottom: 10px;
+}
+
+.adoption-details-container .img-container img {
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.adoption-details-container p {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.adoption-details-container p:first-of-type { /* Pet Name */
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.adoption-details-container img[alt="male-icon"],
+.adoption-details-container img[alt="female-icon"] {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.adoption-details-container img[alt="organization avatar"] {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.adoption-details-container .pet-details-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.adoption-details-container .pet-details-container p {
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+
+/* --- Comments Component Styles --- */
+.comments-section-wrapper { /* Add a wrapper div around Comments component for full width */
+  background-color: #fff;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.comment-container {
+  display: flex;
+  width: 100%;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee; /* Separator between comments */
+  background-color: #fff; /* Light background for comment bubble */
+}
+
+.comment-row {
+  display: flex;
+  width: 100%;
+}
+
+.comment-img {
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+
+}
+
+.comment-content {
+  flex-grow: 1; /* Allow content to take available space */
+  padding: 10px 12px;
+  position: relative;
+  word-break: break-word; /* Ensure long words wrap */
+}
+
+.comment-content div:first-of-type { /* Username */
+  font-weight: bold;
+  color: #333;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.comment-content div:nth-of-type(2) { /* Comment text */
+  color: #555;
+  font-size: 0.95em;
+}
+
+.comment-icon-row {
+  display: flex;
+  margin-top: 5px;
+  gap: 20px; /* Space between buttons */
+}
+
+.comment-likes-container,
+.comment-replies-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.comment-likes-container button,
+.comment-replies-container button { /* Adjust this selector if ButtonBubble renders something else */
+  background: none;
+  border: none;
+  color: #777;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.85em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.comment-likes-container img,
+.comment-replies-container img { /* Adjust this selector if ButtonBubble renders something else */
+  width: .85em;
+  height: .85em;
+  margin-right: 5px
+}
+
+.comment-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #f7f7f7;
+  border-top: 1px solid #e5e5e5;
+  bottom: 0; 
+  margin: 0 auto;
+  width: 100%; 
+  box-sizing: border-box; 
+  z-index: 10;
+}
+
+.comment-bar input[type="text"] {
+  flex-grow: 1;
+  padding: 9px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 18px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+.comment-bar input[type="text"]::placeholder {
+  color: #ababab;
+}
+
+.comment-bar .send-message-btn {
+  background: none;
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 1.1rem;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  padding-left: 1px;
+  padding-bottom: 1px;
+}
+
+
+/* --- Goinglist Component Styles --- */
+.going-list-container {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.going-user-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee; /* Separator between users */
+}
+
+.going-user-card:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.going-user-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.going-user-card p {
+  font-size: .95em;
+  color: #585757;
+  margin: 0;
+}
+
+/* --- Meetup Post View Tab Switcher --- */
+.tab-switcher {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ddd;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.tab-switcher button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 1.1em;
+  cursor: pointer;
+  color: #777;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+}
+
+.tab-switcher button.active {
+  color: #007bff; /* Active tab color */
+}
+
+.tab-switcher button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #007bff; /* Active tab underline */
 }
