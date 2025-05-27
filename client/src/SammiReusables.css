@@ -1,3 +1,89 @@
+:root {
+  --grey: #EEEEEE;
+}
+
+button {
+  width: 100%;
+  height: 3rem;
+  border-radius: 8px;
+}
+
+.btn-form{
+  margin-top: 7.5%;
+}
+
+.btn-fill{
+  color: white;
+  background-color: black;
+}
+
+.btn-line {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border-style: solid;
+  border-width: 0.175rem;
+}
+
+/************* FORM CSS *****************/
+.form-ctn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 90%;
+  gap: 1rem; 
+  margin: 0 auto;
+  padding-top: 5%;
+}
+
+input {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 4px;
+}
+
+.form-switch-ctn {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 auto 30%;
+  padding-top: 10%;
+  gap: 2.5%;
+}
+
+.form-switch-text {
+  color: var(--grey);
+}
+
+.signup-btn-cnt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+  gap: 5%;
+  padding-top: 15%;
+}
+
+.signup-btn {
+  border-radius: 33px;
+  height: 2.25rem;
+}
+
+.form-title-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  margin: 25% auto;
+}
+
+
 /************* COMMENT CSS *****************/
 img {
     width: 100%;
@@ -27,4 +113,71 @@ img {
   align-items: center;
   width: 15%;
   margin-top: 3%;
+}
+
+
+/************* PROFILE CSS *****************/
+.profile-background{
+  background-color: var(--grey);
+}
+
+.profile-ctn{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10% 10%;
+  row-gap: 1rem;
+}
+
+.profile-item-ctn{
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  
+}
+
+.profile-user-title{
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+}
+
+.profile-bio-ctn{
+  width: 90%;
+  overflow-wrap: break-word;
+}
+
+.profile-pet-ctn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5%;
+}
+
+.profile-user-img{
+  width: 20%;
+}
+
+.profile-pet-img {
+  width: 90%;
+}
+
+.profile-lg-fnt{
+  font-size: 20px;
+}
+
+.profile-md-fnt{
+  font-size: 16px;
+}
+
+.profile-sm-fnt{
+  font-size: 14px;
+}
+
+.profile-feed-bg {
+  border-radius: 33px 33px 0px 0px;
+  background-color: white;
+  width: 100%;
+  height: 100vh;
+  margin-top: 5%;
 }
