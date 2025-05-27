@@ -1,11 +1,11 @@
 // import React from 'react';
-import { FaCamera, FaHeart, FaImage, FaAt, FaComment } from 'react-icons/fa';
-import ButtonBubble from './Button'; 
+import { FaCamera, FaHeart, FaImage, FaAt, FaComment } from "react-icons/fa";
+import ButtonBubble from "../Navbar/PostButton";
 
 const Icons = () => {
-    function postPhoto () {
-        console.log("photo has been posted")
-    }
+  function postPhoto() {
+    console.log("photo has been posted");
+  }
   return (
     <div className="icon-row">
       <ButtonBubble icon={<FaCamera />} onClick={postPhoto} />

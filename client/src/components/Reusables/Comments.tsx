@@ -4,24 +4,23 @@
 // utilize bubble button components to make the replies button and like button
 
 //HOW TO CALL:
-// const commentsData = [{}]; 
+// const commentsData = [{}];
 // <Comments comments={commentsData}/>
 
 //import React, { useState } from 'react';
 import UserPlaceHolder from "../../assets/react.svg";
 import "../../SammiReusables.css";
-import ButtonBubble from "./Button";
-
+import ButtonBubble from "../Navbar/PostButton";
 
 type Comment = {
-  id: number,
-  user: string,
-  avatar?: string,
-  comment: string,
-  likeCount: number,
-  postedTime: Date,
-  replies: Comment[]
-}
+  id: number;
+  user: string;
+  avatar?: string;
+  comment: string;
+  likeCount: number;
+  postedTime: Date;
+  replies: Comment[];
+};
 
 type CommentsProps = {
   comments: Comment[];
@@ -34,24 +33,23 @@ function CommentItem({ comment }: { comment: Comment }) {
     return comment.id;
   };
 
-  
   return (
-    <div >
-      <div className="comment-container" >
+    <div>
+      <div className="comment-container">
         <div className="comment-row">
           <div className="comment-img">
-            <img src={comment.avatar || UserPlaceHolder}></img> 
+            <img src={comment.avatar || UserPlaceHolder}></img>
           </div>
           <div className="comment-content" onClick={handleContainerClick}>
             <span>{comment.user}</span> <br></br>
-            <span>{comment.comment}</span><br></br>
+            <span>{comment.comment}</span>
+            <br></br>
             <div className="comment-icon-row">
               <ButtonBubble />
               <ButtonBubble />
             </div>
+          </div>
         </div>
-        </div>
-        
       </div>
     </div>
   );
