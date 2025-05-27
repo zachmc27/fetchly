@@ -4,27 +4,29 @@
 // utilize bubble button components to make the replies button and like button
 
 //HOW TO CALL:
-// const commentsData = [{}]; 
+// const commentsData = [{}];
 // <Comments comments={commentsData}/>
 
 import React, { useState } from 'react';
 import UserPlaceHolder from "../../assets/react.svg";
 import "../../SammiReusables.css";
+
 import "../../ZachTemp.css"
 import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import ButtonBubble from "./Button";
 
 
+
 type Comment = {
-  id: number,
-  user: string,
-  avatar?: string,
-  comment: string,
-  likeCount: number,
-  postedTime: Date,
-  replies: Comment[]
-}
+  id: number;
+  user: string;
+  avatar?: string;
+  comment: string;
+  likeCount: number;
+  postedTime: Date;
+  replies: Comment[];
+};
 
 type CommentsProps = {
   comments: Comment[];
@@ -37,17 +39,22 @@ function CommentItem({ comment }: { comment: Comment }) {
     return comment.id;
   };
 
-  
   return (
-    <div >
-      <div className="comment-container" >
+    <div>
+      <div className="comment-container">
         <div className="comment-row">
           <div className="comment-img">
-            <img src={comment.avatar || UserPlaceHolder}></img> 
+            <img src={comment.avatar || UserPlaceHolder}></img>
           </div>
           <div className="comment-content" onClick={handleContainerClick}>
+
             <div>{comment.user}</div> 
             <div>{comment.comment}</div>
+
+            <span>{comment.user}</span> <br></br>
+            <span>{comment.comment}</span>
+            <br></br>
+
             <div className="comment-icon-row">
               <div className="comment-likes-container">
                 <img src={heart} alt="heart icon" />

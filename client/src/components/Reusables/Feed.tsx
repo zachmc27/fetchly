@@ -11,7 +11,14 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import { mockConversations } from "../../mockdata/conversation-data"
+import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import "../../ZachTemp.css"
+import MessagesPage from "../Inbox/MessagesPage"
+import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
+
 
 // testing data, can be deleted after integrations implementation
 import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
@@ -32,6 +39,7 @@ import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 
 
 
+
 type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | MockAdoptionCard;
 
 export default function Feed({
@@ -46,7 +54,9 @@ export default function Feed({
   const location = useLocation();
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
+
 // --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
+
 // ----------------------------------------------------------------
 
   const [activeConversation, setActiveConversation] = useState<MockConversationObject | null>(null); 
@@ -100,6 +110,7 @@ export default function Feed({
     }
     setActiveConversation(null);
   }
+
 // ----------------------------------------------------------------
 // --------------- MEETUP PAGE TO POST VIEW LOGIC -----------------
 // ----------------------------------------------------------------
@@ -164,12 +175,15 @@ export default function Feed({
   }
 // ----------------------------------------------------------------
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
+
     
     switch (item.itemType) {
       case "message": {
           const messageItem = item as MockMessageCard;
           return (
+
             <div key={index} className={itemStyle} onClick={() => handleMessagePageRender(messageItem.id)}>   
+
               <div className="unread-indicator-area">
                 {messageItem.isUnread && <div className="unread-dot"></div>}
               </div>
@@ -286,6 +300,7 @@ if (isChatOpen && activeConversation) {
       )
 }
 
+
 if (isMeetupPostOpen && activeMeetupPost) {
   return (
     <>
@@ -309,6 +324,7 @@ if (isMeetupPostOpen && activeMeetupPost) {
     </>
   )
 }
+
 return (
   <>
     {

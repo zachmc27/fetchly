@@ -53,10 +53,12 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
         <button onClick={handleInfoRender}>i</button>
       </div>
       <div className="chat-messages">
+
         {conversation.messages.map((message, index) => {
           const isUserMessage = message.id === userID; // Determine if it's the user's message
           return (
             <div className="message-content-wrapper" key={index}> {/* Add key prop */}
+
               <p className={isUserMessage ? "msg-user-txt" : "msg-incoming-user-txt"}>
                 {message.messageUser}
               </p>
