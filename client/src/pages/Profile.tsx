@@ -89,7 +89,7 @@ export default function Profile() {
       </div>
         <div className="profile-feed-bg">
           <Feed 
-          feedArray={user.posts} 
+          initialFeedArray={user.posts} 
           itemStyle="adoption-item"          
           containerStyle="meetup-feed-container"
           />

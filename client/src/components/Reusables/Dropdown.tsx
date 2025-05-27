@@ -8,10 +8,10 @@
 // and the meetup option is the dropdown's default option
 
 import { useState } from "react";
-import type { PostType } from "../Reusables/PostModalProvider"
+import type { PostType } from "../../types/Post"
 import '../../PostDropdown.css'
 
-const postOptions = ['Post', 'Meetup Post', 'Adoption Post'];
+const postOptions: PostType[] = ['Post', 'Meetup Post', 'Adoption Post'];
 
 interface PostTypeDropdownProps {
   onSelect: (type: PostType) => void;
@@ -19,11 +19,11 @@ interface PostTypeDropdownProps {
 
 const PostTypeDropdown = ({ onSelect }: PostTypeDropdownProps ) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState('New Post');
+  const [selectedType, setSelectedType] = useState<PostType | null >('Post');
 
   const toggleDropdown = () => setIsOpen(!isOpen)
 
-  const handleSelect = (type: string) => {
+  const handleSelect = (type: PostType) => {
     setSelectedType(type);
     onSelect(type);
     setIsOpen(false);
