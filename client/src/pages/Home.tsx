@@ -4,9 +4,6 @@
 // import Icons from '../components/Reusables/ButtonIcon';
 // import PostTypeDropdown from '../components/Reusables/Dropdown';
 
-import AuthForm from "../pages/Login";
-import Profile from "./Profile";
-//import Profile from "../pages/Profile";
 
 
 export default function Home() {
@@ -15,12 +12,9 @@ export default function Home() {
   //   console.log('Selected post type:', type)
   // };
 
-
-
   return (
     <div>
-      <AuthForm/>
-      <Profile/>
+
     </div>
   );
 }

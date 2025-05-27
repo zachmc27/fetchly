@@ -55,10 +55,13 @@ const mockUser = {
 
 export default function Profile() {
   const [user, setUser] = useState(mockUser);
-  //setUser(mockUser);
-
+  
   useEffect(() => {
     // to change users with setUser based on who's saved locally
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(mockUser);
+    }
   }, []);
 
   console.log(user.posts);
@@ -98,7 +101,7 @@ export default function Profile() {
       </div>
         <div className="profile-feed-bg">
           <Feed 
-          feedArray={user.posts} 
+          initialFeedArray={user.posts} 
           itemStyle="profile-post-item"          
           containerStyle="profile-feed-container"
           />
