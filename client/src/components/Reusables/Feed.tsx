@@ -11,13 +11,7 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
-import { mockConversations } from "../../mockdata/conversation-data"
-import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
-import "../../ZachTemp.css"
-import MessagesPage from "../Inbox/MessagesPage"
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+
 
 
 // testing data, can be deleted after integrations implementation
