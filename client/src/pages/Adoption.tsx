@@ -5,6 +5,7 @@
 import Feed from "../components/Reusables/Feed";
 import { mockAdoptionData } from "../mockdata/feed-data";
 import SearchBar from "../components/Reusables/SearchBar"
+import MediaUpload from "../components/Media/uploadMedia";
 import "../ZachTemp.css"
 
 export default function Adoption() {
@@ -28,6 +29,7 @@ export default function Adoption() {
   return (
     <div className="adoption-page-container">
       <SearchBar send={filterBySearch} />
+      <MediaUpload />
       <div className="filter-buttons-container">
         <button onClick={filterByAll} className="filter-button">All</button>
         <button onClick={filterByDogs} className="filter-button">Dogs</button>
