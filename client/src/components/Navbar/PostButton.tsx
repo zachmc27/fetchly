@@ -1,9 +1,9 @@
 // button that takes:
 // a function prop to execute when clicked,
 // a class name
-import React from "react";
+// import React from "react";
 import { useLocation } from "react-router-dom";
-import { usePostModal } from "../Reusables/PostModalProvider";
+import { usePostModal } from "../Reusables/usePostModal";
 import "../../PostButton.css";
 
 const PostButton = () => {

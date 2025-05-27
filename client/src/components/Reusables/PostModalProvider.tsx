@@ -1,27 +1,28 @@
 // putting all of the logic for the post modal in one place
 //makes it easier to call on the post pages to get button to work
-import { createContext, useContext, useState, ReactNode } from "react";
+import { useState, ReactNode } from "react";
 import PostModal from "./PostModal";
 import NewFreeFormPost from "../Creators/NewPost";
 import NewAdoptionPost from "../Creators/NewAdoptionPost";
 import NewMeetUpPost from "../Creators/NewMeetupPost";
+import { PostModalContext } from "./usePostModal";
 
 // Type of posts the user can create
 type PostType = "Post" | "Adoption Post" | "Meetup Post" | null;
 
-interface PostModalContextType {
-  openModalWithType: (type: PostType) => void;
-}
+// interface PostModalContextType {
+//   openModalWithType: (type: PostType) => void;
+// }
 
-const PostModalContext = createContext<PostModalContextType | undefined>(undefined);
+// const PostModalContext = createContext<PostModalContextType | undefined>(undefined);
 
-export const usePostModal = () => {
-  const context = useContext(PostModalContext);
-  if (!context) {
-    throw new Error("usePostModal must be used within a PostModalProvider");
-  }
-  return context;
-};
+// export const usePostModal = () => {
+//   const context = useContext(PostModalContext);
+//   if (!context) {
+//     throw new Error("usePostModal must be used within a PostModalProvider");
+//   }
+//   return context;
+// };
 
 export const PostModalProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

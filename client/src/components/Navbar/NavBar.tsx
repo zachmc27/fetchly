@@ -1,5 +1,5 @@
 // the bar that will have bubble button components that route user to other pages when pressed
-import React from "react"
+// import React from "react"
 import { FaHome, FaPaw, } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 import { MdOutlineComment } from "react-icons/md";
