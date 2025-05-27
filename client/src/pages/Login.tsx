@@ -6,7 +6,7 @@
 // below log in account form should have text "Need an account? Sign up here" that renders create account form if pressed
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER, ADD_USER, ADD_ORG } from '../utils/mutations';
+import { LOGIN_USER, LOGIN_ORG, ADD_USER, ADD_ORG } from '../utils/mutations';
 import Form from "../components/Reusables/Form";
 import Auth from '../utils/auth';
 import "../SammiReusables.css";
@@ -16,6 +16,7 @@ function Login() {
   console.log("Login component rendered");
 
   const [login] = useMutation(LOGIN_USER);
+  const [loginOrg] = useMutation(LOGIN_ORG);
 
   const fields = [
     { name: "email", label: "Email", type: "email" },
@@ -32,19 +33,54 @@ function Login() {
         variables: {  ...formState },
       });
 
-      console.log("Login data:", data);
-      const token = data.loginUser.token || data.loginOrg.token;
-      
-      if (token) {
-        Auth.login(token);
-      }
-      else {
-        console.error("No token received");
-      }
-    } catch (e) {
-      console.error(e);
+       console.log("Login data:", data);
+    const token = data.loginUser.token;
+    const userId = data.loginUser.user._id;
+
+    if (token) {
+      Auth.login(token, userId);
+      localStorage.setItem('accountType', "user");
+      return;
     }
-  };
+  } catch (userError) {
+    // If user login fails, try org login
+    try {
+      const { data } = await loginOrg({
+        variables: { ...formState },
+      });
+
+      console.log("Org login data:", data);
+      const token = data.loginOrg.token;
+      const orgId = data.loginOrg.org._id;
+
+      if (token) {
+        Auth.login(token, orgId);
+        localStorage.setItem('accountType', "org");
+        return;
+      } else {
+        console.error("No token received from org login");
+      }
+    } catch (orgError) {
+      console.error("Both user and org login failed:", orgError);
+    }
+  }
+};
+
+  //     console.log("Login data:", data);
+  //     const token = data.loginUser.token || data.loginOrg.token;
+  //     const userId = data.loginUser.user._id || data.loginOrg.org._id;
+
+  //     if (token) {
+  //       Auth.login(token, userId);
+  //     }
+  //     else {
+  //       console.error("No token received");
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+    
+  // };
 
   return (
     <div>

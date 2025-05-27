@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import "../SammiReusables.css";
 import Feed from "../components/Reusables/Feed";
 import UserPlaceHolder from "../assets/react.svg";
+import ButtonBubble from "../components/Reusables/Button";
+import AddIcon from "../images/add.png";
+import EditIcon from "../images/edit.png";
+import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 
 const profileMockPosts = [
   {
@@ -14,7 +18,7 @@ const profileMockPosts = [
     postLikeCount: 5,
     postCommentCount: 2,
     postDate: "11-23-01",
-    itemType: "MockPostItem"
+    itemType: "post"
   },
   {
     id: 2,
@@ -24,7 +28,7 @@ const profileMockPosts = [
     postLikeCount: 4,
     postCommentCount: 6,
     postDate: "11-27-01",
-    itemType: "MockPostItem"
+    itemType: "post"
   },
   
 ];
@@ -51,10 +55,13 @@ const mockUser = {
 
 export default function Profile() {
   const [user, setUser] = useState(mockUser);
-  setUser(mockUser);
-
+  
   useEffect(() => {
     // to change users with setUser based on who's saved locally
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(mockUser);
+    }
   }, []);
 
   console.log(user.posts);
@@ -69,7 +76,11 @@ export default function Profile() {
             <span className="profile-lg-fnt">{user.fullName}</span>
             <span className="profile-md-fnt">{user.username}</span>
           </div>
-          
+          <div className="profile-btn-ctn">
+            <ButtonBubble imageSrc={CalenderIcon} />
+            <ButtonBubble imageSrc={EditIcon} />
+          </div>
+           
         </div>
         <div className="profile-bio-ctn profile-sm-fnt">
           <span>{user.about}</span>
@@ -85,13 +96,14 @@ export default function Profile() {
               <span>{pet.name}</span>
             </div>
           ))}
+          <ButtonBubble imageSrc={AddIcon} />
         </div>
       </div>
         <div className="profile-feed-bg">
           <Feed 
-          feedArray={user.posts} 
-          itemStyle="adoption-item"          
-          containerStyle="meetup-feed-container"
+          initialFeedArray={user.posts} 
+          itemStyle="profile-post-item"          
+          containerStyle="profile-feed-container"
           />
         </div>
     </div>
