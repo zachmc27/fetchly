@@ -19,7 +19,7 @@ export default function Meetup() {
     <div className="meetup-page-container">
          <SearchBar send={filterBySearch} />
          <Feed 
-          feedArray={mockMeetupData} 
+          initialFeedArray={mockMeetupData} 
           itemStyle="meetup-card" 
           containerStyle="meetup-feed-container"/>
     </div>
