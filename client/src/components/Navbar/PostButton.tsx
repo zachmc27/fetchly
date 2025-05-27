@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { usePostModal } from "../Reusables/usePostModal";
 import "../../PostButton.css";
 
+
 const PostButton = () => {
   const location = useLocation();
   const { openModalWithType } = usePostModal();

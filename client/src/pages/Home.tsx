@@ -1,7 +1,7 @@
 import PostTypeDropdown from "../components/Reusables/Dropdown";
 import AuthForm from "../pages/Login";
 import PostButton from "../components/Navbar/PostButton";
-import { usePostModal } from "../components/Reusables/PostModalProvider";
+import { usePostModal } from "../components/Reusables/usePostModal";
 
 export default function Home() {
   const { openModalWithType } = usePostModal();
