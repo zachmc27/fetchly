@@ -594,14 +594,14 @@ export const CREATE_ADOPTION = gql`
 // CREATE_ADOPTION input should look like this:
 // {
 //   "input": {
-//     "pet": <petId>,
-//     "poster": <orgId>,
-//     "goodWithPets": "Prefers to be your only pet.",
-//     "description": "A great little cat that loves to snuggle.",
+//    "pet": <petId>,
+//    "poster": <orgId>,
+//    "goodWithPets": "Prefers to be your only pet.",
+//    "description": "A great little cat that loves to snuggle.",
 //    "location": {
-//      "address": "76 Peter St",
-//      "zip": "L6E 0T9",
-//      "city": "Markham",
+//     "address": "76 Peter St",
+//     "zip": "L6E 0T9",
+//     "city": "Markham",
 //      "state": "Ontario",
 //      "country": "Canada"
 //    },

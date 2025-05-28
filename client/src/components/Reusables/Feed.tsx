@@ -225,7 +225,10 @@ export default function Feed({
           <div key={adoptionItem._id} className={itemStyle}>
             {/* adoption JSX */}
             <div className="adoption-image-container">
-              <img src={adoptionItem.pet.profilePhoto.url} alt="cover image for the post" />
+              <img
+              src={adoptionItem.pet.profilePhoto?.url || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
+              alt="cover image for the post"
+              />
             </div>
             <div className="adoption-feed-info-container">
             <h1>{adoptionItem.pet.name}</h1>

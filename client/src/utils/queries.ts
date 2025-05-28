@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
 //-------------- USER QUERIES ------------- //
 
@@ -45,37 +46,27 @@ export const QUERY_USERS = gql`
         contentText
       }
       postCount
-      following {
-        _id
-        username
-      }
       conversation {
-        _id
         conversationName
       }
       conversationCount
       likedPosts {
-        _id
         contentText
       }
       likedPostsCount
       organizations {
-        _id
         orgName
       }
       following {
         refId {
           ... on User {
-            _id
             username
             email
           }
           ... on Pet {
-            _id
             name
           }
           ... on Org {
-            _id
             orgName
           }
         }
@@ -85,12 +76,10 @@ export const QUERY_USERS = gql`
       followedBy {
         refId {
           ... on User {
-            _id
             username
             email
           }
           ... on Org {
-            _id
             orgName
           }
         }
@@ -199,6 +188,19 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+// Example function to call QUERY_USER using Apollo Client
+
+export async function fetchUser(
+  client: ApolloClient<NormalizedCacheObject>,
+  userId: string
+) {
+  const { data } = await client.query({
+    query: QUERY_USER,
+    variables: { userId },
+  });
+  return data.user;
+}
 
 //Returns logged in user
 export const QUERY_ME = gql`
