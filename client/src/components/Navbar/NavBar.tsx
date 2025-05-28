@@ -21,24 +21,24 @@ const NavBar = () => {
                 </li>
                 <li>
                   <Link
-                    to="/Adoption"
-                    className={currentPage === '/Adoption' ? 'nav-link active' : 'nav-link'}
+                    to="/adoption"
+                    className={currentPage === '/adoption' ? 'nav-link active' : 'nav-link'}
                   >
                       <FaPaw/>
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/MeetUp"
-                    className={currentPage === '/MeetUp' ? 'nav-link active' : 'nav-link'}
+                    to="/meetup"
+                    className={currentPage === '/meetup' ? 'nav-link active' : 'nav-link'}
                   >
                       <IoLocation/>
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/Inbox"
-                    className={currentPage === '/Inbox' ? 'nav-link active' : 'nav-link'}
+                    to="/inbox"
+                    className={currentPage === '/inbox' ? 'nav-link active' : 'nav-link'}
                   >
                       <MdOutlineComment/>
                   </Link>

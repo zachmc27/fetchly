@@ -18,10 +18,11 @@ export type MockPostItem = {
   userAvi: string;
   postUser: string;
   postContent: string;
-  images: string[];
+  postImages?: string[];
   postLikeCount: number;
-  postCommentCount: number;
   postDate: string;
+  postCommentCount: number;
+  comments: Comment[]
   itemType: string;
 
 };
