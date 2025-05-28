@@ -7,10 +7,14 @@
 // const commentsData = [{}];
 // <Comments comments={commentsData}/>
 
-//import React, { useState } from 'react';
+
 import UserPlaceHolder from "../../assets/react.svg";
 import "../../SammiReusables.css";
-import ButtonBubble from "../Navbar/PostButton";
+import "../../ZachTemp.css"
+import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+// import ButtonBubble from "./Button";
+
 
 type Comment = {
   id: number;
@@ -41,15 +45,21 @@ function CommentItem({ comment }: { comment: Comment }) {
             <img src={comment.avatar || UserPlaceHolder}></img>
           </div>
           <div className="comment-content" onClick={handleContainerClick}>
-            <span>{comment.user}</span> <br></br>
-            <span>{comment.comment}</span>
-            <br></br>
+            <div>{comment.user}</div> 
+            <div>{comment.comment}</div>
             <div className="comment-icon-row">
-              <ButtonBubble />
-              <ButtonBubble />
+              <div className="comment-likes-container">
+                <img src={heart} alt="heart icon" />
+                <button>{comment.likeCount}</button>
+              </div>
+              <div className="comment-replies-container">
+                <img src={chat} alt="comment icon" />
+                <button>{comment.replies.length}</button>
+              </div>
             </div>
-          </div>
         </div>
+        </div>
+        
       </div>
     </div>
   );
@@ -59,10 +69,14 @@ export default function Comments({ comments }: CommentsProps) {
   comments.sort((a, b) => a.postedTime.getTime() - b.postedTime.getTime());
   console.log(comments);
   return (
-    <div>
+    <div className="comments-section-wrapper">
       {comments.map((comment, idx) => (
         <CommentItem key={idx} comment={comment} />
       ))}
+      <div className="comment-bar">
+          <input type="text" placeholder="Type a message here..." />
+          <button className="send-message-btn">↗️</button>
+        </div>
     </div>
   );
 }
