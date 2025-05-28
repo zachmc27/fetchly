@@ -102,7 +102,7 @@ export default function Profile() {
         <div className="profile-feed-bg">
           <Feed 
           initialFeedArray={user.posts} 
-          itemStyle="profile-post-item"          
+          itemStyle="post-card"          
           containerStyle="profile-feed-container"
           />
         </div>

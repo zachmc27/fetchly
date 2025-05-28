@@ -42,7 +42,7 @@ export const QUERY_USERS = gql`
       meetUpCount
       posts {
         _id
-        contentText}
+        contentText
       }
       postCount
       following {
@@ -141,7 +141,7 @@ export const QUERY_USER = gql`
       meetUpCount
       posts {
         _id
-        contentText}
+        contentText
       }
       postCount
       following {
@@ -240,7 +240,7 @@ export const QUERY_ME = gql`
       meetUpCount
       posts {
         _id
-        contentText}
+        contentText
       }
       postCount
       following {
@@ -308,7 +308,6 @@ export const QUERY_ORGS = gql`
       _id
       orgName
       email
-      password
       avatar {
         id
         filename
@@ -385,7 +384,6 @@ export const QUERY_ORG = gql`
       _id
       orgName
       email
-      password
       avatar {
         id
         filename
@@ -1049,7 +1047,6 @@ export const QUERY_ADOPTIONS = gql`
         _id
         username
         email
-        password
         avatar {
           id
           filename
@@ -1195,25 +1192,26 @@ export const ALL_MEDIA = gql`
 
 export const GET_CONVERSATIONS = gql`
   query Conversations {
-  conversations {
-    _id
-    conversationName
-    conversationUsers {
+    conversations {
       _id
-    }
-    lastMessage {
-      _id
-      textContent
-    }
-    messages {
-      _id
-      messageUser {
+      conversationName
+      conversationUsers {
         _id
       }
-      textContent
+      lastMessage {
+        _id
+        textContent
+      }
+      messages {
+        _id
+        messageUser {
+          _id
+        }
+        textContent
+      }
     }
   }
-}`;
+`;
 
 // You can expand upon the following values to include more details other than id:
 // USERS - You can grab name/uersname, email, etc.

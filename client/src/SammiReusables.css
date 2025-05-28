@@ -2,7 +2,7 @@
   --grey: #EEEEEE;
 }
 
-button {
+.main-button {
   width: 100%;
   height: 3rem;
   border-radius: 8px;
@@ -36,7 +36,7 @@ button {
   padding-top: 5%;
 }
 
-input {
+.form-input {
   display: flex;
   flex: 1;
   width: 100%;
@@ -85,7 +85,7 @@ input {
 
 
 /************* COMMENT CSS *****************/
-img {
+.comment-img {
     width: 100%;
     border-radius: 30%;
 }

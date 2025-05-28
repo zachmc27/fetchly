@@ -130,11 +130,15 @@ export default function Feed({
           
           <div key={postItem.id} className={itemStyle}>
             {/* post JSX */}
-            <img src={postItem.userAvi} alt="cover image for the post" />
-            <h1>{postItem.postUser}</h1>
-            <p>{postItem.postContent}</p>
-            <p>{postItem.postDate}</p>
-            <p>{postItem.postCommentCount}</p>
+            <div className="user-info">
+                <img src={postItem.userAvi} alt="User Avatar" className="user-avatar" />
+                <h1 className="username">{postItem.postUser}</h1>
+            </div>
+            <p className="post-content">{postItem.postContent}</p>
+            <p className="post-date">{postItem.postDate}</p>
+            <p className="comment-count">{postItem.postCommentCount}</p>
+
+            
           </div>
         );
         }

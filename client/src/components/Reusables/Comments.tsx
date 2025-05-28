@@ -38,7 +38,7 @@ function CommentItem({ comment }: { comment: Comment }) {
       <div className="comment-container">
         <div className="comment-row">
           <div className="comment-img">
-            <img src={comment.avatar || UserPlaceHolder}></img>
+            <img className="comment-img" src={comment.avatar || UserPlaceHolder}></img>
           </div>
           <div className="comment-content" onClick={handleContainerClick}>
             <span>{comment.user}</span> <br></br>

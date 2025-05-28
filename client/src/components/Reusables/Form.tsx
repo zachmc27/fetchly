@@ -44,7 +44,7 @@ export default function Form({ fields, onSubmit, buttonName, initialValues = {} 
       {fields.map(field => (
         <div key={field.name}>
           <label className="profile-md-fnt" htmlFor={field.name}>{field.label}</label> <br/>
-          <input
+          <input className='form-input'
             type={field.type}
             id={field.name}
             name={field.name}
@@ -54,7 +54,7 @@ export default function Form({ fields, onSubmit, buttonName, initialValues = {} 
           
         </div>
       ))}
-      <button className="btn-fill btn-form" type="submit">{buttonName || 'Submit'}</button>
+      <button className="main-button btn-fill btn-form" type="submit">{buttonName || 'Submit'}</button>
     </form>
     </div>
   );

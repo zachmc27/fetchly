@@ -209,7 +209,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -229,6 +229,56 @@
 .profile-post-item img{
     width: 35px;
     height: 35px;
+}
+
+.post-card {
+    background-color: white;
+    margin-top: 10px;
+    padding: 25px;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info {
+    display: flex;
+    align-items: center; /* Vertically align avatar and username */
+    margin-bottom: 10px; /* Space between user info and post content */
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin: 0; /* Override default h1 margin */
+}
+
+.post-content {
+    font-size: 1em;
+    line-height: 1.4;
+    color: #555;
+    margin-top: 0; /* Adjust as per previous element */
+    margin-bottom: 10px;
+}
+
+.post-date,
+.comment-count {
+    font-size: 0.8em;
+    color: #999;
+    margin-top: 0;
+    margin-bottom: 5px; /* Small space between date and comment count */
+}
+
+.comment-count {
+    margin-bottom: 0; /* No margin at the bottom of the last element */
 }
 
 
