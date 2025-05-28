@@ -1,4 +1,4 @@
-export type MockAdoptionCard = {
+export type AdoptionCard = {
   _id: number;
   petCoverImage: string;
   petName: string;
