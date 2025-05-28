@@ -5,19 +5,13 @@
 // takes an array of users that are attending the event (Going list)
 
 import "../ZachTemp.css"
-import SearchBar from "../components/Reusables/SearchBar";
 import Feed from "../components/Reusables/Feed";
 import { mockMeetupData } from "../mockdata/feed-data";
 
 export default function Meetup() {
 
-    function filterBySearch() {
-    console.log('This function will filter posts by the search.');
-  }
-
   return (
     <div className="meetup-page-container">
-         <SearchBar send={filterBySearch} />
          <Feed 
           initialFeedArray={mockMeetupData} 
           itemStyle="meetup-card" 

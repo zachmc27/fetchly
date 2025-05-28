@@ -1,0 +1,60 @@
+type Comment = {
+  id: number,
+  user: string,
+  avatar?: string,
+  comment: string,
+  likeCount: number,
+  postedTime: Date,
+  replies: Comment[]
+}
+
+export type rsvpList = {
+  username: string,
+  userAvi: string
+}
+
+export type MockPostItem = {
+  id: number;
+  userAvi: string;
+  postUser: string;
+  postContent: string;
+  images: string[];
+  postLikeCount: number;
+  postCommentCount: number;
+  postDate: string;
+  itemType: string;
+
+};
+
+export type MockMeetupItem = {
+  id: number;
+  userAvi: string;
+  username: string;
+  title: string;
+  postText: string;
+  images: string[];
+  location: string;
+  date: string;
+  time: string;
+  comments: Comment[];
+  rsvpList: rsvpList[]
+  itemType: string;
+};
+
+export type MockAdoptionItem = {
+  id: number;
+  orgName: string;
+  orgAvi: string;
+  orgEmail: string;
+  orgNumber: string;
+  images: string[];
+  petName: string;
+  description: string;
+  gender: string;
+  location: string;
+  vaccinated: boolean;
+  breed: string;
+  isFixed: boolean;
+  goodWithPets: string;
+  itemType: string;
+};
