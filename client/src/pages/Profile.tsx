@@ -8,6 +8,9 @@ import ButtonBubble from "../components/Reusables/Button";
 import AddIcon from "../images/add.png";
 import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../utils/queries';
+
 
 const profileMockPosts = [
   {
@@ -54,16 +57,32 @@ const mockUser = {
 
 
 export default function Profile() {
+
+  const userId = localStorage.getItem("userId");
+  console.log(userId);
+  const { data, error } = useQuery(QUERY_USER, {
+    variables: {userId},
+  });
+  console.log(data);
+
   const [user, setUser] = useState(mockUser);
   
   useEffect(() => {
     // to change users with setUser based on who's saved locally
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(mockUser);
+    console.log("Query data:", data);
+    if (data && data.user) {
+      setUser(data.user);
+      console.log(data.user);
+    } else {
+      console.log("noooooo")
     }
-  }, []);
-
+    
+  }, [data]);
+  
+  if (error){
+    console.error("GraphQL error:", error);
+  }
+  
   console.log(user.posts);
 
   return (

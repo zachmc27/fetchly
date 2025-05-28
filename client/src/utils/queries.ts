@@ -45,10 +45,6 @@ export const QUERY_USERS = gql`
         contentText
       }
       postCount
-      following {
-        _id
-        username
-      }
       conversation {
         _id
         conversationName
@@ -144,10 +140,6 @@ export const QUERY_USER = gql`
         contentText
       }
       postCount
-      following {
-        _id
-        username
-      }
       conversation {
         _id
         conversationName
