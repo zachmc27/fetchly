@@ -42,7 +42,7 @@ export const QUERY_USERS = gql`
       meetUpCount
       posts {
         _id
-        contentText}
+        contentText
       }
       postCount
       following {
@@ -141,7 +141,7 @@ export const QUERY_USER = gql`
       meetUpCount
       posts {
         _id
-        contentText}
+        contentText
       }
       postCount
       following {
@@ -240,7 +240,7 @@ export const QUERY_ME = gql`
       meetUpCount
       posts {
         _id
-        contentText}
+        contentText
       }
       postCount
       following {
@@ -999,6 +999,7 @@ export const QUERY_ADOPTIONS = gql`
           uploadDate
           gridFsId
           tags
+          url
         }
         about
       }
@@ -1021,6 +1022,7 @@ export const QUERY_ADOPTIONS = gql`
           uploadDate
           gridFsId
           tags
+          url
         }
         vaccination
         neuteredOrSpayed

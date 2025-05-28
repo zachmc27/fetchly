@@ -3,14 +3,25 @@
 // 3 Feed components conditionally rendered by filtered posts and takes back array of filtered posts
 // 1 Feed component conditionally rendered by what is Searched and sends back an array of the searched posts
 import Feed from "../components/Reusables/Feed";
+import { QUERY_ADOPTIONS } from "../utils/queries";
+import { useQuery } from "@apollo/client";
 import { mockAdoptionData } from "../mockdata/feed-data";
 import SearchBar from "../components/Reusables/SearchBar"
+import MediaUpload from "../components/Reusables/MediaUpload";
 import "../ZachTemp.css"
 
 export default function Adoption() {
 
-  function filterBySearch() {
     console.log('This function will filter posts by the search.');
+    const { loading, error, data } = useQuery(QUERY_ADOPTIONS);
+    console.log('Query data:', data?.adoptions);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+    const adoptionPosts = data?.adoptions || mockAdoptionData; // Fallback to mock data if query fails
+    console.log('Adoption posts:', adoptionPosts);
+
+  function filterBySearch() {
+
   }
 
   function filterByAll() {
@@ -28,12 +39,13 @@ export default function Adoption() {
   return (
     <div className="adoption-page-container">
       <SearchBar send={filterBySearch} />
+      <MediaUpload />
       <div className="filter-buttons-container">
         <button onClick={filterByAll} className="filter-button">All</button>
         <button onClick={filterByDogs} className="filter-button">Dogs</button>
         <button onClick={filterByCats} className="filter-button">Cats</button>
       </div>
-      <Feed initialFeedArray={mockAdoptionData} itemStyle="adoption-card" containerStyle="adoption-feed-container"/>
+      <Feed initialFeedArray={data?.adoptions} itemStyle="adoption-card" containerStyle="adoption-feed-container"/>
     </div>
   )
 }

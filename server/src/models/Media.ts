@@ -8,6 +8,7 @@ export interface MediaDocument extends Document {
   uploadDate: Date;
   gridFsId: Types.ObjectId; // The ID of the file in GridFS
   tags?: string[];
+  url?: string; // Optional URL to access the media
 }
 
 const mediaSchema = new Schema<MediaDocument>({
@@ -31,6 +32,10 @@ const mediaSchema = new Schema<MediaDocument>({
     ref: 'fs.files'
   },
   tags: [String],
+  url: { 
+    type: String, 
+    required: false 
+  } // URL to access the media, if applicable
 });
 
 const Media = model<MediaDocument>('Media', mediaSchema);

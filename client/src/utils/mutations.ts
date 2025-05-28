@@ -673,13 +673,14 @@ export const DELETE_ADOPTION = gql`
 export const UPLOAD_MEDIA = gql`
   mutation UploadMedia($input: UploadMediaInput!) {
     uploadMedia(input: $input) {
-      _id
+      id
       filename
       contentType
       length
       uploadDate
       gridFsId
       tags
+      url
     }
   }
 `;
