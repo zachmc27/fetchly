@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { UPLOAD_MEDIA } from '../../utils/mutations';
-import Actionmodal from '../Reusables/ActionModal'; // adjust the path as needed
+import Actionmodal from './ActionModal'; // adjust the path as needed
 import { FaCog } from 'react-icons/fa';
+import '../../SammiReusables.css';
 
   type UploadedMedia = {
     id: string;
@@ -12,6 +13,7 @@ import { FaCog } from 'react-icons/fa';
     uploadDate: string;
     gridFsId: string;
     tags: string[];
+    url: string; // URL to access the media
   };
 
 const MediaUpload = () => {
@@ -56,6 +58,7 @@ const MediaUpload = () => {
           uploadDate: uploadedFile.uploadDate,
           gridFsId: uploadedFile.gridFsId,
           tags: uploadedFile.tags || [],
+          url: uploadedFile.url, // Assuming you have a route to serve the media
         });
       }
 
@@ -75,19 +78,19 @@ const MediaUpload = () => {
   };
 
   return (
-    <div className="relative w-64 h-64 border rounded-md overflow-hidden">
+    <div className="upload-media-container">
       {uploadedMedia ? (
         <>
           {/* Display the uploaded image */}
           <img
-            src={`http://localhost:3001/media/${uploadedMedia.gridFsId}`}
+            src={uploadedMedia.url}
             alt={uploadedMedia.filename}
-            className="w-full h-full object-cover"
+            className="upload-media-image"
           />
           {/* Overlay with cog icon */}
           <button
             onClick={resetUpload}
-            className="absolute top-2 right-2 bg-black bg-opacity-50 rounded-full p-2 text-white hover:bg-opacity-75"
+            className="upload-media-cog"
             aria-label="Change image"
             title="Change image"
           >
@@ -100,9 +103,9 @@ const MediaUpload = () => {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="w-full h-full opacity-0 absolute top-0 left-0 cursor-pointer"
+            className="upload-media-input"
           />
-          <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500">
+          <div className="upload-media-loading">
             {loading ? 'Uploading...' : 'Click to upload image'}
           </div>
 
@@ -115,7 +118,7 @@ const MediaUpload = () => {
             </Actionmodal>
           )}
 
-          {error && <p className="text-red-500 mt-2">Upload failed: {error.message}</p>}
+          {error && <p className="upload-media-fail">Upload failed: {error.message}</p>}
         </>
       )}
     </div>

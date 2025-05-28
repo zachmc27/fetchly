@@ -680,6 +680,7 @@ export const UPLOAD_MEDIA = gql`
       uploadDate
       gridFsId
       tags
+      url
     }
   }
 `;

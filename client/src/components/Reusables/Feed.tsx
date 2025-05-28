@@ -11,6 +11,7 @@ import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import { AdoptionCard } from "../../types/CardTypes";
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import "../../ZachTemp.css"
@@ -139,24 +140,24 @@ export default function Feed({
         );
         }
       case "adoption": {
-        const adoptionItem = item as MockAdoptionCard
+        const adoptionItem = item as AdoptionCard
         return (
-          <div key={adoptionItem.id} className={itemStyle}>
+          <div key={adoptionItem._id} className={itemStyle}>
             {/* adoption JSX */}
             <div className="adoption-image-container">
-              <img src={adoptionItem.petCoverImage} alt="cover image for the post" />
+              <img src={adoptionItem.pet.profilePhoto.url} alt="cover image for the post" />
             </div>
             <div className="adoption-feed-info-container">
-            <h1>{adoptionItem.petName}</h1>
+            <h1>{adoptionItem.pet.name}</h1>
               <div className="adoption-feed-details-row">
                 <div className="age-info"> 
                   <img src={calendar} alt="calendar icon" className="calendar-icon" />
-                  <p>{adoptionItem.petAge} yrs</p> {/* Added "yrs" for context */}
+                  <p>{adoptionItem.pet.age} yrs</p> {/* Added "yrs" for context */}
                 </div>
-              {adoptionItem.petGender === "male" &&
+              {adoptionItem.pet.gender === "male" &&
               <img src={male} alt="male-icon" className="male-icon"/>
               }
-              {adoptionItem.petGender === "female" &&
+              {adoptionItem.pet.gender === "female" &&
               <img src={female} alt="female-icon" className="female-icon"/>
               }
               </div>
