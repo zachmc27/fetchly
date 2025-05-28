@@ -15,7 +15,7 @@ import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg
 
 
 // testing data, can be deleted after integrations implementation
-import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 import { AdoptionCard } from "../../types/CardTypes";
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
@@ -35,7 +35,7 @@ import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 
 
 
-type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | MockAdoptionCard;
+type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard;
 
 export default function Feed({
   initialFeedArray,
