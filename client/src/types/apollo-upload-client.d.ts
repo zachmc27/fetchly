@@ -4,7 +4,7 @@ declare module 'apollo-upload-client' {
     uri?: string;
     credentials?: string;
     headers?: Record<string, string>;
-    fetchOptions?: Record<string, any>;
+    fetchOptions?: RequestInit;
     fetch?: typeof fetch;
   }
 
