@@ -52,13 +52,15 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
             }
             
             <div className="post-info-container">
+              <div className="post-likes-container">
+                <p>{post.postLikeCount}</p>
+                <img src={heart} alt="heart icon" />
+              </div>
               <div className="post-comment-container">
                  <p>{post.postCommentCount}</p>
                  <img src={chat} alt="comment icon"/>
               </div>
-              <div className="post-likes-container">
-                <p>{post.postLikeCount}</p>
-              </div>
+              
             </div>
             <p>{post.postDate}</p>
           </div>
