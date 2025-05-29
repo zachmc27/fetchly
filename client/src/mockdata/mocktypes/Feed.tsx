@@ -4,7 +4,8 @@ export type MockPostCard = {
   id: number;
   userAvi: string;
   postUser: string;
-  postContent: string
+  postContent: string;
+  postImage?: string[];
   postLikeCount: number;
   postCommentCount: number;
   postDate: string;

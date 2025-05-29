@@ -30,7 +30,10 @@ interface DeleteTypeArgs {
 const typeResolvers = {
   Query: {
     // Type Queries
-    types: async () => {
+    types: async (_parent: any, args: { type?: string }) => {
+      if (args.type) {
+        return await Type.find({ type: args.type });
+      }
       return await Type.find();
     },
     type: async (_parent: any, { typeId }: TypeArgs) => {

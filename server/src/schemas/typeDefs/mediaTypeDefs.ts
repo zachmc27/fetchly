@@ -12,6 +12,7 @@ type Media {
     uploadDate: String
     gridFsId: ID
     tags: [String]
+    url: String
 }
 
 input UploadMediaInput {
@@ -25,7 +26,7 @@ type Query {
 }
 
 type Mutation {
-    uploadMedia(input: UploadMediaInput!): Media
+    uploadMedia(input: UploadMediaInput!): Media!
     deleteMedia(mediaId: ID!): BooleanResponse
 }
 `;

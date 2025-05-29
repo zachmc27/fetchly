@@ -3,13 +3,15 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink,
-} from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import { Outlet } from "react-router-dom";
+} from '@apollo/client';
+import { createUploadLink } from 'apollo-upload-client';
+import { setContext } from '@apollo/client/link/context';
+import { Outlet } from 'react-router-dom';
 import NavBar from "./components/Navbar/NavBar";
 import PostButton from "./components/Navbar/PostButton";
 import { PostModalProvider } from "./components/Reusables/PostModalProvider";
+import TopNavBar from "./components/Navbar/TopNavBar";
+
 
 // ****** Each of these will render on each page ******
 // import NavBar from './components/Navbar/Bar';
@@ -17,9 +19,9 @@ import { PostModalProvider } from "./components/Reusables/PostModalProvider";
 // ****** Post bubble conditionally renders with a passed back link prop corresponding to the respective route ******
 
 // Construct our main GraphQL API endpoint
-const httpLink = createHttpLink({
-  uri: "/graphql",
-});
+// const httpLink = createHttpLink({
+//   uri: '/graphql',
+// });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
@@ -29,14 +31,19 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
+      'apollo-require-preflight': 'true', 
     },
   };
 });
 
+const uploadLink = createUploadLink({
+  uri: '/graphql', // your GraphQL server URI
+});
+
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-  link: authLink.concat(httpLink),
+  link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
 });
 
@@ -44,9 +51,10 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <PostModalProvider>
-      <NavBar />
-      <PostButton />
-      <Outlet />
+        <TopNavBar />
+        <NavBar />
+        <PostButton />
+        <Outlet />
       </PostModalProvider>
     </ApolloProvider>
   );

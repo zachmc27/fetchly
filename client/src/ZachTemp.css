@@ -60,17 +60,21 @@
 
 /* post details */
 
-.post-container {
-    border: 1px solid black;
-    background-color: beige;
+.viewing-container {
+  min-height: 100vh;
 }
 
-.meetup-container {
+.post-details-container {
+    background-color: beige;
+    height: 100%
+}
+
+.meetup-details-container {
     border: 1px solid black;
     background-color: lightgreen;
 }
 
-.adoption-container {
+.adoption-details-container {
     border: 1px solid black;
     background-color: lightpink;
 }
@@ -109,8 +113,7 @@
 .adoption-page-container {
     height: fit-content;
     width: 100vw;
-    border: .1px solid black;
-    background-color: beige;
+
 }
 
 .search-style:focus-within {
@@ -294,8 +297,8 @@
 .meetup-page-container {
     height: fit-content;
     width: 100vw;
-    border: .1px solid black;
-    background-color: beige;
+
+
 }
 
 .meetup-card {
@@ -424,8 +427,7 @@
 .inbox-page-container {
     height: fit-content;
     width: 100vw;
-    border: .1px solid black;
-    background-color: beige;
+
 }
 
 .inbox-feed-container {
@@ -842,4 +844,745 @@
 /* If there's no group chat editing container, adjust margin for the user list */
 .msg-info-container > .user-list-wrapper:first-child {
   margin-top: 30px; /* If the group editing section is hidden, give space */
+}
+
+/* Viewing Meetup Post Page */
+
+.meetup-details-container { /* Assuming this will be the containerClass prop for PostDetails */
+  background-color: #fff;
+  border-radius: 0px 0px 8px 8px;
+  border-color: #eee;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px; /* Adjust as needed for width */
+  box-sizing: border-box;
+}
+
+/* User Info (Avatar and Username) */
+.meetup-user-info-row { /* Add this class to a div wrapping user avi and username in PostDetails */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.meetup-user-info-row button:first-child {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.meetup-user-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.meetup-user-info-container p {
+ margin-bottom: 3px;
+}
+
+.meetup-user-info-row img[alt="users avatar"],
+.comment-img img,
+.going-user-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 1px solid #eee; /* Light border for avatars */
+}
+
+.meetup-post-username {
+  color: #333;
+  font-size: 1.1em;
+}
+
+/* RSVP Button in PostDetails */
+.rsvp-btn { /* Targeting the RSVP button in meetup */
+  background-color: #007bff; /* Blue button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1;
+  margin-top: 5px;
+}
+
+.meetup-details-container button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+
+/* Post Content and Image */
+.post-content, .meetup-title, .meetup-text, .adoption-description {
+  margin-bottom: 10px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.meetup-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #333;
+}
+
+.meetup-img-container {
+  width: 100%;
+  background-color: #f0f0f0; /* Placeholder background for image */
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px; /* Minimum height for the image container */
+}
+
+.meetup-img-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  max-height: 350px; /* Limit height of post images */
+  border-radius: 8px; /* Apply border-radius to the image itself if not fully contained */
+}
+
+/* Post Details - Dates, Time, Location */
+.meetup-details-container p:has(img[alt="location-icon"]),
+.meetup-details-container p:has(img[alt="calendar-icon"]),
+.meetup-details-container p:has(img[alt="time-icon"]) {
+  display: flex;
+  align-items: center;
+  color: #777;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+/* Adjustments for the icons for location, time, date */
+.meetup-details-container p img {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+
+/* --- Adoption Post Specific Styles --- */
+.adoption-details-container { /* Assuming this is the containerClass for adoption posts */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.adoption-details-container .img-container { /* If you render multiple images for adoption, style their containers */
+    margin-bottom: 10px;
+}
+
+.adoption-details-container .img-container img {
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.adoption-details-container p {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.adoption-details-container p:first-of-type { /* Pet Name */
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.adoption-details-container img[alt="male-icon"],
+.adoption-details-container img[alt="female-icon"] {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.adoption-details-container img[alt="organization avatar"] {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.adoption-details-container .pet-details-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.adoption-details-container .pet-details-container p {
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+
+/* --- Comments Component Styles --- */
+.comments-section-wrapper { /* Add a wrapper div around Comments component for full width */
+  width: 100vw;
+  box-sizing: border-box;
+  min-height: 70vh;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.comment-container {
+  display: flex;
+  width: 100vw;
+  min-width: 100vw;
+  box-sizing: border-box;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee; 
+  background-color: #fff; /* Light background for comment bubble */
+}
+
+.comment-container:nth-last-child {
+  border-bottom: none;
+}
+
+.comment-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.comment-img {
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+  width: 15%;
+  padding-left: 3%;
+}
+.comment-icon-row {
+  display: flex;
+  align-items: center;
+  width: 15%;
+  margin-top: 3%;
+}
+
+.comment-content {
+  flex-grow: 1; /* Allow content to take available space */
+  padding: 10px 12px;
+  position: relative;
+  word-break: break-word; /* Ensure long words wrap */
+}
+
+.comment-content div:first-of-type { /* Username */
+  font-weight: bold;
+  color: #333;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.comment-content div:nth-of-type(2) { /* Comment text */
+  color: #555;
+  font-size: 0.95em;
+}
+
+.comment-icon-row {
+  display: flex;
+  margin-top: 5px;
+  gap: 20px; /* Space between buttons */
+}
+
+.comment-likes-container,
+.comment-replies-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.comment-likes-container button,
+.comment-replies-container button { /* Adjust this selector if ButtonBubble renders something else */
+  background: none;
+  border: none;
+  color: #777;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.85em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.comment-likes-container img,
+.comment-replies-container img { /* Adjust this selector if ButtonBubble renders something else */
+  width: .85em;
+  height: .85em;
+  margin-right: 5px
+}
+
+.comment-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #f7f7f7;
+  border-top: 1px solid #e5e5e5;
+  position: absolute;
+  bottom: 0; 
+  margin: 0 auto;
+  width: 100%; 
+  box-sizing: border-box; 
+  z-index: 10;
+}
+
+.comment-bar input[type="text"] {
+  flex-grow: 1;
+  padding: 9px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 18px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+.comment-bar input[type="text"]::placeholder {
+  color: #ababab;
+}
+
+.comment-bar .send-message-btn {
+  background: none;
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 1.1rem;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  padding-left: 1px;
+  padding-bottom: 1px;
+}
+
+
+/* --- Goinglist Component Styles --- */
+.going-list-container {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.going-user-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee; /* Separator between users */
+}
+
+.going-user-card:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.going-user-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.going-user-card p {
+  font-size: .95em;
+  color: #585757;
+  margin: 0;
+}
+
+/* --- Meetup Post View Tab Switcher --- */
+.tab-switcher {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ddd;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.tab-switcher button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 1.1em;
+  cursor: pointer;
+  color: #777;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+}
+
+.tab-switcher button.active {
+  color: #007bff; /* Active tab color */
+}
+
+.tab-switcher button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #007bff; /* Active tab underline */
+}
+
+/* home page feed */
+
+.post-page-container {
+    height: fit-content;
+    width: 100vw;
+   
+
+}
+
+.post-feed-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+    justify-content: center;
+}
+
+/* Ensure this CSS is loaded by your component */
+
+/* Main Post Container (your 'itemStyle' class) */
+.post-card { 
+  background-color: #ffffff;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 16px; /* Uniform padding around the card */
+  color: #262626;
+  position: relative; /* ESSENTIAL: For absolute positioning of the date */
+  width: 100%;
+}
+
+/* User Info Section */
+.post-user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  /* This container will no longer directly control the date's final position,
+     but it still groups the avatar and username. */
+}
+
+.post-user-info > img { /* User Avatar */
+  width: 36px; /* Slightly larger for visual balance if date is far */
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.post-user-info > p { /* Username */
+  font-weight: 600;
+  font-size: 14px;
+  color: #262626;
+  margin: 0;
+  /* Username takes up available space until it hits the date area
+     if the date wasn't absolutely positioned. Now it just sits next to avatar. */
+}
+
+/* Date Container - Positioned at the top-right of the .post-card */
+.post-date-container {
+  position: absolute;
+  top: 16px; /* Should match the .post-card's top padding */
+  right: 16px; /* Should match the .post-card's right padding */
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.post-date-container img { /* Calendar icon */
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  /* If using SVG and want to color it:
+  filter: invert(59%) sepia(11%) saturate(0%) hue-rotate(148deg) brightness(93%) contrast(89%); for #8e8e8e
+  */
+}
+
+.post-date-container p {
+  margin: 0;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+/* Post Content Paragraph */
+/* This targets the <p>{postItem.postContent}</p> */
+/* It's the second <p> overall inside .post-card if username is <p> and first child of post-user-info*/
+/* A more robust way is to add a class to this <p> like className="post-body-content" */
+.post-card > p:not(:first-child):not(.post-user-info p):not(.post-date-container p):not(.post-likes-container p):not(.post-comments-container p) {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #262626;
+  margin-top: 8px; /* Space below user info */
+  margin-bottom: 12px; /* Space above images or details row */
+  padding-right: 50px; /* Add some padding so text doesn't overlap with a long date string if the card is narrow */
+}
+/* If you add a class e.g. <p className="post-text-content">{postItem.postContent}</p> use this: */
+/*
+.post-text-content {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #262626;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  padding-right: 50px;
+}
+*/
+
+
+/* Post Image(s) - Assuming images are direct children of .post-card after the content <p> */
+.post-card > img:not(.post-user-info img):not(.post-date-container img):not(.post-likes-container img):not(.post-comments-container img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px; /* Optional: rounded corners for images */
+  margin-top: 8px; /* Space between multiple images or content and image */
+  margin-bottom: 12px; /* Space below image(s) before details row */
+}
+
+/* Post Details Row (Likes and Comments) */
+.post-details-row {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between the "likes" group and "comments" group */
+  margin-top: 10px;
+  /* If you want this row indented (e.g. to align with text content if text content is indented):
+  padding-left: 48px; /* (Avatar 36px + margin 12px) */
+}
+
+.post-likes-container,
+.post-comments-container {
+  display: flex;
+  align-items: center;
+}
+
+.post-likes-container img, /* Heart icon */
+.post-comments-container img { /* Chat icon */
+  width: 18px; /* Adjust icon size as needed */
+  height: 18px;
+  margin-right: 6px;
+  /* Example SVG coloring if needed:
+  filter: invert(10%) sepia(0%) saturate(7498%) hue-rotate(26deg) brightness(99%) contrast(90%); for #262626
+  */
+}
+
+.post-likes-container p,
+.post-comments-container p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500; /* Slightly bolder for counts */
+  color: #262626;
+}
+
+/* post details */
+
+/* Ensure this CSS is loaded for your component */
+
+.post-details-container { /* Your containerClass */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #262626; /* Default text color */
+  background-color: #fff; /* Assuming a white background for the post area */
+  border-bottom: 1px solid #efefef; /* Separator if this is part of a list */
+}
+
+/* Top User Info Row */
+.post-user-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes date to the right */
+  padding: 10px 12px; /* Adjust padding as needed */
+  border-bottom: 1px solid #efefef; /* Separator line below the top bar */
+}
+
+.post-user-info-row > button { /* Back button styling */
+  background: none;
+  border: none;
+  font-size: 22px; /* Adjust size of "<" */
+  font-weight: bold;
+  color: #262626;
+  cursor: pointer;
+  padding: 5px 8px; /* Clickable area */
+  margin-right: 8px;
+}
+
+.post-user-info-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* Allows username to take available space if needed */
+}
+
+.post-user-info-container img { /* User Avatar */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.post-user-info-container .post-username {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0; /* Remove default p margin */
+}
+
+.post-user-info-row .post-date-display {
+  font-size: 12px;
+  color: #8e8e8e; /* Lighter grey for date */
+  margin: 0; /* Remove default p margin */
+  white-space: nowrap; /* Prevent date from wrapping */
+  margin-left: 10px; /* Ensure some space if username area grows */
+}
+
+/* Post Content Paragraph */
+.post-content {
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px 16px;
+  margin: 0; /* Remove default p margin */
+}
+
+/* Image Container */
+.img-container {
+  /* For a single image as per your current TSX */
+  margin: 0 0 12px 0; /* Margin below the image block */
+  padding: 0; /* No padding if the image should be edge-to-edge or has own margin */
+  background-color: #fafafa; /* Light grey background for placeholder area */
+  min-height: 200px; /* Example: give some height to the placeholder area */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-container img { /* Styling for the actual image */
+  display: block;
+  max-width: 100%; /* Responsive image */
+  max-height: 400px; /* Max height for the image area */
+  height: auto;
+  object-fit: contain; /* Or 'cover' depending on desired cropping */
+}
+
+
+/* --- Conceptual CSS for Multi-Image Layout (as seen in screenshot) --- */
+/* If you update TSX to have multiple image elements/placeholders:
+.img-container.multi-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  padding: 0;
+  background-color: #fff; // Or transparent
+  min-height: auto; // Reset min-height from single image style
+  margin: 12px 0; // Adjust margin if needed
+}
+
+.img-container.multi-layout .img-slot {
+  background-color: #fafafa; // Placeholder background
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; // If using object-fit: cover
+}
+
+.img-container.multi-layout .img-slot.large {
+  grid-row: span 2; // Make the first image span two rows
+}
+
+.img-container.multi-layout .img-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // Cover the slot area
+}
+
+.img-container.multi-layout .img-slot .placeholder-icon { // Your gallery icon SVG/img
+  width: 40px;
+  height: 40px;
+  opacity: 0.5;
+}
+*/
+/* --- End of Conceptual CSS for Multi-Image --- */
+
+
+/* Post Info Container (Comment and Like Counts) */
+.post-info-container {
+  display: flex;
+  justify-content: space-between; /* Pushes likes to the right */
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid #efefef; /* Separator line as in image */
+}
+
+.post-comment-container,
+.post-likes-container {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.post-comment-container p,
+.post-likes-container p {
+  margin: 0;
+  font-weight: 600; /* Bold counts */
+  color: #262626;
+}
+
+/* Styling for comment icon (icon after text, as per your TSX) */
+.post-comment-container img { /* Chat icon */
+  width: 22px;
+  height: 22px;
+  margin-left: 6px; /* Space between count and icon */
+}
+/* If you move icon before text (like in image):
+.post-comment-container img {
+  margin-right: 6px;
+}
+*/
+
+/* Likes container - Image shows a heart icon. You need to add it to your TSX. */
+.post-likes-container .like-icon { /* Add <img src={heartIcon} className="like-icon" /> in TSX */
+  width: 22px;
+  height: 22px;
+  margin-right: 6px; /* Assuming icon is before the like count */
+  /* You might need to style the heart icon's color, e.g., if it's an SVG or a specific image */
+}
+
+/* Redundant Date Display at the bottom */
+/* This targets the last <p> in .post-details-container, which is post.postDate in your TSX */
+.post-details-container > p:last-child {
+  display: none; /* Hide if it's redundant with the top date display */
+  /* Or, if it's meant to be there for another reason, style it accordingly:
+  font-size: 12px;
+  color: #8e8e8e;
+  text-align: center;
+  padding: 8px 16px;
+  */
 }

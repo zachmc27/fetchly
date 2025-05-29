@@ -15,7 +15,7 @@ const typeTypeDefs = `
 
 # -------------------- Query TypeDefs ------------------------
     type Query {
-        types: [Type]
+        types(type: String): [Type]
         type(typeId: String!): Type
     }
 

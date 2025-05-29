@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
 //-------------- USER QUERIES ------------- //
 
@@ -19,7 +20,14 @@ export const QUERY_USERS = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       pets {
         _id
         name
@@ -46,32 +54,26 @@ export const QUERY_USERS = gql`
       }
       postCount
       conversation {
-        _id
         conversationName
       }
       conversationCount
       likedPosts {
-        _id
         contentText
       }
       likedPostsCount
       organizations {
-        _id
         orgName
       }
       following {
         refId {
           ... on User {
-            _id
             username
             email
           }
           ... on Pet {
-            _id
             name
           }
           ... on Org {
-            _id
             orgName
           }
         }
@@ -81,12 +83,10 @@ export const QUERY_USERS = gql`
       followedBy {
         refId {
           ... on User {
-            _id
             username
             email
           }
           ... on Org {
-            _id
             orgName
           }
         }
@@ -114,7 +114,14 @@ export const QUERY_USER = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       pets {
         _id
         name
@@ -192,6 +199,19 @@ export const QUERY_USER = gql`
   }
 `;
 
+// Example function to call QUERY_USER using Apollo Client
+
+export async function fetchUser(
+  client: ApolloClient<NormalizedCacheObject>,
+  userId: string
+) {
+  const { data } = await client.query({
+    query: QUERY_USER,
+    variables: { userId },
+  });
+  return data.user;
+}
+
 //Returns logged in user
 export const QUERY_ME = gql`
   query me {
@@ -209,7 +229,14 @@ export const QUERY_ME = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       pets {
         _id
         name
@@ -310,7 +337,14 @@ export const QUERY_ORGS = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       employees {
         _id
         username
@@ -386,7 +420,14 @@ export const QUERY_ORG = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       employees {
         _id
         username
@@ -725,6 +766,16 @@ export const QUERY_TYPE = gql`
   }
 `;
 
+// Filtered types query
+export const FILTER_QUERY_TYPE = gql`
+  query TypesByType($type: String!) {
+    types(type: $type) {
+      _id
+      breed
+    }
+  }
+`;
+
 //-------------- MEETUP QUERIES ------------- //
 // Returns all meetups
 export const QUERY_MEETUPS = gql`
@@ -989,6 +1040,7 @@ export const QUERY_ADOPTIONS = gql`
           uploadDate
           gridFsId
           tags
+          url
         }
         about
       }
@@ -1011,6 +1063,7 @@ export const QUERY_ADOPTIONS = gql`
           uploadDate
           gridFsId
           tags
+          url
         }
         vaccination
         neuteredOrSpayed
@@ -1139,6 +1192,23 @@ export const QUERY_ADOPTION = gql`
       }
       createdAt
       itemType
+    }
+  }
+`;
+
+export const FILTERED_ADOPTIONS = gql`
+  query FilteredAdoptions($type: String, $location: String) {
+    adoptions(type: $type, location: $location) {
+      _id
+      pet {
+        _id
+        name
+        type { type }
+        profilePhoto { url }
+      }
+      location { city, state }
+      goodWithPets
+      description
     }
   }
 `;

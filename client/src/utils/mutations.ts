@@ -594,14 +594,14 @@ export const CREATE_ADOPTION = gql`
 // CREATE_ADOPTION input should look like this:
 // {
 //   "input": {
-//     "pet": <petId>,
-//     "poster": <orgId>,
-//     "goodWithPets": "Prefers to be your only pet.",
-//     "description": "A great little cat that loves to snuggle.",
+//    "pet": <petId>,
+//    "poster": <orgId>,
+//    "goodWithPets": "Prefers to be your only pet.",
+//    "description": "A great little cat that loves to snuggle.",
 //    "location": {
-//      "address": "76 Peter St",
-//      "zip": "L6E 0T9",
-//      "city": "Markham",
+//     "address": "76 Peter St",
+//     "zip": "L6E 0T9",
+//     "city": "Markham",
 //      "state": "Ontario",
 //      "country": "Canada"
 //    },
@@ -673,13 +673,14 @@ export const DELETE_ADOPTION = gql`
 export const UPLOAD_MEDIA = gql`
   mutation UploadMedia($input: UploadMediaInput!) {
     uploadMedia(input: $input) {
-      _id
+      id
       filename
       contentType
       length
       uploadDate
       gridFsId
       tags
+      url
     }
   }
 `;

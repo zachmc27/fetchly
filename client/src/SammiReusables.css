@@ -2,11 +2,15 @@
   --grey: #EEEEEE;
 }
 
+<<<<<<< HEAD
 .main-button {
+=======
+/* button {
+>>>>>>> f2fc6b484a347221cf45ad49d1b11212ec723030
   width: 100%;
   height: 3rem;
   border-radius: 8px;
-}
+} */
 
 .btn-form{
   margin-top: 7.5%;
@@ -36,13 +40,17 @@
   padding-top: 5%;
 }
 
+<<<<<<< HEAD
 .form-input {
+=======
+/* input {
+>>>>>>> f2fc6b484a347221cf45ad49d1b11212ec723030
   display: flex;
   flex: 1;
   width: 100%;
   height: 2.5rem;
   border-radius: 4px;
-}
+} */
 
 .form-switch-ctn {
   display: flex;
@@ -85,35 +93,18 @@
 
 
 /************* COMMENT CSS *****************/
+<<<<<<< HEAD
 .comment-img {
+=======
+/* img {
+>>>>>>> f2fc6b484a347221cf45ad49d1b11212ec723030
     width: 100%;
     border-radius: 30%;
-}
+} */
 
-.comment-container {
-  width: 90%;
-  border-bottom: 1px solid black;
-  padding: 1%;
-}
 
-.comment-row {
-  width: 70%;
-  display: flex;
-  align-items: center;
-  
-}
 
-.comment-img {
-  width: 15%;
-  padding: 3%;
-}
 
-.comment-icon-row {
-  display: flex;
-  align-items: center;
-  width: 15%;
-  margin-top: 3%;
-}
 
 
 /************* PROFILE CSS *****************/
@@ -188,4 +179,81 @@
   width: 100%;
   height: 100vh;
   margin-top: 5%;
+}
+
+
+
+/************* UPLOAD MEDIA CSS *****************/
+
+.upload-media-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border: 2px dashed #ccc;
+  border-radius: 1rem;
+  background-color: #fafafa;
+  transition: background-color 0.3s ease;
+  position: relative;
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.upload-media-container:hover {
+  background-color: #f0f0f0;
+}
+
+.upload-media-input {
+  width: 100%;
+  padding: 3rem;
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.upload-media-loading {
+  z-index: 1;
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.upload-media-image {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.upload-media-image:hover {
+  transform: scale(1.01);
+}
+
+.upload-media-cog {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  border-radius: 20%;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  transition: transform 0.2s ease;
+  width: 2rem;
+  height: 2rem;
+
+}
+
+.upload-media-cog:hover {
+  transform: rotate(90deg);
+}
+
+.upload-media-fail {
+  margin-top: 1rem;
+  color: #d9534f;
+  font-weight: 500;
 }

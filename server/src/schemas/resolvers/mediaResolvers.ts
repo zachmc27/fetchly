@@ -33,7 +33,7 @@ const mediaResolvers = {
     },
 
     Mutation: {
-        uploadMedia: async (_parent: unknown, { input }: { input: UploadMediaInput }) => {
+        uploadMedia: async (_parent: unknown, { input }: { input: UploadMediaInput }, context: any) => {
             const upload = input.file as unknown as { promise: Promise<FileUpload> };
             const { createReadStream, filename, mimetype } = await upload.promise;
 
@@ -75,6 +75,10 @@ const mediaResolvers = {
 
             if (!fileDoc) throw new Error('No metadata found for uploaded file');
 
+            const req = context?.req;
+            const host = req?.headers?.host || 'localhost:3001';
+            const protocol = req?.headers['x-forwarded-proto'] || 'http';
+
             const newMedia = await Media.create({
                 filename,
                 contentType: detectedMime,
@@ -82,7 +86,10 @@ const mediaResolvers = {
                 uploadDate: new Date(fileDoc.uploadDate),
                 gridFsId: uploadedFileId,
                 tags: input.tags || [],
+                url: `${protocol}://${host}/media/${uploadedFileId}`,
             });
+
+            console.log('Media uploaded successfully:', newMedia);
 
             return newMedia;
         },
@@ -107,8 +114,14 @@ const mediaResolvers = {
         }
     },   
     Media: {
-        url: (media: any) => {
-            return `http://localhost:3001/media/${media.gridFsId}`;
+        url: (media: any, _args: any, context: any) => {
+            console.log('Media.url resolver called');
+            console.log('Context.req:', context.req?.headers);
+            const req = context.req;
+            const host = req?.headers?.host || 'localhost:3001'; 
+            const protocol = req?.headers['x-forwarded-proto'] || 'http';           
+            
+            return `${protocol}://${host}/media/${media.gridFsId}`;
         }
     } 
 };
