@@ -250,10 +250,97 @@ const rsvpList = [
 }
 ]
 
-export const mockAdoptionPost = {
-  id: 3,
+export const mockAdoptionPosts = 
+[
+{
+  id: 1,
   orgName: 'austin pets alive!',
-  orgAvi: 'img',
+  orgAvi: dog,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  id: 2,
+  orgName: 'cat cafe',
+  orgAvi: cat,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  id: 3,
+  orgName: 'dog world',
+  orgAvi: billie,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  id: 4,
+  orgName: 'dog land',
+  orgAvi: batdog,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  id: 5,
+  orgName: 'unreasonably wealthy cats',
+  orgAvi: baller,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  id: 6,
+  orgName: 'aliens',
+  orgAvi: alien,
   orgEmail: "pets@alive.com",
   orgNumber: '512-999-9999',
   images: ['img1', 'img2'],
@@ -267,3 +354,4 @@ export const mockAdoptionPost = {
   goodWithPets: 'Yes with cats, no with dogs',
   itemType: 'adoption'
 }
+]

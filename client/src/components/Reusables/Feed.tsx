@@ -20,7 +20,8 @@ import { AdoptionCard } from "../../types/CardTypes";
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-import { mockPosts } from "../../mockdata/post-data"
+import { mockPosts, mockAdoptionPosts } from "../../mockdata/post-data"
+
 
 // components
 import MessagesPage from "../Inbox/MessagesPage"
@@ -31,7 +32,7 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
-import { MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
+import { MockAdoptionItem, MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
 
 
 
@@ -216,6 +217,33 @@ function handleClosePostView() {
 }
 
 // ----------------------------------------------------------------
+// --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
+// ----------------------------------------------------------------
+const [activeAdoptionPost, setActiveAdoptionPost] = useState<MockAdoptionItem | null>(null); 
+const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
+
+async function handleAdoptionPostViewRender(adoptionId: number) {
+  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption.id === adoptionId);
+  console.log(adoptionToOpen);
+  if (!adoptionToOpen) {
+    console.log('no post found')
+  }
+    if (adoptionToOpen) {
+      await setActiveAdoptionPost(adoptionToOpen);
+      console.log('active post:', activeAdoptionPost);
+      setIsAdoptionPostOpen(true)
+      localStorage.setItem("activeAdoptionId", adoptionToOpen.id.toString());
+    } else  {
+      console.warn('No post found with ID:', adoptionId);
+    }
+    setIsAdoptionPostOpen(true)
+}
+
+function handleCloseAdoptionPostView() {
+  setIsAdoptionPostOpen(false)
+  localStorage.removeItem("activeAdoptionId");
+  setActiveAdoptionPost(null)
+}
 
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
 
@@ -290,7 +318,7 @@ function handleClosePostView() {
       case "adoption": {
         const adoptionItem = item as AdoptionCard
         return (
-          <div key={adoptionItem._id} className={itemStyle}>
+          <div key={adoptionItem._id} className={itemStyle} onClick={() => handleAdoptionPostViewRender(adoptionItem._id)}>
             {/* adoption JSX */}
             <div className="adoption-image-container">
               <img src={adoptionItem.pet.profilePhoto.url} alt="cover image for the post" />
@@ -398,6 +426,16 @@ if (isPostOpen && activePost) {
   />
   <Comments comments={activePost.comments}/>
   </div>
+  )
+}
+
+if (isAdoptionPostOpen && activeAdoptionPost) {
+  return (
+    <PostDetails
+     postData={activeAdoptionPost}
+     containerClass="adoption-details-container"
+     onClose={handleCloseAdoptionPostView}
+    />
   )
 }
 
