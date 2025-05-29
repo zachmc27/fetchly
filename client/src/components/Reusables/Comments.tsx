@@ -41,7 +41,7 @@ const [isRepliesOpen, setIsRepliesOpen] = useState(false)
 
   function handleContainerClick() {
     setIsRepliesOpen(!isRepliesOpen)
-  };
+  }
     return (
       <>
         <div className="comment-container">
