@@ -27,7 +27,7 @@ import { mockPosts, mockAdoptionPosts } from "../../mockdata/post-data"
 import MessagesPage from "../Inbox/MessagesPage"
 import PostDetails from "./PostDetails"
 import Comments from "./Comments"
-import ImageCarousel from "./ImageCarousel"
+
 
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -287,7 +287,6 @@ function handleCloseAdoptionPostView() {
         return (
           
           <div key={postItem.id} className={itemStyle} onClick={() => handlePostViewRender(postItem.id)}>
-            {/* post JSX */}
             <div className="post-user-info">
               <img src={postItem.userAvi} alt="profile picture" />
               <p>{postItem.postUser}</p>
@@ -320,7 +319,6 @@ function handleCloseAdoptionPostView() {
         const adoptionItem = item as AdoptionCard
         return (
           <div key={adoptionItem._id} className={itemStyle} onClick={() => handleAdoptionPostViewRender(adoptionItem._id)}>
-            {/* adoption JSX */}
             <div className="adoption-image-container">
               <img
               src={adoptionItem.pet.profilePhoto?.url || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
