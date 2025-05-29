@@ -112,14 +112,7 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
         return (
           <div key={adoption._id} className={containerClass}>
             <div className="adoption-pet-image-container">
-              {/* {adoption.images.length > 0 && 
-              adoption.images.map((image, index) => (
-                <div key={index}>
-                <img key={index} src={image} alt="post image"></img>
-                </div>
-              ))
-            } */}
-            <img src={adoption.images[0]} alt="first image" />
+              <ImageCarousel slides={adoption.images}/>
             </div>
             <div className="adoption-pet-main-card">
               <div className="main-pet-card-row">
