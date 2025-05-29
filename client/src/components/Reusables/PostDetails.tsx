@@ -11,6 +11,8 @@
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import "../../ZachTemp.css"
 // testing data, can be deleted after integrations implementation
 import { MockPostItem, MockMeetupItem, MockAdoptionItem } from "../../mockdata/mocktypes/PostDetails";
@@ -27,19 +29,39 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
         const post = postData as MockPostItem;
         return (
           <div key={post.id} className={containerClass}>
-            <img src={post.userAvi} alt="users avatar" />
-            <p className="post-username">{post.postUser}</p>
+            <div className="post-user-info-row">
+                <button onClick={onClose}>{"<"}</button>
+                <div className="post-user-info-container">
+                  <img src={post.userAvi} alt="users avatar"/>
+                  <p className="post-username">{post.postUser}</p>
+                </div>
+                <p className="post-date-display">{post.postDate}</p>
+            </div>
             <p className="post-content">{post.postContent}</p>
-            <div className="img-container"> 
+            
             {/* {post.images.length > 0 && 
               post.images.map((image, index) => (
                 <img key={index} src={image} alt="post image"></img>
               ))
             } */}
-            <img src={post.images[0]} alt="first-image" />
+            {
+             post.postImages && 
+             <div className="img-container"> 
+              <img src={post.postImages[0]} alt="first-image" />
+             </div>
+            }
+            
+            <div className="post-info-container">
+              <div className="post-likes-container">
+                <p>{post.postLikeCount}</p>
+                <img src={heart} alt="heart icon" />
+              </div>
+              <div className="post-comment-container">
+                 <p>{post.postCommentCount}</p>
+                 <img src={chat} alt="comment icon"/>
+              </div>
+              
             </div>
-            <button>{post.postCommentCount}</button>
-            <button>{post.postLikeCount}</button>
             <p>{post.postDate}</p>
           </div>
         );
@@ -48,16 +70,16 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
         const meetup = postData as MockMeetupItem
         return (
           <div key={meetup.id} className={containerClass}>
-             <div className="user-info-row">
+             <div className="meetup-user-info-row">
                 <button onClick={onClose}>{"<"}</button>
-                <div className="user-info-container">
+                <div className="meetup-user-info-container">
                   <img src={meetup.userAvi} alt="users avatar"/>
-                  <p className="post-username">{meetup.username}</p>
+                  <p className="meetup-post-username">{meetup.username}</p>
                 </div>
                 <button className="rsvp-btn">RSVP</button>
             </div>
             
-            <div className="img-container"> 
+            <div className="meetup-img-container"> 
             {/* {meetup.images.length > 0 && 
               meetup.images.map((image, index) => (
                 <img key={index} src={image} alt="post image"></img>

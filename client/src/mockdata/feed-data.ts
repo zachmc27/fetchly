@@ -99,7 +99,7 @@ import batdog from "../images/batdog.jpeg"
   export const mockPostData = [
     {
         id: 1,
-        userAvi: "avi",
+        userAvi: dog,
         postUser: "zachmc",
         postContent: "I love Stella",
         postLikeCount: 5,
@@ -109,7 +109,7 @@ import batdog from "../images/batdog.jpeg"
     },
     {
         id: 2,
-        userAvi: "avi",
+        userAvi: cat,
         postUser: "dmish",
         postContent: "My cat likes my desk",
          postLikeCount: 5,
@@ -119,14 +119,46 @@ import batdog from "../images/batdog.jpeg"
     },
     {
         id: 3,
-        userAvi: "avi",
+        userAvi: billie,
         postUser: "sammtee",
         postContent: "woof",
         postLikeCount: 5,
         postDate: "6/2/25",
         postCommentCount: 12,
         itemType: "post"
-    }
+    },
+    {
+        id: 4,
+        userAvi: alien,
+        postUser: "bmcbry",
+        postContent: "meow",
+        postLikeCount: 5,
+        postDate: "6/2/25",
+        postCommentCount: 12,
+        itemType: "post"
+    },
+    {
+        id: 5,
+        userAvi: batdog,
+        postUser: "kdot",
+        postContent: "As I strolled through the park, what began as a peaceful afternoon quickly unraveled into a slapstick saga. First, a squirrel with the confidence of a seasoned pickpocket tried to rob me of my granola bar—locking eyes with me as it yanked the wrapper like it paid rent. Then I stepped directly into a flock of pigeons who, rather than flying off dramatically like in the movies, just looked mildly annoyed and shuffled sideways. My attempt to sit on a bench ended in an accidental cannonball onto a wet patch, because of course it had rained—right before I got there. Somewhere between dodging rogue frisbees and mistaking a yoga class for a public interpretive dance group, I realized: I wasn’t walking through the park. The park was walking all over me.",
+        postLikeCount: 5,
+        postDate: "6/2/25",
+        postCommentCount: 12,
+        itemType: "post"
+    },
+    {
+        id: 6,
+        userAvi: baller,
+        postUser: "johnbrownhimself",
+        postContent: "i am smart",
+        postImage: [flowerdog],
+        postLikeCount: 5,
+        postDate: "6/2/25",
+        postCommentCount: 12,
+        itemType: "post"
+    },
+    
   ]
   
   export const mockAdoptionData = [
