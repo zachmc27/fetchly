@@ -48,9 +48,12 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
     setPetType(selectedType);
     getBreeds({ variables: { type: selectedType.toLowerCase() } });
   };
+  // Define a type for breed objects returned from the query
+  type BreedType = { breed: string };
+
   useEffect(() => {
     if (breedData?.types) {
-      setBreedOptions(breedData.types.map((t: any) => t.breed));
+      setBreedOptions(breedData.types.map((t: BreedType) => t.breed));
     }
   }, [breedData]);
 
@@ -95,7 +98,7 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
 
     // If everything is provided, get ready to call mutation
 
-    let petInput = {
+    const petInput = {
       about,
       age,
       size,

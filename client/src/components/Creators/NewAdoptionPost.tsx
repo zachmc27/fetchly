@@ -61,11 +61,11 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
     if (userType === "Org") {
       getPets({ variables: { orgId: userId } });
     }
-  }, []);
+  }, [getPets]);
 
   useEffect(() => {
     if (petData?.org?.pets) {
-      const names = petData.org.pets.map((pet: any) => ({
+      const names = petData.org.pets.map((pet: { _id: string; name: string }) => ({
         id: pet._id,
         name: pet.name,
       }));
