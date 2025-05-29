@@ -259,17 +259,6 @@ function handleClosePostView() {
           
           <div key={postItem.id} className={itemStyle} onClick={() => handlePostViewRender(postItem.id)}>
             {/* post JSX */}
-<<<<<<< HEAD
-            <div className="user-info">
-                <img src={postItem.userAvi} alt="User Avatar" className="user-avatar" />
-                <h1 className="username">{postItem.postUser}</h1>
-            </div>
-            <p className="post-content">{postItem.postContent}</p>
-            <p className="post-date">{postItem.postDate}</p>
-            <p className="comment-count">{postItem.postCommentCount}</p>
-
-            
-=======
             <div className="post-user-info">
               <img src={postItem.userAvi} alt="profile picture" />
               <p>{postItem.postUser}</p>
@@ -295,7 +284,6 @@ function handleClosePostView() {
                 <p>{postItem.postCommentCount}</p>
               </div>
             </div>
->>>>>>> f2fc6b484a347221cf45ad49d1b11212ec723030
           </div>
         );
         }
