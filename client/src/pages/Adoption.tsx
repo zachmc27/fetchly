@@ -1,51 +1,74 @@
-// renders a search bar component that will allow user to search for adoption post in the searched location
-// 3 button components that filter posts by species: All, Dogs, Cats
-// 3 Feed components conditionally rendered by filtered posts and takes back array of filtered posts
-// 1 Feed component conditionally rendered by what is Searched and sends back an array of the searched posts
+import { useState } from "react";
 import Feed from "../components/Reusables/Feed";
-import { QUERY_ADOPTIONS } from "../utils/queries";
-import { useQuery } from "@apollo/client";
-import { mockAdoptionData } from "../mockdata/feed-data";
+import AdoptionFocus from "../components/Focus/AdoptionFocus";
+import { QUERY_ADOPTIONS, FILTERED_ADOPTIONS } from "../utils/queries";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import SearchBar from "../components/Reusables/SearchBar"
 import MediaUpload from "../components/Reusables/MediaUpload";
 import "../ZachTemp.css"
 
 export default function Adoption() {
 
-    console.log('This function will filter posts by the search.');
+    // Allow opening of AdoptionFocus
+    const [selectedAdoptionId, setSelectedAdoptionId] = useState<string | null>(null);
+
     const { loading, error, data } = useQuery(QUERY_ADOPTIONS);
-    console.log('Query data:', data?.adoptions);
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-    const adoptionPosts = data?.adoptions || mockAdoptionData; // Fallback to mock data if query fails
+    const [getFilteredAdoptions, { data: filteredData, loading: filteredLoading }] = useLazyQuery(FILTERED_ADOPTIONS);
+
+    function handleAdoptionClick(id: string) {
+      setSelectedAdoptionId(id);
+    }
+
+    const adoptionPosts = data?.adoptions;
     console.log('Adoption posts:', adoptionPosts);
 
-  function filterBySearch() {
+    function filterByAll() {
+      getFilteredAdoptions({ variables: {} });
+    }
+    
+    function filterByDogs() {
+      getFilteredAdoptions({ variables: { type: "Dog" } });
+    }
+    
+    function filterByCats() {
+      getFilteredAdoptions({ variables: { type: "Cat" } });
+    }
 
-  }
+    //function filterBySearch() {
+    function filterBySearch(searchTerm: string) {
+      getFilteredAdoptions({ variables: { location: searchTerm } });
+    }
 
-  function filterByAll() {
-    console.log('This function will show all posts');
-  }
-
-  function filterByDogs() {
-    console.log('This function will filter posts by dogs');
-  }
-
-  function filterByCats() {
-    console.log('This function will filter posts by cats');
-  }
+  if (filteredLoading) return <p>Filtering...</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="adoption-page-container">
       <SearchBar send={filterBySearch} />
-      <MediaUpload />
+      <MediaUpload onUpload={(media) => { 
+        console.log('Uploaded media:', media);
+      }} />
       <div className="filter-buttons-container">
         <button onClick={filterByAll} className="filter-button">All</button>
         <button onClick={filterByDogs} className="filter-button">Dogs</button>
         <button onClick={filterByCats} className="filter-button">Cats</button>
       </div>
-      <Feed initialFeedArray={data?.adoptions} itemStyle="adoption-card" containerStyle="adoption-feed-container"/>
+      {(filteredData?.adoptions?.length === 0) && (
+        <p className="no-results">No adoptions found for that filter.</p>
+      )}
+      <Feed 
+        initialFeedArray={filteredData?.adoptions || data?.adoptions} 
+        itemStyle="adoption-card" 
+        containerStyle="adoption-feed-container"
+        onItemClick={handleAdoptionClick}
+      />
+      {selectedAdoptionId && (
+        <AdoptionFocus 
+          adoptionId={selectedAdoptionId} 
+          onClose={() => setSelectedAdoptionId(null)} 
+        />
+      )}
     </div>
   )
 }

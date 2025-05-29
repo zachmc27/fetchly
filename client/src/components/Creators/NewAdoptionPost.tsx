@@ -1,207 +1,195 @@
-//form for creating an adoption post
-import React, { useState } from "react";
-import ImageUpload from "../Reusables/ImageUpload";
-import { useMutation } from "@apollo/client";
-import { ADD_PET, CREATE_ADOPTION } from "../../utils/mutations";
+import React, { useState, useEffect } from "react";
+import MediaUpload from "../Reusables/MediaUpload";
+import NewPet from "./NewPet";
+import WindowModal from "../Reusables/WindowModal"; // assuming this exists
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import { CREATE_ADOPTION } from "../../utils/mutations";
+import { QUERY_ORG } from "../../utils/queries";
+import "../../MishaTemp.css"
 
 interface NewAdoptionPostProps {
   onSubmit: (data: {
-    name: string;
-    petType: "" | "Dog" | "Cat";
-    breed: string;
-    gender: "" | "Male" | "Female" | "Unsure";
-    size: "" | "Small" | "Medium" | "Large";
-    allergies?: string;
-    vaccines?: string;
-    pet?: string
-    description: string;
+    pet?: string;
+    poster: string | null;
+    goodWithPets?: string;
+    description?: string;
+    location?: {
+      address: string;
+      zip: string;
+      city: string;
+      state: string;
+      country: string;
+    },
+    media?: string[];
   }) => void;
 }
 
-    const userId = localStorage.getItem('user_Id');
+type UploadedMedia = {
+  id: string;
+  filename: string;
+  contentType: string;
+  length: number;
+  uploadDate: string;
+  gridFsId: string;
+  tags: string[];
+  url: string;
+};
+
+const userId = localStorage.getItem("user_Id");
+const accountType = localStorage.getItem("accountType");
+const userType = accountType === "org" ? "Org" : "User";
 
 const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
-
-  const [AdoptedPet] = useMutation(ADD_PET);
   const [createAdoptionPost] = useMutation(CREATE_ADOPTION);
+  const [showError, setShowError] = useState(userType !== "Org");
 
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [name, setName] = useState("");
-  const [petType, setPetType] = useState<"" | "Dog" | "Cat">("");
-  const [breed, setBreed] = useState("");
-  const [gender, setGender] = useState<"" | "Male" | "Female" | "Unsure">("");
-  const [size, setSize] = useState<"" | "Small" | "Medium" | "Large">("");
-  const [allergies, setAllergies] = useState("");
-  const [vaccines, setVaccines] = useState("");
-  const [description, setDescription] = useState("");
+  const { data: orgData } = useQuery(QUERY_ORG, {
+    variables: { orgId: userId },
+    skip: userType !== "Org",
+  });
+
+  const [pet, setPet] = useState<string>("");
+  const [goodWithPets, setGoodWithPets] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [media, setMedia] = useState<string[]>([""]);
+  const [showNewPet, setShowNewPet] = useState(false);
+
+  const [getPets, { data: petData }] = useLazyQuery(QUERY_ORG);
+  const [petOptions, setPetOptions] = useState<{ id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    if (userType === "Org") {
+      getPets({ variables: { orgId: userId } });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (petData?.org?.pets) {
+      const names = petData.org.pets.map((pet: any) => ({
+        id: pet._id,
+        name: pet.name,
+      }));
+      setPetOptions(names);
+    }
+  }, [petData]);
+
+  // Closes the modal
+  const closeModal = () => {
+    setShowNewPet(false);
+  };
+
+  const handleSubmitPet = () => {
+    getPets({ variables: { orgId: userId } });
+    setShowNewPet(false);
+  };
+
+  const handleMediaUpload = (media: UploadedMedia) => {
+    setMedia([media.id]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    let petInput = {
-      name,
-      owner: {
-        refId: userId || "",
-        refModel: "User",
-      },
-      type: breed,
-      gender,
-      size,
-      vaccination: vaccines,
-      about: description,
-    };
-
-   let adoptedPetResponse = null;
-
-    try {
-      adoptedPetResponse = await AdoptedPet({ variables: { input: petInput } });
-
-
-    } catch (error) {
-      console.error("Error adding pet:", error);
+    if (userType !== "Org" || !orgData?.org?.location) {
+      console.error("Only organizations with a valid location can post.");
+      return;
     }
+
+    const location = orgData.org.location;
 
     const adoptionInput = {
-      pet: adoptedPetResponse?.data?.addPet?._id || "",
+      pet,
       poster: userId,
-    }
+      goodWithPets,
+      description,
+      location: {
+        address: location?.address || "",
+        zip: location?.zip || "",
+        city: location?.city || "",
+        state: location?.state || "",
+        country: location?.country || "",
+      },
+      media,
+    };
 
     try {
-      await createAdoptionPost({ variables: { input: adoptionInput } })
-      onSubmit({
-        name,
-        petType,
-        breed,
-        gender,
-        size,
-        allergies,
-        vaccines,
-        description,
-      });
+      await createAdoptionPost({ variables: { input: adoptionInput } });
+      onSubmit(adoptionInput);
 
-      setName("");
-      setPetType("");
-      setBreed("");
-      setGender("");
-      setSize("");
-      setAllergies("");
-      setVaccines("");
+      setPet("");
+      setGoodWithPets("");
       setDescription("");
-
-      window.location.reload();
+      setMedia([]);
     } catch (error) {
       console.error("Error adding adoption:", error);
     }
   };
 
+  if (showError) {
+    return (
+      <div className="form-errors">
+        <p>Only organizations can post adoptions.</p>
+        <button onClick={() => setShowError(false)}>Dismiss</button>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="adoption-post-form">
-      <ImageUpload
-        onImageSelect={(file) => {
-          console.log("selected Image", file);
-        }}
-        previewImage={previewImage}
-        setPreviewImage={setPreviewImage}
-      />
-      <div>
-        <label>What&apos;s Their Name?</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Write your furry pal's name"
-        />
-      </div>
+    <>
+      <form onSubmit={handleSubmit} className="adoption-post-form">
 
-      <div>
-        <label>What kind of pet is it?</label>
-        <div className="adoption-petType-button">
-          {["Dog", "Cat"].map((type) => (
-            <button
-              type="button"
-              key={type}
-              className={petType === type ? "active" : ""}
-              onClick={() => setPetType(type as "Dog" | "Cat")}
-            >
-              {type}
-            </button>
-          ))}
+        <div className="adoption-pet-button">
+          <label>Which pet is up for adoption?</label>
+          <select value={pet} onChange={(e) => setPet(e.target.value)}>
+            <option value="">Select Pet</option>
+            {petOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={() => setShowNewPet(true)}
+            className="new-pet-toggle"
+          >
+            Add New Pet
+          </button>
         </div>
-      </div>
 
-      <div>
-        <label>What&apos;s their breed?</label>
-        <input
-          type="text"
-          value={breed}
-          onChange={(e) => setBreed(e.target.value)}
-          placeholder="Search"
-        />
-      </div>
-
-      <div>
-        <label>Boy or Girl?</label>
-        <div className="adoption-gender-button">
-          {["Male", "Female", "Unsure"].map((g) => (
-            <button
-              type="button"
-              key={g}
-              className={gender === g ? "active" : ""}
-              onClick={() => setGender(g as "Male" | "Female" | "Unsure")}
-            >
-              {g}
-            </button>
-          ))}
+        <div>
+          <label>Are they good with other Pets?</label>
+          <input
+            type="text"
+            value={goodWithPets}
+            onChange={(e) => setGoodWithPets(e.target.value)}
+            placeholder="e.g., Yes they love other pets"
+          />
         </div>
-      </div>
 
-      <div>
-        <label>What size?</label>
-        <div className="adoption-size-button">
-          {["Small", "Medium", "Large"].map((s) => (
-            <button
-              type="button"
-              key={s}
-              className={size === s ? "active" : ""}
-              onClick={() => setSize(s as "Small" | "Medium" | "Large")}
-            >
-              {s}
-            </button>
-          ))}
+        <div>
+          <label>Tell us about them.</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Tell us about this pet."
+          />
         </div>
-      </div>
 
-      <div>
-        <label>Any allergies?</label>
-        <input
-          type="text"
-          value={allergies}
-          onChange={(e) => setAllergies(e.target.value)}
-          placeholder="Search"
-        />
-      </div>
+        <MediaUpload onUpload={handleMediaUpload} />
 
-      <div>
-        <label>What about vaccines?</label>
-        <input
-          type="text"
-          value={vaccines}
-          onChange={(e) => setVaccines(e.target.value)}
-          placeholder="Search"
-        />
-      </div>
+        <button type="submit">Post for Adoption</button>
+      </form>
 
-      <div>
-        <label>Tell us more about them</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Tell us more about the pet"
-        />
-      </div>
-
-      <button type="submit">Post for Adoption</button>
-    </form>
+      {/* NewPet Modal */}
+      {showNewPet && (
+        <WindowModal cancel={closeModal} confirm={() => {}}>
+          <NewPet onSubmit={handleSubmitPet} onCancel={closeModal} />
+        </WindowModal>
+      )}
+    </>
   );
 };
+
 export default NewAdoptionPost;

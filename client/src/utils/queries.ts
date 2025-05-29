@@ -20,7 +20,14 @@ export const QUERY_USERS = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       pets {
         _id
         name
@@ -107,7 +114,14 @@ export const QUERY_USER = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       pets {
         _id
         name
@@ -219,7 +233,14 @@ export const QUERY_ME = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       pets {
         _id
         name
@@ -321,7 +342,14 @@ export const QUERY_ORGS = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       employees {
         _id
         username
@@ -398,7 +426,14 @@ export const QUERY_ORG = gql`
         tags
       }
       about
-      location
+      location {
+        _id
+        address
+        zip
+        city
+        state
+        country
+      }
       employees {
         _id
         username
@@ -732,6 +767,16 @@ export const QUERY_TYPE = gql`
     type(typeId: $typeId) {
       _id
       type
+      breed
+    }
+  }
+`;
+
+// Filtered types query
+export const FILTER_QUERY_TYPE = gql`
+  query TypesByType($type: String!) {
+    types(type: $type) {
+      _id
       breed
     }
   }
@@ -1154,6 +1199,23 @@ export const QUERY_ADOPTION = gql`
       }
       createdAt
       itemType
+    }
+  }
+`;
+
+export const FILTERED_ADOPTIONS = gql`
+  query FilteredAdoptions($type: String, $location: String) {
+    adoptions(type: $type, location: $location) {
+      _id
+      pet {
+        _id
+        name
+        type { type }
+        profilePhoto { url }
+      }
+      location { city, state }
+      goodWithPets
+      description
     }
   }
 `;

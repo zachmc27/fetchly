@@ -11,12 +11,10 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-
-
+import { AdoptionCard } from "../../types/CardTypes"
 
 // testing data, can be deleted after integrations implementation
-import { MockPostCard, MockAdoptionCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
-import { AdoptionCard } from "../../types/CardTypes";
+import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
@@ -33,18 +31,18 @@ import Goinglist from "../Meetup/Goinglist"
 import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 
 
-
-
-type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | MockAdoptionCard;
+type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard;
 
 export default function Feed({
   initialFeedArray,
   itemStyle,
   containerStyle,
+  onItemClick,  
 }: {
   initialFeedArray: FeedItem[];
   itemStyle: string;
   containerStyle: string;
+  onItemClick?: (id: string) => void;  
 }) {
   const location = useLocation();
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
@@ -231,7 +229,7 @@ export default function Feed({
               />
             </div>
             <div className="adoption-feed-info-container">
-            <h1>{adoptionItem.pet.name}</h1>
+            <h1 onClick={() => onItemClick?.(adoptionItem._id)} className="clickable-header">{adoptionItem.pet.name}</h1>
               <div className="adoption-feed-details-row">
                 <div className="age-info"> 
                   <img src={calendar} alt="calendar icon" className="calendar-icon" />
@@ -243,6 +241,9 @@ export default function Feed({
               {adoptionItem.pet.gender === "female" &&
               <img src={female} alt="female-icon" className="female-icon"/>
               }
+              </div>
+              <div className="adoption-feed-description-row">
+                <p>{adoptionItem.description}</p>
               </div>
             </div>
           </div>
