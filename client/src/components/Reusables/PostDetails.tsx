@@ -62,7 +62,6 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
               </div>
               
             </div>
-            <p>{post.postDate}</p>
           </div>
         );
       }

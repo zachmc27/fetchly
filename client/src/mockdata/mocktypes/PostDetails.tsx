@@ -1,11 +1,11 @@
-type Comment = {
+export type Comment = {
   id: number,
   user: string,
   avatar?: string,
   comment: string,
   likeCount: number,
   postedTime: Date,
-  replies: Comment[]
+  replies?: Comment[]
 }
 
 export type rsvpList = {

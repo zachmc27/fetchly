@@ -22,7 +22,6 @@ const comments = [
       comment: 'Yes, epic fun',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       },
       {
       id: 102,
@@ -31,7 +30,6 @@ const comments = [
       comment: 'omg my cat is on my desk rn',
       likeCount: 42,
       postedTime:new Date(),
-      replies: []
       }
     ]
   },
@@ -50,7 +48,6 @@ const comments = [
       comment: 'Can I eat your house',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       },
       {
       id: 202,
@@ -59,7 +56,6 @@ const comments = [
       comment: 'Where am I',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       }
     ]
   },
@@ -78,7 +74,6 @@ const comments = [
       comment: "Money won't get you love",
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       },
       {
       id: 103,
@@ -87,7 +82,6 @@ const comments = [
       comment: 'Oh, the glittering shackles of avarice, how they bind the soul! Each trinket bought, each fleeting pleasure pursued, layers another chain upon the spirit, suffocating the once vibrant spark within. The relentless chase for more, a hollow echo in the cavern of a heart consumed by yearning, steals not just peace, but the very essence of well-being. Sleep becomes a battleground for anxieties over acquisitions, relationships wither in the shadow of possessions, and the mirror reflects not a contented individual, but a weary stranger, forever reaching, forever empty. For what price, indeed, the fleeting joy of a material bauble, when the true treasures of contentment, connection, and inner peace lie bleeding, sacrificed upon the altar of insatiable greed?',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       }
     ]
   }
