@@ -3,7 +3,7 @@
 // pass back a function prop that can be executed when clicking the send button
 // use bubble button component for send button
 
-export default function SearchBar({ send }: { send: (searchTerm: string) => void }) {
+export default function SearchBar({ send }: { send: () => void }) {
   return (
     <div className="search-style">
       <button onClick={send} className="search-btn">🔍</button>  

@@ -35,8 +35,8 @@ export default function Adoption() {
     }
 
     //function filterBySearch() {
-    function filterBySearch(searchTerm: string) {
-      getFilteredAdoptions({ variables: { location: searchTerm } });
+    function filterBySearch() {
+      getFilteredAdoptions();
     }
 
   if (filteredLoading) return <p>Filtering...</p>;
