@@ -1,0 +1,310 @@
+/* ----------------------- */
+/* Window Modal CSS Styles */
+/* ----------------------- */
+
+/* Modal overlay fills viewport and centers modal */
+.window-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;  /* center horizontally */
+  align-items: center;      /* center vertically */
+
+  background-color: rgba(0, 0, 0, 0.5); /* translucent black overlay */
+  z-index: 1000; /* high stack to overlay all */
+}
+
+/* Modal content box */
+.window-modal {
+  max-width: 600px;
+  width: 90vw;           /* responsive */
+  max-height: 85vh; 
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 2rem; 
+  box-sizing: border-box;
+  background: #fff; 
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Buttons container */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end; /* align buttons right horizontally */
+  gap: 12px;
+  margin-top: 24px; /* add space above buttons */
+  position: static; /* remove any absolute positioning */
+  padding-top: 12px;
+  border-top: 1px solid #ddd; /* optional nice separator */
+}
+
+/* Cancel button */
+.close-button {
+  background: transparent;
+  border: 2px solid #d33;
+  color: #d33;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: #d33;
+  color: white;
+}
+
+/* Confirm button */
+.yes-button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.yes-button:hover {
+  background-color: #45a049;
+}
+
+/* ---------------------------- */
+/* New Adoption Post CSS Styles */
+/* ---------------------------- */
+
+.adoption-post-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.adoption-post-form label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.adoption-post-form input[type="text"],
+.adoption-post-form select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.adoption-post-form input[type="text"]:focus,
+.adoption-post-form select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.adoption-pet-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.new-pet-toggle {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.new-pet-toggle:hover {
+  background-color: #0056b3;
+}
+
+.adoption-post-form button[type="submit"] {
+  margin-top: 1rem;
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.adoption-post-form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* ----------------------- */
+/* New Pet Post CSS Styles */
+/* ----------------------- */
+
+/* Container for the entire form */
+.new-pet-form {
+  max-width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 0 auto;
+  padding: 20px 25px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 580px;       /* a bit wider */
+  min-width: 320px;       /* don't get too narrow on small screens */
+}
+
+/* Labels */
+.new-pet-form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  color: #333;
+}
+
+/* Text inputs and select */
+.new-pet-form input[type="text"],
+.new-pet-form select,
+.new-pet-form textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.new-pet-form input[type="text"]:focus,
+.new-pet-form select:focus,
+.new-pet-form textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Textarea specifically */
+.new-pet-form textarea {
+  min-height: 100px;
+}
+
+/* Grouped buttons style */
+.new-pet-petType-button,
+.new-pet-gender-button,
+.new-pet-size-button,
+.new-pet-neutered-button {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+/* Buttons inside groups */
+.new-pet-petType-button button,
+.new-pet-gender-button button,
+.new-pet-size-button button,
+.new-pet-neutered-button button {
+  background-color: #eee;
+  border: 1.5px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #555;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.new-pet-petType-button button:hover,
+.new-pet-gender-button button:hover,
+.new-pet-size-button button:hover,
+.new-pet-neutered-button button:hover {
+  background-color: #dff0d8;
+  border-color: #4caf50;
+  color: #2e7d32;
+}
+
+/* Active button style */
+.new-pet-petType-button button.active,
+.new-pet-gender-button button.active,
+.new-pet-size-button button.active,
+.new-pet-neutered-button button.active {
+  background-color: #4caf50;
+  border-color: #388e3c;
+  color: white;
+}
+
+/* Age input specifically: smaller width */
+.new-pet-age-button input[type="text"] {
+  max-width: 100px;
+}
+
+/* Submit button */
+.new-pet-form button[type="submit"] {
+  margin-top: 1.5rem;
+  padding: 14px;
+  font-size: 1.1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.new-pet-form button[type="submit"]:hover {
+  background-color: #388e3c;
+}
+
+/* Error container */
+.form-errors {
+  background-color: #ffe6e6;
+  border: 1.5px solid #d9534f;
+  border-radius: 6px;
+  padding: 10px 15px;
+  color: #a94442;
+  margin-bottom: 1rem;
+}
+
+.form-errors ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.form-errors li {
+  margin-bottom: 5px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .new-pet-petType-button button,
+  .new-pet-gender-button button,
+  .new-pet-size-button button,
+  .new-pet-neutered-button button {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}

@@ -1,5 +1,5 @@
 export type AdoptionCard= {
-    _id: number;
+    _id: string;
     id?: string;
     pet: {
         _id: number;
@@ -11,4 +11,5 @@ export type AdoptionCard= {
         gender: string;
     };
     itemType: string;
+    description: string;
 };
