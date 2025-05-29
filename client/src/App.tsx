@@ -11,6 +11,7 @@ import NavBar from "./components/Navbar/NavBar";
 import PostButton from "./components/Navbar/PostButton";
 import { PostModalProvider } from "./components/Reusables/PostModalProvider";
 
+
 // ****** Each of these will render on each page ******
 // import NavBar from './components/Navbar/Bar';
 // import PostBubble from './components/Navbar/PostBubble';

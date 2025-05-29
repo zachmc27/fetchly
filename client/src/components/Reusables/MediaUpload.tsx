@@ -16,7 +16,20 @@ import '../../SammiReusables.css';
     url: string; // URL to access the media
   };
 
-const MediaUpload = () => {
+  interface MediaUploadProps {
+    onUpload: (media: {
+      id: string;
+      filename: string;
+      contentType: string;
+      length: number;
+      uploadDate: string;
+      gridFsId: string;
+      tags: string[];
+      url: string;
+    }) => void;
+  }
+
+const MediaUpload: React.FC<MediaUploadProps> = ({ onUpload }) => {
   const [file, setFile] = useState<File | null>(null);
   //const [tagsInput, setTagsInput] = useState<string>('');
   const [showModal, setShowModal] = useState(false);
@@ -35,8 +48,11 @@ const MediaUpload = () => {
   // };
 
   const handleUpload = async () => {
+    // Break if there's no file
     if (!file) return;
     console.log('Uploading file:', file.name);
+
+    // Try to upload the media file and pass in the required variables
     try {
       const response = await uploadMedia({ 
         variables: {
@@ -45,27 +61,33 @@ const MediaUpload = () => {
             tags: ['placeholder-for-tags'],
           } 
         }});
+
+      // Retrieve the uploaded media details to access it later
       const uploadedFile = response.data?.uploadMedia;
       if (!uploadedFile) {
         throw new Error('Upload failed');
       }
-      if (uploadedFile) {
-        setUploadedMedia({
-          id: uploadedFile.id,
-          filename: uploadedFile.filename,
-          contentType: uploadedFile.contentType,
-          length: uploadedFile.length,
-          uploadDate: uploadedFile.uploadDate,
-          gridFsId: uploadedFile.gridFsId,
-          tags: uploadedFile.tags || [],
-          url: uploadedFile.url, // Assuming you have a route to serve the media
-        });
-      }
-
+      
+      const formattedMedia: UploadedMedia = {
+        id: uploadedFile.id,
+        filename: uploadedFile.filename,
+        contentType: uploadedFile.contentType,
+        length: uploadedFile.length,
+        uploadDate: uploadedFile.uploadDate,
+        gridFsId: uploadedFile.gridFsId,
+        tags: uploadedFile.tags || [],
+        url: uploadedFile.url,
+      };
+      
+      // Send returned data up to the parent component
+      setUploadedMedia(formattedMedia);
+      onUpload(formattedMedia);
+      
+      // Close and reset the uploadMedia modal
       setShowModal(false);
       setFile(null);
       console.log('Upload response:', response.data?.uploadMedia);
-      return response.data?.uploadMedia;
+      return uploadedFile;
     } catch (err) {
       console.error('Upload error:', err);
       setShowModal(false);
