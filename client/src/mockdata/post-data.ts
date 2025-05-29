@@ -6,6 +6,29 @@ import flowerdog from "../images/flowerdog.jpeg"
 import billie from "../images/billiewooflish.jpeg"
 import batdog from "../images/batdog.jpeg"
 
+
+export const mockMutualFollowers = [
+  {
+  userAvi: dog,
+  userName: 'zach'
+  },
+  {
+    userAvi: cat,
+    userName: 'sammi'
+  },
+  {
+  userAvi: dog,
+  userName: 'kendrick'
+  },
+  {
+    userAvi: cat,
+    userName: 'misha'
+  },
+  {
+  userAvi: dog,
+  userName: ' brett'
+  }
+]
 const comments = [
   {
     id: 100,
@@ -167,7 +190,7 @@ const rsvpList = [
         userAvi: baller,
         postUser: "johnbrownhimself",
         postContent: "i am smart",
-        postImages: [flowerdog],
+        postImages: [flowerdog, dog, batdog],
         postLikeCount: 5,
         postDate: "6/2/25",
         postCommentCount: 12,
@@ -253,7 +276,7 @@ const rsvpList = [
 export const mockAdoptionPosts = 
 [
 {
-  id: 1,
+  _id: "1",
   orgName: 'austin pets alive!',
   orgAvi: dog,
   orgEmail: "pets@alive.com",
@@ -261,6 +284,7 @@ export const mockAdoptionPosts =
   images: ['img1', 'img2'],
   petName: 'Potato',
   gender: `male`,
+  age: 5,
   description: 'chill guy',
   location: '225 Barton Springs Rd, Austin, TX',
   vaccinated: true,
@@ -270,7 +294,7 @@ export const mockAdoptionPosts =
   itemType: 'adoption'
 },
 {
-  id: 2,
+  _id: "2",
   orgName: 'cat cafe',
   orgAvi: cat,
   orgEmail: "pets@alive.com",
@@ -278,6 +302,7 @@ export const mockAdoptionPosts =
   images: ['img1', 'img2'],
   petName: 'Potato',
   gender: `male`,
+  age: 5,
   description: 'chill guy',
   location: '225 Barton Springs Rd, Austin, TX',
   vaccinated: true,
@@ -287,7 +312,8 @@ export const mockAdoptionPosts =
   itemType: 'adoption'
 },
 {
-  id: 3,
+  
+  _id: "3",
   orgName: 'dog world',
   orgAvi: billie,
   orgEmail: "pets@alive.com",
@@ -295,6 +321,7 @@ export const mockAdoptionPosts =
   images: ['img1', 'img2'],
   petName: 'Potato',
   gender: `male`,
+  age: 5,
   description: 'chill guy',
   location: '225 Barton Springs Rd, Austin, TX',
   vaccinated: true,
@@ -304,7 +331,7 @@ export const mockAdoptionPosts =
   itemType: 'adoption'
 },
 {
-  id: 4,
+  _id: "4",
   orgName: 'dog land',
   orgAvi: batdog,
   orgEmail: "pets@alive.com",
@@ -312,6 +339,7 @@ export const mockAdoptionPosts =
   images: ['img1', 'img2'],
   petName: 'Potato',
   gender: `male`,
+  age: 5,
   description: 'chill guy',
   location: '225 Barton Springs Rd, Austin, TX',
   vaccinated: true,
@@ -321,7 +349,7 @@ export const mockAdoptionPosts =
   itemType: 'adoption'
 },
 {
-  id: 5,
+  _id: "5",
   orgName: 'unreasonably wealthy cats',
   orgAvi: baller,
   orgEmail: "pets@alive.com",
@@ -329,6 +357,7 @@ export const mockAdoptionPosts =
   images: ['img1', 'img2'],
   petName: 'Potato',
   gender: `male`,
+  age: 5,
   description: 'chill guy',
   location: '225 Barton Springs Rd, Austin, TX',
   vaccinated: true,
@@ -338,7 +367,7 @@ export const mockAdoptionPosts =
   itemType: 'adoption'
 },
 {
-  id: 6,
+  _id: "6",
   orgName: 'aliens',
   orgAvi: alien,
   orgEmail: "pets@alive.com",
@@ -346,6 +375,7 @@ export const mockAdoptionPosts =
   images: ['img1', 'img2'],
   petName: 'Potato',
   gender: `male`,
+  age: 5,
   description: 'chill guy',
   location: '225 Barton Springs Rd, Austin, TX',
   vaccinated: true,

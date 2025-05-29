@@ -23,21 +23,19 @@ export default function Adoption() {
     console.log('Adoption posts:', adoptionPosts);
 
     function filterByAll() {
-      getFilteredAdoptions({ variables: {} });
+    getFilteredAdoptions({ variables: { filter: {} } });
     }
-    
     function filterByDogs() {
-      getFilteredAdoptions({ variables: { type: "Dog" } });
+    getFilteredAdoptions({ variables: { filter: { Type: "dog" } } });
     }
-    
     function filterByCats() {
-      getFilteredAdoptions({ variables: { type: "Cat" } });
+    getFilteredAdoptions({ variables: { filter: { Type: "cat" } } });
     }
 
     //function filterBySearch() {
     function filterBySearch() {
-      getFilteredAdoptions();
-    }
+    getFilteredAdoptions({ variables: { filter: {} } });
+  }
 
   if (filteredLoading) return <p>Filtering...</p>;
   if (loading) return <p>Loading...</p>;

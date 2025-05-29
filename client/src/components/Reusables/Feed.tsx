@@ -27,6 +27,7 @@ import { mockPosts, mockAdoptionPosts } from "../../mockdata/post-data"
 import MessagesPage from "../Inbox/MessagesPage"
 import PostDetails from "./PostDetails"
 import Comments from "./Comments"
+import ImageCarousel from "./ImageCarousel"
 
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -222,17 +223,17 @@ function handleClosePostView() {
 const [activeAdoptionPost, setActiveAdoptionPost] = useState<MockAdoptionItem | null>(null); 
 const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
 
-async function handleAdoptionPostViewRender(adoptionId: number) {
-  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption.id === adoptionId);
+ function handleAdoptionPostViewRender(adoptionId: string) {
+  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption._id === adoptionId);
   console.log(adoptionToOpen);
   if (!adoptionToOpen) {
     console.log('no post found')
   }
     if (adoptionToOpen) {
-      await setActiveAdoptionPost(adoptionToOpen);
+       setActiveAdoptionPost(adoptionToOpen);
       console.log('active post:', activeAdoptionPost);
       setIsAdoptionPostOpen(true)
-      localStorage.setItem("activeAdoptionId", adoptionToOpen.id.toString());
+      localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
     } else  {
       console.warn('No post found with ID:', adoptionId);
     }
@@ -244,7 +245,7 @@ function handleCloseAdoptionPostView() {
   localStorage.removeItem("activeAdoptionId");
   setActiveAdoptionPost(null)
 }
-
+// ----------------------------------------------------------------
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
 
     
@@ -297,10 +298,10 @@ function handleCloseAdoptionPostView() {
             </div>
             <p>{postItem.postContent}</p>
             {
-              postItem.postImage &&
-              postItem.postImage.map((image, index) => (
-                <img src={image} key={index}></img>
-              ))
+              postItem.postImage && postItem.postImage.length > 0 &&
+                <div className="img-container"> 
+                <img src={postItem.postImage[0]} alt="first image in the post" />
+                </div>
             }
             <div className="post-details-row">
               <div className="post-likes-container">
@@ -331,7 +332,7 @@ function handleCloseAdoptionPostView() {
               <div className="adoption-feed-details-row">
                 <div className="age-info"> 
                   <img src={calendar} alt="calendar icon" className="calendar-icon" />
-                  <p>{adoptionItem.pet.age} yrs</p> {/* Added "yrs" for context */}
+                  <p>{adoptionItem.pet.age} yrs</p>
                 </div>
               {adoptionItem.pet.gender === "male" &&
               <img src={male} alt="male-icon" className="male-icon"/>

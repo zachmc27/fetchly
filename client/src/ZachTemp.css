@@ -883,7 +883,7 @@
   color: #333;
 }
 
-.meetup-img-container {
+.img-container {
   width: 100%;
   background-color: #f0f0f0; /* Placeholder background for image */
   border-radius: 8px;
@@ -895,7 +895,7 @@
   min-height: 200px; /* Minimum height for the image container */
 }
 
-.meetup-img-container img {
+.img-container img {
   width: 100%;
   height: auto;
   display: block;
@@ -923,72 +923,6 @@
   vertical-align: middle;
 }
 
-
-/* --- Adoption Post Specific Styles --- */
-.adoption-details-container { /* Assuming this is the containerClass for adoption posts */
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 500px;
-  box-sizing: border-box;
-}
-
-.adoption-details-container .img-container { /* If you render multiple images for adoption, style their containers */
-    margin-bottom: 10px;
-}
-
-.adoption-details-container .img-container img {
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
-.adoption-details-container p {
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.adoption-details-container p:first-of-type { /* Pet Name */
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.adoption-details-container img[alt="male-icon"],
-.adoption-details-container img[alt="female-icon"] {
-    width: 20px;
-    height: 20px;
-    margin-left: 5px;
-    vertical-align: middle;
-}
-
-.adoption-details-container img[alt="organization avatar"] {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-.adoption-details-container .pet-details-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-}
-
-.adoption-details-container .pet-details-container p {
-    background-color: #f8f8f8;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 0.9em;
-    color: #666;
-}
 
 
 /* --- Comments Component Styles --- */
@@ -1356,10 +1290,8 @@
 
 /* post details */
 
-/* Ensure this CSS is loaded for your component */
-
-.post-details-container { /* Your containerClass */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+.post-details-container {
+  padding: 15px;
   color: #262626; /* Default text color */
   background-color: #fff; /* Assuming a white background for the post area */
   border-bottom: 1px solid #efefef; /* Separator if this is part of a list */
@@ -1422,64 +1354,8 @@
 }
 
 /* Image Container */
-.img-container {
-  /* For a single image as per your current TSX */
-  margin: 0 0 12px 0; /* Margin below the image block */
-  padding: 0; /* No padding if the image should be edge-to-edge or has own margin */
-  background-color: #fafafa; /* Light grey background for placeholder area */
-  min-height: 200px; /* Example: give some height to the placeholder area */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.img-container img { /* Styling for the actual image */
-  display: block;
-  max-width: 100%; /* Responsive image */
-  max-height: 400px; /* Max height for the image area */
-  height: auto;
-  object-fit: contain; /* Or 'cover' depending on desired cropping */
-}
 
 
-/* --- Conceptual CSS for Multi-Image Layout (as seen in screenshot) --- */
-/* If you update TSX to have multiple image elements/placeholders:
-.img-container.multi-layout {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px;
-  padding: 0;
-  background-color: #fff; // Or transparent
-  min-height: auto; // Reset min-height from single image style
-  margin: 12px 0; // Adjust margin if needed
-}
-
-.img-container.multi-layout .img-slot {
-  background-color: #fafafa; // Placeholder background
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; // If using object-fit: cover
-}
-
-.img-container.multi-layout .img-slot.large {
-  grid-row: span 2; // Make the first image span two rows
-}
-
-.img-container.multi-layout .img-slot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; // Cover the slot area
-}
-
-.img-container.multi-layout .img-slot .placeholder-icon { // Your gallery icon SVG/img
-  width: 40px;
-  height: 40px;
-  opacity: 0.5;
-}
-*/
-/* --- End of Conceptual CSS for Multi-Image --- */
 
 
 /* Post Info Container (Comment and Like Counts) */
@@ -1624,4 +1500,423 @@
   cursor: pointer;
 }
 
+/* adoption details */
+
+/* Overall Page Styles */
+.adoption-page-container { /* Your containerClass */
+  background-color: #f0f2f5; /* Light grey background for the whole page */
+  color: #1c1e21; /* Default dark text color */
+  padding-bottom: 20px; /* Space at the bottom if content is long */
+}
+
+/* Pet Image Container */
+.adoption-pet-image-container {
+  width: 100%;
+  height: 300px; /* Adjust height as needed, or use aspect-ratio */
+  background-color: #e0e0e0; /* Placeholder background if no image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensures image conforms to container */
+}
+
+.adoption-pet-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area, might crop */
+  /* If you want to show a placeholder icon like in the image:
+  object-fit: scale-down;
+  max-width: 80px;
+  max-height: 80px;
+  opacity: 0.5; */
+}
+
+/* Main Pet Info Card */
+.adoption-pet-main-card {
+  background-color: #ffffff;
+  border-radius: 20px; /* Significant rounding */
+  padding: 20px;
+  margin: -40px 16px 16px 16px; /* Negative top margin to overlap image, side margins */
+  position: relative; /* For stacking context if needed */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+}
+
+.main-pet-card-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.main-pet-card-row p { /* Pet Name */
+  font-size: 26px; /* Large font for name */
+  font-weight: 700;
+  color: #1c1e21;
+  margin: 0;
+  margin-right: 8px;
+}
+
+.main-pet-card-row img { /* Gender Icon */
+  width: 22px; /* Adjust size */
+  height: 22px;
+}
+
+.secondary-pet-card-row {
+  display: flex;
+  justify-content: space-between; /* Distribute items */
+  align-items: center;
+  gap: 10px; /* Gap between items */
+}
+
+.adoption-location,
+.adoption-pet-age,
+.vaccinated-icon {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #555555; /* Slightly lighter text for secondary info */
+}
+
+.secondary-pet-card-row img { /* Icons in secondary row */
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  /* Consider filter for consistent icon color if they are different
+     e.g., filter: grayscale(50%) opacity(0.7); */
+}
+
+.secondary-pet-card-row p {
+  margin: 0;
+}
+
+/* Organization Info Row */
+.org-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px; /* Match card horizontal padding */
+  background-color: #ffffff; /* Could be part of a larger white block or a new card */
+  /* If it's a new card that's not .adoption-pet-main-card:
+  margin: 0 16px 16px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  */
+  border-bottom: 1px solid #f0f2f5; /* Light separator if not the last element in a card */
+}
+
+.main-org-info {
+  display: flex;
+  align-items: center;
+}
+
+.main-org-info img { /* Organization Avatar */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.main-org-info p { /* Organization Name */
+  font-size: 15px;
+  font-weight: 500;
+  color: #333333;
+  margin: 0;
+}
+
+.org-contact-info button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 8px; /* Space between contact icons */
+}
+
+.org-contact-info button img { /* Contact Icons (mail, call) */
+  width: 22px;
+  height: 22px;
+  /* Consider filter for consistent icon color */
+}
+
+/* Conditional Contact Info Display */
+.adoption-page-container > div[style] { /* A bit generic, better to wrap isCallOpen/isEmailOpen content in a div with a class */
+  padding: 8px 20px;
+  font-size: 14px;
+  background-color: #ffffff; /* Assuming it continues the white block */
+  color: #007bff; /* Link-like color for contact info */
+}
+
+/* Pet Description */
+.adoption-page-container > p { /* Targets the main adoption.description paragraph */
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333333;
+  padding: 16px 20px;
+  margin: 0;
+  background-color: #ffffff; /* Assuming it continues the white block */
+}
+
+/* More Pet Details Container */
+.more-pet-details-container {
+  padding: 10px 20px 20px 20px;
+  background-color: #ffffff; /* Assuming it continues the white block */
+  border-top: 1px solid #f0f2f5; /* Separator if description is above */
+}
+
+.more-pet-details-container p {
+  font-size: 14px;
+  color: #444444;
+  margin: 0 0 8px 0; /* Space between each detail line */
+  display: flex; /* To potentially style label and value differently if TSX changes */
+}
+
+/* Example to make "Breed:", "Fixed:" labels slightly distinct if you split them in TSX */
+.more-pet-details-container p .detail-label {
+  font-weight: 500;
+  color: #1c1e21;
+  margin-right: 5px;
+}
+.more-pet-details-container p .detail-value {
+  color: #555555;
+}
+
+/* new message form */
+
+.msg-creation-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  font-family: sans-serif;
+  background-color: #fff;
+  color: #333;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.msg-creation-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.msg-creation-header button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #333;
+  padding: 0;
+}
+
+.msg-creation-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+}
+
+.gc-creating-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Adjust as needed */
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.gc-creating-container input {
+  border: none;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px 10px;
+  outline: none;
+  width: auto; /* Adjust width as needed */
+}
+
+.gc-creating-container p {
+  background: none;
+  border: none;
+  font-size: 18px;
+  margin-left: 5px;
+  cursor: pointer;
+  color: #333;
+}
+
+.add-user-header {
+  font-size: 18px; /* Match "People" style */
+  font-weight: 500;
+  margin-top: 25px; /* Adjust spacing */
+  margin-bottom: 10px; /* Adjust spacing */
+  color: #333; /* Match "People" color */
+  padding-left: 20px; /* Align with the content inside the white box */
+  align-self: flex-start; /* Align text to the left */
+}
+
+.add-user-list-wrapper {
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-height: 50vh;
+  display: flex; /* Make it a flex container */
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.add-user-list-scroll {
+  overflow-y: auto;
+}
+
+.user-search-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee; /* Separator line */
+}
+
+.user-search-bar button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 10px;
+  cursor: pointer;
+  color: #888; /* Light gray for the icon */
+  font-size: 20px; /* Adjust icon size */
+}
+
+.user-search-bar input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.mutual-user-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px; /* Adjust padding inside the white box */
+  border-bottom: 1px solid #eee;
+}
+
+.mutual-user-row:last-child {
+  border-bottom: none;
+}
+
+.mutual-user-row img {
+  width: 30px; /* Adjust avatar size */
+  height: 30px; /* Adjust avatar size */
+  border-radius: 50%;
+  margin-right: 15px;
+  background-color: #ddd; /* Placeholder */
+}
+
+.mutual-user-row .msg-create-user-card {
+  flex-grow: 1;
+  font-size: 16px;
+  margin: 0;
+}
+
+.mutual-user-row button {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+}
+
+.mutual-user-row button.selected {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+}
+
+.chat-create-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  width: calc(100% - 40px); /* Adjust width for margin */
+  margin: 20px; /* Add margin */
+}
+
+.chat-create-btn:hover {
+  opacity: 0.9;
+}
+
+/* image carousel */
+
+.carousel-container {
+  width: 100%; 
+  aspect-ratio: 1 / 1;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden; 
+  background-color: #f0f0f0;
+}
+
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 10; 
+  border-radius: 50%; 
+  font-size: 18px; 
+  line-height: 1;
+  width: 40px; 
+  height: 40px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px; 
+  z-index: 10; 
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6); 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-dot.active {
+  background-color: white; 
+}
 
