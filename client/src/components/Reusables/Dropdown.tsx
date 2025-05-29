@@ -11,7 +11,7 @@ import { useState } from "react";
 import type { PostType } from "../../types/Post"
 import '../../PostDropdown.css'
 
-const postOptions: PostType[] = ['Post', 'Meetup Post', 'Adoption Post'];
+const postOptions: PostType[] = ['New Post', 'Meetup Post', 'Adoption Post'];
 
 interface PostTypeDropdownProps {
   onSelect: (type: PostType) => void;
@@ -19,7 +19,7 @@ interface PostTypeDropdownProps {
 
 const PostTypeDropdown = ({ onSelect }: PostTypeDropdownProps ) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState<PostType | null >('Post');
+  const [selectedType, setSelectedType] = useState<PostType>('New Post');
 
   const toggleDropdown = () => setIsOpen(!isOpen)
 

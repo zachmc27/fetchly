@@ -20,7 +20,7 @@ const PostButton = () => {
     } else if (path.includes("/Adoption")) {
       openModalWithType("Adoption Post");
     } else {
-      openModalWithType("Post");
+      openModalWithType("New Post");
     }
   };
   return (
