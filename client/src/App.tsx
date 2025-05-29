@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom';
 import NavBar from "./components/Navbar/NavBar";
 import PostButton from "./components/Navbar/PostButton";
 import { PostModalProvider } from "./components/Reusables/PostModalProvider";
+import TopNavBar from "./components/Navbar/TopNavBar";
 
 
 // ****** Each of these will render on each page ******
@@ -50,9 +51,10 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <PostModalProvider>
-      <NavBar />
-      <PostButton />
-      <Outlet />
+        <TopNavBar />
+        <NavBar />
+        <PostButton />
+        <Outlet />
       </PostModalProvider>
     </ApolloProvider>
   );

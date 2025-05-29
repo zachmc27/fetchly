@@ -4,11 +4,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
+  background: white;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 .post-modal-content {
@@ -28,4 +30,5 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  width: fit-content;
 }

@@ -3,6 +3,7 @@ import type { PostType } from "../types/Post";
 
 type PostModalContextType = {
   openModalWithType: (type: PostType) => void;
+  changePostType: (type: PostType) => void;
 };
 
 export const PostModalContext = createContext<PostModalContextType | undefined>(undefined);
