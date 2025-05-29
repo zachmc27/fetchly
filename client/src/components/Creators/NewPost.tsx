@@ -1,6 +1,7 @@
 //form for creating a free flow post
 import { useState } from "react";
-import { FaImage, FaCamera, FaAt } from "react-icons/fa";
+import { FaImage } from "react-icons/fa";
+// import { FaCamera, FaAt } from "react-icons/fa";
 import Actionmodal from "../Reusables/ActionModal";
 import { useMutation } from "@apollo/client";
 import { ADD_POST, ADD_POST_RESPONSE, UPLOAD_MEDIA } from "../../utils/mutations";
@@ -17,16 +18,16 @@ interface NewPostProps {
   }) => void
 }
 
-type UploadedMedia = {
-  id: string;
-  filename: string;
-  contentType: string;
-  length: number;
-  uploadDate: string;
-  gridFsId: string;
-  tags: string[];
-  url: string;
-};
+// type UploadedMedia = {
+//   id: string;
+//   filename: string;
+//   contentType: string;
+//   length: number;
+//   uploadDate: string;
+//   gridFsId: string;
+//   tags: string[];
+//   url: string;
+// };
 
 const userId = localStorage.getItem("user_Id");
 const accountType = localStorage.getItem("accountType");
