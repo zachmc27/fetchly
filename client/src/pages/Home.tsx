@@ -1,20 +1,16 @@
-import PostTypeDropdown from "../components/Reusables/Dropdown";
-import AuthForm from "../pages/Login";
-import PostButton from "../components/Navbar/PostButton";
-import { usePostModal } from "../components/Reusables/usePostModal";
+import Feed from "../components/Reusables/Feed";
+import { mockPostData } from "../mockdata/feed-data";
 
 export default function Home() {
-  const { openModalWithType } = usePostModal();
+
 
   return (
-    <div>
-      <AuthForm />
-      <h1>Home</h1>
-      <PostButton
+    <div className="post-page-container">
+      <Feed
+       initialFeedArray={mockPostData}
+       itemStyle="post-card"
+       containerStyle="post-feed-container"
       />
-      <div>
-        <PostTypeDropdown onSelect={openModalWithType} />
-      </div>
     </div>
   );
 }

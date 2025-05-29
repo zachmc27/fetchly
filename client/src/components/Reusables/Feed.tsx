@@ -15,9 +15,12 @@ import { AdoptionCard } from "../../types/CardTypes"
 
 // testing data, can be deleted after integrations implementation
 import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
+import { mockPosts } from "../../mockdata/post-data"
 
 // components
 import MessagesPage from "../Inbox/MessagesPage"
@@ -28,7 +31,7 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
-import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
+import { MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
 
 
 type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard;
@@ -133,7 +136,7 @@ export default function Feed({
     const meetupToOpen = mockMeetupPosts.find(post => post.id === meetupId);
 
     if (meetupToOpen) {
-      console.log('Opening chat for conversation:', meetupToOpen.title);
+      console.log('Opening meetup for post:', meetupToOpen.title);
       setActiveMeetupPost(meetupToOpen);
       setIsMeetupPostOpen(true)
       localStorage.setItem("activeMeetupId", meetupToOpen.id.toString());
@@ -167,6 +170,53 @@ export default function Feed({
     setActiveTab('comments')
   }
 // ----------------------------------------------------------------
+// --------------- HOME PAGE TO POST VIEW LOGIC -------------------
+// ----------------------------------------------------------------
+const [activePost, setActivePost] = useState<MockPostItem | null>(null); 
+const [isPostOpen, setIsPostOpen] = useState(false)
+
+useEffect(() => {
+  const storedPostId = localStorage.getItem("activePostId");
+  if (storedPostId && location.pathname === '/') {
+    const postId = parseInt(storedPostId, 10); // Parse as integer
+    const storedPost = mockPosts.find((post) => post.id === postId);
+    if (storedPost) {
+      setActivePost(storedPost);
+      setIsPostOpen(true);
+    }
+  }
+
+  if (location.pathname !== "/meetup") {
+    localStorage.removeItem("activeMeetupId");
+  }
+}, [location.pathname]);
+
+async function handlePostViewRender(postId: number) {
+  console.log('post');
+  const postToOpen = mockPosts.find(post => post.id === postId);
+  console.log(postToOpen);
+  if (!postToOpen) {
+    console.log('no post found')
+  }
+    if (postToOpen) {
+      await setActivePost(postToOpen);
+      console.log('active post:', activePost);
+      setIsPostOpen(true)
+      localStorage.setItem("activePostId", postToOpen.id.toString());
+    } else  {
+      console.warn('No post found with ID:', postId);
+    }
+    setIsPostOpen(true)
+}
+
+function handleClosePostView() {
+  setIsPostOpen(false)
+  localStorage.removeItem("activePostId");
+  setActivePost(null)
+}
+
+// ----------------------------------------------------------------
+
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
 
     
@@ -207,13 +257,33 @@ export default function Feed({
         const postItem = item as MockPostCard;
         return (
           
-          <div key={postItem.id} className={itemStyle}>
+          <div key={postItem.id} className={itemStyle} onClick={() => handlePostViewRender(postItem.id)}>
             {/* post JSX */}
-            <img src={postItem.userAvi} alt="cover image for the post" />
-            <h1>{postItem.postUser}</h1>
+            <div className="post-user-info">
+              <img src={postItem.userAvi} alt="profile picture" />
+              <p>{postItem.postUser}</p>
+              <div className="post-date-container">
+                <img src={calendar} alt="calendar icon" />
+                <p>{postItem.postDate}</p>
+              </div>
+            </div>
             <p>{postItem.postContent}</p>
-            <p>{postItem.postDate}</p>
-            <p>{postItem.postCommentCount}</p>
+            {
+              postItem.postImage &&
+              postItem.postImage.map((image, index) => (
+                <img src={image} key={index}></img>
+              ))
+            }
+            <div className="post-details-row">
+              <div className="post-likes-container">
+                <img src={heart} alt="heart icon" />
+                <p>{postItem.postLikeCount}</p>
+              </div>
+              <div className="post-comments-container">
+                <img src={chat} alt="comment icon" />
+                <p>{postItem.postCommentCount}</p>
+              </div>
+            </div>
           </div>
         );
         }
@@ -324,10 +394,24 @@ if (isMeetupPostOpen && activeMeetupPost) {
   )
 }
 
+if (isPostOpen && activePost) {
+  return (
+  <div className="viewing-container">
+  <PostDetails
+   postData={activePost}
+   containerClass="post-details-container"
+   onClose={handleClosePostView}
+  />
+  <Comments comments={activePost.comments}/>
+  </div>
+  )
+}
+
 return (
   <>
     {
-      !isMeetupPostOpen && <SearchBar send={filterBySearch} />
+      (!isMeetupPostOpen && location.pathname === "/meetup") &&
+      <SearchBar send={filterBySearch} />
     }
     <div className={containerStyle}>
       {feedArray.map(renderFeedItem)}
