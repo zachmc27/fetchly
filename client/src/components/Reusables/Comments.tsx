@@ -38,7 +38,6 @@ function CommentItem({ comment }: { comment: Comment }) {
   };
 
   return (
-    <div>
       <div className="comment-container">
         <div className="comment-row">
           <div className="comment-img">
@@ -59,9 +58,7 @@ function CommentItem({ comment }: { comment: Comment }) {
             </div>
         </div>
         </div>
-        
       </div>
-    </div>
   );
 }
 
