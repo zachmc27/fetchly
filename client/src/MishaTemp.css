@@ -308,3 +308,128 @@
     text-align: center;
   }
 }
+
+/*---------------------------------------*/
+/*-----------New Post CSS -----------*/
+/*---------------------------------------*/
+
+.uploaded-images-preview {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.uploaded-image-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.post-creator-container {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-input-wrapper {
+  margin-bottom: 1rem;
+}
+
+.post-textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.post-textarea:focus {
+  border-color: #007bff;
+}
+
+.post-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.media-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.image-button,
+.camera-button,
+.at-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.image-button:hover,
+.camera-button:hover,
+.at-button:hover {
+  background: #e0e0e0;
+}
+
+.submit-post-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.submit-post-button:hover {
+  background: #0056b3;
+}
+
+.error-message,
+.loading-message,
+.upload-success-message {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  color: #d9534f;
+}
+
+.upload-success-message {
+  color: #28a745;
+}
+
+.uploaded-images-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.uploaded-image-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+}
