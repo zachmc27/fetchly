@@ -1,54 +1,88 @@
 import { Conversation, User } from '../../models/index.js';
 import { Types } from 'mongoose';
 
-
-interface ConversationArgs {
-    conversationId: string;
-    conversationName: string;
-    conversationUsers: string[]; // Array of user IDs
-    messages: string[]; // Array of message IDs
-    lastMessage: string; // ID of the last message
-}
-
-interface CreateConversationArgs{
+interface CreateConversationArgs {
     input: {
         conversationName: string;
         conversationUsers: string[]; // Array of user IDs
     };
 }
-// Define the resolvers for the Conversation model
+
 const conversationResolvers = {
     Query: {
         conversations: async () => {
-            return await Conversation.find()
-                .populate('conversationUsers')
-                .populate('messages')
-                .populate('lastMessage');
+            try {
+                return await Conversation.find()
+                    .populate({
+                        path: 'conversationUsers',
+                        select: 'username profilePicture',
+                    })
+                    .populate('messages')
+                    .populate('lastMessage');
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to fetch conversations: ${error.message}`);
+                }
+                throw new Error('Failed to fetch conversations: An unknown error occurred.');
+            }
         },
-        conversation: async (_parent: any, { conversationId }: ConversationArgs) => {
-            return await Conversation.findById(conversationId)
-                .populate('conversationUsers')
-                .populate('messages')
-                .populate('lastMessage');
-        }
+        conversation: async (_parent: any, { conversationId }: { conversationId: string }) => {
+            try {
+                return await Conversation.findById(conversationId)
+                    .populate({
+                        path: 'conversationUsers',
+                        select: 'username profilePicture',
+                    })
+                    .populate('messages')
+                    .populate('lastMessage');
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to fetch conversation: ${error.message}`);
+                }
+                throw new Error('Failed to fetch conversation: An unknown error occurred.');
+            }
+        },
+        conversationByUser: async (_parent: any, { userId }: { userId: string }) => {
+            try {
+                return await Conversation.find({ conversationUsers: userId })
+                    .populate({
+                        path: 'conversationUsers',
+                        select: 'username profilePicture',
+                    })
+                    .populate('messages')
+                    .populate('lastMessage');
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to fetch conversations for user: ${error.message}`);
+                }
+                throw new Error('Failed to fetch conversations for user: An unknown error occurred.');
+            }
+        },
     },
     Mutation: {
-        CreateConversationInput: async (_parent: any, { input }: CreateConversationArgs) => {
-            const userIds = input.conversationUsers; // Use user IDs directly
-            const newConversation = await Conversation.create({
-                conversationName: input.conversationName,
-                conversationUsers: userIds,
-            });
+        createConversation: async (_parent: any, { input }: CreateConversationArgs) => {
+            try {
+                const userIds = input.conversationUsers;
+                const newConversation = await Conversation.create({
+                    conversationName: input.conversationName,
+                    conversationUsers: userIds,
+                });
 
-            // Populate the conversation ID into each user's conversation list
-            const users = await User.find({ _id: { $in: userIds } });
-            for (const user of users) {
-                (user.conversation as Types.ObjectId[]).push(newConversation._id as Types.ObjectId);
-                await user.save();
+                const users = await User.find({ _id: { $in: userIds } });
+                for (const user of users) {
+                    (user.conversation as Types.ObjectId[]).push(newConversation._id as Types.ObjectId);
+                    await user.save();
+                }
+
+                return newConversation.populate('conversationUsers');
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to create conversation: ${error.message}`);
+                }
+                throw new Error('Failed to create conversation: An unknown error occurred.');
             }
-
-            return newConversation.populate('conversationUsers');
         },
-    }
+    },
 };
+
 export default conversationResolvers;

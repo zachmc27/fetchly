@@ -853,12 +853,22 @@ export const UNFOLLOW_AS_ORG = gql`
 
 
 export const CREATE_CONVERSATION = gql`
-  mutation CreateConversationInput($input: CreateConversationInput!) {
-  CreateConversationInput(input: $input) {
+mutation CreateConversation($input: CreateConversationInput!) {
+  createConversation(input: $input) {
     _id
     conversationName
     conversationUsers {
       _id
+      username
+    }
+    formattedCreatedAt
+    lastMessage {
+      _id
+      textContent
+      messageUser {
+        _id
+        username
+      }
     }
   }
 }`;

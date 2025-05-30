@@ -39,7 +39,7 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
       <p className="user-list-header">Participants</p>
       <div className="user-list-wrapper">
       {conversation.conversationUsers.map((user) => (
-        <p key={user} className="msg-info-user-card">{user}</p>
+        <p key={user._id} className="msg-info-user-card">{user.username || user._id}</p>
         //will have to query every user if we want to display their profile photos
       ))}
       </div>

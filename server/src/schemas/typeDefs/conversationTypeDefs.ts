@@ -3,36 +3,42 @@ const conversationTypeDefs = `
 # -------------------- Conversation TypeDefs ------------------------
 
 type Conversation {
-    _id: ID
-    conversationName: String
-    conversationUsers: [ConversationUser]
-    messages: [Message]
+    _id: ID!
+    conversationName: String!
+    conversationUsers: [ConversationUser!]!
+    messages: [Message!]
     lastMessage: Message
-    }
+    formattedCreatedAt: String
+    
+}
 
-type ConversationUser{
+type ConversationUser {
+    _id: ID!
+    username: String!
+    profilePicture: String
+}
+
+input ConversationUserInput {
     _id: ID!
 }
 
-input ConversationUserInput{
-    _id: ID!
-}
 input CreateConversationInput {
     conversationName: String!
-    conversationUsers: [ConversationUserInput!]! 
+    conversationUsers: [ConversationUserInput!]!
 }
 
 #----------Query TypeDefs------------------------
 
 type Query {
-    conversations: [Conversation]
+    conversations: [Conversation!]
     conversation(conversationId: String!): Conversation
+    conversationByUser(userId: String!): [Conversation!]
 }
 
 #----------Mutation TypeDefs------------------------
 
-type Mutation{
-CreateConversationInput(input: CreateConversationInput!): Conversation
+type Mutation {
+    createConversation(input: CreateConversationInput!): Conversation
 }
 
 `;
