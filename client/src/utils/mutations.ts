@@ -886,6 +886,37 @@ mutation CreateConversation($input: CreateConversationInput!) {
 // }
 
 
+export const UPDATE_CONVERSATION = gql`
+mutation UpdateConversationName($input: UpdateConversationNameInput!) {
+  updateConversationName(input: $input) {
+    _id
+    conversationName
+    formattedCreatedAt
+    conversationUsers {
+      _id
+      username
+    }
+    lastMessage {
+      _id
+      textContent
+    }
+    messages {
+      _id
+      messageUser {
+        _id
+        username
+      }
+      textContent
+    }
+  }
+}`;
+
+export const DELETE_CONVERSATION = gql`
+mutation DeleteConversation($conversationId: String!) {
+  deleteConversation(conversationId: $conversationId)
+}`;
+
+
 
 // ------------- MESSAGE MUTATIONS ------------- //
 

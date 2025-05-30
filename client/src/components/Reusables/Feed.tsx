@@ -13,7 +13,7 @@ import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import chat from "/Users/brett/Desktop/fetchly/client/src/images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import "./Feed.css"
+// import "./Feed.css"
 // icons
 import { MockPostItem, MockAdoptionItem } from "../../mockdata/mocktypes/PostDetails"
 

@@ -4,24 +4,13 @@
 import { useEffect } from "react";
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation";
 import { useMutation } from "@apollo/client";
-import { gql } from "@apollo/client";
-import {DELETE_CONVERSATION, UPDATE_CONVERSATION} from "../../utils/mutations"; // Ensure the correct path to your mutations
+import { DELETE_CONVERSATION, UPDATE_CONVERSATION } from "../../utils/mutations";
 
 export default function MsgInfoPage({ conversation, onClose }: { conversation: MockConversationObject, onClose: () => void }) {
   function handleClose() {
     localStorage.removeItem("isInfoOpen"); // Clear isInfoOpen from localStorage
     onClose(); // Call the onClose prop to close the component
   }
-
-
-  const DELETE_CONVERSATION = gql`
-    mutation DeleteConversation($conversationId: ID!) {
-      deleteConversation(conversationId: $conversationId) {
-        success
-        message
-      }
-    }
-  `;
 
   const [deleteConversation] = useMutation(DELETE_CONVERSATION);
   const [updateConversation] = useMutation(UPDATE_CONVERSATION);
@@ -79,7 +68,7 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
         {/* add jsx element for change group photo option */}
         <div>
         <input type="text" placeholder={conversation.conversationName}/>
-        <button onClick={handleUpdate}>✏️</button>
+        <button onClick={handleUpdate}>✏️</button> 
         </div>
       </div>
       }

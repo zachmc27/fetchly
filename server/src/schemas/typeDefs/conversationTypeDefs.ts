@@ -9,7 +9,6 @@ type Conversation {
     messages: [Message!]
     lastMessage: Message
     formattedCreatedAt: String
-    
 }
 
 type ConversationUser {
@@ -26,11 +25,10 @@ input CreateConversationInput {
     conversationName: String!
     conversationUsers: [ConversationUserInput!]!
 }
-inpurt UpdateConversationInput {
-    conversationId: String!
-    conversationName: String!
-    conversationUsers: [ConversationUserInput?]?
-}
+
+input UpdateConversationNameInput{
+    _id: String!
+    conversationName: String!}
 #----------Query TypeDefs------------------------
 
 type Query {
@@ -43,11 +41,10 @@ type Query {
 
 type Mutation {
     createConversation(input: CreateConversationInput!): Conversation
-    updateConversation(conversationId: String!, conversationName: String!): Conversation
+    updateConversationName(input: UpdateConversationNameInput!): Conversation
     deleteConversation(conversationId: String!): Boolean
-type Mutation {
-    createConversation(input: CreateConversationInput!): Conversation
 }
 
 `;
+
 export default conversationTypeDefs;

@@ -1,10 +1,16 @@
 import { Conversation, User } from '../../models/index.js';
-import { Types } from 'mongoose';
+import { Types, isValidObjectId } from 'mongoose';
 
 interface CreateConversationArgs {
     input: {
         conversationName: string;
-        conversationUsers: string[]; // Array of user IDs
+        conversationUsers: string[];
+    };
+}
+interface UpdateConversationNameArgs {
+    input: {
+        _id: string;
+        conversationName: string;
     };
 }
 
@@ -28,6 +34,10 @@ const conversationResolvers = {
         },
         conversation: async (_parent: any, { conversationId }: { conversationId: string }) => {
             try {
+                if (!isValidObjectId(conversationId)) {
+                    throw new Error('Invalid conversationId format');
+                }
+
                 return await Conversation.findById(conversationId)
                     .populate({
                         path: 'conversationUsers',
@@ -44,6 +54,10 @@ const conversationResolvers = {
         },
         conversationByUser: async (_parent: any, { userId }: { userId: string }) => {
             try {
+                if (!isValidObjectId(userId)) {
+                    throw new Error('Invalid userId format');
+                }
+
                 return await Conversation.find({ conversationUsers: userId })
                     .populate({
                         path: 'conversationUsers',
@@ -63,18 +77,33 @@ const conversationResolvers = {
         createConversation: async (_parent: any, { input }: CreateConversationArgs) => {
             try {
                 const userIds = input.conversationUsers;
+
+                if (!userIds || userIds.length === 0) {
+                    throw new Error('No users provided for the conversation');
+                }
+
                 const newConversation = await Conversation.create({
                     conversationName: input.conversationName,
                     conversationUsers: userIds,
                 });
 
                 const users = await User.find({ _id: { $in: userIds } });
+                if (users.length !== userIds.length) {
+                    throw new Error('Some users provided for the conversation do not exist');
+                }
+
                 for (const user of users) {
+                    if (!user.conversation) {
+                        user.conversation = [];
+                    }
                     (user.conversation as Types.ObjectId[]).push(newConversation._id as Types.ObjectId);
                     await user.save();
                 }
 
-                return newConversation.populate('conversationUsers');
+                return await newConversation.populate({
+                    path: 'conversationUsers',
+                    select: 'username profilePicture',
+                });
             } catch (error) {
                 if (error instanceof Error) {
                     throw new Error(`Failed to create conversation: ${error.message}`);
@@ -82,34 +111,45 @@ const conversationResolvers = {
                 throw new Error('Failed to create conversation: An unknown error occurred.');
             }
         },
-        updateConversation: async (_parent: any, { conversationId, conversationName }: { conversationId: string; conversationName: string }) => {
-            try {
-                const updatedConversation = await Conversation.findByIdAndUpdate(
-                    conversationId,
-                    { conversationName },
-                    { new: true }
-                ).populate('conversationUsers');
+        updateConversationName: async (_parent: any, { input }: UpdateConversationNameArgs) => {
+            try{
+                if (!isValidObjectId(input._id)) {
+                    throw new Error('Invalid conversationId format');
+                }
 
-                if (!updatedConversation) {
+                const conversation = await Conversation.findByIdAndUpdate(
+                    input._id,
+                    { conversationName: input.conversationName },
+                    { new: true }
+                ).populate({
+                    path: 'conversationUsers',
+                    select: 'username profilePicture',
+                });
+
+                if (!conversation) {
                     throw new Error('Conversation not found');
                 }
 
-                return updatedConversation;
+                return conversation;
             } catch (error) {
                 if (error instanceof Error) {
-                    throw new Error(`Failed to update conversation: ${error.message}`);
+                    throw new Error(`Failed to update conversation name: ${error.message}`);
                 }
-                throw new Error('Failed to update conversation: An unknown error occurred.');
+                throw new Error('Failed to update conversation name: An unknown error occurred.');
             }
         },
+
         deleteConversation: async (_parent: any, { conversationId }: { conversationId: string }) => {
             try {
+                if (!isValidObjectId(conversationId)) {
+                    throw new Error('Invalid conversationId format');
+                }
+
                 const conversation = await Conversation.findByIdAndDelete(conversationId);
                 if (!conversation) {
                     throw new Error('Conversation not found');
                 }
 
-                // Remove the conversation from all users
                 await User.updateMany(
                     { conversation: conversationId },
                     { $pull: { conversation: conversationId } }
@@ -125,6 +165,5 @@ const conversationResolvers = {
         },
     },
 };
-
 
 export default conversationResolvers;
