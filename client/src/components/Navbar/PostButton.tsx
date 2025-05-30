@@ -15,9 +15,9 @@ const PostButton = () => {
   const handleClick = () => {
     const path = location.pathname;
 
-    if (path.includes("/MeetUp")) {
+    if (path.includes("/meetup")) {
       openModalWithType("Meetup Post");
-    } else if (path.includes("/Adoption")) {
+    } else if (path.includes("/adoption")) {
       openModalWithType("Adoption Post");
     } else {
       openModalWithType("New Post");
