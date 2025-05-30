@@ -45,6 +45,8 @@ type Mutation {
     createConversation(input: CreateConversationInput!): Conversation
     updateConversation(conversationId: String!, conversationName: String!): Conversation
     deleteConversation(conversationId: String!): Boolean
+type Mutation {
+    createConversation(input: CreateConversationInput!): Conversation
 }
 
 `;
