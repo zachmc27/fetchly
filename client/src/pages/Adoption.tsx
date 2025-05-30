@@ -1,6 +1,6 @@
-import { useState } from "react";
+
 import Feed from "../components/Reusables/Feed";
-import AdoptionFocus from "../components/Focus/AdoptionFocus";
+
 import { QUERY_ADOPTIONS, FILTERED_ADOPTIONS } from "../utils/queries";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import SearchBar from "../components/Reusables/SearchBar"
@@ -9,15 +9,12 @@ import "../ZachTemp.css"
 
 export default function Adoption() {
 
-    // Allow opening of AdoptionFocus
-    const [selectedAdoptionId, setSelectedAdoptionId] = useState<string | null>(null);
+
 
     const { loading, error, data } = useQuery(QUERY_ADOPTIONS);
     const [getFilteredAdoptions, { data: filteredData, loading: filteredLoading }] = useLazyQuery(FILTERED_ADOPTIONS);
 
-    function handleAdoptionClick(id: string) {
-      setSelectedAdoptionId(id);
-    }
+  
 
     const adoptionPosts = data?.adoptions;
     console.log('Adoption posts:', adoptionPosts);
@@ -59,14 +56,7 @@ export default function Adoption() {
         initialFeedArray={filteredData?.adoptions || data?.adoptions} 
         itemStyle="adoption-card" 
         containerStyle="adoption-feed-container"
-        onItemClick={handleAdoptionClick}
       />
-      {selectedAdoptionId && (
-        <AdoptionFocus 
-          adoptionId={selectedAdoptionId} 
-          onClose={() => setSelectedAdoptionId(null)} 
-        />
-      )}
     </div>
   )
 }

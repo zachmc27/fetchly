@@ -42,12 +42,10 @@ export default function Feed({
   initialFeedArray,
   itemStyle,
   containerStyle,
-  onItemClick,  
 }: {
   initialFeedArray: FeedItem[];
   itemStyle: string;
   containerStyle: string;
-  onItemClick?: (id: string) => void;  
 }) {
   const location = useLocation();
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
@@ -326,7 +324,7 @@ function handleCloseAdoptionPostView() {
               />
             </div>
             <div className="adoption-feed-info-container">
-            <h1 onClick={() => onItemClick?.(adoptionItem._id)} className="clickable-header">{adoptionItem.pet.name}</h1>
+            <h1 className="clickable-header">{adoptionItem.pet.name}</h1>
               <div className="adoption-feed-details-row">
                 <div className="age-info"> 
                   <img src={calendar} alt="calendar icon" className="calendar-icon" />
