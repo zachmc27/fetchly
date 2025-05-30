@@ -248,7 +248,7 @@
 
 /************************* PROFILE DETAILS ****************************/
 
-.container {
+.prof-detail-container {
   background-color: #ffffff;
   border-radius: 25px; /* Rounded corners for the entire screen */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -259,14 +259,14 @@
   overflow: hidden; /* Important for border-radius to apply correctly */
 }
 
-.header {
+.prof-detail-header {
   display: flex;
   align-items: center;
   margin-bottom: 30px;
   position: relative; /* For positioning the back button */
 }
 
-.back-button {
+.prof-detail-back-btn {
   background: none;
   border: none;
   font-size: 24px;
@@ -278,7 +278,7 @@
   color: #333;
 }
 
-.header h2 {
+.prof-detail-header h2 {
   flex-grow: 1; /* Pushes the title to the center */
   text-align: center;
   margin: 0;
@@ -286,7 +286,7 @@
   color: #333;
 }
 
-.profile-picture-container {
+.prof-detail-picture-container {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
@@ -305,19 +305,19 @@
   border: 1px solid #ccc;
 }
 
-.form-section {
+.prof-detail-form-section {
   margin-bottom: 20px;
 }
 
-.form-section label {
+.prof-detail-form-section label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
   color: #555;
 }
 
-.form-section input,
-.form-section textarea {
+.prof-detail-form-section input,
+.prof-detail-form-section textarea {
   width: calc(100% - 20px); /* Adjust for padding */
   padding: 12px 10px;
   border: 1px solid #ccc;
@@ -326,13 +326,13 @@
   box-sizing: border-box;
 }
 
-.form-section textarea {
+.prof-detail-form-section textarea {
   resize: vertical; /* Allow vertical resizing */
   min-height: 100px;
   line-height: 1.5; /* Improve readability */
 }
 
-.save-button {
+.prof-detail-save-btn {
   width: 100%;
   padding: 15px;
   background-color: #000000; /* Black button */
@@ -346,6 +346,6 @@
   transition: background-color 0.3s ease;
 }
 
-.save-button:hover {
+.prof-detail-save-btn:hover {
   background-color: #333333; /* Slightly lighter black on hover */
 }

@@ -1,38 +1,91 @@
 //takes in props for the user/org details (image, name,  user name, bio, followers, following, location (if applicable))
 //use feed-posts component to render posts below details
 //use bubble button components for buttons like add pet button and edit profile button
-export default function AccountDetails() {
+import { useEffect, useState } from "react";
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_USER } from '../../utils/queries';
+import { UPDATE_USER } from '../../utils/mutations';
+import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+
+export default function AccountDetails({ onClose }: { onClose: () => void }) {
+  function handleClose() {
+    localStorage.setItem("isEditOpen", "false");
+    if (onClose) onClose();
+  }
+
+  /************ QUERY USER********** */
+  const userId = localStorage.getItem("userId");
+  const { data: userData, error: queryError } = useQuery(QUERY_USER,{
+   variables: { userId } 
+  
+  });
+
+  const [user, setUser] = useState<any>(null);
+    
+    useEffect(() => {
+      if (userData && userData.user) {
+        setUser(userData.user);
+      }
+    }, [userData]);
+
+    if (queryError) {
+      console.error("GraphQL error:", queryError);
+    }
+
+  /*********** MUTATE USER ***********/
+  const [updateUser] = useMutation(UPDATE_USER);
+
+  const handleUpdate = async () => {
+    console.log(userId);
+  try {
+    const { data } = await updateUser({
+      variables: {
+        userId: userId,
+        input: {
+          username: "NewUsername",
+          email: "new@email.com",
+          avatar: UserPlaceHolder,
+          about: "Updated bio",
+        }
+      }
+    });
+    console.log("User updated:", data.updateUser);
+  } catch (err) {
+    console.error("Update failed:", err);
+  }
+};
+
 
   return (
-    <div className="container">
-      <div className="header">
-        <button className="back-button">&lt;</button>
+    <div className="prof-detail-container">
+      <div className="prof-detail-header">
+        <button className="prof-detail-back-btn" onClick={handleClose}>&lt;</button>
         <h2>Edit Profile</h2>
       </div>
 
-      <div className="profile-picture-container">
+      <div className="prof-detail-picture-container">
         <div className="profile-picture-placeholder">
           {/* You could use an actual image here, or an icon */}
           <span className="icon">&#128444;</span> {/* Camera/image icon */}
         </div>
       </div>
 
-      <div className="form-section">
+      <div className="prof-detail-form-section">
         <label htmlFor="username">Username</label>
-        <input type="text" id="username" placeholder="username" />
+        <input type="text" id="username" placeholder={user?.username! || "Username"} />
       </div>
 
-      <div className="form-section">
+      <div className="prof-detail-form-section">
         <label htmlFor="fullName">Name</label>
-        <input type="text" id="fullName" placeholder="Full Name" />
+        <input type="text" id="fullName" placeholder={user?.fullName || "Full Name"} />
       </div>
 
-      <div className="form-section">
+      <div className="prof-detail-form-section">
         <label htmlFor="bio">Bio</label>
-        <textarea id="bio" placeholder="Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations."></textarea>
+        <textarea id="bio" placeholder={user?.about ||"Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations."}></textarea>
       </div>
 
-      <button className="save-button">Save Profile</button>
+      <button className="prof-detail-save-button" onClick={handleUpdate}>Save Profile</button>
     </div>
   );
 };

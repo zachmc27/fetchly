@@ -10,6 +10,7 @@ import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import AccountDetails from "../components/Profile/AccountDetails";
 
 
 const profileMockPosts = [
@@ -58,6 +59,27 @@ const mockUser = {
 
 export default function Profile() {
 
+  const [isEditOpen, setIsEditOpen] = useState(false)
+
+  useEffect(() => {
+    const storedIsEditOpen = localStorage.getItem("isEditOpen");
+    if (storedIsEditOpen === "true") {
+      setIsEditOpen(true);
+    }
+    return () => {
+      localStorage.removeItem("activeConversationId"); // Clear activeConversationId from localStorage
+      localStorage.removeItem("isInfoOpen"); // Clear isInfoOpen from localStorage
+    };
+  }, []);
+
+
+  function handleInfoRender() {
+    const newIsEditOpen = !isEditOpen;
+      setIsEditOpen(newIsEditOpen)
+       localStorage.setItem("isEditOpen", newIsEditOpen.toString());
+  };
+
+    
   const userId = localStorage.getItem("userId");
   console.log(userId);
   const { data, error } = useQuery(QUERY_USER, {
@@ -80,6 +102,15 @@ export default function Profile() {
     console.error("GraphQL error:", error);
   }
 
+   if (isEditOpen) {
+      return (
+        <AccountDetails onClose={() => {
+      setIsEditOpen(false);
+      localStorage.setItem("isEditOpen", "false");
+    }} />
+      )
+    }
+
   return (
     <div>
     <div className="profile-background">
@@ -92,7 +123,7 @@ export default function Profile() {
           </div>
           <div className="profile-btn-ctn">
             <ButtonBubble imageSrc={CalenderIcon} />
-            <ButtonBubble imageSrc={EditIcon} />
+            <ButtonBubble imageSrc={EditIcon} onClick={handleInfoRender}/>
           </div>
            
         </div>

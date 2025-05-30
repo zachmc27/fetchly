@@ -38,7 +38,7 @@ const userTypeDefs = `
     email: String
     avatar: ID
     about: String
-    location: String
+    location: LocationInput
   }
 
   union FollowsUnion  = User | Pet | Org
