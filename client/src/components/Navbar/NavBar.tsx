@@ -1,13 +1,15 @@
 // the bar that will have bubble button components that route user to other pages when pressed
 // import React from "react"
-import { FaHome, FaPaw, } from "react-icons/fa";
-import { IoLocation } from "react-icons/io5";
-import { MdOutlineComment } from "react-icons/md";
+
 import { Link, useLocation } from "react-router-dom";
 import '../../NavBar.css'
-
+import love from "../../images/love.png"
+import home from "../../images/home_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import location from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24 (1).svg"
+import inbox from "../../images/inbox_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 const NavBar = () => {
   const currentPage = useLocation().pathname;
+  
   return (
             <nav className="nav-bar">
             <ul className='nav-links'>
@@ -16,7 +18,7 @@ const NavBar = () => {
                     to="/"
                     className={currentPage === '/' ? 'nav-link active' : 'nav-link'}
                   >
-                      <FaHome/>
+                      <img src={home}/>
                   </Link>
                 </li>
                 <li>
@@ -24,7 +26,7 @@ const NavBar = () => {
                     to="/adoption"
                     className={currentPage === '/adoption' ? 'nav-link active' : 'nav-link'}
                   >
-                      <FaPaw/>
+                      <img src={love}/>
                   </Link>
                 </li>
                 <li>
@@ -32,15 +34,15 @@ const NavBar = () => {
                     to="/meetup"
                     className={currentPage === '/meetup' ? 'nav-link active' : 'nav-link'}
                   >
-                      <IoLocation/>
+                      <img src={location}/>
                   </Link>
                 </li>
                 <li>
-                  <Link
+                  <Link 
                     to="/inbox"
                     className={currentPage === '/inbox' ? 'nav-link active' : 'nav-link'}
                   >
-                      <MdOutlineComment/>
+                      <img src={inbox}/>
                   </Link>
                 </li>
             </ul>
