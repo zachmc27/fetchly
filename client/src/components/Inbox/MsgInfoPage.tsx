@@ -18,7 +18,12 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
   async function handleUpdate() {
     try {
       const { data } = await updateConversation({
-        variables: { conversationId: conversation._id, conversationName: conversation.conversationName },
+        variables: {
+          input: {
+            _id: conversation._id,
+            conversationName: conversation.conversationName,
+          },
+        },
       });
       if (data.updateConversation.success) {
         alert("Chat name updated successfully to " + conversation.conversationName);
@@ -35,18 +40,23 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
   async function handleDelete() {
     try {
       const { data } = await deleteConversation({
-        variables: { conversationId: conversation._id },
+        variables: {
+          conversationId: conversation._id,
+        },
       });
 
-      if (data.deleteConversation.success) {
+      if (data.deleteConversation) {
         alert("Chat deleted successfully");
         onClose(); // Close the component after deletion
+        return true;
       } else {
-        alert(`Failed to delete chat: ${data.deleteConversation.message}`);
+        alert("Failed to delete chat");
+        return false;
       }
     } catch (error) {
       console.error("Error deleting conversation:", error);
       alert("An error occurred while deleting the chat.");
+      return false;
     }
   }
   useEffect(() => {
