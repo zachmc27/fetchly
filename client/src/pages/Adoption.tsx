@@ -6,13 +6,28 @@ import { useQuery } from "@apollo/client";
 import SearchBar from "../components/Reusables/SearchBar"
 import "../ZachTemp.css"
 
+interface Adoption {
+  id: string;
+  pet: {
+    name: string;
+    type: {
+      type: string;
+      breed?: string;
+    };
+  };
+  location?: {
+    city?: string;
+  };
+  description?: string;
+}
+
 export default function Adoption() {
 
     // Allow opening of AdoptionFocus
     const [selectedAdoptionId, setSelectedAdoptionId] = useState<string | null>(null);
 
     const { loading, error, data } = useQuery(QUERY_ADOPTIONS);
-    const [filteredAdoptions, setFilteredAdoptions] = useState<any[] | null>(null);
+    const [filteredAdoptions, setFilteredAdoptions] = useState<Adoption[] | null>(null);
 
     function handleAdoptionClick(id: string) {
       setSelectedAdoptionId(id);
@@ -28,7 +43,7 @@ export default function Adoption() {
     function filterByDogs() {
       if(!data?.adoptions) return;
       const dogs = data.adoptions.filter(
-        (adoption: any) => adoption.pet?.type.type?.toLowerCase() === "dog"
+        (adoption: Adoption) => adoption.pet?.type.type?.toLowerCase() === "dog"
       );
       console.log("Filtered dogs:", dogs);
       setFilteredAdoptions(dogs);
@@ -37,7 +52,7 @@ export default function Adoption() {
     function filterByCats() {
       if(!data?.adoptions) return;
       const cat = data.adoptions.filter(
-        (adoption: any) => adoption.pet?.type.type?.toLowerCase() === "cat"
+        (adoption: Adoption) => adoption.pet?.type.type?.toLowerCase() === "cat"
       );
       setFilteredAdoptions(cat);
     }
@@ -46,7 +61,7 @@ export default function Adoption() {
       if (!data?.adoptions) return;
       const search = searchTerm.toLowerCase();
 
-      const results = data.adoptions.filter((adoption: any) => {
+      const results = data.adoptions.filter((adoption: Adoption) => {
         const petName = adoption.pet?.name?.toLowerCase() || "";
         const breed = adoption.pet?.type?.breed?.toLowerCase() || "";
         const city = adoption.location?.city?.toLowerCase() || "";
