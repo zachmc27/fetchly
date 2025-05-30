@@ -11,6 +11,11 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import heart from "../../images/heart_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import "./Feed.css"
+// icons
+import { MockPostItem, MockAdoptionItem } from "../../mockdata/mocktypes/PostDetails"
 
 
 // testing data, can be deleted after integrations implementation
