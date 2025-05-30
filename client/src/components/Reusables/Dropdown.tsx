@@ -11,7 +11,7 @@ import { useState } from "react";
 import type { PostType } from "../../types/Post"
 import '../../PostDropdown.css'
 
-const postOptions: PostType[] = ['New Post', 'Meetup Post', 'Adoption Post'];
+const postOptions: PostType[] = ['New Post', 'Meetup Post', 'Adoption Post', 'New Message'];
 
 interface PostTypeDropdownProps {
   onSelect: (type: PostType) => void;
