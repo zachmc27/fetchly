@@ -3,7 +3,7 @@ import Feed from "../components/Reusables/Feed";
 
 
 import { QUERY_ADOPTIONS, FILTERED_ADOPTIONS } from "../utils/queries";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 import SearchBar from "../components/Reusables/SearchBar"
 import "../ZachTemp.css"
