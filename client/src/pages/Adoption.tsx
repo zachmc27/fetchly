@@ -24,7 +24,7 @@ export default function Adoption() {
     function filterByAll() {
       setFilteredAdoptions(null);
     }
-    
+  
     function filterByDogs() {
       if(!data?.adoptions) return;
       const dogs = data.adoptions.filter(
@@ -33,7 +33,7 @@ export default function Adoption() {
       console.log("Filtered dogs:", dogs);
       setFilteredAdoptions(dogs);
     }
-    
+  
     function filterByCats() {
       if(!data?.adoptions) return;
       const cat = data.adoptions.filter(
@@ -41,6 +41,7 @@ export default function Adoption() {
       );
       setFilteredAdoptions(cat);
     }
+  
     function filterBySearch(searchTerm: string) {
       if (!data?.adoptions) return;
       const search = searchTerm.toLowerCase();

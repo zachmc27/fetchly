@@ -6,6 +6,29 @@ import flowerdog from "../images/flowerdog.jpeg"
 import billie from "../images/billiewooflish.jpeg"
 import batdog from "../images/batdog.jpeg"
 
+
+export const mockMutualFollowers = [
+  {
+  userAvi: dog,
+  userName: 'zach'
+  },
+  {
+    userAvi: cat,
+    userName: 'sammi'
+  },
+  {
+  userAvi: dog,
+  userName: 'kendrick'
+  },
+  {
+    userAvi: cat,
+    userName: 'misha'
+  },
+  {
+  userAvi: dog,
+  userName: ' brett'
+  }
+]
 const comments = [
   {
     id: 100,
@@ -22,7 +45,6 @@ const comments = [
       comment: 'Yes, epic fun',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       },
       {
       id: 102,
@@ -31,7 +53,6 @@ const comments = [
       comment: 'omg my cat is on my desk rn',
       likeCount: 42,
       postedTime:new Date(),
-      replies: []
       }
     ]
   },
@@ -50,7 +71,6 @@ const comments = [
       comment: 'Can I eat your house',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       },
       {
       id: 202,
@@ -59,7 +79,6 @@ const comments = [
       comment: 'Where am I',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       }
     ]
   },
@@ -78,7 +97,6 @@ const comments = [
       comment: "Money won't get you love",
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       },
       {
       id: 103,
@@ -87,7 +105,6 @@ const comments = [
       comment: 'Oh, the glittering shackles of avarice, how they bind the soul! Each trinket bought, each fleeting pleasure pursued, layers another chain upon the spirit, suffocating the once vibrant spark within. The relentless chase for more, a hollow echo in the cavern of a heart consumed by yearning, steals not just peace, but the very essence of well-being. Sleep becomes a battleground for anxieties over acquisitions, relationships wither in the shadow of possessions, and the mirror reflects not a contented individual, but a weary stranger, forever reaching, forever empty. For what price, indeed, the fleeting joy of a material bauble, when the true treasures of contentment, connection, and inner peace lie bleeding, sacrificed upon the altar of insatiable greed?',
       likeCount: 42,
       postedTime: new Date(),
-      replies: []
       }
     ]
   }
@@ -173,7 +190,7 @@ const rsvpList = [
         userAvi: baller,
         postUser: "johnbrownhimself",
         postContent: "i am smart",
-        postImages: [flowerdog],
+        postImages: [flowerdog, dog, batdog],
         postLikeCount: 5,
         postDate: "6/2/25",
         postCommentCount: 12,
@@ -256,15 +273,109 @@ const rsvpList = [
 }
 ]
 
-export const mockAdoptionPost = {
-  id: 3,
+export const mockAdoptionPosts = 
+[
+{
+  _id: "1",
   orgName: 'austin pets alive!',
-  orgAvi: 'img',
+  orgAvi: dog,
   orgEmail: "pets@alive.com",
   orgNumber: '512-999-9999',
   images: ['img1', 'img2'],
   petName: 'Potato',
   gender: `male`,
+  age: 5,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  _id: "2",
+  orgName: 'cat cafe',
+  orgAvi: cat,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  age: 5,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  
+  _id: "3",
+  orgName: 'dog world',
+  orgAvi: billie,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  age: 5,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  _id: "4",
+  orgName: 'dog land',
+  orgAvi: batdog,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  age: 5,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  _id: "5",
+  orgName: 'unreasonably wealthy cats',
+  orgAvi: baller,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  age: 5,
+  description: 'chill guy',
+  location: '225 Barton Springs Rd, Austin, TX',
+  vaccinated: true,
+  breed: 'labrador',
+  isFixed: true,
+  goodWithPets: 'Yes with cats, no with dogs',
+  itemType: 'adoption'
+},
+{
+  _id: "6",
+  orgName: 'aliens',
+  orgAvi: alien,
+  orgEmail: "pets@alive.com",
+  orgNumber: '512-999-9999',
+  images: ['img1', 'img2'],
+  petName: 'Potato',
+  gender: `male`,
+  age: 5,
   description: 'chill guy',
   location: '225 Barton Springs Rd, Austin, TX',
   vaccinated: true,
@@ -273,3 +384,4 @@ export const mockAdoptionPost = {
   goodWithPets: 'Yes with cats, no with dogs',
   itemType: 'adoption'
 }
+]
