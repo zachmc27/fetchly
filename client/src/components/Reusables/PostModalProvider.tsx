@@ -7,6 +7,7 @@ import NewAdoptionPost from "../Creators/NewAdoptionPost";
 import NewMeetUpPost from "../Creators/NewMeetupPost";
 import type { PostType } from "../../types/Post";
 import { PostModalContext } from "../../contexts/PostModalContext";
+import NewMessage from "../Creators/NewMessage";
 // import PostTypeDropdown from "./Dropdown";
 
 export const PostModalProvider = ({ children }: { children: ReactNode }) => {
@@ -36,6 +37,9 @@ const openModalWithType = (type: PostType) => {
     }
     if (selectedType === "New Post") {
       return <NewFreeFormPost onSubmit={handleCloseModal} />;
+    } 
+    if (selectedType === "New Message") {
+      return <NewMessage onClose={handleCloseModal} onSubmit={handleCloseModal} />
     }
     return null;
   };

@@ -1,18 +1,34 @@
-
+import { useState } from "react";
 import Feed from "../components/Reusables/Feed";
 
-import { QUERY_ADOPTIONS, FILTERED_ADOPTIONS } from "../utils/queries";
-import { useQuery, useLazyQuery } from "@apollo/client";
+
+import { QUERY_ADOPTIONS } from "../utils/queries";
+import { useQuery } from "@apollo/client";
+
 import SearchBar from "../components/Reusables/SearchBar"
-import MediaUpload from "../components/Reusables/MediaUpload";
 import "../ZachTemp.css"
+
+interface Adoption {
+  id: string;
+  pet: {
+    name: string;
+    type: {
+      type: string;
+      breed?: string;
+    };
+  };
+  location?: {
+    city?: string;
+  };
+  description?: string;
+}
 
 export default function Adoption() {
 
 
 
     const { loading, error, data } = useQuery(QUERY_ADOPTIONS);
-    const [getFilteredAdoptions, { data: filteredData, loading: filteredLoading }] = useLazyQuery(FILTERED_ADOPTIONS);
+    const [filteredAdoptions, setFilteredAdoptions] = useState<Adoption[] | null>(null);
 
   
 
@@ -20,43 +36,69 @@ export default function Adoption() {
     console.log('Adoption posts:', adoptionPosts);
 
     function filterByAll() {
-    getFilteredAdoptions({ variables: { filter: {} } });
+      setFilteredAdoptions(null);
     }
+  
     function filterByDogs() {
-    getFilteredAdoptions({ variables: { filter: { Type: "dog" } } });
+      if(!data?.adoptions) return;
+      const dogs = data.adoptions.filter(
+        (adoption: Adoption) => adoption.pet?.type.type?.toLowerCase() === "dog"
+      );
+      console.log("Filtered dogs:", dogs);
+      setFilteredAdoptions(dogs);
     }
+  
     function filterByCats() {
-    getFilteredAdoptions({ variables: { filter: { Type: "cat" } } });
+      if(!data?.adoptions) return;
+      const cat = data.adoptions.filter(
+        (adoption: Adoption) => adoption.pet?.type.type?.toLowerCase() === "cat"
+      );
+      setFilteredAdoptions(cat);
+    }
+  
+    function filterBySearch(searchTerm: string) {
+      if (!data?.adoptions) return;
+      const search = searchTerm.toLowerCase();
+
+      const results = data.adoptions.filter((adoption: Adoption) => {
+        const petName = adoption.pet?.name?.toLowerCase() || "";
+        const breed = adoption.pet?.type?.breed?.toLowerCase() || "";
+        const city = adoption.location?.city?.toLowerCase() || "";
+        const description = adoption.description?.toLowerCase() || "";
+
+        return (
+          petName.includes(search) ||
+          breed.includes(search) ||
+          city.includes(search) ||
+          description.includes(search)
+        );
+      });
+      setFilteredAdoptions(results);
     }
 
-    //function filterBySearch() {
-    function filterBySearch() {
-    getFilteredAdoptions({ variables: { filter: {} } });
-  }
-
-  if (filteredLoading) return <p>Filtering...</p>;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="adoption-page-container">
       <SearchBar send={filterBySearch} />
-      <MediaUpload onUpload={(media) => { 
-        console.log('Uploaded media:', media);
-      }} />
       <div className="filter-buttons-container">
         <button onClick={filterByAll} className="filter-button">All</button>
         <button onClick={filterByDogs} className="filter-button">Dogs</button>
         <button onClick={filterByCats} className="filter-button">Cats</button>
       </div>
-      {(filteredData?.adoptions?.length === 0) && (
-        <p className="no-results">No adoptions found for that filter.</p>
-      )}
+
       <Feed 
-        initialFeedArray={filteredData?.adoptions || data?.adoptions} 
+        initialFeedArray={filteredAdoptions || data?.adoptions} 
         itemStyle="adoption-card" 
         containerStyle="adoption-feed-container"
       />
+
+      {(filteredAdoptions?.length === 0) && (
+        <p className="no-results">No adoptions found for that filter.</p>
+      )}
+     
+
     </div>
   )
 }
