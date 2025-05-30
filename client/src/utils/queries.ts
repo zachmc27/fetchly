@@ -1188,23 +1188,6 @@ export const QUERY_ADOPTION = gql`
   }
 `;
 
-export const FILTERED_ADOPTIONS = gql`
-  query FilteredAdoptions($filter: AdoptionFilterInput) {
-    adoptions(filter: $filter) {
-      _id
-      pet {
-        _id
-        name
-        type { type }
-        profilePhoto { url }
-      }
-      location { city, state }
-      goodWithPets
-      description
-    }
-  }
-`;
-
 //-------------- MEDIA QUERIES ------------- //
 
 //Returns a media file by ID

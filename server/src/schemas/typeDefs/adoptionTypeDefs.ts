@@ -37,20 +37,8 @@ type BooleanResponse {
   success: Boolean!
 }
 
-input LocationFilterInput {
-  city: String
-  state: String
-  country: String
-  zip: String
-}
-
-input AdoptionFilterInput {
-  Type: String
-  Location: LocationFilterInput
-}
-
 type Query {
-    adoptions(filter: AdoptionFilterInput): [Adoption]
+    adoptions: [Adoption]
     adoption(adoptionId: ID!): Adoption
 }
 

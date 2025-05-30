@@ -31,6 +31,8 @@ type UploadedMedia = {
   url: string; // URL to access the media
 };
 
+
+
 const userId = localStorage.getItem('user_Id');
 const accountType = localStorage.getItem('accountType');
 const userType = accountType === "org" ? "Org" : "User";
@@ -42,18 +44,19 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   // Breed Type Filters
+  // Define a type for breed objects returned from the query
+  type BreedType = { _id: string; breed: string };  
   const [getBreeds, { data: breedData }] = useLazyQuery(FILTER_QUERY_TYPE);
-  const [breedOptions, setBreedOptions] = useState<string[]>([]);
+  const [breedOptions, setBreedOptions] = useState<BreedType[]>([]);
+  const [petTypeId, setPetTypeId] = useState<string>("");
   const handlePetTypeSelection = (selectedType: "Dog" | "Cat") => {
     setPetType(selectedType);
     getBreeds({ variables: { type: selectedType.toLowerCase() } });
   };
-  // Define a type for breed objects returned from the query
-  type BreedType = { breed: string };
 
   useEffect(() => {
     if (breedData?.types) {
-      setBreedOptions(breedData.types.map((t: BreedType) => t.breed));
+      setBreedOptions(breedData.types);
     }
   }, [breedData]);
 
@@ -109,7 +112,7 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
         refId: userId || "",
         refModel: userType || "",
       },
-      type: breed,
+      type: petTypeId,
       profilePhoto,
       vaccination: vaccines,
     };
@@ -125,7 +128,6 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
         vaccines,
         about,
       });
-
       setName("");
       setPetType("");
       setBreed("");
@@ -185,11 +187,18 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
 
       <div className="new-pet-breed-button">
         <label>What&apos;s their breed?</label>
-        <select value={breed} onChange={(e) => setBreed(e.target.value)}>
+        <select 
+          value={petTypeId} 
+          onChange={(e) => {
+            const selected = breedOptions.find((b) => b._id === e.target.value);
+            setPetTypeId(e.target.value);
+            setBreed(selected?.breed || "");
+          }}
+        >
           <option value="">Select Breed</option>
           {breedOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option key={option._id} value={option._id}>
+              {option.breed}
             </option>
           ))}
         </select>
