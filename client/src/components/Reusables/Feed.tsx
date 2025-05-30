@@ -50,6 +50,9 @@ export default function Feed({
   const location = useLocation();
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
+  useEffect(() => {
+    setFeedArray(initialFeedArray);
+  }, [initialFeedArray]);
 
 // --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
 

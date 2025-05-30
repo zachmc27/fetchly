@@ -102,7 +102,7 @@ export const QUERY_USER = gql`
   query User($userId: String!) {
     user(userId: $userId) {
       _id
-      username      
+      username
       email
       avatar {
         id
@@ -180,7 +180,7 @@ export const QUERY_USER = gql`
             orgName
           }
         }
-         refModel         
+        refModel
       }
       followingCount
     }
@@ -1183,23 +1183,6 @@ export const QUERY_ADOPTION = gql`
       }
       createdAt
       itemType
-    }
-  }
-`;
-
-export const FILTERED_ADOPTIONS = gql`
-  query FilteredAdoptions($type: String, $location: String) {
-    adoptions(type: $type, location: $location) {
-      _id
-      pet {
-        _id
-        name
-        type { type }
-        profilePhoto { url }
-      }
-      location { city, state }
-      goodWithPets
-      description
     }
   }
 `;
