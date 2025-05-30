@@ -1,6 +1,6 @@
 import Feed from "../components/Reusables/Feed";
 import { mockPostData } from "../mockdata/feed-data";
-
+// import NewMessage from "../components/Creators/NewMessage";
 export default function Home() {
 
 
@@ -11,6 +11,7 @@ export default function Home() {
        itemStyle="post-card"
        containerStyle="post-feed-container"
       />
+      {/* <NewMessage /> */}
     </div>
   );
 }

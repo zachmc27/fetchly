@@ -152,7 +152,7 @@ import batdog from "../images/batdog.jpeg"
         userAvi: baller,
         postUser: "johnbrownhimself",
         postContent: "i am smart",
-        postImage: [flowerdog],
+        postImage: [flowerdog, dog, batdog],
         postLikeCount: 5,
         postDate: "6/2/25",
         postCommentCount: 12,
@@ -163,52 +163,94 @@ import batdog from "../images/batdog.jpeg"
   
   export const mockAdoptionData = [
     {
-        id: 1,
-        petCoverImage: dog,
-        petName: 'Potato',
-        petAge: 1,
-        petGender: 'male',
-        itemType: "adoption"
+        _id: '1',
+        id: '1',
+        pet: {
+            _id: '1',
+            name: 'Potato',
+            age: 4,
+            profilePhoto: {
+                url: dog,
+            },
+            gender: "male",
+        },
+        itemType: 'adoption',
+        description: 'cool guy',
     },
     {
-        id: 2,
-        petCoverImage: cat,
-        petName: 'Garter',
-        petAge: 6,
-        petGender: 'male',
-        itemType: "adoption"
+        _id: '1',
+        id: '1',
+        pet: {
+            _id: '1',
+            name: 'Potato',
+            age: 4,
+            profilePhoto: {
+                url: dog,
+            },
+            gender: "male",
+        },
+        itemType: 'adoption',
+        description: 'cool guy',
     },
     {
-        id: 3,
-        petCoverImage: alien,
-        petName: 'Kiki',
-        petAge: 2,
-        petGender: 'female',
-        itemType: "adoption"
+        _id: '1',
+        id: '1',
+        pet: {
+            _id: '1',
+            name: 'Potato',
+            age: 4,
+            profilePhoto: {
+                url: dog,
+            },
+            gender: "male",
+        },
+        itemType: 'adoption',
+        description: 'cool guy',
     },
     {
-        id: 4,
-        petCoverImage: flowerdog,
-        petName: 'Lexi',
-        petAge: 3,
-        petGender: 'female',
-        itemType: "adoption"
+        _id: '2',
+        id: '2',
+        pet: {
+            _id: '2',
+            name: 'Marv',
+            age: 2,
+            profilePhoto: {
+                url: alien,
+            },
+            gender: "male",
+        },
+        itemType: 'adoption',
+        description: 'has a history of probing',
     },
     {
-        id: 5,
-        petCoverImage: billie,
-        petName: 'Doobie',
-        petAge: 1,
-        petGender: 'male',
-        itemType: "adoption"
+        _id: '3',
+        id: '3',
+        pet: {
+            _id: '3',
+            name: 'Barnaby',
+            age: 6,
+            profilePhoto: {
+                url: flowerdog,
+            },
+            gender: "female",
+        },
+        itemType: 'adoption',
+        description: "Barnaby wasn't like the other terriers in the park who lived for chasing squirrels or unearthing forgotten treasures. His heart belonged to the blooms. Every walk was a slow, deliberate exploration of neighborhood gardens, his black button nose twitching with delight as he inhaled the sweet perfume of roses or the earthy scent of marigolds. He’d gently nudge his snout against soft petals, sometimes letting out a contented sigh, his tail a happy metronome against the grass. His owner often found him patiently sitting beside a vibrant flower bed, not to dig or destroy, but seemingly just to admire their colors and bask in their fragrant company, a furry little botanist in a world of canine chaos.",
     },
     {
-        id: 6,
-        petCoverImage: baller,
-        petName: 'Fluffy',
-        petAge: 4,
-        petGender: 'female',
-        itemType: "adoption"
+        _id: '4',
+        id: '4',
+        pet: {
+            _id: '4',
+            name: 'Chianti',
+            age: 4,
+            profilePhoto: {
+                url: baller,
+            },
+            gender: "female",
+        },
+        itemType: 'adoption',
+        description: 'Loves head rubs and rolex',
     }
   ]
 

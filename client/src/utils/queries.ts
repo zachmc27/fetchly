@@ -1204,8 +1204,8 @@ export const QUERY_ADOPTION = gql`
 `;
 
 export const FILTERED_ADOPTIONS = gql`
-  query FilteredAdoptions($type: String, $location: String) {
-    adoptions(type: $type, location: $location) {
+  query FilteredAdoptions($filter: AdoptionFilterInput) {
+    adoptions(filter: $filter) {
       _id
       pet {
         _id
