@@ -8,8 +8,6 @@ import ButtonBubble from "../components/Reusables/Button";
 import AddIcon from "../images/add.png";
 import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-import { QUERY_USER } from "../utils/queries"; 
-import { useQuery } from "@apollo/client";
 
 const profileMockPosts = [
   {
@@ -58,13 +56,6 @@ const mockUser = {
 export default function Profile() {
   const [user, setUser] = useState(mockUser);
   
-  const userId = "68289fdc963a3a074bafd47b";
-
-  const { loading, error, data } = useQuery(QUERY_USER, {
-    variables: { userId }
-  });
-
-  console.log(data)
   useEffect(() => {
     // to change users with setUser based on who's saved locally
     const savedUser = localStorage.getItem("user");
