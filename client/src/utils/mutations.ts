@@ -47,9 +47,9 @@ export const ADD_USER = gql`
 export const UPDATE_USER = gql`
   mutation UpdateUser($userId: String!, $input: UpdateUserInput!) {
     updateUser(userId: $userId, input: $input) {
-      user{ 
-      _id
-      }  
+      user {
+        _id
+      }
     }
   }
 `;  

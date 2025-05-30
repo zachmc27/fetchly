@@ -5,7 +5,19 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
 import { UPDATE_USER } from '../../utils/mutations';
-import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+// import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import MediaUpload from "../Reusables/MediaUpload";
+
+type UploadedMedia = {
+  id: string;
+  filename: string;
+  contentType: string;
+  length: number;
+  uploadDate: string;
+  gridFsId: string;
+  tags: string[];
+  url: string;
+};
 
 export default function AccountDetails({ onClose }: { onClose: () => void }) {
   function handleClose() {
@@ -33,6 +45,15 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
     }
 
   /*********** MUTATE USER ***********/
+  const[updatedUsername, setUpdatedUsername] = useState<String>("");
+  const[media, setMedia] = useState<UploadedMedia>();
+  const[updatedAbout, setUpdatedAbout] = useState<String>("");
+  const[updatedName, setUpdatedName] = useState<String>("");
+
+  const handleMediaUpload = (media: UploadedMedia) => {
+    setMedia(media);
+  };
+
   const [updateUser] = useMutation(UPDATE_USER);
 
   const handleUpdate = async () => {
@@ -42,14 +63,15 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
       variables: {
         userId: userId,
         input: {
-          username: "NewUsername",
-          email: "new@email.com",
-          avatar: UserPlaceHolder,
-          about: "Updated bio",
+          username: updatedUsername,
+          // email: "new@email.com",
+          avatar: media?.id || null,
+          about: updatedAbout,
+          fullName: updatedName,
         }
       }
     });
-    console.log("User updated:", data.updateUser);
+    console.log("User updated:", data);
   } catch (err) {
     console.error("Update failed:", err);
   }
@@ -65,24 +87,25 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
 
       <div className="prof-detail-picture-container">
         <div className="profile-picture-placeholder">
-          {/* You could use an actual image here, or an icon */}
-          <span className="icon">&#128444;</span> {/* Camera/image icon */}
+          <MediaUpload onUpload={handleMediaUpload}/>
+          {/* <span className="icon">&#128444;</span> Camera/image icon */}
         </div>
       </div>
 
       <div className="prof-detail-form-section">
         <label htmlFor="username">Username</label>
-        <input type="text" id="username" placeholder={user?.username! || "Username"} />
+        <input type="text" id="username" placeholder={user?.username! || "Username"} onChange={e => setUpdatedUsername(e.target.value)} />
       </div>
 
       <div className="prof-detail-form-section">
         <label htmlFor="fullName">Name</label>
-        <input type="text" id="fullName" placeholder={user?.fullName || "Full Name"} />
+        <input type="text" id="fullName" placeholder={user?.fullName || "Full Name"} onChange={e => setUpdatedName(e.target.value)} />
       </div>
 
       <div className="prof-detail-form-section">
         <label htmlFor="bio">Bio</label>
-        <textarea id="bio" placeholder={user?.about ||"Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations."}></textarea>
+        <textarea id="bio" placeholder={user?.about ||"Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations."} 
+        onChange={e => setUpdatedAbout(e.target.value)}></textarea>
       </div>
 
       <button className="prof-detail-save-button" onClick={handleUpdate}>Save Profile</button>

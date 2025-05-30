@@ -61,7 +61,7 @@
 /* post details */
 
 .viewing-container {
-  min-height: 100vh;
+  min-height: 92vh;
 }
 
 .post-details-container {
@@ -111,7 +111,9 @@
 /* adoption page */
 
 .adoption-page-container {
-    height: fit-content;
+    height: 82vh;
+    overflow: hidden;
+    overflow-y: auto;
     width: 100vw;
 
 }
@@ -139,6 +141,9 @@
     gap: 2vh 5%;
     padding: 10px 0px;
     justify-content: center;
+    height: 82vh;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .adoption-card {
@@ -214,6 +219,10 @@
     justify-content: center;
     width: 100%;
     margin: 0 auto;
+    height: 92vh;
+    height: 82vh;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .profile-post-item {
@@ -292,13 +301,18 @@
     flex-wrap: wrap;
     padding: 10px 0px;
     justify-content: center;
+    height: 76vh;
+    overflow: hidden;
+    overflow-y: auto;
+    
 }
 
 .meetup-page-container {
     height: fit-content;
     width: 100vw;
-
-
+    height: 82vh;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .meetup-card {
@@ -427,11 +441,17 @@
 .inbox-page-container {
     height: fit-content;
     width: 100vw;
+    height: 85vh;
+    overflow: hidden;
+    overflow-y: auto;
 
 }
 
 .inbox-feed-container {
   background-color: #ffffff; 
+  height: 82vh;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 
@@ -521,13 +541,8 @@
   display: flex;
   flex-direction: column;
   width: 100%; /* Takes full width of its parent */
-  height: 100vh; /* Takes full height of its parent, or adjust as needed */
+  height: 92vh; /* Takes full height of its parent, or adjust as needed */
   background-color: #ffffff;
-  /* You might want a border or shadow if it's a component within a larger page */
-  /* border: 1px solid #e0e0e0; */
-  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); */
-  /* border-radius: 8px; /* Optional: if you want rounded corners for the chat component itself */
-  overflow: hidden; /* To contain rounded corners if any, and manage scrolling */
 }
 
 /* Chat Header */
@@ -685,7 +700,7 @@
   background-color: #f7f7f7;
   border-top: 1px solid #e5e5e5;
   position: fixed; 
-  bottom: 0; 
+  bottom: 55px; 
   margin: 0 auto;
   width: 100%; 
   box-sizing: border-box; 
@@ -730,7 +745,7 @@
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  height: 100vh;
+  height: 92vh;
   max-width: 400px;
   padding: 20px;
   box-sizing: border-box;
@@ -1076,7 +1091,7 @@
   background-color: #f7f7f7;
   border-top: 1px solid #e5e5e5;
   position: absolute;
-  bottom: 0; 
+  bottom: 55px; 
   margin: 0 auto;
   width: 100%; 
   box-sizing: border-box; 
@@ -1203,6 +1218,9 @@
     flex-wrap: wrap;
     padding: 10px 0px;
     justify-content: center;
+    height: 82vh;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 /* Ensure this CSS is loaded by your component */
@@ -1738,7 +1756,7 @@
   font-family: sans-serif;
   background-color: #fff;
   color: #333;
-  height: 100vh;
+  height: 92vh;
   box-sizing: border-box;
 }
 

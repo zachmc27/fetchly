@@ -5,6 +5,7 @@ const userTypeDefs = `
   type User {
     _id: ID
     username: String
+    fullName: String
     email: String
     password: String
     avatar: Media
@@ -35,6 +36,7 @@ const userTypeDefs = `
 
   input UpdateUserInput {
     username: String
+    fullName: String
     email: String
     avatar: ID
     about: String

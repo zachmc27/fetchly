@@ -8,7 +8,8 @@ export const QUERY_USERS = gql`
   query Users {
     users {
       _id
-      username      
+      username   
+      fullName   
       email
       avatar {
         id
@@ -103,6 +104,7 @@ export const QUERY_USER = gql`
     user(userId: $userId) {
       _id
       username
+      fullName
       email
       password
       avatar {
@@ -206,7 +208,8 @@ export const QUERY_ME = gql`
   query me {
     me {
       _id
-      username      
+      username   
+      fullName   
       email
       avatar {
         id
