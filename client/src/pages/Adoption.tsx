@@ -2,7 +2,7 @@
 import Feed from "../components/Reusables/Feed";
 
 
-import { QUERY_ADOPTIONS, FILTERED_ADOPTIONS } from "../utils/queries";
+import { QUERY_ADOPTIONS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
 import SearchBar from "../components/Reusables/SearchBar"
@@ -97,12 +97,7 @@ export default function Adoption() {
       {(filteredAdoptions?.length === 0) && (
         <p className="no-results">No adoptions found for that filter.</p>
       )}
-      {selectedAdoptionId && (
-        <AdoptionFocus 
-          adoptionId={selectedAdoptionId} 
-          onClose={() => setSelectedAdoptionId(null)} 
-        />
-      )}
+     
 
     </div>
   )
