@@ -45,10 +45,11 @@ export const ADD_USER = gql`
 // }
 
 export const UPDATE_USER = gql`
-  mutation Mutation($userId: String!, $input: UpdateUserInput!) {
+  mutation UpdateUser($userId: String!, $input: UpdateUserInput!) {
     updateUser(userId: $userId, input: $input) {
-      _id
-      username
+      user {
+        _id
+      }
     }
   }
 `;  
