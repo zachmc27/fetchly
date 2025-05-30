@@ -4,13 +4,14 @@
   left: 0;
   width: 100%;
   background-color: #f8f9fa; 
-  border-top-left-radius: 20px; 
-  border-top-right-radius: 20px; 
+  border-top-left-radius: 15px; 
+  border-top-right-radius: 15px; 
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
   padding: 10px 0;
   z-index: 1000; 
   display: flex;
   justify-content: center;
+  height: 9vh
 }
 
 .nav-links {
@@ -57,8 +58,8 @@
 
 
 .nav-link img {
-  width: 26px; 
-  height: 26px;
+  width: 28px; 
+  height: 28px;
   object-fit: cover;
 }
 
