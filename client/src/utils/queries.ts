@@ -112,6 +112,7 @@ export const QUERY_USER = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       about
       location {
@@ -132,9 +133,21 @@ export const QUERY_USER = gql`
         }
         gender
         age
+        size
         neuteredOrSpayed
         about
+        profilePhoto {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+          url
+        }
         vaccination
+        followedByCount
       }
       petCount
       meetUps {
@@ -147,30 +160,16 @@ export const QUERY_USER = gql`
         contentText
       }
       postCount
-      following {
-        _id
-        username
-      }
-      conversation {
-        _id
-        conversationName
-      }
-      conversationCount
       likedPosts {
         _id
         contentText
       }
       likedPostsCount
-      organizations {
-        _id
-        orgName
-      }
       following {
         refId {
           ... on User {
             _id
             username
-            email
           }
           ... on Pet {
             _id
@@ -184,21 +183,6 @@ export const QUERY_USER = gql`
          refModel         
       }
       followingCount
-      followedBy {
-        refId {
-          ... on User {
-            _id
-            username
-            email
-          }
-          ... on Org {
-            _id
-            orgName
-          }
-        }
-         refModel         
-      }
-      followedByCount      
     }
   }
 `;
