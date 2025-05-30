@@ -26,7 +26,11 @@ input CreateConversationInput {
     conversationName: String!
     conversationUsers: [ConversationUserInput!]!
 }
-
+inpurt UpdateConversationInput {
+    conversationId: String!
+    conversationName: String!
+    conversationUsers: [ConversationUserInput?]?
+}
 #----------Query TypeDefs------------------------
 
 type Query {
@@ -39,6 +43,8 @@ type Query {
 
 type Mutation {
     createConversation(input: CreateConversationInput!): Conversation
+    updateConversation(conversationId: String!, conversationName: String!): Conversation
+    deleteConversation(conversationId: String!): Boolean
 }
 
 `;

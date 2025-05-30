@@ -82,6 +82,47 @@ const conversationResolvers = {
                 throw new Error('Failed to create conversation: An unknown error occurred.');
             }
         },
+        updateConversation: async (_parent: any, { conversationId, conversationName }: { conversationId: string; conversationName: string }) => {
+            try {
+                const updatedConversation = await Conversation.findByIdAndUpdate(
+                    conversationId,
+                    { conversationName },
+                    { new: true }
+                ).populate('conversationUsers');
+
+                if (!updatedConversation) {
+                    throw new Error('Conversation not found');
+                }
+
+                return updatedConversation;
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to update conversation: ${error.message}`);
+                }
+                throw new Error('Failed to update conversation: An unknown error occurred.');
+            }
+        },
+        deleteConversation: async (_parent: any, { conversationId }: { conversationId: string }) => {
+            try {
+                const conversation = await Conversation.findByIdAndDelete(conversationId);
+                if (!conversation) {
+                    throw new Error('Conversation not found');
+                }
+
+                // Remove the conversation from all users
+                await User.updateMany(
+                    { conversation: conversationId },
+                    { $pull: { conversation: conversationId } }
+                );
+
+                return true;
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to delete conversation: ${error.message}`);
+                }
+                throw new Error('Failed to delete conversation: An unknown error occurred.');
+            }
+        },
     },
 };
 
