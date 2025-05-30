@@ -217,10 +217,6 @@ export const ADD_POST = gql`
     addPost(input: $input) {
       _id
       contentText    
-      poster {
-        refId
-        refModel
-      }
     }
   }
 `;

@@ -1,11 +1,11 @@
-type Comment = {
+export type Comment = {
   id: number,
   user: string,
   avatar?: string,
   comment: string,
   likeCount: number,
   postedTime: Date,
-  replies: Comment[]
+  replies?: Comment[]
 }
 
 export type rsvpList = {
@@ -43,7 +43,7 @@ export type MockMeetupItem = {
 };
 
 export type MockAdoptionItem = {
-  id: number;
+  _id: string;
   orgName: string;
   orgAvi: string;
   orgEmail: string;
@@ -52,6 +52,7 @@ export type MockAdoptionItem = {
   petName: string;
   description: string;
   gender: string;
+  age: number;
   location: string;
   vaccinated: boolean;
   breed: string;

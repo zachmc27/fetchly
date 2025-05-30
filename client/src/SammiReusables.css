@@ -245,3 +245,107 @@
   color: #d9534f;
   font-weight: 500;
 }
+
+/************************* PROFILE DETAILS ****************************/
+
+.container {
+  background-color: #ffffff;
+  border-radius: 25px; /* Rounded corners for the entire screen */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Typical phone width */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+  overflow: hidden; /* Important for border-radius to apply correctly */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative; /* For positioning the back button */
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333;
+}
+
+.header h2 {
+  flex-grow: 1; /* Pushes the title to the center */
+  text-align: center;
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.profile-picture-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.profile-picture-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: #e0e0e0; /* Light gray for the placeholder */
+  border-radius: 50%; /* Makes it a circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-size: 40px;
+  border: 1px solid #ccc;
+}
+
+.form-section {
+  margin-bottom: 20px;
+}
+
+.form-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-section input,
+.form-section textarea {
+  width: calc(100% - 20px); /* Adjust for padding */
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Rounded corners for input fields */
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-section textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 100px;
+  line-height: 1.5; /* Improve readability */
+}
+
+.save-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #000000; /* Black button */
+  color: #ffffff;
+  border: none;
+  border-radius: 15px; /* Rounded corners for the button */
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #333333; /* Slightly lighter black on hover */
+}

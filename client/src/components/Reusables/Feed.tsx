@@ -20,18 +20,20 @@ import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-import { mockPosts } from "../../mockdata/post-data"
+import { mockPosts, mockAdoptionPosts } from "../../mockdata/post-data"
+
 
 // components
 import MessagesPage from "../Inbox/MessagesPage"
 import PostDetails from "./PostDetails"
 import Comments from "./Comments"
 
+
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
-import { MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
+import { MockAdoptionItem, MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
 
 
 type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard;
@@ -216,7 +218,34 @@ function handleClosePostView() {
 }
 
 // ----------------------------------------------------------------
+// --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
+// ----------------------------------------------------------------
+const [activeAdoptionPost, setActiveAdoptionPost] = useState<MockAdoptionItem | null>(null); 
+const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
 
+ function handleAdoptionPostViewRender(adoptionId: string) {
+  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption._id === adoptionId);
+  console.log(adoptionToOpen);
+  if (!adoptionToOpen) {
+    console.log('no post found')
+  }
+    if (adoptionToOpen) {
+       setActiveAdoptionPost(adoptionToOpen);
+      console.log('active post:', activeAdoptionPost);
+      setIsAdoptionPostOpen(true)
+      localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
+    } else  {
+      console.warn('No post found with ID:', adoptionId);
+    }
+    setIsAdoptionPostOpen(true)
+}
+
+function handleCloseAdoptionPostView() {
+  setIsAdoptionPostOpen(false)
+  localStorage.removeItem("activeAdoptionId");
+  setActiveAdoptionPost(null)
+}
+// ----------------------------------------------------------------
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
 
     
@@ -258,7 +287,6 @@ function handleClosePostView() {
         return (
           
           <div key={postItem.id} className={itemStyle} onClick={() => handlePostViewRender(postItem.id)}>
-            {/* post JSX */}
             <div className="post-user-info">
               <img src={postItem.userAvi} alt="profile picture" />
               <p>{postItem.postUser}</p>
@@ -269,10 +297,10 @@ function handleClosePostView() {
             </div>
             <p>{postItem.postContent}</p>
             {
-              postItem.postImage &&
-              postItem.postImage.map((image, index) => (
-                <img src={image} key={index}></img>
-              ))
+              postItem.postImage && postItem.postImage.length > 0 &&
+                <div className="img-container"> 
+                <img src={postItem.postImage[0]} alt="first image in the post" />
+                </div>
             }
             <div className="post-details-row">
               <div className="post-likes-container">
@@ -290,8 +318,7 @@ function handleClosePostView() {
       case "adoption": {
         const adoptionItem = item as AdoptionCard
         return (
-          <div key={adoptionItem._id} className={itemStyle}>
-            {/* adoption JSX */}
+          <div key={adoptionItem._id} className={itemStyle} onClick={() => handleAdoptionPostViewRender(adoptionItem._id)}>
             <div className="adoption-image-container">
               <img
               src={adoptionItem.pet.profilePhoto?.url || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
@@ -303,7 +330,7 @@ function handleClosePostView() {
               <div className="adoption-feed-details-row">
                 <div className="age-info"> 
                   <img src={calendar} alt="calendar icon" className="calendar-icon" />
-                  <p>{adoptionItem.pet.age} yrs</p> {/* Added "yrs" for context */}
+                  <p>{adoptionItem.pet.age} yrs</p>
                 </div>
               {adoptionItem.pet.gender === "male" &&
               <img src={male} alt="male-icon" className="male-icon"/>
@@ -404,6 +431,16 @@ if (isPostOpen && activePost) {
   />
   <Comments comments={activePost.comments}/>
   </div>
+  )
+}
+
+if (isAdoptionPostOpen && activeAdoptionPost) {
+  return (
+    <PostDetails
+     postData={activeAdoptionPost}
+     containerClass="adoption-details-container"
+     onClose={handleCloseAdoptionPostView}
+    />
   )
 }
 

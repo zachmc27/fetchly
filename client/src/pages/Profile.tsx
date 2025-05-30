@@ -73,17 +73,12 @@ export default function Profile() {
     if (data && data.user) {
       setUser(data.user);
       console.log(data.user);
-    } else {
-      console.log("noooooo")
-    }
-    
+    } 
   }, [data]);
   
   if (error){
     console.error("GraphQL error:", error);
   }
-  
-  console.log(user.posts);
 
   return (
     <div>
