@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import "../SammiReusables.css";
 import Feed from "../components/Reusables/Feed";
-import UserPlaceHolder from "../assets/react.svg";
+import UserPlaceHolder from "../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import ButtonBubble from "../components/Reusables/Button";
 import AddIcon from "../images/add.png";
 import EditIcon from "../images/edit.png";
@@ -90,9 +90,9 @@ export default function Profile() {
     <div className="profile-background">
       <div className="profile-ctn">
         <div className="profile-item-ctn">
-          <img src={user.avatar} className="profile-user-img" />
+          <img src={user.avatar || UserPlaceHolder} className="profile-user-img" />
           <div className="profile-user-title">
-            <span className="profile-lg-fnt">{user.fullName}</span>
+            <span className="profile-lg-fnt">{user.fullName || "First Last"}</span>
             <span className="profile-md-fnt">{user.username}</span>
           </div>
           <div className="profile-btn-ctn">
@@ -105,8 +105,8 @@ export default function Profile() {
           <span>{user.about}</span>
         </div>
         <div className="profile-item-ctn profile-sm-fnt">
-          <span>{user.followers} followers</span>
-          <span>{user.following} following</span>
+          <span>{user.followers || '0'} followers</span>
+          <span>{user.following || '0'} following</span>
         </div>
         <div className="profile-item-ctn profile-md-fnt">
           {user.pets.map((pet, idx) => (

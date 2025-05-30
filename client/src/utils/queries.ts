@@ -102,8 +102,9 @@ export const QUERY_USER = gql`
   query User($userId: String!) {
     user(userId: $userId) {
       _id
-      username      
+      username
       email
+      password
       avatar {
         id
         filename
@@ -112,6 +113,7 @@ export const QUERY_USER = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       about
       location {
@@ -132,9 +134,21 @@ export const QUERY_USER = gql`
         }
         gender
         age
+        size
         neuteredOrSpayed
         about
+        profilePhoto {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+          url
+        }
         vaccination
+        followedByCount
       }
       petCount
       meetUps {
@@ -147,26 +161,16 @@ export const QUERY_USER = gql`
         contentText
       }
       postCount
-      conversation {
-        _id
-        conversationName
-      }
-      conversationCount
       likedPosts {
         _id
         contentText
       }
       likedPostsCount
-      organizations {
-        _id
-        orgName
-      }
       following {
         refId {
           ... on User {
             _id
             username
-            email
           }
           ... on Pet {
             _id
@@ -177,24 +181,9 @@ export const QUERY_USER = gql`
             orgName
           }
         }
-         refModel         
+        refModel
       }
       followingCount
-      followedBy {
-        refId {
-          ... on User {
-            _id
-            username
-            email
-          }
-          ... on Org {
-            _id
-            orgName
-          }
-        }
-         refModel         
-      }
-      followedByCount      
     }
   }
 `;
@@ -327,6 +316,7 @@ export const QUERY_ORGS = gql`
       _id
       orgName
       email
+      password
       avatar {
         id
         filename
@@ -410,6 +400,7 @@ export const QUERY_ORG = gql`
       _id
       orgName
       email
+      password
       avatar {
         id
         filename
@@ -1092,6 +1083,7 @@ export const QUERY_ADOPTIONS = gql`
         _id
         username
         email
+        password
         avatar {
           id
           filename
@@ -1254,26 +1246,25 @@ export const ALL_MEDIA = gql`
 
 export const GET_CONVERSATIONS = gql`
   query Conversations {
-    conversations {
+  conversations {
+    _id
+    conversationName
+    conversationUsers {
       _id
-      conversationName
-      conversationUsers {
+    }
+    lastMessage {
+      _id
+      textContent
+    }
+    messages {
+      _id
+      messageUser {
         _id
       }
-      lastMessage {
-        _id
-        textContent
-      }
-      messages {
-        _id
-        messageUser {
-          _id
-        }
-        textContent
-      }
+      textContent
     }
   }
-`;
+}`;
 
 // You can expand upon the following values to include more details other than id:
 // USERS - You can grab name/uersname, email, etc.
