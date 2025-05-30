@@ -126,15 +126,5 @@ const conversationResolvers = {
     },
 };
 
-                return newConversation.populate('conversationUsers');
-            } catch (error) {
-                if (error instanceof Error) {
-                    throw new Error(`Failed to create conversation: ${error.message}`);
-                }
-                throw new Error('Failed to create conversation: An unknown error occurred.');
-            }
-        },
-    },
-};
 
 export default conversationResolvers;
