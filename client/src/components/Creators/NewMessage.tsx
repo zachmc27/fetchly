@@ -3,7 +3,14 @@
 import { useState } from "react";
 import { mockMutualFollowers } from "../../mockdata/post-data";
 
-export default function NewMessage() {
+
+
+interface NewMessageProps {
+  onSubmit: () => void;
+  onClose: () => void;
+}
+
+export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
 
   const [selectedParticipantNames, setSelectedParticipantNames] = useState<string[]>([]);
 
@@ -21,7 +28,7 @@ export default function NewMessage() {
   }
 
   function handleClose() {
-    console.log('closes form');
+    onClose();
   }
 
   function queryUser(event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
@@ -29,9 +36,9 @@ export default function NewMessage() {
     console.log('query a user that matches the search criteria');
   }
 
-  function onSubmit(){
-  console.log('Kendricks onSubmit function');
-  }
+  function handleSubmitChat(){
+    onSubmit();
+}
   return (
      <div className="msg-creation-container">
       <div className="msg-creation-header">
@@ -70,7 +77,7 @@ export default function NewMessage() {
               ))}
         </div>
       </div>  
-      <button onClick={onSubmit} className="chat-create-btn">Create Chat</button>
+      <button onClick={handleSubmitChat} className="chat-create-btn">Create Chat</button>
     </div>
   )
 }

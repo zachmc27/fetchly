@@ -9,7 +9,7 @@ const userTypeDefs = `
     password: String
     avatar: Media
     about: String
-    location: String
+    location: Location
     pets: [Pet]
     petCount: Int
     meetUps: [MeetUp]
