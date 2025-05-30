@@ -15,16 +15,18 @@ const PostButton = () => {
   const handleClick = () => {
     const path = location.pathname;
 
-    if (path.includes("/MeetUp")) {
+    if (path.includes("/meetup")) {
       openModalWithType("Meetup Post");
-    } else if (path.includes("/Adoption")) {
+    } else if (path.includes("/adoption")) {
       openModalWithType("Adoption Post");
+    } else if (path.includes("/inbox")) {
+      openModalWithType("New Message")
     } else {
       openModalWithType("New Post");
     }
   };
   return (
-    <button className={`icon-button`} onClick={handleClick}>
+    <button className={`post-icon-button`} onClick={handleClick}>
       +
     </button>
   );
