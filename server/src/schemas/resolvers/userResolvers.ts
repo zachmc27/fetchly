@@ -1,4 +1,4 @@
-import { User, Org, Pet } from '../../models/index.js';
+import { User, Org, Pet, Location } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js'; 
 import mongoose from 'mongoose';
 
@@ -21,6 +21,14 @@ interface UserArgs {
   userId: string;
 }
 
+interface LocationInput {
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: string;
+}
+
 interface UpdateUserArgs {
   userId: string;
   input:{
@@ -28,7 +36,7 @@ interface UpdateUserArgs {
     email: string;
     avatar: String
     about: String
-    location: String
+    location: LocationInput
   }
 }
 
@@ -124,6 +132,27 @@ const userResolvers = {
         throw new AuthenticationError('You are not authorized to update this user.');
       }
 
+
+
+      let locationId;
+      if (input.location) {
+        const existingLocation = await Location.findOne({
+          address: input.location.address,
+          city: input.location.city,
+          state: input.location.state,
+          country: input.location.country,
+          zip: input.location.zip,
+        });
+
+        if (existingLocation) {
+          locationId = existingLocation._id;
+        } else {
+          const newLocation = await Location.create(input.location);
+          locationId = newLocation._id;
+        }
+      }
+
+
       const updateData = {
         ...input,
         avatar: typeof input.avatar === 'string' && input.avatar.trim() 
@@ -137,10 +166,13 @@ const userResolvers = {
       if (updatedUser?.avatar?._id) {
         updatedUser.avatar._id = updatedUser.avatar._id.toString();
       }
+
       if (updatedUser?._id) {
         updatedUser._id = updatedUser._id.toString();
       }
-      //console.log('updatedUser:', JSON.stringify(updatedUser, null, 2));
+
+
+
       return updatedUser;
     },
     followUser: async (_parent: any, { userId, input }: FollowArgs, context: any) => {

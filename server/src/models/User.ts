@@ -15,6 +15,7 @@ import type { OrgDocument } from './Org.js';
 export interface UserDocument extends Document {
   id: string;
   username: string;
+  fullName: string;
   email: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
@@ -51,6 +52,9 @@ const userSchema = new Schema<UserDocument>(
         required: true,
         unique: true,
         index: true,
+    },
+    fullName: {
+      type: String,
     },
     email: {
         type: String,

@@ -1,4 +1,4 @@
-export type AdoptionCard= {
+export type AdoptionCard = {
     _id: string;
     id?: string;
     pet: {
@@ -13,3 +13,16 @@ export type AdoptionCard= {
     itemType: string;
     description: string;
 };
+
+
+export type PostCard = {
+  _id: string;
+  id: string;
+  poster: {
+    refId: string;
+    refModel: string;
+  };
+  contentText: string;
+  media: string[];
+  itemType: string;
+}
