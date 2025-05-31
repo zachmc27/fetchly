@@ -11,6 +11,6 @@ export default function Header() {
           <Link to="/">Fetchly</Link>
         </div>
   );
-};
+}
 
 
