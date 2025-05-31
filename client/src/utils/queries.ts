@@ -607,10 +607,16 @@ export const QUERY_POSTS = gql`
           ... on User {
             _id
             username
+            avatar {
+              url
+            }
           }
           ... on Org {
             _id
             orgName
+            avatar {
+              url
+            }
           }
         }
         refModel
@@ -624,6 +630,7 @@ export const QUERY_POSTS = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       responses {
         _id
@@ -632,10 +639,16 @@ export const QUERY_POSTS = gql`
              ... on User {
               _id
               username
+              avatar {
+                url
+              }
              }
              ... on Org {
                _id
-              orgName
+              orgName            
+              avatar {
+                url
+              }
              }
           }
            refModel

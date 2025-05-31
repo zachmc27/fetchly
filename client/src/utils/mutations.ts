@@ -279,19 +279,6 @@ export const ADD_POST_RESPONSE = gql`
   mutation AddPostResponse($addPostResponsePostId: String!, $addPostResponseInput: AddPostResponseInput!) {
     addPostResponse(postId: $addPostResponsePostId, input: $addPostResponseInput) {
       _id
-      poster {
-        refId
-        refModel
-      }
-      contentText
-      media
-      responses {
-        _id
-      }
-      responseCount
-      createdAt
-      parentPost
-      isResponse
     }
   }
 `;
