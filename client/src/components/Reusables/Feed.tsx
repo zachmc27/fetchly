@@ -11,34 +11,37 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { AdoptionCard } from "../../types/CardTypes"
+import { AdoptionCard, PostCard } from "../../types/CardTypes"
 
 // testing data, can be deleted after integrations implementation
 import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
-import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+// import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+// import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-import { mockPosts, mockAdoptionPosts } from "../../mockdata/post-data"
-
+import { mockAdoptionPosts } from "../../mockdata/post-data"
 
 // components
 import MessagesPage from "../Inbox/MessagesPage"
 import PostDetails from "./PostDetails"
 import Comments from "./Comments"
 
+// Cards
+import PostCardItem from "../Cards/PostCardItem";
 
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
-import { MockAdoptionItem, MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
+
+import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 
 
-type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard;
+
+type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard | PostCard;
 
 export default function Feed({
   initialFeedArray,
@@ -52,12 +55,16 @@ export default function Feed({
   const location = useLocation();
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
+  // Get user info
+  const userId = localStorage.getItem("user_Id");
+  const accountType = localStorage.getItem("accountType");
+  const userType = accountType === "org" ? "Org" : "User";
+
   useEffect(() => {
     setFeedArray(initialFeedArray);
   }, [initialFeedArray]);
 
 // --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
-
 // ----------------------------------------------------------------
 
   const [activeConversation, setActiveConversation] = useState<MockConversationObject | null>(null); 
@@ -177,14 +184,15 @@ export default function Feed({
 // ----------------------------------------------------------------
 // --------------- HOME PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
-const [activePost, setActivePost] = useState<MockPostItem | null>(null); 
+const [activePost, setActivePost] = useState<PostCard | null>(null); 
 const [isPostOpen, setIsPostOpen] = useState(false)
 
 useEffect(() => {
   const storedPostId = localStorage.getItem("activePostId");
   if (storedPostId && location.pathname === '/') {
-    const postId = parseInt(storedPostId, 10); // Parse as integer
-    const storedPost = mockPosts.find((post) => post.id === postId);
+    const storedPost = initialFeedArray.find(
+      (post) => post.itemType === "post" && (post as PostCard)._id === storedPostId
+    ) as PostCard | undefined;
     if (storedPost) {
       setActivePost(storedPost);
       setIsPostOpen(true);
@@ -194,30 +202,63 @@ useEffect(() => {
   if (location.pathname !== "/meetup") {
     localStorage.removeItem("activeMeetupId");
   }
-}, [location.pathname]);
+}, [location.pathname, initialFeedArray]);
 
-async function handlePostViewRender(postId: number) {
+async function handlePostViewRender(postId: string) {
   console.log('post');
-  const postToOpen = mockPosts.find(post => post.id === postId);
+
+  const postToOpen = feedArray.find(
+    (post) => post.itemType === "post" && (post as PostCard)._id === postId
+  ) as PostCard | undefined;
   console.log(postToOpen);
+
   if (!postToOpen) {
-    console.log('no post found')
+    console.warn('no post found with ID:', postId);
+    return;
   }
-    if (postToOpen) {
-      await setActivePost(postToOpen);
-      console.log('active post:', activePost);
-      setIsPostOpen(true)
-      localStorage.setItem("activePostId", postToOpen.id.toString());
-    } else  {
-      console.warn('No post found with ID:', postId);
-    }
-    setIsPostOpen(true)
+  setActivePost(postToOpen);
+  setIsPostOpen(true)
+  localStorage.setItem("activePostId", postToOpen._id);
 }
 
 function handleClosePostView() {
   setIsPostOpen(false)
   localStorage.removeItem("activePostId");
   setActivePost(null)
+}
+
+// Convert response to comment
+type Comment = {
+  id: number;
+  user: string;
+  avatar?: string;
+  comment: string;
+  likeCount: number;
+  postedTime: Date;
+  replies?: Comment[];
+};
+
+function mapResponseToComment(res: {
+  _id: string;
+  contentText: string;
+  poster: {
+    refId: {
+      avatar?: { url?: string };
+      _id: string;
+      username: string;
+    };
+    refModel: string;
+  };
+}): Comment {
+  return {
+    id: parseInt(res._id || "0", 10),
+    user: res.poster.refId.username || "Unknown",
+    avatar: res.poster.refId.avatar?.url || undefined,
+    comment: res.contentText || "",
+    likeCount: 0,
+    postedTime: new Date(), // Placeholder since there's no timestamp
+    replies: []
+  };
 }
 
 // ----------------------------------------------------------------
@@ -248,6 +289,7 @@ function handleCloseAdoptionPostView() {
   localStorage.removeItem("activeAdoptionId");
   setActiveAdoptionPost(null)
 }
+
 // ----------------------------------------------------------------
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
 
@@ -286,37 +328,17 @@ function handleCloseAdoptionPostView() {
           );
         }
       case "post": {
-        const postItem = item as MockPostCard;
-        return (
-          
-          <div key={postItem.id} className={itemStyle} onClick={() => handlePostViewRender(postItem.id)}>
-            <div className="post-user-info">
-              <img src={postItem.userAvi} alt="profile picture" />
-              <p>{postItem.postUser}</p>
-              <div className="post-date-container">
-                <img src={calendar} alt="calendar icon" />
-                <p>{postItem.postDate}</p>
-              </div>
-            </div>
-            <p>{postItem.postContent}</p>
-            {
-              postItem.postImage && postItem.postImage.length > 0 &&
-                <div className="img-container"> 
-                <img src={postItem.postImage[0]} alt="first image in the post" />
-                </div>
-            }
-            <div className="post-details-row">
-              <div className="post-likes-container">
-                <img src={heart} alt="heart icon" />
-                <p>{postItem.postLikeCount}</p>
-              </div>
-              <div className="post-comments-container">
-                <img src={chat} alt="comment icon" />
-                <p>{postItem.postCommentCount}</p>
-              </div>
-            </div>
-          </div>
-        );
+  const postItem = item as PostCard;
+  return (
+    <PostCardItem
+      key={postItem._id}
+      post={postItem}
+      onOpen={handlePostViewRender}
+      itemStyle={itemStyle}
+      userId={userId || ""}
+      refModel={userType}
+    />
+  );
         }
       case "adoption": {
         const adoptionItem = item as AdoptionCard
@@ -425,6 +447,7 @@ if (isMeetupPostOpen && activeMeetupPost) {
 }
 
 if (isPostOpen && activePost) {
+
   return (
   <div className="viewing-container">
   <PostDetails
@@ -432,7 +455,7 @@ if (isPostOpen && activePost) {
    containerClass="post-details-container"
    onClose={handleClosePostView}
   />
-  <Comments comments={activePost.comments}/>
+  <Comments comments={(activePost.responses || []).map(mapResponseToComment)} />
   </div>
   )
 }
