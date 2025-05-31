@@ -35,6 +35,16 @@ import NewFreeFormPost from "../Creators/NewPost"
 
 type postData =  PostCard | MockMeetupItem | MockAdoptionItem;
 
+interface PostResponse {
+    poster: {
+      refId: string;
+      refModel: string;
+    };
+    contentText: string;
+    media?: string[];
+}
+
+
 export default function PostDetails({ postData, containerClass, onClose }: { postData: postData, containerClass: string, onClose: () => void}) {
 
   // Get user info
@@ -77,7 +87,7 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
     window.scrollTo(0, 0);
   }, [postData]);
 
-  const handleResponseSubmit = (responseData: any) => {
+  const handleResponseSubmit = (responseData: PostResponse) => {
     console.log("New response submitted:", responseData);
   };
 
@@ -111,7 +121,6 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
       console.error("Error toggling like:", error);
     }
   };
-
 
   function handleEmailToggle() {
     setIsEmailOpen(!isEmailOpen)

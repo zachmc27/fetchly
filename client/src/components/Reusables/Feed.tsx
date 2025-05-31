@@ -420,18 +420,6 @@ if (isPostOpen && activePost) {
     replies?: Comment[];
   };
 
-  function mapPostCardToComment(post: PostCard): Comment {
-    return {
-      id: parseInt(post._id || "0", 10),
-      user: post.poster?.refId.username || "Unknown User",
-      avatar: post.poster?.refId.avatar?.url || undefined,
-      comment: post.contentText || "",
-      likeCount: post.likesCount || 0,
-      postedTime: post.createdAt ? new Date(post.createdAt) : new Date(),
-      replies: (post.responses || []).map(mapResponseToComment)
-    };
-  }
-
   function mapResponseToComment(res: {
     _id: string;
     contentText: string;
