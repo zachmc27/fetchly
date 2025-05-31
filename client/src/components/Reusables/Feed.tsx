@@ -11,7 +11,9 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { AdoptionCard } from "../../types/CardTypes"
+import UserPlaceHolder from "../../assets/react.svg";
+import { AdoptionCard, PostCard } from "../../types/CardTypes"
+import { format } from 'date-fns';
 
 // testing data, can be deleted after integrations implementation
 import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
@@ -20,7 +22,7 @@ import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-import { mockPosts, mockAdoptionPosts } from "../../mockdata/post-data"
+import { mockAdoptionPosts } from "../../mockdata/post-data"
 
 
 // components
@@ -33,10 +35,10 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
-import { MockAdoptionItem, MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
+import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 
 
-type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard;
+type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard | PostCard;
 
 export default function Feed({
   initialFeedArray,
@@ -53,6 +55,7 @@ export default function Feed({
   useEffect(() => {
     setFeedArray(initialFeedArray);
   }, [initialFeedArray]);
+  
 
 // --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
 
@@ -175,14 +178,15 @@ export default function Feed({
 // ----------------------------------------------------------------
 // --------------- HOME PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
-const [activePost, setActivePost] = useState<MockPostItem | null>(null); 
+const [activePost, setActivePost] = useState<PostCard | null>(null); 
 const [isPostOpen, setIsPostOpen] = useState(false)
 
 useEffect(() => {
   const storedPostId = localStorage.getItem("activePostId");
   if (storedPostId && location.pathname === '/') {
-    const postId = parseInt(storedPostId, 10); // Parse as integer
-    const storedPost = mockPosts.find((post) => post.id === postId);
+    const storedPost = initialFeedArray.find(
+      (post) => post.itemType === "post" && (post as PostCard)._id === storedPostId
+    ) as PostCard | undefined;
     if (storedPost) {
       setActivePost(storedPost);
       setIsPostOpen(true);
@@ -194,22 +198,21 @@ useEffect(() => {
   }
 }, [location.pathname]);
 
-async function handlePostViewRender(postId: number) {
+async function handlePostViewRender(postId: string) {
   console.log('post');
-  const postToOpen = mockPosts.find(post => post.id === postId);
+
+  const postToOpen = feedArray.find(
+    (post) => post.itemType === "post" && (post as PostCard)._id === postId
+  ) as PostCard | undefined;
   console.log(postToOpen);
+
   if (!postToOpen) {
-    console.log('no post found')
+    console.warn('no post found with ID:', postId);
+    return;
   }
-    if (postToOpen) {
-      await setActivePost(postToOpen);
-      console.log('active post:', activePost);
-      setIsPostOpen(true)
-      localStorage.setItem("activePostId", postToOpen.id.toString());
-    } else  {
-      console.warn('No post found with ID:', postId);
-    }
-    setIsPostOpen(true)
+  setActivePost(postToOpen);
+  setIsPostOpen(true)
+  localStorage.setItem("activePostId", postToOpen._id);
 }
 
 function handleClosePostView() {
@@ -284,33 +287,35 @@ function handleCloseAdoptionPostView() {
           );
         }
       case "post": {
-        const postItem = item as MockPostCard;
+        const postItem = item as PostCard;
         return (
           
-          <div key={postItem.id} className={itemStyle} onClick={() => handlePostViewRender(postItem.id)}>
+          <div key={postItem._id} className={itemStyle} onClick={() => handlePostViewRender(postItem._id)}>
             <div className="post-user-info">
-              <img src={postItem.userAvi} alt="profile picture" />
-              <p>{postItem.postUser}</p>
+              <img src={postItem.poster.refId.avatar?.url || UserPlaceHolder} alt="profile picture" />
+              <p>{postItem.poster.refId.username}</p>
               <div className="post-date-container">
                 <img src={calendar} alt="calendar icon" />
-                <p>{postItem.postDate}</p>
+                <p>{format(new Date(Number(postItem.createdAt)), 'MMM d, yyyy')}</p>
               </div>
             </div>
-            <p>{postItem.postContent}</p>
+            <p>{postItem.contentText}</p>
             {
-              postItem.postImage && postItem.postImage.length > 0 &&
-                <div className="img-container"> 
-                <img src={postItem.postImage[0]} alt="first image in the post" />
+              postItem.media && postItem.media.length > 0 && (
+                <div className="img-container">
+                  {postItem.media.map((mediaItem, index) => ( 
+                    <img key={index} src={mediaItem.url} alt={`post media item ${index + 1}`} className="post-image" />
+                  ))}
                 </div>
-            }
+            )}
             <div className="post-details-row">
               <div className="post-likes-container">
                 <img src={heart} alt="heart icon" />
-                <p>{postItem.postLikeCount}</p>
+                <p>{postItem.likesCount}</p>
               </div>
               <div className="post-comments-container">
                 <img src={chat} alt="comment icon" />
-                <p>{postItem.postCommentCount}</p>
+                <p>{postItem.responseCount}</p>
               </div>
             </div>
           </div>
@@ -423,6 +428,52 @@ if (isMeetupPostOpen && activeMeetupPost) {
 }
 
 if (isPostOpen && activePost) {
+
+  type Comment = {
+    id: number;
+    user: string;
+    avatar?: string;
+    comment: string;
+    likeCount: number;
+    postedTime: Date;
+    replies?: Comment[];
+  };
+
+  function mapPostCardToComment(post: PostCard): Comment {
+    return {
+      id: parseInt(post._id || "0", 10),
+      user: post.poster?.refId.username || "Unknown User",
+      avatar: post.poster?.refId.avatar?.url || undefined,
+      comment: post.contentText || "",
+      likeCount: post.likesCount || 0,
+      postedTime: post.createdAt ? new Date(post.createdAt) : new Date(),
+      replies: (post.responses || []).map(mapResponseToComment)
+    };
+  }
+
+  function mapResponseToComment(res: {
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: { url?: string };
+        _id: string;
+        username: string;
+      };
+      refModel: string;
+    };
+  }): Comment {
+    return {
+      id: parseInt(res._id || "0", 10),
+      user: res.poster.refId.username || "Unknown",
+      avatar: res.poster.refId.avatar?.url || undefined,
+      comment: res.contentText || "",
+      likeCount: 0,
+      postedTime: new Date(), // Placeholder since there's no timestamp
+      replies: []
+    };
+  }
+
   return (
   <div className="viewing-container">
   <PostDetails
@@ -430,7 +481,7 @@ if (isPostOpen && activePost) {
    containerClass="post-details-container"
    onClose={handleClosePostView}
   />
-  <Comments comments={activePost.comments}/>
+  <Comments comments={(activePost.responses || []).map(mapResponseToComment)} />
   </div>
   )
 }

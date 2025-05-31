@@ -1,5 +1,5 @@
 import Feed from "../components/Reusables/Feed";
-import { mockPostData } from "../mockdata/feed-data";
+// import { mockPostData } from "../mockdata/feed-data";
 // import NewMessage from "../components/Creators/NewMessage";
 import { QUERY_POSTS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <div className="post-page-container">
       <Feed
-       initialFeedArray={ mockPostData}
+       initialFeedArray={ posts }
        itemStyle="post-card"
        containerStyle="post-feed-container"
       />

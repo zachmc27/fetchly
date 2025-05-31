@@ -9,21 +9,24 @@
 // Pass back a prop identifying the class name of the container
 
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import { format } from 'date-fns';
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import vaccine from "../../images/syringe_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import mail from "../../images/mail_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import UserPlaceHolder from "../../assets/react.svg";
 import call from "../../images/call_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import "../../ZachTemp.css"
 // testing data, can be deleted after integrations implementation
-import { MockPostItem, MockMeetupItem, MockAdoptionItem } from "../../mockdata/mocktypes/PostDetails";
+import { MockMeetupItem, MockAdoptionItem } from "../../mockdata/mocktypes/PostDetails";
+import { PostCard } from "../../types/CardTypes"
 import { useEffect, useState } from "react"
 import ImageCarousel from "./ImageCarousel"
 
 
-type postData =  MockPostItem | MockMeetupItem | MockAdoptionItem;
+type postData =  PostCard | MockMeetupItem | MockAdoptionItem;
 
 export default function PostDetails({ postData, containerClass, onClose }: { postData: postData, containerClass: string, onClose: () => void}) {
   const [isEmailOpen, setIsEmailOpen] = useState(false)  
@@ -44,38 +47,38 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
   function renderPost(postData: postData): JSX.Element | null {
     switch (postData.itemType) {
       case "post": {
-        const post = postData as MockPostItem;
+        const post = postData as PostCard;
         return (
           <div key={post.id} className={containerClass}>
             <div className="post-user-info-row">
                 <button onClick={onClose}>{"<"}</button>
                 <div className="post-user-info-container">
-                  <img src={post.userAvi} alt="users avatar"/>
-                  <p className="post-username">{post.postUser}</p>
+                  <img src={post.poster.refId.avatar?.url || UserPlaceHolder} alt="users avatar"/>
+                  <p className="post-username">{post.poster.refId.username}</p>
                 </div>
-                <p className="post-date-display">{post.postDate}</p>
+                <p className="post-date-display">{format(new Date(Number(post.createdAt)), 'MMM d, yyyy')}</p>
             </div>
-            <p className="post-content">{post.postContent}</p>
+            <p className="post-content">{post.contentText}</p>
             {
-              post.postImages && post.postImages.length > 1 &&
+              post.media && post.media.length > 1 &&
               <div className="img-container"> 
-              <ImageCarousel slides={post.postImages || []}/>
+              <ImageCarousel slides={post.media.map(m =>m.url).filter(Boolean)}/>
               </div>
             }
             {
-              post.postImages && post.postImages.length === 1 &&
+              post.media && post.media.length === 1 &&
               <div className="img-container">
-                <img src={post.postImages[0]} alt="first image"/>
+                <img src={post.media[0].url} alt="first image"/>
               </div>
               
             }
             <div className="post-info-container">
               <div className="post-likes-container">
-                <p>{post.postLikeCount}</p>
+                <p>{post.likesCount}</p>
                 <img src={heart} alt="heart icon" />
               </div>
               <div className="post-comment-container">
-                 <p>{post.postCommentCount}</p>
+                 <p>{post.responseCount}</p>
                  <img src={chat} alt="comment icon"/>
               </div>
               
