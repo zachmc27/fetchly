@@ -10,7 +10,7 @@
 import { useState, useEffect } from "react";
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import MsgInfoPage from "./MsgInfoPage";
-
+import sendIcon from "../../images/send_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 export default function MessagesPage({ conversation, onClose }: { conversation: MockConversationObject, onClose: () => void }) {
 
   const [isInfoOpen, setIsInfoOpen] = useState(false)
@@ -48,7 +48,7 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
   return (
     <div className="messages-page-container">
       <div className="chat-header">{/* temporary header, will have to configure the universal header somehow or disable it on this page */}
-        <button onClick={onClose}>close</button>
+        <button onClick={onClose}>{"<"}</button>
         <h1>{conversation.conversationName}</h1>
         <button onClick={handleInfoRender}>i</button>
       </div>
@@ -71,7 +71,7 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
         })}
         <div className="chat-bar">
           <input type="text" placeholder="Type a message here..." />
-          <button className="send-message-btn">↗️</button>
+          <button className="send-message-btn"><img src={sendIcon} alt="" /></button>
         </div>
       </div>
 

@@ -3,7 +3,6 @@
 // IF GROUP CHAT: render an input bar and bubble button that allows user to change group chat name and save the name
 import { useEffect } from "react";
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation";
-
 export default function MsgInfoPage({ conversation, onClose }: { conversation: MockConversationObject, onClose: () => void }) {
   function handleClose() {
     localStorage.removeItem("isInfoOpen"); // Clear isInfoOpen from localStorage

@@ -14,7 +14,7 @@ export default function Inbox() {
        initialFeedArray={mockMessageData}
        itemStyle="inbox-card"
        containerStyle="inbox-feed-container"/>
+  
     </div>
-    
   )
 }
