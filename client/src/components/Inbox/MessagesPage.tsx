@@ -93,7 +93,7 @@ const handleSendMessage = async (
   return (
     <div className="messages-page-container">
       <div className="chat-header">{/* temporary header, will have to configure the universal header somehow or disable it on this page */}
-        <button onClick={onClose}>close</button>
+        <button onClick={onClose}>{"<"}</button>
         <h1>{conversation.conversationName}</h1>
         <button onClick={handleInfoRender}>i</button>
       </div>
@@ -131,6 +131,8 @@ const handleSendMessage = async (
           >
             ↗️
           </button>
+          <input type="text" placeholder="Type a message here..." />
+          <button className="send-message-btn"><img src={sendIcon} alt="" /></button>
         </div>
       </div>
 

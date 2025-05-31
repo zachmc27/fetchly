@@ -11,11 +11,14 @@ import { mockMeetupData } from "../mockdata/feed-data";
 export default function Meetup() {
 
   return (
+    <>
     <div className="meetup-page-container">
-         <Feed 
-          initialFeedArray={mockMeetupData} 
-          itemStyle="meetup-card" 
-          containerStyle="meetup-feed-container"/>
+        
+      <Feed 
+      initialFeedArray={mockMeetupData} 
+      itemStyle="meetup-card" 
+      containerStyle="meetup-feed-container"/>
     </div>
+    </>
   )
 }

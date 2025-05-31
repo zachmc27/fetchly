@@ -8,15 +8,8 @@ import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import NavBar from "./components/Navbar/NavBar";
-import PostButton from "./components/Navbar/PostButton";
 import { PostModalProvider } from "./components/Reusables/PostModalProvider";
-import TopNavBar from "./components/Navbar/TopNavBar";
 
-
-// ****** Each of these will render on each page ******
-// import NavBar from './components/Navbar/Bar';
-// import PostBubble from './components/Navbar/PostBubble';
-// ****** Post bubble conditionally renders with a passed back link prop corresponding to the respective route ******
 
 // Construct our main GraphQL API endpoint
 // const httpLink = createHttpLink({
@@ -51,9 +44,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <PostModalProvider>
-        <TopNavBar />
         <NavBar />
-        <PostButton />
         <Outlet />
       </PostModalProvider>
     </ApolloProvider>
