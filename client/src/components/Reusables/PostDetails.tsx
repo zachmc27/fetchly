@@ -30,6 +30,8 @@ import ImageCarousel from "./ImageCarousel"
 import { useMutation } from '@apollo/client';
 import { LIKE_POST, UNLIKE_POST } from '../../utils/mutations';
 
+// Components
+import NewFreeFormPost from "../Creators/NewPost"
 
 type postData =  PostCard | MockMeetupItem | MockAdoptionItem;
 
@@ -43,6 +45,8 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
   const userHasLikedPost = (post: PostCard, userId:string) => {
     return post.likes.some(like => like.refId._id === userId);
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [likePost] = useMutation(LIKE_POST);
   const [unlikePost] = useMutation(UNLIKE_POST);
@@ -73,7 +77,9 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
     window.scrollTo(0, 0);
   }, [postData]);
 
-
+  const handleResponseSubmit = (responseData: any) => {
+    console.log("New response submitted:", responseData);
+  };
 
   const handleLikeToggle = async () => {
     if (postData.itemType !== 'post') return;
@@ -149,11 +155,28 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
                 <p>{likesCount}</p>
                   <img src={isLiked ? heartFilled : heart} alt="heart icon" />
               </div>
-              <div className="post-comment-container">
-                 <p>{post.responseCount}</p>
-                 <img src={chat} alt="comment icon"/>
+              <div 
+                className="post-comment-container" 
+                onClick={() => setIsModalOpen(true)}
+                style={{ cursor: "pointer" }}
+              >
+                <p>{post.responseCount}</p>
+                <img src={chat} alt="comment icon" />
               </div>
-              
+              {isModalOpen && (
+                <div className="post-modal-overlay" onClick={() => setIsModalOpen(false)}>
+                  <div className="post-modal-content" onClick={e => e.stopPropagation()}>
+                    <button className="post-modal-close-button" onClick={() => setIsModalOpen(false)}>×</button>
+                    <NewFreeFormPost
+                      parentPostId={post._id}
+                      onSubmit={(responseData) => {
+                        handleResponseSubmit(responseData);
+                        setIsModalOpen(false); // close modal on submit
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         );

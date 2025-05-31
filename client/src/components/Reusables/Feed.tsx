@@ -58,7 +58,7 @@ export default function Feed({
 
   useEffect(() => {
     setFeedArray(initialFeedArray);
-  }, [initialFeedArray]);
+  }, [initialFeedArray, handleCloseMessagePage]);
 
 // --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
 // ----------------------------------------------------------------
