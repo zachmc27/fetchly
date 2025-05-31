@@ -433,3 +433,47 @@
   border-radius: 0.5rem;
   border: 1px solid #ddd;
 }
+
+
+/*------------------Post CSS --------------*/
+.post-image {
+  max-width: 25%;        /* Image won't exceed container width */
+  height: auto;           /* Keep aspect ratio */
+  border-radius: 8px;     /* Rounded corners for a softer look */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+  margin: 12px 0;         /* Spacing above and below the image */
+  object-fit: cover;      /* Cover container nicely without distortion */
+  display: block;         /* Remove inline spacing issues */
+}
+
+.post-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.post-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+.post-modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}

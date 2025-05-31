@@ -63,7 +63,11 @@ const postResolvers = {
             populate: {
               path: 'poster.refId',
           }})
-          .populate('poster.refId')
+          .populate({
+            path: 'poster.refId',
+            populate: {
+              path: 'avatar',
+          }})
           .populate({
             path: 'likes.refId'
           });
@@ -76,7 +80,11 @@ const postResolvers = {
             populate: {
               path: 'poster.refId',
           }})
-          .populate('poster.refId')
+          .populate({
+            path: 'poster.refId',
+            populate: {
+              path: 'avatar',
+          }})
           .populate({
             path: 'likes.refId'
           });

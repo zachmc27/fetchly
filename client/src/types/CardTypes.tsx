@@ -19,10 +19,40 @@ export type PostCard = {
   _id: string;
   id: string;
   poster: {
-    refId: string;
+    refId: {
+      avatar?: {
+        url?: string;
+      };
+      _id: string;
+      username: string;
+    }
     refModel: string;
   };
   contentText: string;
-  media: string[];
+  media: [{
+    url: string
+  }];
   itemType: string;
+  createdAt: Date;
+  likesCount: number;
+  responseCount: number;
+  likes: [{
+    refId: {
+      _id: string
+    }
+  }]
+  responses: [{
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: {
+          url?: string;
+        };
+        _id: string;
+        username: string;
+      }
+      refModel: string;
+    };
+  }],
 }
