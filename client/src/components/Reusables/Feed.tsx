@@ -11,25 +11,24 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import UserPlaceHolder from "../../assets/react.svg";
 import { AdoptionCard, PostCard } from "../../types/CardTypes"
-import { format } from 'date-fns';
 
 // testing data, can be deleted after integrations implementation
 import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
-import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+// import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+// import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
 import { mockAdoptionPosts } from "../../mockdata/post-data"
-
 
 // components
 import MessagesPage from "../Inbox/MessagesPage"
 import PostDetails from "./PostDetails"
 import Comments from "./Comments"
 
+// Cards
+import PostCardItem from "../Cards/PostCardItem";
 
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -52,13 +51,16 @@ export default function Feed({
   const location = useLocation();
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
+  // Get user info
+  const userId = localStorage.getItem("user_Id");
+  const accountType = localStorage.getItem("accountType");
+  const userType = accountType === "org" ? "Org" : "User";
+
   useEffect(() => {
     setFeedArray(initialFeedArray);
   }, [initialFeedArray]);
-  
 
 // --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
-
 // ----------------------------------------------------------------
 
   const [activeConversation, setActiveConversation] = useState<MockConversationObject | null>(null); 
@@ -249,6 +251,7 @@ function handleCloseAdoptionPostView() {
   localStorage.removeItem("activeAdoptionId");
   setActiveAdoptionPost(null)
 }
+
 // ----------------------------------------------------------------
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null  {
 
@@ -287,39 +290,17 @@ function handleCloseAdoptionPostView() {
           );
         }
       case "post": {
-        const postItem = item as PostCard;
-        return (
-          
-          <div key={postItem._id} className={itemStyle} onClick={() => handlePostViewRender(postItem._id)}>
-            <div className="post-user-info">
-              <img src={postItem.poster.refId.avatar?.url || UserPlaceHolder} alt="profile picture" />
-              <p>{postItem.poster.refId.username}</p>
-              <div className="post-date-container">
-                <img src={calendar} alt="calendar icon" />
-                <p>{format(new Date(Number(postItem.createdAt)), 'MMM d, yyyy')}</p>
-              </div>
-            </div>
-            <p>{postItem.contentText}</p>
-            {
-              postItem.media && postItem.media.length > 0 && (
-                <div className="img-container">
-                  {postItem.media.map((mediaItem, index) => ( 
-                    <img key={index} src={mediaItem.url} alt={`post media item ${index + 1}`} className="post-image" />
-                  ))}
-                </div>
-            )}
-            <div className="post-details-row">
-              <div className="post-likes-container">
-                <img src={heart} alt="heart icon" />
-                <p>{postItem.likesCount}</p>
-              </div>
-              <div className="post-comments-container">
-                <img src={chat} alt="comment icon" />
-                <p>{postItem.responseCount}</p>
-              </div>
-            </div>
-          </div>
-        );
+  const postItem = item as PostCard;
+  return (
+    <PostCardItem
+      key={postItem._id}
+      post={postItem}
+      onOpen={handlePostViewRender}
+      itemStyle={itemStyle}
+      userId={userId || ""}
+      refModel={userType}
+    />
+  );
         }
       case "adoption": {
         const adoptionItem = item as AdoptionCard

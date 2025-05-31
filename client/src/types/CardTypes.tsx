@@ -36,6 +36,11 @@ export type PostCard = {
   createdAt: Date;
   likesCount: number;
   responseCount: number;
+  likes: [{
+    refId: {
+      _id: string
+    }
+  }]
   responses: [{
     _id: string;
     contentText: string;
