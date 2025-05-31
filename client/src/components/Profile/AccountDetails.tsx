@@ -8,6 +8,7 @@ import { UPDATE_USER } from '../../utils/mutations';
 // import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import MediaUpload from "../Reusables/MediaUpload";
 
+
 type UploadedMedia = {
   id: string;
   filename: string;
@@ -19,20 +20,29 @@ type UploadedMedia = {
   url: string;
 };
 
+type User = {
+  _id: string;
+  username: string;
+  fullName: string;
+  about?: string;
+  avatar?: string;
+  // Add other fields you use from userData.user
+};
+
 export default function AccountDetails({ onClose }: { onClose: () => void }) {
   function handleClose() {
     localStorage.setItem("isEditOpen", "false");
     if (onClose) onClose();
   }
 
-  /************ QUERY USER********** */
+  /************ QUERY USER***********/
   const userId = localStorage.getItem("userId");
   const { data: userData, error: queryError } = useQuery(QUERY_USER,{
    variables: { userId } 
   
   });
 
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
     
     useEffect(() => {
       if (userData && userData.user) {
@@ -45,10 +55,10 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
     }
 
   /*********** MUTATE USER ***********/
-  const[updatedUsername, setUpdatedUsername] = useState<String>("");
+  const[updatedUsername, setUpdatedUsername] = useState<string>("");
   const[media, setMedia] = useState<UploadedMedia>();
-  const[updatedAbout, setUpdatedAbout] = useState<String>("");
-  const[updatedName, setUpdatedName] = useState<String>("");
+  const[updatedAbout, setUpdatedAbout] = useState<string>("");
+  const[updatedName, setUpdatedName] = useState<string>("");
 
   const handleMediaUpload = (media: UploadedMedia) => {
     setMedia(media);
@@ -57,21 +67,25 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
   const [updateUser] = useMutation(UPDATE_USER);
 
   const handleUpdate = async () => {
+    if (!user) return;
+
     console.log(userId);
   try {
     const { data } = await updateUser({
       variables: {
         userId: userId,
         input: {
-          username: updatedUsername,
-          // email: "new@email.com",
-          avatar: media?.id || null,
-          about: updatedAbout,
-          fullName: updatedName,
+          username: updatedUsername || user.username,
+          avatar: media?.id || user.avatar, // or user.avatar?.id if avatar is an object
+          about: updatedAbout || user.about,
+          fullName: updatedName || user.fullName,
         }
       }
     });
+    
     console.log("User updated:", data);
+    localStorage.setItem("isEditOpen", "false");
+    if (onClose) onClose();
   } catch (err) {
     console.error("Update failed:", err);
   }
@@ -94,7 +108,7 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
 
       <div className="prof-detail-form-section">
         <label htmlFor="username">Username</label>
-        <input type="text" id="username" placeholder={user?.username! || "Username"} onChange={e => setUpdatedUsername(e.target.value)} />
+        <input type="text" id="username" placeholder={user?.username || "Username"} onChange={e => setUpdatedUsername(e.target.value)} />
       </div>
 
       <div className="prof-detail-form-section">
@@ -111,6 +125,6 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
       <button className="prof-detail-save-button" onClick={handleUpdate}>Save Profile</button>
     </div>
   );
-};
+}
 
 

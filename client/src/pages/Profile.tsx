@@ -11,56 +11,57 @@ import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRA
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import AccountDetails from "../components/Profile/AccountDetails";
+import { useNavigate } from "react-router-dom";
+import NewPet from "../components/Creators/NewPet";
+import WindowModal from "../components/Reusables/WindowModal"; 
+
+type UploadedMedia = {
+  id: string;
+  filename: string;
+  contentType: string;
+  length: number;
+  uploadDate: string;
+  gridFsId: string;
+  tags: string[];
+  url: string;
+};
 
 
-const profileMockPosts = [
-  {
-    id: 1,
-    userAvi: UserPlaceHolder,
-    postUser: "mytestuser",
-    postContent: "post 1 wowwwww",
-    postLikeCount: 5,
-    postCommentCount: 2,
-    postDate: "11-23-01",
-    itemType: "post"
-  },
-  {
-    id: 2,
-    userAvi: UserPlaceHolder,
-    postUser: "mytestuser",
-    postContent: "post 2 wowwwww",
-    postLikeCount: 4,
-    postCommentCount: 6,
-    postDate: "11-27-01",
-    itemType: "post"
-  },
-  
-];
+const UserPlaceHolderMedia: UploadedMedia = {
+  id: "placeholder",
+  filename: "person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg",
+  contentType: "image/svg+xml",
+  length: 0,
+  uploadDate: "",
+  gridFsId: "",
+  tags: [],
+  url: UserPlaceHolder, // this is the imported image URL
+};
+
 
 const mockUser = {
   _id: 1,
   fullName: "Test User",
   username: "mytestuser",
   email: "testuser@email.com",
-  avatar: UserPlaceHolder,
+  avatar: UserPlaceHolderMedia,
   about: "This is real. This is me. I'm exactly where I'm supposed to be now - Camp Rock",
   location: "Location, ST",
   followers: 123,
   following: 123,
   pets: [
-    { name: "Pet 1", avatar: UserPlaceHolder },
-    { name: "Pet 2", avatar: UserPlaceHolder },
-    { name: "Pet 3", avatar: UserPlaceHolder },
+    { _id: 1, name: "Pet 1", avatar: UserPlaceHolder },
+    { _id: 2, name: "Pet 2", avatar: UserPlaceHolder },
+    { _id: 3, name: "Pet 3", avatar: UserPlaceHolder },
   ],
-  posts: profileMockPosts
+  posts: []
 }
-
 
 
 export default function Profile() {
 
+  /************* EDITING PROFILE *****************/
   const [isEditOpen, setIsEditOpen] = useState(false)
-
   useEffect(() => {
     const storedIsEditOpen = localStorage.getItem("isEditOpen");
     if (storedIsEditOpen === "true") {
@@ -77,9 +78,30 @@ export default function Profile() {
     const newIsEditOpen = !isEditOpen;
       setIsEditOpen(newIsEditOpen)
        localStorage.setItem("isEditOpen", newIsEditOpen.toString());
+  }
+
+  /************* OPEN USER MEETUPS *****************/
+  const navigate = useNavigate();
+  function handleMeetupRender() {
+    navigate("/meetup");
+  }
+
+  /************* ADDING PET *****************/
+  const [showNewPet, setShowNewPet] = useState(false);
+  function handleNewPetRender() {
+    setShowNewPet(true);
+  }
+
+  const closeModal = () => {
+    setShowNewPet(false);
   };
 
-    
+  const handleSubmitPet = () => {
+    setShowNewPet(false);
+  };
+
+
+  /************* SHOWING CORRECT USER *****************/
   const userId = localStorage.getItem("userId");
   console.log(userId);
   const { data, error } = useQuery(QUERY_USER, {
@@ -90,7 +112,6 @@ export default function Profile() {
   const [user, setUser] = useState(mockUser);
   
   useEffect(() => {
-    // to change users with setUser based on who's saved locally
     console.log("Query data:", data);
     if (data && data.user) {
       setUser(data.user);
@@ -102,27 +123,39 @@ export default function Profile() {
     console.error("GraphQL error:", error);
   }
 
+
+  /************* RENDER PAGE *****************/
    if (isEditOpen) {
       return (
         <AccountDetails onClose={() => {
-      setIsEditOpen(false);
-      localStorage.setItem("isEditOpen", "false");
-    }} />
+          setIsEditOpen(false);
+          localStorage.setItem("isEditOpen", "false");
+          window.location.reload();
+        }} />
       )
     }
+
+    if (showNewPet) {
+      return (
+        <WindowModal cancel={closeModal} confirm={() => {}}>
+          <NewPet onSubmit={handleSubmitPet} onCancel={closeModal} />
+        </WindowModal>
+      )
+    }
+
 
   return (
     <div>
     <div className="profile-background">
       <div className="profile-ctn">
         <div className="profile-item-ctn">
-          <img src={user.avatar || UserPlaceHolder} className="profile-user-img" />
+          <img src={user.avatar?.url || UserPlaceHolder} className="profile-user-img" />
           <div className="profile-user-title">
             <span className="profile-lg-fnt">{user.fullName || "First Last"}</span>
             <span className="profile-md-fnt">{user.username}</span>
           </div>
           <div className="profile-btn-ctn">
-            <ButtonBubble imageSrc={CalenderIcon} />
+            <ButtonBubble imageSrc={CalenderIcon} onClick={handleMeetupRender}/>
             <ButtonBubble imageSrc={EditIcon} onClick={handleInfoRender}/>
           </div>
            
@@ -135,13 +168,13 @@ export default function Profile() {
           <span>{user.following || '0'} following</span>
         </div>
         <div className="profile-item-ctn profile-md-fnt">
-          {user.pets.map((pet, idx) => (
-            <div className="profile-pet-ctn" key={idx}>
+          {user.pets.map((pet) => (
+            <div className="profile-pet-ctn" key={pet._id}>
               <img src={pet.avatar} />
               <span>{pet.name}</span>
             </div>
           ))}
-          <ButtonBubble imageSrc={AddIcon} />
+          <ButtonBubble imageSrc={AddIcon} onClick={handleNewPetRender}/>
         </div>
       </div>
         <div className="profile-feed-bg">
