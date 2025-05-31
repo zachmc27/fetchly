@@ -151,7 +151,7 @@ useEffect(() => {
       conversationName: messageData.conversation.conversationName,
       conversationUsers: messageData.conversation.conversationUsers,
       messages: messageData.conversation.messages
-        ? messageData.conversation.messages.map((msg: any) => ({
+        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: string; createdAt: string }) => ({
           _id: msg._id,
           textContent: msg.textContent,
           messageUser: msg.messageUser,
