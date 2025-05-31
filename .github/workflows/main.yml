@@ -17,12 +17,12 @@ jobs:
     steps:
       # Get code from repo
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v1
         with:
-          node-version: 18.x
+          node-version: 21.x
 
       # Install dependencies
       - name: 🧰 Install Deps
