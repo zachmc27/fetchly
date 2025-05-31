@@ -7,6 +7,10 @@ export default function Home() {
 
   const { loading, error, data } = useQuery(QUERY_POSTS);
 
+  // const handleNewPostSubmit = async () => {
+  //   await refetch();
+  // };
+
   // Sort post by newest first
   const posts = data?.posts
     ? [...data.posts].sort(
