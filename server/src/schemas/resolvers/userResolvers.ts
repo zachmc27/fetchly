@@ -1,4 +1,4 @@
-import { User, Org, Pet, Location } from '../../models/index.js';
+import { User, Org, Pet } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js'; 
 import mongoose from 'mongoose';
 
@@ -132,26 +132,23 @@ const userResolvers = {
         throw new AuthenticationError('You are not authorized to update this user.');
       }
 
+      // let locationId;
+      // if (input.location) {
+      //   const existingLocation = await Location.findOne({
+      //     address: input.location.address,
+      //     city: input.location.city,
+      //     state: input.location.state,
+      //     country: input.location.country,
+      //     zip: input.location.zip,
+      //   });
 
-
-      let locationId;
-      if (input.location) {
-        const existingLocation = await Location.findOne({
-          address: input.location.address,
-          city: input.location.city,
-          state: input.location.state,
-          country: input.location.country,
-          zip: input.location.zip,
-        });
-
-        if (existingLocation) {
-          locationId = existingLocation._id;
-        } else {
-          const newLocation = await Location.create(input.location);
-          locationId = newLocation._id;
-        }
-      }
-
+      //   if (existingLocation) {
+      //     locationId = existingLocation._id;
+      //   } else {
+      //     const newLocation = await Location.create(input.location);
+      //     locationId = newLocation._id;
+      //   }
+      // }
 
       const updateData = {
         ...input,

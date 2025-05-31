@@ -33,8 +33,6 @@ type CommentsProps = {
 };
 
 
-
-
 function CommentItem({ comment }: { comment: Comment }) {
   //pass back the comment id so it can be opened as main post
 const [isRepliesOpen, setIsRepliesOpen] = useState(false)
