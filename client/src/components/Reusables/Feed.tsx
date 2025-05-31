@@ -198,7 +198,7 @@ useEffect(() => {
   if (location.pathname !== "/meetup") {
     localStorage.removeItem("activeMeetupId");
   }
-}, [location.pathname]);
+}, [location.pathname, initialFeedArray]);
 
 async function handlePostViewRender(postId: string) {
   console.log('post');
@@ -221,6 +221,40 @@ function handleClosePostView() {
   setIsPostOpen(false)
   localStorage.removeItem("activePostId");
   setActivePost(null)
+}
+
+// Convert response to comment
+type Comment = {
+  id: number;
+  user: string;
+  avatar?: string;
+  comment: string;
+  likeCount: number;
+  postedTime: Date;
+  replies?: Comment[];
+};
+
+function mapResponseToComment(res: {
+  _id: string;
+  contentText: string;
+  poster: {
+    refId: {
+      avatar?: { url?: string };
+      _id: string;
+      username: string;
+    };
+    refModel: string;
+  };
+}): Comment {
+  return {
+    id: parseInt(res._id || "0", 10),
+    user: res.poster.refId.username || "Unknown",
+    avatar: res.poster.refId.avatar?.url || undefined,
+    comment: res.contentText || "",
+    likeCount: 0,
+    postedTime: new Date(), // Placeholder since there's no timestamp
+    replies: []
+  };
 }
 
 // ----------------------------------------------------------------
@@ -409,39 +443,6 @@ if (isMeetupPostOpen && activeMeetupPost) {
 }
 
 if (isPostOpen && activePost) {
-
-  type Comment = {
-    id: number;
-    user: string;
-    avatar?: string;
-    comment: string;
-    likeCount: number;
-    postedTime: Date;
-    replies?: Comment[];
-  };
-
-  function mapResponseToComment(res: {
-    _id: string;
-    contentText: string;
-    poster: {
-      refId: {
-        avatar?: { url?: string };
-        _id: string;
-        username: string;
-      };
-      refModel: string;
-    };
-  }): Comment {
-    return {
-      id: parseInt(res._id || "0", 10),
-      user: res.poster.refId.username || "Unknown",
-      avatar: res.poster.refId.avatar?.url || undefined,
-      comment: res.contentText || "",
-      likeCount: 0,
-      postedTime: new Date(), // Placeholder since there's no timestamp
-      replies: []
-    };
-  }
 
   return (
   <div className="viewing-container">
