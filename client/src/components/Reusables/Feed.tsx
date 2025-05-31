@@ -34,6 +34,8 @@ import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
 import { MockAdoptionItem, MockMeetupItem, MockPostItem } from "../../mockdata/mocktypes/PostDetails"
+import PostButton from "../Navbar/PostButton"
+import Header from "../Header"
 
 
 type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard;
@@ -447,13 +449,16 @@ if (isAdoptionPostOpen && activeAdoptionPost) {
 
 return (
   <>
+    <Header />
     {
       (!isMeetupPostOpen && location.pathname === "/meetup") &&
       <SearchBar send={filterBySearch} />
     }
     <div className={containerStyle}>
+      
       {feedArray.map(renderFeedItem)}
     </div>
+    <PostButton />
   </>
   );
 }

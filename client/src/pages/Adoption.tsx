@@ -80,6 +80,7 @@ export default function Adoption() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
+    <>
     <div className="adoption-page-container">
       <SearchBar send={filterBySearch} />
       <div className="filter-buttons-container">
@@ -97,8 +98,7 @@ export default function Adoption() {
       {(filteredAdoptions?.length === 0) && (
         <p className="no-results">No adoptions found for that filter.</p>
       )}
-     
-
     </div>
+    </>
   )
 }
