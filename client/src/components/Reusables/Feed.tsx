@@ -17,10 +17,14 @@ import { AdoptionCard, PostCard } from "../../types/CardTypes"
 import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { mockConversations } from "../../mockdata/conversation-data"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
 import { mockAdoptionPosts } from "../../mockdata/post-data"
+
+  //get mutations and queries
+  import { useQuery } from "@apollo/client";
+  import { GET_CONVERSATION } from "../../utils/queries";
+  import { useCallback } from "react";
 
 // components
 import MessagesPage from "../Inbox/MessagesPage"
@@ -35,6 +39,7 @@ import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
 import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
+
 
 
 type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard | PostCard;
@@ -55,6 +60,8 @@ export default function Feed({
   const userId = localStorage.getItem("user_Id");
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
+
+
 
   useEffect(() => {
     setFeedArray(initialFeedArray);

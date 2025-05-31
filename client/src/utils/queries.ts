@@ -309,6 +309,27 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_USER_BY_USERNAME = gql`
+query UserByUsername($username: String!) {
+  userByUsername(username: $username) {
+    _id
+    username
+  }
+}`;
+
+export const GET_FOLLOWERS = gql`
+query GetFollowers($userId: String!) {
+  user(userId: $userId) {
+    followedBy {
+      refId {
+        ... on User {
+          username
+        }
+      }
+    }
+  }
+}
+`;
 //-------------- ORG QUERIES ------------- //
 
 //Return all organizations

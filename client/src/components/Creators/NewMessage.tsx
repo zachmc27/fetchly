@@ -1,18 +1,36 @@
 //form for creating a new dm/group dm
 
 import { useState } from "react";
-import { mockMutualFollowers } from "../../mockdata/post-data";
+import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 
+import { CREATE_CONVERSATION } from "../../utils/mutations";
+import { QUERY_USER_BY_USERNAME, GET_FOLLOWERS} from "../../utils/queries";
 
+const loggedInUser = localStorage.getItem("loggedInUser");
 
 interface NewMessageProps {
   onSubmit: () => void;
   onClose: () => void;
+
 }
 
 export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
 
   const [selectedParticipantNames, setSelectedParticipantNames] = useState<string[]>([]);
+  const [createConversation] = useMutation(CREATE_CONVERSATION);
+  const [groupName, setGroupName] = useState<string>("");
+  const [fetchUserByUsername] = useLazyQuery(QUERY_USER_BY_USERNAME);
+  
+
+
+  interface Follower {
+    userAvi: string;
+    userName: string;
+  }
+
+  const { data: followersData }: { data?: { user: { followedBy: Follower[] } } } = useQuery(GET_FOLLOWERS, {
+    variables: { userId: loggedInUser }, // Replace "someUserId" with the actual user ID
+  });
 
   function handleToggleParticipant(userName: string) {
     setSelectedParticipantNames(prevSelectedNames => {
@@ -36,8 +54,50 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
     console.log('query a user that matches the search criteria');
   }
 
-  function handleSubmitChat(){
+async function handleSubmitChat() {
+  if (selectedParticipantNames.length < 1) {
+    alert("Please select at least one participant to create a chat.");
+    return;
+  }
+
+  const conversationUsers: { _id: string }[] = [];
+  const conversationName =
+    selectedParticipantNames.length > 2
+      ? groupName || "Group Chat"
+      : selectedParticipantNames.join(", ");
+
+  for (const userName of selectedParticipantNames) {
+    try {
+      // Assuming QUERY_USER_BY_USERNAME is a function that returns a Promise
+      const { data } = await fetchUserByUsername({ variables: { username: userName } });
+      const userId = data?.user?._id;
+      if (userId) {
+        conversationUsers.push({ _id: userId });
+      } else {
+        alert(`User ${userName} not found.`);
+        return;
+      }
+    } catch (error) {
+      console.error(`Error fetching user ${userName}:`, error);
+      alert(`Error fetching user ${userName}.`);
+      return;
+    }
+  }
+
+  try {
+    await createConversation({
+      variables: {
+        input: {
+          conversationName: conversationName,
+          conversationUsers: conversationUsers,
+        },
+      },
+    });
     onSubmit();
+  } catch (error) {
+    console.error("Error creating conversation:", error);
+    alert("Failed to create conversation. Please try again.");
+  }
 }
   return (
      <div className="msg-creation-container">
@@ -50,10 +110,14 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
       <div className="gc-creating-container">
         {/* add jsx element for change group photo option */}
         <div>
-        <input type="text" placeholder="Group name"/>
-        <button>✏️</button>
-        {/* this button shouldnt actually do anything, the entered group name should 
-        be saved when create chat is pressed */}
+          <input 
+            type="text" 
+            placeholder="Group name" 
+            onChange={(e) => setGroupName(e.target.value)} 
+          />
+          <button>✏️</button>
+          {/* this button shouldn’t actually do anything, the entered group name should 
+          be saved when create chat is pressed */}
         </div>
       </div>
       }
@@ -65,7 +129,7 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
           <input type="text" placeholder="Search for a user" />
         </form>
         <div className="add-user-list-scroll">
-        {mockMutualFollowers.map((user, index) => (
+        {followersData?.user?.followedBy?.map((user, index) => (
                 <div className="mutual-user-row" key={index}>
                   <img src={user.userAvi} />
                   <p key={index} className="msg-create-user-card">{user.userName}</p>
