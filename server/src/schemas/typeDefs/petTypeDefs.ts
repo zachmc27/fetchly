@@ -28,6 +28,7 @@ const petTypeDefs = `
         vaccination: String
         followedBy: [FollowedProfile]
         followedByCount: Int
+        taggedPosts: [Post]
     }
 
     input PetInput {

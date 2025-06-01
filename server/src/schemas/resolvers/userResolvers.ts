@@ -69,7 +69,11 @@ const userResolvers = {
     },
     user: async (_parent: any, { userId }: UserArgs) => {
       return await User.findById(userId)
-        .populate('pets')
+        .populate({
+          path: 'pets',
+          populate: {
+            path: 'profilePhoto type',
+          }})
         .populate('posts')
         .populate('avatar')
         .populate('meetUps')
@@ -84,7 +88,11 @@ const userResolvers = {
     },
     userByUsername: async (_parent: any, { username }: { username: string }) => {
       return await User.find({ username })
-      .populate('pets')
+        .populate({
+          path: 'pets',
+          populate: {
+            path: 'profilePhoto type',
+          }})
         .populate('posts')
         .populate('avatar')
         .populate('meetUps')

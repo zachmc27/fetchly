@@ -4,6 +4,7 @@ import { Schema, model, type Document, type Types } from 'mongoose';
 import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
 import type { MediaDocument } from './Media.js';
+import type { PetDocument } from './Pet.js'
 
 export interface PostDocument extends Document {
   id: string;
@@ -24,6 +25,7 @@ export interface PostDocument extends Document {
   isResponse: boolean;
   createdAt: Date;
   itemType: string;
+  taggedPets: Types.ObjectId | PetDocument;
 }
 
 const postSchema = new Schema<PostDocument>(
@@ -81,6 +83,10 @@ const postSchema = new Schema<PostDocument>(
         itemType: {
             type: String,
             default: 'post' 
+        },
+        taggedPets: {
+            type: Schema.Types.ObjectId,
+            ref: 'Pet'
         }
     },
     {

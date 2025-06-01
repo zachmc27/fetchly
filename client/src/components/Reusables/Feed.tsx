@@ -71,7 +71,7 @@ export default function Feed({
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
   // Get user info
-  const userId = localStorage.getItem("user_Id");
+  const userId = localStorage.getItem("userId");
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
 
@@ -260,16 +260,41 @@ const { data, loading, error } = useQuery(GET_CONVERSATION, {
     localStorage.removeItem("activePostId");
     setActivePost(null);
   }
+// Convert response to comment
+type Comment = {
+  id: number;
+  user: string;
+  avatar?: string;
+  comment: string;
+  likeCount: number;
+  postedTime: Date;
+  replies?: Comment[];
+  media?: { url: string }[];
+};
 
-  // Convert response to comment
-  type Comment = {
-    id: number;
-    user: string;
-    avatar?: string;
-    comment: string;
-    likeCount: number;
-    postedTime: Date;
-    replies?: Comment[];
+function mapResponseToComment(res: {
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: { url?: string };
+        _id: string;
+        username?: string;
+        orgName?: string;
+      };
+      refModel: string;
+    };
+    media?: { url: string }[];
+}): Comment {
+  return {
+    id: parseInt(res._id || "0", 10),
+    user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
+    avatar: res.poster.refId.avatar?.url || undefined,
+    comment: res.contentText || "",
+    likeCount: 0,
+    postedTime: new Date(),
+    replies: [],
+    media: [],
   };
 
   function mapResponseToComment(res: {

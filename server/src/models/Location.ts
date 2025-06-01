@@ -21,11 +21,9 @@ const locationSchema = new Schema<LocationDocument>({
   },
   country: { 
     type: String, 
-    required: true 
   },
   zip: { 
     type: String, 
-    required: true 
   }
 });
 
