@@ -384,7 +384,7 @@ export const ADD_MEETUP = gql`
 
 export const UPDATE_MEETUP = gql`
   mutation UpdateMeetUp($updateMeetUpMeetUpId: String!, $input: UpdateMeetUpInput!) {
-    addMeetUp(meetUpId: $updateMeetUpMeetUpId, input: $input) {
+    updateMeetUp(meetUpId: $updateMeetUpMeetUpId, input: $input) {
       _id
       title
     }
