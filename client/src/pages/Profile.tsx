@@ -11,7 +11,7 @@ import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRA
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { useMutation } from '@apollo/client';
-import { ADD_PET, UPDATE_OWNER } from '../utils/mutations';
+import { ADD_PET } from '../utils/mutations';
 import AccountDetails from "../components/Profile/AccountDetails";
 import { useNavigate } from "react-router-dom";
 import NewPet from "../components/Creators/NewPet";
@@ -28,10 +28,10 @@ type UploadedMedia = {
   url: string;
 };
 
-type OwnerRef = {
-  refId: string;
-  refModel: "User" | "Org";
-};
+// type OwnerRef = {
+//   refId: string;
+//   refModel: "User" | "Org";
+// };
 
 interface NewPetProps {
     name: string;
