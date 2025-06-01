@@ -56,4 +56,7 @@ export type PostCard = {
       refModel: string;
     };
   }],
+  taggedPets: {
+    name: string;
+  }
 }

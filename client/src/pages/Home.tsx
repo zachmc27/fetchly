@@ -17,7 +17,7 @@ export default function Home() {
     }
   }, [navigate]);
 
-  const { loading, error, data } = useQuery(QUERY_POSTS, { pollInterval: 10000 });
+  const { loading, error, data } = useQuery(QUERY_POSTS, { pollInterval: 20000 });
   // const { loading, error, data } = useQuery(QUERY_POSTS);
   // const handleNewPostSubmit = async () => {
   //   await refetch();

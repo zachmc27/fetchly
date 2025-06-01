@@ -74,6 +74,9 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
         <div onClick={openProfile} style={{ cursor: 'pointer' }}>
           <img src={post.poster.refId?.avatar?.url || UserPlaceHolder} alt="profile picture" />
           <p>{post.poster.refId?.username || post.poster.refId?.orgName}</p>
+          {post.taggedPets?.name && (          
+              <p>{post.taggedPets?.name}</p>
+          )}
         </div>
         <div className="post-date-container">
           <img src={calendar} alt="calendar icon" />

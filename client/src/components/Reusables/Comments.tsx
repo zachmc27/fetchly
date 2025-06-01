@@ -7,7 +7,6 @@
 // const commentsData = [{}];
 // <Comments comments={commentsData}/>
 
-
 import UserPlaceHolder from "../../assets/react.svg";
 import "../../SammiReusables.css";
 import "../../ZachTemp.css"
@@ -17,7 +16,6 @@ import Replies from "./Replies";
 import ImageCarousel from "./ImageCarousel"
 import { useState } from "react";
 // import ButtonBubble from "./Button";
-
 
 type Comment = {
   id: number;
