@@ -54,7 +54,7 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
   const [pet, setPet] = useState<string>("");
   const [goodWithPets, setGoodWithPets] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [media, setMedia] = useState<string[]>([""]);
+  const [media, setMedia] = useState<string[]>([]);
   const [showNewPet, setShowNewPet] = useState(false);
 
   const [getPets, { data: petData }] = useLazyQuery(QUERY_ORG);

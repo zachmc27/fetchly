@@ -14,17 +14,17 @@ import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg
 import { AdoptionCard, PostCard } from "../../types/CardTypes"
 
 // testing data, can be deleted after integrations implementation
-import { MockPostCard, MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import { MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
 import { mockAdoptionPosts } from "../../mockdata/post-data"
 
-  //get mutations and queries
-  import { useQuery } from "@apollo/client";
-  import { GET_CONVERSATION } from "../../utils/queries";
-  import { useCallback } from "react";
+//get mutations and queries
+import { useQuery } from "@apollo/client";
+import { GET_CONVERSATION } from "../../utils/queries";
+import { useCallback } from "react";
 
 // components
 import MessagesPage from "../Inbox/MessagesPage"
@@ -43,10 +43,7 @@ import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostD
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 
-
-
-
-type FeedItem = MockMessageCard | MockPostCard | MockMeetupCard | AdoptionCard | PostCard;
+type FeedItem = MockMessageCard | MockMeetupCard | AdoptionCard | PostCard;
 
 export default function Feed({
   initialFeedArray,
@@ -64,8 +61,6 @@ export default function Feed({
   const userId = localStorage.getItem("userId");
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
-
-
 
   useEffect(() => {
     setFeedArray(initialFeedArray);
