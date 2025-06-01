@@ -52,7 +52,7 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
       getPets({ variables: {userId: userId}})
     }
     console.log("Fetching pets for:", userId)
-  }, [getPets, userType, userId]);
+  }, [getPets]);
 
   useEffect(() => {
     if (petData?.org?.pets) {

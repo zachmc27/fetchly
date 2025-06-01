@@ -35,7 +35,7 @@ type UploadedMedia = {
   url: string;
 };
 
-const userId = localStorage.getItem("user_Id");
+const userId = localStorage.getItem("userId");
 const accountType = localStorage.getItem("accountType");
 const userType = accountType === "org" ? "Org" : "User";
 
