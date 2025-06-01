@@ -35,11 +35,14 @@ type UploadedMedia = {
   url: string;
 };
 
-const userId = localStorage.getItem("userId");
-const accountType = localStorage.getItem("accountType");
-const userType = accountType === "org" ? "Org" : "User";
+
 
 const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
+  
+  const userId = localStorage.getItem("userId");
+  const accountType = localStorage.getItem("accountType");
+  const userType = accountType === "org" ? "Org" : "User";
+
   const [createAdoptionPost] = useMutation(CREATE_ADOPTION);
   const [showError, setShowError] = useState(userType !== "Org");
 

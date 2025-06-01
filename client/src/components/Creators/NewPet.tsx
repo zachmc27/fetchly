@@ -31,13 +31,11 @@ type UploadedMedia = {
   url: string; // URL to access the media
 };
 
-
-
-const userId = localStorage.getItem('userId');
-const accountType = localStorage.getItem('accountType');
-const userType = accountType === "org" ? "Org" : "User";
-
 const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
+
+  const userId = localStorage.getItem('userId');
+  const accountType = localStorage.getItem('accountType');
+  const userType = accountType === "org" ? "Org" : "User";
 
   const [NewPet] = useMutation(ADD_PET);
 

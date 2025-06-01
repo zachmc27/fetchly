@@ -19,11 +19,13 @@ interface NewPostProps {
   }) => void
 }
 
-const userId = localStorage.getItem("userId");
-const accountType = localStorage.getItem("accountType");
-const userType = accountType === "org" ? "Org" : "User";
+
 
 const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
+  const userId = localStorage.getItem("userId");
+  const accountType = localStorage.getItem("accountType");
+  const userType = accountType === "org" ? "Org" : "User";
+
   const [createPost, { loading: postLoading, error: postError }] = useMutation(ADD_POST);
   const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE);
 
