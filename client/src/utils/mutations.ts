@@ -384,7 +384,7 @@ export const ADD_MEETUP = gql`
 
 export const UPDATE_MEETUP = gql`
   mutation UpdateMeetUp($updateMeetUpMeetUpId: String!, $input: UpdateMeetUpInput!) {
-    addMeetUp(meetUpId: $updateMeetUpMeetUpId, input: $input) {
+    updateMeetUp(meetUpId: $updateMeetUpMeetUpId, input: $input) {
       _id
       title
     }
@@ -841,12 +841,22 @@ export const UNFOLLOW_AS_ORG = gql`
 
 
 export const CREATE_CONVERSATION = gql`
-  mutation CreateConversationInput($input: CreateConversationInput!) {
-  CreateConversationInput(input: $input) {
+mutation CreateConversation($input: CreateConversationInput!) {
+  createConversation(input: $input) {
     _id
     conversationName
     conversationUsers {
       _id
+      username
+    }
+    formattedCreatedAt
+    lastMessage {
+      _id
+      textContent
+      messageUser {
+        _id
+        username
+      }
     }
   }
 }`;
@@ -861,6 +871,37 @@ export const CREATE_CONVERSATION = gql`
 //         ]
 //   }
 // }
+
+
+export const UPDATE_CONVERSATION = gql`
+mutation UpdateConversationName($input: UpdateConversationNameInput!) {
+  updateConversationName(input: $input) {
+    _id
+    conversationName
+    formattedCreatedAt
+    conversationUsers {
+      _id
+      username
+    }
+    lastMessage {
+      _id
+      textContent
+    }
+    messages {
+      _id
+      messageUser {
+        _id
+        username
+      }
+      textContent
+    }
+  }
+}`;
+
+export const DELETE_CONVERSATION = gql`
+mutation DeleteConversation($conversationId: String!) {
+  deleteConversation(conversationId: $conversationId)
+}`;
 
 
 

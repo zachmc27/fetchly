@@ -106,6 +106,7 @@ export const QUERY_USER = gql`
       username
       fullName
       email
+      password
       avatar {
         id
         filename
@@ -309,6 +310,28 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_USER_BY_USERNAME = gql`
+query UserByUsername($username: String!) {
+  userByUsername(username: $username) {
+    _id
+    username
+  }
+}`;
+
+export const GET_FOLLOWERS = gql`
+query GetFollowers($userId: String!) {
+  user(userId: $userId) {
+    followedBy {
+      refId {
+        ... on User {
+          username
+          _id
+        }
+      }
+    }
+  }
+}
+`;
 //-------------- ORG QUERIES ------------- //
 
 //Return all organizations
@@ -318,7 +341,6 @@ export const QUERY_ORGS = gql`
       _id
       orgName
       email
-      password
       avatar {
         id
         filename
@@ -402,7 +424,6 @@ export const QUERY_ORG = gql`
       _id
       orgName
       email
-      password
       avatar {
         id
         filename
@@ -1098,7 +1119,6 @@ export const QUERY_ADOPTIONS = gql`
         _id
         username
         email
-        password
         avatar {
           id
           filename
@@ -1244,7 +1264,65 @@ export const ALL_MEDIA = gql`
 
 export const GET_CONVERSATIONS = gql`
   query Conversations {
-  conversations {
+    conversations {
+      _id
+      conversationName
+      conversationUsers {
+        _id
+      }
+      lastMessage {
+        _id
+        textContent
+      }
+      messages {
+        _id
+        messageUser {
+          _id
+        }
+        textContent
+      }
+    }
+  }
+`;
+
+
+export const GET_CONVERSATION = gql`
+query Conversations($conversationId: String!) {
+  conversation(conversationId: $conversationId) {
+    _id
+    conversationName
+    conversationUsers {
+      _id
+      username
+    }
+    lastMessage {
+      _id
+      textContent
+      messageUser {
+        _id
+        username
+      }
+      formattedCreatedAt
+    }
+    messages {
+      _id
+      messageUser {
+        _id
+        username
+      }
+      textContent
+      formattedCreatedAt
+    }
+  }
+}`;
+// You can expand upon the following values to include more details other than id:
+// USERS - You can grab name/uersname, email, etc.
+// MESSAGES - You can grab the message textConent, MessageUser, etc.
+
+
+export const GET_CONVERSATION_BY_USER = gql`
+query ConversationByUser($userId: String!) {
+  conversationByUser(userId: $userId) {
     _id
     conversationName
     conversationUsers {
@@ -1256,18 +1334,10 @@ export const GET_CONVERSATIONS = gql`
     }
     messages {
       _id
-      messageUser {
-        _id
-      }
-      textContent
     }
+    formattedCreatedAt
   }
 }`;
-
-// You can expand upon the following values to include more details other than id:
-// USERS - You can grab name/uersname, email, etc.
-// MESSAGES - You can grab the message textConent, MessageUser, etc.
-
 
 // ----------- MESSAGES QUERIES ------------- //
 
@@ -1282,6 +1352,28 @@ query Messages {
   }
 }
 `;
+
+export const GET_MESSAGES_BY_CONVERSATION = gql`
+query MessageByConversation($conversationId: String!) {
+  messageByConversation(conversationId: $conversationId) {
+    _id
+    conversation {
+      _id
+      conversationName
+    }
+    formattedCreatedAt
+    isRead
+    itemType
+    media {
+      gridFsId
+    }
+    messageUser {
+      _id
+      username
+    }
+    textContent
+  }
+}`;
 
 export const GET_MESSAGES_BY_ID = gql`
   query Message($messageId: String!) {

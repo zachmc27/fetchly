@@ -4,9 +4,9 @@
   left: 0;
   width: 100%;
   background-color: #f8f9fa; 
-  border-top-left-radius: 15px; 
-  border-top-right-radius: 15px; 
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
+  border-top-left-radius: 20px; 
+  border-top-right-radius: 20px; 
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.4); 
   padding: 10px 0;
   z-index: 1000; 
   display: flex;

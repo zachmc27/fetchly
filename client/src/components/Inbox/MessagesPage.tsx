@@ -10,10 +10,16 @@
 import { useState, useEffect } from "react";
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import MsgInfoPage from "./MsgInfoPage";
+import { useMutation } from "@apollo/client";
+import { CREATE_MESSAGE } from "../../utils/mutations"; // Correct the module path and import CREATE_MESSAGE mutation
+// import sendIcon from "../../images/send_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" // Removed unused import
+
 
 export default function MessagesPage({ conversation, onClose }: { conversation: MockConversationObject, onClose: () => void }) {
 
-  const [isInfoOpen, setIsInfoOpen] = useState(false)
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [textContent, setTextContent] = useState(""); // Add state for textContent
+
 
   useEffect(() => {
     const storedIsInfoOpen = localStorage.getItem("isInfoOpen");
@@ -23,6 +29,7 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
 
     return () => {
       localStorage.removeItem("activeConversationId"); // Clear activeConversationId from localStorage
+      console.log("MessagesPage unmounted, clearing localStorage");
       localStorage.removeItem("isInfoOpen"); // Clear isInfoOpen from localStorage
     };
   }, []);
@@ -31,8 +38,46 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
   // NOTE: the way my mock data is set up, id in the messages array basically corresponds to the ID of the user that sent the message, but I think the backend
   // data is set up to where those ID values are unique to each message. In order to filter the right messages using userID, you will likely
   // have to find the username tied to that ID and filter it like that (or userIDs will need to be added to message data to prevent identical usernames giving the rendering issues)
-  const userID = 11
-  //match this id with id in messages array to filter the logged in users messages
+  const activeConversationId = localStorage.getItem("activeConversationId");
+  const userID = localStorage.getItem('user_Id');
+  // const userID = "6837b59ff2c13eff3aa57c6b"
+  const [addMessage, { loading, error }] = useMutation(CREATE_MESSAGE); // Use the correct mutation name
+
+
+const handleSendMessage = async (
+  event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>,
+  textContent: string
+) => {
+  event.preventDefault(); // Prevent default form submission behavior
+  try {
+    console.log("Sending message:", textContent);
+
+    const input = {
+      conversation: activeConversationId, // Ensure this is a valid conversation ID
+      messageUser: {
+        _id: userID, // Use the actual user ID
+      },
+      textContent: textContent, // The message content
+    };
+
+    const response = await addMessage({ variables: { input } });
+    console.log("Message sent successfully:", response.data.addMessage);
+    setTextContent(""); // Clear the input field after sending the message
+  } catch (error) {
+    console.error("Error sending message:", error);
+  }
+};
+
+  if (loading) return <p>Sending message...</p>;
+  if (error) return <p>Error sending message: {error.message}</p>;
+  
+
+
+
+
+
+
+  //match this id with id in messages array "to filter the logged in users messages
   
   function handleInfoRender() {
     const newIsInfoOpen = !isInfoOpen;
@@ -48,19 +93,17 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
   return (
     <div className="messages-page-container">
       <div className="chat-header">{/* temporary header, will have to configure the universal header somehow or disable it on this page */}
-        <button onClick={onClose}>close</button>
+        <button onClick={onClose}>{"<"}</button>
         <h1>{conversation.conversationName}</h1>
         <button onClick={handleInfoRender}>i</button>
       </div>
-      <div className="chat-messages">
-
-        {conversation.messages.map((message, index) => {
-          const isUserMessage = message.id === userID; // Determine if it's the user's message
+      <div className="chat-messages" style={{ overflowY: "auto", maxHeight: "70vh" }}>
+        {conversation.messages?.map((message) => {
+          const isUserMessage = message.messageUser._id === userID; // Determine if it's the user's message
           return (
-            <div className="message-content-wrapper" key={index}> {/* Add key prop */}
-
+            <div className="message-content-wrapper" key={message._id}> {/* Add key prop */}
               <p className={isUserMessage ? "msg-user-txt" : "msg-incoming-user-txt"}>
-                {message.messageUser}
+                {message.messageUser.username}
               </p>
               <div className={isUserMessage ? "user-message" : "incoming-message"}>
                 <div className="avatar-placeholder"></div>
@@ -70,11 +113,26 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
           );
         })}
         <div className="chat-bar">
-          <input type="text" placeholder="Type a message here..." />
-          <button className="send-message-btn">↗️</button>
+          <input 
+            type="text" 
+            placeholder="Type a message here..." 
+            value={textContent}
+            onChange={(e) => setTextContent(e.target.value)} 
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSendMessage(e, textContent);
+              }
+            }}
+          />
+          <button 
+            className="send-message-btn" 
+            type="button" 
+            onClick={(event) => handleSendMessage(event, textContent)}
+          >
+            ↗️
+          </button>
         </div>
       </div>
-
     </div>
-  )
+  );
 }

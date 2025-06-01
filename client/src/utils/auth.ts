@@ -31,7 +31,7 @@ class AuthService {
       if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
         return true;
       }
-    } catch (err) {
+    } catch {
       return false;
     }
   }
@@ -45,7 +45,7 @@ class AuthService {
   // TODO: What is the purpose of this method?
   login(idToken: string, userId: number) {
     localStorage.setItem('id_token', idToken);
-    localStorage.setItem('user_Id', userId.toString());
+    localStorage.setItem('userId', userId.toString());
     window.location.assign('/');
 
     // Alert for testing purposes comment out when not needed
