@@ -60,7 +60,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
     <div key={post._id} className={itemStyle} onClick={() => onOpen(post._id)}>
       <div className="post-user-info">
         <img src={post.poster.refId.avatar?.url || UserPlaceHolder} alt="profile picture" />
-        <p>{post.poster.refId.username}</p>
+        <p>{post.poster.refId.username || post.poster.refId.orgName}</p>
         <div className="post-date-container">
           <img src={calendar} alt="calendar icon" />
           <p>{format(new Date(Number(post.createdAt)), 'MMM d, yyyy')}</p>

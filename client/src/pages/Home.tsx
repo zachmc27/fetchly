@@ -17,7 +17,7 @@ export default function Home() {
     }
   }, [navigate]);
 
-  const { loading, error, data } = useQuery(QUERY_POSTS);
+  const { loading, error, data } = useQuery(QUERY_POSTS, { pollInterval: 10000 });
 
   // const handleNewPostSubmit = async () => {
   //   await refetch();
@@ -25,8 +25,9 @@ export default function Home() {
 
   // Sort post by newest first
   const posts = data?.posts
-    ? [...data.posts].sort(
-        (a, b) => Number(b.createdAt) - Number(a.createdAt)
+    ? [...data.posts]
+        .filter(post => !post.isResponse)
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
       )
     : [];
 

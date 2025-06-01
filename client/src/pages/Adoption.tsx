@@ -25,12 +25,8 @@ interface Adoption {
 
 export default function Adoption() {
 
-
-
-    const { loading, error, data } = useQuery(QUERY_ADOPTIONS);
+    const { loading, error, data } = useQuery(QUERY_ADOPTIONS, { pollInterval: 10000 });
     const [filteredAdoptions, setFilteredAdoptions] = useState<Adoption[] | null>(null);
-
-  
 
     const adoptionPosts = data?.adoptions;
     console.log('Adoption posts:', adoptionPosts);
