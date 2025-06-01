@@ -105,7 +105,7 @@ const handleSendMessage = async (
                 {message.messageUser.username}
               </p>
               <div className={isUserMessage ? "user-message" : "incoming-message"}>
-                <div className="avatar-placeholder"></div>
+                <img className="msg-info-user-card-photo"src={message.messageUser.avatar?.url}/>
                 <p className="msg-txt">{message.textContent}</p>
               </div>
             </div>
