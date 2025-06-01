@@ -21,7 +21,7 @@ type Props = {
 
 export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel }: Props) {
   const userHasLikedPost = (post: PostCard, userId:string) => {
-    return post.likes.some(like => like.refId._id === userId);
+    return Array.isArray(post.likes) && post.likes.some(like => like?.refId?._id === userId);
   };
 
   const [isLiked, setIsLiked] = useState(() => userHasLikedPost(post, userId));
@@ -72,8 +72,8 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
     <div key={post._id} className={itemStyle} onClick={() => onOpen(post._id)}>
       <div className="post-user-info">
         <div onClick={openProfile} style={{ cursor: 'pointer' }}>
-          <img src={post.poster.refId.avatar?.url || UserPlaceHolder} alt="profile picture" />
-          <p>{post.poster.refId.username || post.poster.refId.orgName}</p>
+          <img src={post.poster.refId?.avatar?.url || UserPlaceHolder} alt="profile picture" />
+          <p>{post.poster.refId?.username || post.poster.refId?.orgName}</p>
         </div>
         <div className="post-date-container">
           <img src={calendar} alt="calendar icon" />
@@ -105,7 +105,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
             <div onClick={(e) => e.stopPropagation()}>
               <button onClick={closeModal} className="modal-close-btn">×</button>
               <ProfileDetails
-                profileUserId={post.poster.refId._id}
+                profileUserId={post.poster.refId?._id}
                 profileAccountType={post.poster.refModel}
               />
             </div>            

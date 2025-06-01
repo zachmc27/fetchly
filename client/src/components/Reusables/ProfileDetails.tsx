@@ -1,11 +1,12 @@
 import "../../SammiReusables.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { QUERY_USER, QUERY_ORG } from '../../utils/queries';
 import { FOLLOW_AS_USER, UNFOLLOW_AS_USER, FOLLOW_AS_ORG, UNFOLLOW_AS_ORG } from '../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
-import Feed from "../../components/Reusables/Feed";
 import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import { UserType } from "../../types/UserType";
+import { format } from 'date-fns';
+import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 
 type ProfileDetailsProps = {
   profileUserId: string;
@@ -13,32 +14,56 @@ type ProfileDetailsProps = {
 }
 
 export default function ProfileDetails({ profileUserId, profileAccountType }: ProfileDetailsProps) {
-  const userId = localStorage.getItem('userId');
-  const accountType = localStorage.getItem('accountType');
-  const userType = accountType === "org" ? "Org" : "User";
+
+    const userId = localStorage.getItem('userId');
+    const accountType = localStorage.getItem('accountType');
+    const userType = accountType === "org" ? "Org" : "User";
 
   if (!profileAccountType) return null;
 
-  const queryToUse = profileAccountType === "Org" ? QUERY_ORG : QUERY_USER;
-  const variables = profileAccountType === "Org"
-    ? { orgId: profileUserId }
-    : { userId: profileUserId };
+    const queryToUse = useMemo(() => {
+    return profileAccountType === "Org" ? QUERY_ORG : QUERY_USER;
+    }, [profileAccountType]);
 
-  const { data, loading, error } = useQuery(queryToUse, { variables });
+    const variables = useMemo(() => {
+    return profileAccountType === "Org"
+        ? { orgId: profileUserId }
+        : { userId: profileUserId };
+    }, [profileUserId, profileAccountType]);
+
+    const { data, loading, error } = useQuery(queryToUse, {
+    variables,
+    fetchPolicy: "cache-first", // prevent forced refetch
+    });
 
   const [user, setUser] = useState<UserType | undefined>();
   const [isFollowing, setIsFollowing] = useState(false);
 
-  // Set user and follow state when data changes
-  useEffect(() => {
-    if (data) {
-      const profileData = data.user || data.org;
-      setUser(profileData);
-      setIsFollowing(
-        profileData?.followedBy?.some((follower: any) => follower?.refID?._id === userId) || false
-      );
-    }
-  }, [data, userId]);
+//   Set user and follow state when data changes
+useEffect(() => {
+  if (data) {
+    const profileData = data.user || data.org;
+
+    setUser(prev => {
+      // Only update if data has changed
+      if (JSON.stringify(prev) !== JSON.stringify(profileData)) {
+        return profileData;
+      }
+      return prev;
+    });
+
+    setIsFollowing(prev => {
+      const shouldFollow = Array.isArray(profileData?.followedBy) &&
+        profileData.followedBy.some((follower: any) => follower?.refID?._id === userId);
+
+      // Only update if value changed
+      if (prev !== shouldFollow) {
+        return shouldFollow;
+      }
+      return prev;
+    });
+  }
+}, [data]);
 
   // Mutations
   const [followAsUser] = useMutation(FOLLOW_AS_USER);
@@ -70,14 +95,11 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
         followedByCount: (prev.followedByCount || 0) + (isFollowing ? -1 : 1),
       } : prev);
 
-      // Uncomment below if you want server sync after mutation
-      // await refetch();
-
     } catch (err) {
       console.error("Follow/Unfollow error:", err);
     }
   };
-
+  console.log("posts: ", user?.posts)
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   if (!user) return <p>User not found.</p>;
@@ -112,22 +134,23 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
         </div>
 
         <div className="profile-item-ctn profile-md-fnt">
-          {user.pets.map(pet => (
+          {user.pets?.map(pet => (
             <div className="profile-pet-ctn" key={pet._id}>
               <img className="profile-pet-img" src={pet.profilePhoto?.url} alt={`${pet.name} profile`} />
               <span>{pet.name}</span>
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="profile-feed-bg">
-        <Feed
-          initialFeedArray={user.posts}
-          itemStyle="post-card"
-          containerStyle="profile-feed-container"
-        />
-      </div>
+        </div>
+        <div className="profile-feed-bg">
+            {user.posts?.map(post => (
+                <div key={post._id}>
+                    <img src={calendar} alt="calendar icon" />
+                    <p>{format(new Date(Number(post.createdAt)), 'MMM d, yyyy')}</p>
+                    <p>{post.contentText}</p>   
+                </div>           
+            ))}
+        </div>
     </div>
   );
 }

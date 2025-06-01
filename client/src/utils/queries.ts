@@ -161,6 +161,7 @@ export const QUERY_USER = gql`
       posts {
         _id
         contentText
+        createdAt
       }
       postCount
       likedPosts {
@@ -477,6 +478,7 @@ export const QUERY_ORG = gql`
       posts {
         _id
         contentText
+        createdAt
       }
       postCount
       likedPosts {
