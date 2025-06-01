@@ -1,4 +1,4 @@
-import { Schema, model, type Document, type Types } from 'mongoose';
+import mongoose, { Schema, model, type Document, type Types } from 'mongoose';
 
 // import models
 import type { UserDocument } from './User.js';
@@ -9,7 +9,7 @@ export interface MessageDocument extends Document {
   messageUser: Types.ObjectId | UserDocument;
   textContent: string;
   media: Types.ObjectId[] | MediaDocument[];
-  readUser: Types.ObjectId[] | UserDocument[];
+  unreadUser: Types.ObjectId[] | UserDocument[];
   conversation: Types.ObjectId;
   isRead: boolean;
   itemType: string;
@@ -32,7 +32,7 @@ const messageSchema = new Schema<MessageDocument>({
       ref: 'Media'
     }
   ],
-  readUser: [
+  unreadUser: [
     {
       type: Schema.Types.ObjectId,
       ref: 'User'
@@ -61,7 +61,7 @@ const messageSchema = new Schema<MessageDocument>({
 });
 
 messageSchema.virtual('isRead').get(function (this: MessageDocument) {
-  return this.readUser.length > 0;
+  return this.unreadUser.length > 0;
 });
 
 messageSchema.virtual('formattedCreatedAt').get(function (this: MessageDocument) {
@@ -76,6 +76,19 @@ messageSchema.virtual('formattedCreatedAt').get(function (this: MessageDocument)
   const ss = pad(date.getSeconds());
 
   return `${MM}-${DD}-${YYYY} ${HH}:${mm}:${ss}`;
+});
+messageSchema.virtual('conversationUsers').get(async function (this: MessageDocument) {
+  const conversation = await mongoose.model('Conversation').findById(this.conversation).populate('conversationUsers');
+  // Remove this messageUser ID from the conversationUsers
+  const filteredUsers = conversation.conversationUsers.filter((user: UserDocument) => user._id?.toString() !== this.messageUser.toString());
+
+  // Set the unreadUsers to the filtered users
+  this.unreadUser = filteredUsers.map((user: UserDocument) => ({
+    _id: user._id,
+    username: user.username,
+  }));
+
+  return this.unreadUser;
 });
 
 const Message = model<MessageDocument>('Message', messageSchema);

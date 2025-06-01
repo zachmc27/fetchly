@@ -19,12 +19,24 @@ const conversationResolvers = {
         conversations: async () => {
             try {
                 return await Conversation.find()
-                    .populate({
-                        path: 'conversationUsers',
-                        select: 'username profilePicture',
-                    })
-                    .populate('messages')
-                    .populate('lastMessage');
+                .populate({
+                    path: 'conversationUsers',
+                    select: 'username profilePicture',
+                })
+                .populate({
+                    path: 'messages',
+                    populate: {
+                        path: 'messageUser',
+                        select: 'username profilePicture', // Ensure these fields exist in the User schema
+                    },
+                })
+                .populate({
+                    path: 'lastMessages',
+                    populate: {
+                        path: 'unreadUser',
+                        select: 'username ', // Ensure these fields exist in the User schema
+                    },
+                });
             } catch (error) {
                 if (error instanceof Error) {
                     throw new Error(`Failed to fetch conversations: ${error.message}`);
@@ -43,7 +55,13 @@ const conversationResolvers = {
                         path: 'conversationUsers',
                         select: 'username profilePicture',
                     })
-                    .populate('messages')
+                    .populate({
+                        path: 'messages',
+                        populate: {
+                            path: 'messageUser',
+                            select: 'username profilePicture', // Ensure these fields exist in the User schema
+                        },
+                    })
                     .populate('lastMessage');
             } catch (error) {
                 if (error instanceof Error) {
@@ -61,9 +79,15 @@ const conversationResolvers = {
                 return await Conversation.find({ conversationUsers: userId })
                     .populate({
                         path: 'conversationUsers',
-                        select: 'username profilePicture',
+                        select: 'username profilePicture', // Ensure these fields exist in the User schema
                     })
-                    .populate('messages')
+                    .populate({
+                        path: 'messages',
+                        populate: {
+                            path: 'messageUser',
+                            select: 'username profilePicture', // Ensure these fields exist in the User schema
+                        }
+                    })
                     .populate('lastMessage');
             } catch (error) {
                 if (error instanceof Error) {
