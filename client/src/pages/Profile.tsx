@@ -1,5 +1,7 @@
 // renders acccount details component with the users information
 // renders feed component with users posts
+// "https://www.flaticon.com/free-icons/ui" Ui icons created by Fantasyou - Flaticon
+
 import { useEffect, useState } from "react";
 import "../SammiReusables.css";
 import Feed from "../components/Reusables/Feed";
@@ -13,9 +15,11 @@ import { QUERY_USER } from '../utils/queries';
 import { useMutation } from '@apollo/client';
 import { ADD_PET } from '../utils/mutations';
 import AccountDetails from "../components/Profile/AccountDetails";
-import { useNavigate } from "react-router-dom";
 import NewPet from "../components/Creators/NewPet";
-import WindowModal from "../components/Reusables/WindowModal"; 
+import WindowModal from "../components/Reusables/WindowModal";
+import LogoutIcon from "../images/logout.png";
+import { useNavigate } from "react-router-dom";
+
 
 type UploadedMedia = {
   id: string;
@@ -98,9 +102,10 @@ export default function Profile() {
   }
 
   /************* OPEN USER MEETUPS *****************/
-  const navigate = useNavigate();
+  const [isMeetupsOpen, setIsMeetupsOpen] = useState(false);
+  
   function handleMeetupRender() {
-    navigate("/meetup");
+    setIsMeetupsOpen(true);
   }
 
   /************* ADDING PET *****************/
@@ -138,6 +143,7 @@ export default function Profile() {
   const { data, error } = useQuery(QUERY_USER, {
     variables: {userId},
   });
+  const meetups = data?.user?.meetUps || [];
   console.log(data);
 
   const [user, setUser] = useState(mockUser);
@@ -152,6 +158,13 @@ export default function Profile() {
   
   if (error){
     console.error("GraphQL error:", error);
+  }
+
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("id_token");
+    navigate("/login");
   }
 
 
@@ -174,6 +187,16 @@ export default function Profile() {
       )
     }
 
+    if (isMeetupsOpen) {
+      return (
+        <Feed 
+          initialFeedArray={meetups} 
+          itemStyle="meetup-card" 
+          containerStyle="meetup-feed-container"
+        />
+      )
+    }
+
 
   return (
     <div>
@@ -186,8 +209,9 @@ export default function Profile() {
             <span className="profile-md-fnt">{user.username}</span>
           </div>
           <div className="profile-btn-ctn">
-            <ButtonBubble imageSrc={CalenderIcon} onClick={handleMeetupRender}/>
-            <ButtonBubble imageSrc={EditIcon} onClick={handleInfoRender}/>
+            <ButtonBubble imageSrc={CalenderIcon} onClick={handleMeetupRender} className="button-bubble-small"/>
+            <ButtonBubble imageSrc={EditIcon} onClick={handleInfoRender} className="button-bubble-small"/>
+            <ButtonBubble imageSrc={LogoutIcon} onClick={handleLogout} className="button-bubble-small"/>
           </div>
            
         </div>
