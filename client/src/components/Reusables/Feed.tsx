@@ -27,6 +27,11 @@ import { MockConversationObject } from "../../mockdata/mocktypes/Conversation";
 import { mockMeetupPosts } from "../../mockdata/post-data";
 import { mockAdoptionPosts } from "../../mockdata/post-data";
 
+  //get mutations and queries
+  import { useQuery } from "@apollo/client";
+  import { GET_CONVERSATION } from "../../utils/queries";
+  import { useCallback } from "react";
+
 // components
 import MessagesPage from "../Inbox/MessagesPage";
 import PostDetails from "./PostDetails";
@@ -34,7 +39,6 @@ import Comments from "./Comments";
 
 // Cards
 import PostCardItem from "../Cards/PostCardItem";
-
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -71,6 +75,8 @@ export default function Feed({
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
 
+
+
   useEffect(() => {
     setFeedArray(initialFeedArray);
   }, [initialFeedArray]);
@@ -95,11 +101,11 @@ export default function Feed({
       }
     }
 
-    if (location.pathname !== "/inbox") {
-      localStorage.removeItem("activeConversationId");
-      localStorage.removeItem("isInfoOpen");
-    }
-  }, [location.pathname]);
+const { data, loading, error } = useQuery(GET_CONVERSATION, {
+  variables: { conversationId: activeConversationId },
+  fetchPolicy: "network-only",
+  skip: !activeConversationId, // Skip query if no activeConversationId
+});
 
   // currently expects a number with how my mock data is setup but will have to be changed to handle strings
   // additionally, if the linking IDs between convo collection and messages collection differ, the .find logic will have to be adjusted to handle that.
@@ -124,6 +130,7 @@ export default function Feed({
       console.warn("No conversation found with ID:", messageId);
     }
   }
+  console.log("useEffect triggered for activeConversationId:", activeConversationId);
 
   function handleCloseMessagePage() {
     setIsChatOpen(false);
@@ -139,7 +146,6 @@ export default function Feed({
       );
     }
     setActiveConversation(null);
-  }
 
   // ----------------------------------------------------------------
   // --------------- MEETUP PAGE TO POST VIEW LOGIC -----------------
@@ -338,6 +344,7 @@ export default function Feed({
             {messageItem.coverImage ? (
               <img
                 src={messageItem.coverImage}
+
                 alt="Chat icon"
                 className="message-icon"
               />
