@@ -44,7 +44,7 @@ export default function MeetupDetails({ userMeetups, userRSVP }: MeetupDetailsPr
                         containerStyle="meetup-feed-container"
                     />
                 ) : (
-                    <span className="prof-meet-warning">No RSVP'ed meetups found.</span>
+                    <span className="prof-meet-warning">No RSVPed meetups found.</span>
                 )}
             </div>
             
