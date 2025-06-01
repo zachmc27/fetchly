@@ -79,7 +79,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
 const activeConversationId = localStorage.getItem("activeConversationId");
 
 const { data, loading, error } = useQuery(GET_CONVERSATION, {
-  variables: { conversationId: activeConversationId || "" },
+  variables: { conversationId: activeConversationId },
   fetchPolicy: "network-only",
   skip: !activeConversationId, // Skip query if no activeConversationId
 });
@@ -137,10 +137,9 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 }, [feedArray]);
 
 useQuery(GET_CONVERSATION, {
-  variables: { conversationId: localStorage.getItem("activeConversationId") || "" },
+  variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
   pollInterval: 10000, // Poll every 5 seconds
-  skip: !localStorage.getItem("activeConversationId"),
 });
 
 const {
@@ -167,12 +166,19 @@ useEffect(() => {
       conversationName: messageData.conversation.conversationName,
       conversationUsers: messageData.conversation.conversationUsers,
       messages: messageData.conversation.messages
-        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: string; createdAt: string }) => ({
-          _id: msg._id,
-          textContent: msg.textContent,
-          messageUser: msg.messageUser,
-          createdAt: msg.createdAt,
-        }))
+        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: { _id: string; username: string; avatar?: { url?: string } }; createdAt: string; formattedCreatedAt: string }) => ({
+            _id: msg._id,
+            textContent: msg.textContent,
+            messageUser: {
+              _id: msg.messageUser._id,
+              username: msg.messageUser.username,
+              avatar:{
+                url: msg.messageUser.avatar?.url || `https://ui-avatars.com/api/?name=${msg.messageUser.username}&background=random&color=fff&size=128`,
+              }
+            },
+            createdAt: msg.createdAt,
+            formattedCreatedAt: msg.formattedCreatedAt, // Include formattedCreatedAt
+          }))
         : [],
     });
     setIsChatOpen(true);

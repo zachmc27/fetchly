@@ -1312,6 +1312,9 @@ query Conversations($conversationId: String!) {
     conversationUsers {
       _id
       username
+      avatar {
+        url
+      }
     }
     lastMessage {
       _id
@@ -1319,6 +1322,9 @@ query Conversations($conversationId: String!) {
       messageUser {
         _id
         username
+        avatar {
+        url
+      }
       }
       formattedCreatedAt
     }
@@ -1327,6 +1333,9 @@ query Conversations($conversationId: String!) {
       messageUser {
         _id
         username
+        avatar {
+        url
+      }
       }
       textContent
       formattedCreatedAt
@@ -1345,6 +1354,9 @@ query ConversationByUser($userId: String!) {
     conversationName
     conversationUsers {
       _id
+      avatar {
+        url
+      }
     }
     lastMessage {
       _id
@@ -1356,6 +1368,9 @@ query ConversationByUser($userId: String!) {
       messageUser {
         _id
         username
+        avatar {
+        url
+      }
       }
     }
     formattedCreatedAt

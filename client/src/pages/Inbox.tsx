@@ -38,7 +38,7 @@ export default function Inbox() {
   const initialFeedArray = data.conversationByUser.map((conversation: MockConversationObject) => {
     return {
       id: conversation._id, // Use `_id` from the API data
-      coverImage: "https://img.icons8.com/?size=100&id=111022&format=png&color=000000", // Default cover image
+      coverImage: `https://ui-avatars.com/api/?name=${conversation.conversationName}&background=random&color=fff&size=128`, // Default cover image
       conversationId: conversation._id, // Use `_id` from the API data
       chatTitle: conversation.conversationName !== "null" ? conversation.conversationName : "New Conversation", // Fallback for `conversationName`
       latestMessage: conversation.lastMessage?.textContent || "No messages yet", // Extract `textContent` or fallback
