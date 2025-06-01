@@ -123,7 +123,7 @@ useEffect(() => {
             )}
           </div>
         </div>
-
+ 
         <div className="profile-bio-ctn profile-sm-fnt">
           <span>{user.about}</span>
         </div>
