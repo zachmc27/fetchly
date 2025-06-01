@@ -84,22 +84,10 @@ export default function Feed({
   // --------------- INBOX PAGE TO MESSAGESPAGE LOGIC ---------------
   // ----------------------------------------------------------------
 
-  const [activeConversation, setActiveConversation] =
-    useState<MockConversationObject | null>(null);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  useEffect(() => {
-    const storedConversationId = localStorage.getItem("activeConversationId");
-    if (storedConversationId && location.pathname === "/inbox") {
-      const conversationId = parseInt(storedConversationId, 10); // Parse as integer
-      const storedConversation = mockConversations.find(
-        (convo) => convo.id === conversationId
-      );
-      if (storedConversation) {
-        setActiveConversation(storedConversation);
-        setIsChatOpen(true);
-      }
-    }
+const [activeConversation, setActiveConversation] = useState<MockConversationObject | null>(null); 
+const [isChatOpen, setIsChatOpen] = useState(false);
+ 
+const activeConversationId = localStorage.getItem("activeConversationId");
 
 const { data, loading, error } = useQuery(GET_CONVERSATION, {
   variables: { conversationId: activeConversationId },
@@ -107,45 +95,108 @@ const { data, loading, error } = useQuery(GET_CONVERSATION, {
   skip: !activeConversationId, // Skip query if no activeConversationId
 });
 
-  // currently expects a number with how my mock data is setup but will have to be changed to handle strings
-  // additionally, if the linking IDs between convo collection and messages collection differ, the .find logic will have to be adjusted to handle that.
-
-  function handleMessagePageRender(messageId: number) {
-    const conversationToOpen = mockConversations.find(
-      (convo) => convo.id === messageId
-    );
-
-    if (conversationToOpen) {
-      console.log(
-        "Opening chat for conversation:",
-        conversationToOpen.conversationName
-      );
-      setActiveConversation(conversationToOpen);
-      setIsChatOpen(true);
-      localStorage.setItem(
-        "activeConversationId",
-        conversationToOpen.id.toString()
-      );
-    } else {
-      console.warn("No conversation found with ID:", messageId);
-    }
+useEffect(() => {
+  if (!activeConversationId) {
+    console.warn("No active conversation ID found in localStorage.");
+    return;
   }
   console.log("useEffect triggered for activeConversationId:", activeConversationId);
 
-  function handleCloseMessagePage() {
-    setIsChatOpen(false);
-    localStorage.removeItem("activeConversationId");
-    localStorage.removeItem("isInfoOpen");
-    if (activeConversation) {
-      setFeedArray((prev) =>
-        prev.map((item) =>
-          item.itemType === "message" && item.id === activeConversation.id
-            ? { ...item, isUnread: false }
-            : item
-        )
-      );
-    }
-    setActiveConversation(null);
+  if (!activeConversationId) {
+    console.warn("No active conversation ID found in localStorage.");
+    return;
+  }
+
+  if (loading) {
+    console.log("Loading conversation...");
+    return;
+  }
+
+  if (error) {
+    console.error("Error fetching conversation:", error);
+    return;
+  }
+
+  if (data?.conversation) {
+    console.log("Fetched conversation data:", data.conversation);
+    setActiveConversation(data.conversation);
+    setIsChatOpen(true);
+  } else {
+    console.warn("No conversation found with ID:", activeConversationId);
+  }
+}, [activeConversationId, loading, error, data]);
+
+const handleMessagePageRender = useCallback((conversationId: string) => {
+  console.log("handleMessagePageRender called with conversationId:", conversationId);
+  const conversation = feedArray.find(
+    (item) => item.itemType === "message" && item.id?.toString() === conversationId
+  ) as MockMessageCard | undefined;
+
+  if (conversation) {
+    console.log("Opening chat for conversation:", conversation.chatTitle);
+    setActiveConversation({
+      _id: conversation.id.toString(),
+      conversationName: conversation.chatTitle,
+      conversationUsers: [], // Add appropriate users if available
+      formattedCreatedAt: conversation.formattedCreatedAt // Placeholder for createdAt
+    });
+    setIsChatOpen(true);
+    localStorage.setItem("activeConversationId", conversationId);
+  } else {
+    console.warn("Conversation not found for ID:", conversationId);
+  }
+}, [feedArray]);
+
+const { data: messageData, loading: messageLoading, error: messageError } = useQuery(GET_CONVERSATION, {
+  variables: { conversationId: localStorage.getItem("activeConversationId") },
+  fetchPolicy: "network-only",
+});
+
+useEffect(() => {
+  console.log("useEffect triggered for messageData");
+  if (messageLoading) {
+    console.log("Loading conversation...");
+  } else if (messageError) {
+    console.error("Error fetching conversation:", messageError);
+  } else if (messageData?.conversation) {
+    console.log("Fetched conversation:", messageData.conversation);
+    console.log("Messages:", messageData.conversation.messages); // Log messages
+    setActiveConversation({
+      _id: messageData.conversation._id,
+      conversationName: messageData.conversation.conversationName,
+      conversationUsers: messageData.conversation.conversationUsers,
+      messages: messageData.conversation.messages
+        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: string; createdAt: string }) => ({
+          _id: msg._id,
+          textContent: msg.textContent,
+          messageUser: msg.messageUser,
+          createdAt: msg.createdAt,
+        }))
+        : [],
+    });
+    setIsChatOpen(true);
+  } else {
+    console.warn("No conversation found with ID:", localStorage.getItem("activeConversationId"));
+  }
+}, [messageLoading, messageError, messageData]);
+
+function handleCloseMessagePage() {
+  console.log("handleCloseMessagePage called");
+  setIsChatOpen(false);
+  localStorage.removeItem("activeConversationId");
+  localStorage.removeItem("isInfoOpen");
+  if (activeConversation) {
+    console.log("Marking conversation as read for ID:", activeConversation._id);
+    setFeedArray(prev =>
+      prev.map(item => 
+        item.itemType === "message" && item.id?.toString() === activeConversation._id
+        ? { ...item, isUnread: false }
+        : item
+      )
+    );
+  }
+  setActiveConversation(null);
+}
 
   // ----------------------------------------------------------------
   // --------------- MEETUP PAGE TO POST VIEW LOGIC -----------------
@@ -500,7 +551,7 @@ function mapResponseToComment(res: {
       }
 
       default:
-        return null;
+      return null;
     }
   }
 
