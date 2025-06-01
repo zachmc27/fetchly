@@ -82,6 +82,21 @@ const userResolvers = {
           path: 'followedBy.refId'
         });
     },
+    userByUsername: async (_parent: any, { username }: { username: string }) => {
+      return await User.find({ username })
+      .populate('pets')
+        .populate('posts')
+        .populate('avatar')
+        .populate('meetUps')
+        .populate('location')
+        .populate('organizations')
+        .populate({
+          path: 'following.refId'
+        })
+        .populate({
+          path: 'followedBy.refId'
+        });
+    },
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id })

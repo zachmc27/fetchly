@@ -36,10 +36,13 @@ export type MockAdoptionCard = {
 
 export type MockMessageCard = {
   id: number;
+  conversationId: string;
   coverImage?: string;
   chatTitle: string;
+  chatUsers: string[];
   latestMessage: string;
-  date: string;
+  formattedCreatedAt: string;
   isUnread?: boolean;
   itemType: string;
+  date: string;
 };

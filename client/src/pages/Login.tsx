@@ -42,7 +42,7 @@ function Login() {
       localStorage.setItem('accountType', "user");
       return;
     }
-  } catch (userError) {
+  } catch {
     // If user login fails, try org login
     try {
       const { data } = await loginOrg({

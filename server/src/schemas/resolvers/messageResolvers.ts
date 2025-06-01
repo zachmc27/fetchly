@@ -57,16 +57,36 @@ const messageResolvers = {
         // Message Queries
         messages: async () => {
             return await Message.find()
-                .populate('messageUser')
+                .populate({
+                    path: 'messageUser',
+                    select: 'username _id', // Explicitly select the fields you need
+                })
                 .populate('conversation')
                 .populate('readUser');
         },
         message: async (_parent: any, { messageId }: MessageArgs) => {
             return Message.findById(messageId)
-                .populate('messageUser')
+                .populate({
+                    path: 'messageUser',
+                    select: 'username _id', // Explicitly select the fields you need
+                })
                 .populate('conversation')
                 .populate('readUser');
-        }
+        },
+        messageByConversation: async (_parent: any, { conversationId }: { conversationId: string }) => {
+            const messages = await Message.find({ conversation: conversationId })
+                .populate({
+                    path: 'messageUser',
+                    select: 'username _id', // Explicitly select the fields you need
+                })
+                .populate('conversation')
+                .populate('readUser');
+        
+            return messages.map((message) => ({
+                ...message.toObject(),
+                messageUser: message.messageUser || null, // Return null if messageUser is missing
+            }));
+        },
     },
     Mutation: {
         addMessage: async (_parent: any, { input }: AddMessageInputArgs) => {

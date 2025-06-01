@@ -66,6 +66,7 @@ const userTypeDefs = `
     users: [User]
     user(userId: String!): User
     me: User
+    userByUsername(username: String!): User
   }
 
 # -------------------- Mutation TypeDefs ------------------------
