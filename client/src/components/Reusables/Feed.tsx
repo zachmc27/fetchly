@@ -391,7 +391,7 @@ function mapResponseToComment(res: {
           <div
             key={index}
             className={itemStyle}
-            onClick={() => handleMessagePageRender(messageItem.id)}
+            onClick={() => handleMessagePageRender(messageItem.id.toString())}
           >
             <div className="unread-indicator-area">
               {messageItem.isUnread && <div className="unread-dot"></div>}
