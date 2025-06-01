@@ -232,28 +232,32 @@ type Comment = {
   likeCount: number;
   postedTime: Date;
   replies?: Comment[];
+  media?: { url: string }[];
 };
 
 function mapResponseToComment(res: {
-  _id: string;
-  contentText: string;
-  poster: {
-    refId: {
-      avatar?: { url?: string };
-      _id: string;
-      username: string;
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: { url?: string };
+        _id: string;
+        username?: string;
+        orgName?: string;
+      };
+      refModel: string;
     };
-    refModel: string;
-  };
+    media?: { url: string }[];
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
-    user: res.poster.refId.username || "Unknown",
+    user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
     likeCount: 0,
-    postedTime: new Date(), // Placeholder since there's no timestamp
-    replies: []
+    postedTime: new Date(),
+    replies: [],
+    media: [],
   };
 }
 
@@ -416,7 +420,6 @@ if (isChatOpen && activeConversation) {
         onClose={handleCloseMessagePage}/>
       )
 }
-
 
 if (isMeetupPostOpen && activeMeetupPost) {
   return (

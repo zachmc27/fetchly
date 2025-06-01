@@ -14,6 +14,7 @@ import "../../ZachTemp.css"
 import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import Replies from "./Replies";
+import ImageCarousel from "./ImageCarousel"
 import { useState } from "react";
 // import ButtonBubble from "./Button";
 
@@ -26,6 +27,7 @@ type Comment = {
   likeCount: number;
   postedTime: Date;
   replies?: Comment[];
+  media?: {url: string}[];
 };
 
 type CommentsProps = {
@@ -50,6 +52,21 @@ const [isRepliesOpen, setIsRepliesOpen] = useState(false)
             <div className="comment-content" onClick={handleContainerClick}>
               <div>{comment.user}</div> 
               <div>{comment.comment}</div>
+              <div>
+                {
+                  comment.media && comment.media.length > 1 &&
+                  <div className="img-container"> 
+                  <ImageCarousel slides={comment.media.map(m =>m.url).filter(Boolean)}/>
+                  </div>
+                }
+                {
+                  comment.media && comment.media.length === 1 &&
+                  <div className="img-container">
+                    <img src={comment.media[0].url} alt="first image"/>
+                  </div>
+                  
+                }
+              </div>
               <div className="comment-icon-row">
                 <div className="comment-likes-container">
                   <img src={heart} alt="heart icon" />

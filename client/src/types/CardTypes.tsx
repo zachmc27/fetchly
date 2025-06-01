@@ -25,6 +25,7 @@ export type PostCard = {
       };
       _id: string;
       username: string;
+      orgName: string
     }
     refModel: string;
   };

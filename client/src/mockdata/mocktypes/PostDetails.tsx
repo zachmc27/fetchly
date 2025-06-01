@@ -1,11 +1,13 @@
 export type Comment = {
   id: number,
   user: string,
+  orgName?: string,
   avatar?: string,
   comment: string,
   likeCount: number,
   postedTime: Date,
   replies?: Comment[]
+  media?: {url: string }[];
 }
 
 export type rsvpList = {
