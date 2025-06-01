@@ -321,7 +321,7 @@ export default function Feed({
     setActiveAdoptionPost(null);
   }
 
-  // ----------------------------------------------------------------
+  // -----------------------------------------------------------------
   function renderFeedItem(item: FeedItem, index: number): JSX.Element | null {
     switch (item.itemType) {
       case "message": {
