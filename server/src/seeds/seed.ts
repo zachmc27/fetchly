@@ -1,14 +1,20 @@
 import db from '../config/connection.js';
+import createTypes from './seed_types.js';
+import {createOrgs} from './seed_orgs.js';
 
-import cleanDB from './cleanDB.js';
+// import cleanDB from './cleanDB.js';
 
 
 const seedDatabase = async (): Promise<void> => {
   try {
     await db();
-    await cleanDB();
+    // await cleanDB();
+    await createTypes();
+    console.log('Types seeded successfully!');
+    await createOrgs();
+    console.log('Orgs seeded successfully!');
 
-    // await Thought.insertMany(thoughtData);
+
     // await User.create(userData);
     console.log('Seeding completed successfully!');
     process.exit(0);

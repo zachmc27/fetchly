@@ -7,7 +7,7 @@ interface ExtendedJwt extends JwtPayload {
     email:string,
     id:string
   }
-};
+}
 
 class AuthService {
   // TODO: What is this method supposed to do?
@@ -43,15 +43,22 @@ class AuthService {
   }
 
   // TODO: What is the purpose of this method?
-  login(idToken: string) {
+  login(idToken: string, userId: number) {
     localStorage.setItem('id_token', idToken);
+    localStorage.setItem('userId', userId.toString());
     window.location.assign('/');
+
+    // Alert for testing purposes comment out when not needed
+    alert("Login successful");
   }
 
   // TODO: What is the purpose of this method?
   logout() {
     localStorage.removeItem('id_token');
     window.location.assign('/');
+
+    // Alert for testing purposes, comment out when not needed
+    alert("Logout successful");
   }
 }
 
