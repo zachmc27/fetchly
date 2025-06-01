@@ -44,7 +44,7 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
 
       setIsFollowing(prev => {
         const shouldFollow = Array.isArray(profileData?.followedBy) &&
-          profileData.followedBy.some((follower: any) => follower?.refID?._id === userId);
+          profileData.followedBy.some((follower: { refID?: { _id?: string } }) => follower?.refID?._id === userId);
 
         if (prev !== shouldFollow) {
           return shouldFollow;
