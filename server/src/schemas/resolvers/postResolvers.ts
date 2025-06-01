@@ -32,6 +32,7 @@ interface AddPostResponseArgs {
         };
         contentText?: string;
         media?: string[];
+        taggedPets: string;
     }
 }
 
@@ -130,6 +131,12 @@ const postResolvers = {
         (parentPost.responses as Types.ObjectId[])
           .push(response._id as Types.ObjectId);
         await parentPost.save();
+
+        if (input.taggedPets) {
+          await Pet.findByIdAndUpdate(input.taggedPets, {
+            $addToSet: {taggedPosts: response._id }
+          });
+        }
 
         const { refId, refModel } = input.poster;
 

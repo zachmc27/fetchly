@@ -53,6 +53,7 @@ const postTypeDefs = `
     poster: PosterInput!
     contentText: String
     media: [String]
+    taggedPets: ID
   }
 
   input UpdatePostInput {
