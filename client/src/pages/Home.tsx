@@ -1,11 +1,21 @@
 import Feed from "../components/Reusables/Feed";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // import NewMessage from "../components/Creators/NewMessage";
 import { QUERY_POSTS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
 export default function Home() {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("id_token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const { loading, error, data } = useQuery(QUERY_POSTS);
 

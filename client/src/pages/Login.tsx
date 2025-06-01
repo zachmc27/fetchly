@@ -169,8 +169,8 @@ function Signup() {
   return (
     <div>
       <div className='signup-btn-cnt profile-sm-fnt'>
-        <button className= {showSignupUser ? 'btn-fill signup-btn' : 'btn-line signup-btn'} onClick={() => setShowSignupUser(true)}>Personal</button>
-        <button className={showSignupUser ? 'btn-line signup-btn' : 'btn-fill signup-btn'} onClick={() => setShowSignupUser(false)}>Organization</button>
+        <button className= {showSignupUser ? 'btn-fill signup-btn main-button' : 'btn-line signup-btn main-button'} onClick={() => setShowSignupUser(true)}>Personal</button>
+        <button className={showSignupUser ? 'btn-line signup-btn main-button' : 'btn-fill signup-btn main-button'} onClick={() => setShowSignupUser(false)}>Organization</button>
       </div>
       {showSignupUser ? (
         <SignupUser />
