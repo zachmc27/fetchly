@@ -1,5 +1,5 @@
 import "../../SammiReusables.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { QUERY_USER, QUERY_ORG } from '../../utils/queries';
 import { FOLLOW_AS_USER, UNFOLLOW_AS_USER, FOLLOW_AS_ORG, UNFOLLOW_AS_ORG } from '../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
@@ -14,52 +14,48 @@ type ProfileDetailsProps = {
 }
 
 export default function ProfileDetails({ profileUserId, profileAccountType }: ProfileDetailsProps) {
+  // These should not depend on early return or condition
+  const userId = localStorage.getItem('userId');
+  const accountType = localStorage.getItem('accountType');
+  const userType = accountType === "org" ? "Org" : "User";
 
-    const userId = localStorage.getItem('userId');
-    const accountType = localStorage.getItem('accountType');
-    const userType = accountType === "org" ? "Org" : "User";
-
+  // Early return after hooks
   if (!profileAccountType) return null;
 
-    const queryToUse = profileAccountType === "Org" ? QUERY_ORG : QUERY_USER;
+  const queryToUse = profileAccountType === "Org" ? QUERY_ORG : QUERY_USER;
+  const variables = useMemo(() => {
+    return profileAccountType === "Org"
+      ? { orgId: profileUserId }
+      : { userId: profileUserId };
+  }, [profileUserId, profileAccountType]);
 
-    const variables = profileAccountType === "Org"
-        ? { orgId: profileUserId }
-        : { userId: profileUserId };
-
-    const { data, loading, error } = useQuery(queryToUse, {
-    variables,
-    fetchPolicy: "cache-first", // prevent forced refetch
-    });
-
+  // Hooks must be called unconditionally:
+  const { data, loading, error } = useQuery(queryToUse, { variables });
   const [user, setUser] = useState<UserType | undefined>();
   const [isFollowing, setIsFollowing] = useState(false);
 
-    //   Set user and follow state when data changes
-    useEffect(() => {
+  useEffect(() => {
     if (data) {
-        const profileData = data.user || data.org;
+      const profileData = data.user || data.org;
 
-    setUser(prev => {
-      // Only update if data has changed
-      if (JSON.stringify(prev) !== JSON.stringify(profileData)) {
-        return profileData;
-      }
-      return prev;
-    });
+      setUser(prev => {
+        if (JSON.stringify(prev) !== JSON.stringify(profileData)) {
+          return profileData;
+        }
+        return prev;
+      });
 
-    setIsFollowing(prev => {
-      const shouldFollow = Array.isArray(profileData?.followedBy) &&
-        profileData.followedBy.some((follower: any) => follower?.refID?._id === userId);
+      setIsFollowing(prev => {
+        const shouldFollow = Array.isArray(profileData?.followedBy) &&
+          profileData.followedBy.some((follower: any) => follower?.refID?._id === userId);
 
-      // Only update if value changed
-      if (prev !== shouldFollow) {
-        return shouldFollow;
-      }
-      return prev;
-    });
-  }
-}, [data]);
+        if (prev !== shouldFollow) {
+          return shouldFollow;
+        }
+        return prev;
+      });
+    }
+  }, [data, userId]);
 
   // Mutations
   const [followAsUser] = useMutation(FOLLOW_AS_USER);
