@@ -10,6 +10,8 @@ import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import { useMutation } from '@apollo/client';
+import { ADD_PET, UPDATE_OWNER } from '../utils/mutations';
 import AccountDetails from "../components/Profile/AccountDetails";
 import { useNavigate } from "react-router-dom";
 import NewPet from "../components/Creators/NewPet";
@@ -26,6 +28,22 @@ type UploadedMedia = {
   url: string;
 };
 
+type OwnerRef = {
+  refId: string;
+  refModel: "User" | "Org";
+};
+
+interface NewPetProps {
+    name: string;
+    petType: "" | "Dog" | "Cat";
+    breed: string;
+    gender: "" | "Male" | "Female" | "Unsure";
+    size: "" | "Small" | "Medium" | "Large";
+    allergies?: string;
+    vaccines?: string;
+    pet?: string
+    about: string;
+}
 
 const UserPlaceHolderMedia: UploadedMedia = {
   id: "placeholder",
@@ -37,7 +55,6 @@ const UserPlaceHolderMedia: UploadedMedia = {
   tags: [],
   url: UserPlaceHolder, // this is the imported image URL
 };
-
 
 const mockUser = {
   _id: 1,
@@ -88,6 +105,8 @@ export default function Profile() {
 
   /************* ADDING PET *****************/
   const [showNewPet, setShowNewPet] = useState(false);
+  const [addPet] = useMutation(ADD_PET);
+
   function handleNewPetRender() {
     setShowNewPet(true);
   }
@@ -96,9 +115,21 @@ export default function Profile() {
     setShowNewPet(false);
   };
 
-  const handleSubmitPet = () => {
+  const handleSubmitPet = async (newPetData: NewPetProps) => {
+  try {
+    await addPet({
+      variables: {
+        userId, 
+        petInput: newPetData,
+      },
+      refetchQueries: [{ query: QUERY_USER, variables: { userId } }],
+    });
     setShowNewPet(false);
-  };
+    console.log(newPetData);
+  } catch (err) {
+    console.error("Failed to add pet:", err);
+  }
+};
 
 
   /************* SHOWING CORRECT USER *****************/
