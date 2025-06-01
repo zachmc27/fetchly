@@ -118,8 +118,8 @@
 .profile-btn-ctn {
   display: flex;
   flex-direction: row;
-  width: 40%;
-  flex: 2;
+  width: 10%;
+  flex: 42;
   justify-content: end;
 }
 
@@ -348,4 +348,15 @@
 
 .prof-detail-save-btn:hover {
   background-color: #333333; /* Slightly lighter black on hover */
+}
+
+
+.button-bubble-small {
+  width: 3vh;
+  height: 3vh;
+  padding: 0;
+}
+.button-bubble-small img {
+  width: 70%;
+  height: 70%;
 }
