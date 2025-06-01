@@ -161,6 +161,7 @@ export const QUERY_USER = gql`
       posts {
         _id
         contentText
+        createdAt
       }
       postCount
       likedPosts {
@@ -168,6 +169,20 @@ export const QUERY_USER = gql`
         contentText
       }
       likedPostsCount
+      followedBy {
+        refId {
+          ... on User {
+            _id
+            username
+            email
+          }
+          ... on Org {
+            _id
+            orgName
+          }
+        }
+         refModel         
+      }
       following {
         refId {
           ... on User {
@@ -186,6 +201,7 @@ export const QUERY_USER = gql`
         refModel
       }
       followingCount
+      followedByCount
     }
   }
 `;
@@ -349,6 +365,7 @@ export const QUERY_ORGS = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       about
       location {
@@ -367,6 +384,9 @@ export const QUERY_ORGS = gql`
       pets {
         _id
         name
+        profilePhoto {
+          url
+        }
       }
       petCount
       posts {
@@ -450,11 +470,15 @@ export const QUERY_ORG = gql`
       pets {
         _id
         name
+        profilePhoto {
+          url
+        }
       }
       petCount
       posts {
         _id
         contentText
+        createdAt
       }
       postCount
       likedPosts {
