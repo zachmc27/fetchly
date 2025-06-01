@@ -169,6 +169,29 @@
   margin-top: 5%;
 }
 
+/*************** MEETUP POPUP *****************/
+.prof-meet-ctn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 90px auto 0;
+  gap: 20px;
+}
+
+.prof-meet-sec-ctn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.prof-meet-title {
+  margin: 0 0 0 15px;
+}
+
+.prof-meet-warning {
+  justify-content: center;
+  margin: 0 auto;
+}
 
 
 /************* UPLOAD MEDIA CSS *****************/

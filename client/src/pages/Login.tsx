@@ -37,6 +37,7 @@ function Login() {
     const token = data.loginUser.token;
     const userId = data.loginUser.user._id;
 
+
     if (token) {
       Auth.login(token, userId);
       localStorage.setItem('accountType', "user");

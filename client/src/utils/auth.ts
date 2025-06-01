@@ -44,7 +44,7 @@ class AuthService {
 
   // TODO: What is the purpose of this method?
   login(idToken: string, userId: number) {
-    localStorage.setItem('id_token', idToken);
+    localStorage.setItem('id_token', idToken.toString());
     localStorage.setItem('userId', userId.toString());
     window.location.assign('/');
 
