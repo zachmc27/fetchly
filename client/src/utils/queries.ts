@@ -106,6 +106,7 @@ export const QUERY_USER = gql`
       username
       fullName
       email
+      password
       avatar {
         id
         filename
