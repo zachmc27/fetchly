@@ -14,7 +14,7 @@ export type MockMessageObject = {
   conversation: MockConversationObject;
   messageUser: MockMessageUser;
   textContent: string
-  createdAt?: string;
+  formattedCreatedAt?: string;
 
 }
  

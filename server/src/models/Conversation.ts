@@ -1,4 +1,4 @@
-import { Schema, model, type Document, type Types } from 'mongoose';
+import mongoose, { Schema, model, type Document, type Types } from 'mongoose';
 
 // import models
 import type { UserDocument } from './User.js';
@@ -21,7 +21,7 @@ const conversationSchema = new Schema<ConversationDocument>({
   },
   conversationUsers: [  
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },

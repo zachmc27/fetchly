@@ -79,7 +79,7 @@ const [isChatOpen, setIsChatOpen] = useState(false);
 const activeConversationId = localStorage.getItem("activeConversationId");
 
 const { data, loading, error } = useQuery(GET_CONVERSATION, {
-  variables: { conversationId: activeConversationId },
+  variables: { conversationId: activeConversationId || "" },
   fetchPolicy: "network-only",
   skip: !activeConversationId, // Skip query if no activeConversationId
 });
@@ -137,9 +137,10 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 }, [feedArray]);
 
 useQuery(GET_CONVERSATION, {
-  variables: { conversationId: localStorage.getItem("activeConversationId") },
+  variables: { conversationId: localStorage.getItem("activeConversationId") || "" },
   fetchPolicy: "network-only",
   pollInterval: 10000, // Poll every 5 seconds
+  skip: !localStorage.getItem("activeConversationId"),
 });
 
 const {
@@ -406,7 +407,7 @@ function handleCloseAdoptionPostView() {
                 <h1 className="chat-title">{messageItem.chatTitle}</h1>
                 <p className="latest-message">{messageItem.latestMessage}</p>
               </div>
-              <p className="chat-date">{messageItem.date}</p>
+              <p className="chat-date">{messageItem.formattedCreatedAt}</p>
             </div>
           );
         }

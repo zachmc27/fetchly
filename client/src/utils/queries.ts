@@ -1352,6 +1352,11 @@ query ConversationByUser($userId: String!) {
     }
     messages {
       _id
+      textContent
+      messageUser {
+        _id
+        username
+      }
     }
     formattedCreatedAt
   }
