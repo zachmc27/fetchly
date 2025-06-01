@@ -38,7 +38,7 @@ type UploadedMedia = {
 
 
 const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
-  
+
   const userId = localStorage.getItem("userId");
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
@@ -93,8 +93,8 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (userType !== "Org" || !orgData?.org?.location) {
-      console.error("Only organizations with a valid location can post.");
+    if (userType !== "Org") {
+      console.error("Only organizations can post.");
       return;
     }
 
