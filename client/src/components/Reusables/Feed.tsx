@@ -26,10 +26,10 @@ import { MockConversationObject } from "../../mockdata/mocktypes/Conversation";
 import { mockMeetupPosts } from "../../mockdata/post-data";
 import { mockAdoptionPosts } from "../../mockdata/post-data";
 
-  //get mutations and queries
-  import { useQuery } from "@apollo/client";
-  import { GET_CONVERSATION } from "../../utils/queries";
-  import { useCallback } from "react";
+//get mutations and queries
+import { useQuery } from "@apollo/client";
+import { GET_CONVERSATION } from "../../utils/queries";
+import { useCallback } from "react";
 
 // components
 import MessagesPage from "../Inbox/MessagesPage";
@@ -38,23 +38,17 @@ import Comments from "./Comments";
 
 // Cards
 import PostCardItem from "../Cards/PostCardItem";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import SearchBar from "./SearchBar";
-import Goinglist from "../Meetup/Goinglist";
 
-import {
-  MockAdoptionItem,
-  MockMeetupItem,
-} from "../../mockdata/mocktypes/PostDetails";
-import PostButton from "../Navbar/PostButton";
-import Header from "../Header";
+import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
+import SearchBar from "./SearchBar"
+import Goinglist from "../Meetup/Goinglist"
 
-type FeedItem =
-  | MockMessageCard
-  | MeetUpCard
-  | AdoptionCard
-  | PostCard;
+import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
+import PostButton from "../Navbar/PostButton"
+import Header from "../Header"
+
+type FeedItem = MockMessageCard | MockMeetupCard | AdoptionCard | PostCard;
 
 export default function Feed({
   initialFeedArray,
@@ -72,8 +66,6 @@ export default function Feed({
   const userId = localStorage.getItem("userId");
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
-
-
 
   useEffect(() => {
     setFeedArray(initialFeedArray);

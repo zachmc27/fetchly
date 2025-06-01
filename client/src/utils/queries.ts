@@ -1155,6 +1155,7 @@ export const QUERY_ADOPTIONS = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       adoptionStatus
       adoptedBy {
