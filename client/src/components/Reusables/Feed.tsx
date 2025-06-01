@@ -199,8 +199,8 @@ useEffect(() => {
     }
   }
 
-  if (location.pathname !== "/meetup") {
-    localStorage.removeItem("activeMeetupId");
+  if (location.pathname !== "/") {
+    localStorage.removeItem("activePostId");
   }
 }, [location.pathname, initialFeedArray]);
 
@@ -264,24 +264,43 @@ function mapResponseToComment(res: {
 // ----------------------------------------------------------------
 // --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
-const [activeAdoptionPost, setActiveAdoptionPost] = useState<MockAdoptionItem | null>(null); 
+const [activeAdoptionPost, setActiveAdoptionPost] = useState<AdoptionCard | null>(null); 
 const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
 
- function handleAdoptionPostViewRender(adoptionId: string) {
-  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption._id === adoptionId);
-  console.log(adoptionToOpen);
-  if (!adoptionToOpen) {
-    console.log('no post found')
-  }
-    if (adoptionToOpen) {
-       setActiveAdoptionPost(adoptionToOpen);
-      console.log('active post:', activeAdoptionPost);
-      setIsAdoptionPostOpen(true)
-      localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
-    } else  {
-      console.warn('No post found with ID:', adoptionId);
+useEffect(() => {
+  const storedAdoptionId = localStorage.getItem("activeAdoptionId");
+  if (storedAdoptionId && location.pathname === '/adoption') {
+    const storedAdoptionPost = initialFeedArray.find(
+      (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === storedAdoptionId
+    ) as PostCard | undefined;
+    if (storedAdoptionPost) {
+      setActivePost(storedAdoptionPost);
+      setIsPostOpen(true);
     }
-    setIsAdoptionPostOpen(true)
+  }
+
+  if (location.pathname !== "/adoption") {
+    localStorage.removeItem("activePostId");
+  }
+}, [location.pathname, initialFeedArray]);
+
+function handleAdoptionPostViewRender(adoptionId: string) {
+
+  const adoptionToOpen = feedArray.find(
+  (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === adoptionId
+  ) as AdoptionCard | undefined;
+  console.log(adoptionToOpen);
+
+  if (!adoptionToOpen) {
+    console.log('no post found');
+    return
+  }
+ 
+  setActiveAdoptionPost(adoptionToOpen);
+  console.log('active post:', activeAdoptionPost);
+  setIsAdoptionPostOpen(true)
+  localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
+  setIsAdoptionPostOpen(true)
 }
 
 function handleCloseAdoptionPostView() {
@@ -462,11 +481,14 @@ if (isPostOpen && activePost) {
 
 if (isAdoptionPostOpen && activeAdoptionPost) {
   return (
+    <>
+    <Header />
     <PostDetails
      postData={activeAdoptionPost}
      containerClass="adoption-details-container"
      onClose={handleCloseAdoptionPostView}
     />
+    </>
   )
 }
 
@@ -474,7 +496,7 @@ return (
   <>
     <Header />
     {
-      (!isMeetupPostOpen && location.pathname === "/meetup") &&
+      !isMeetupPostOpen && location.pathname === "/meetup" &&
       <SearchBar send={filterBySearch} />
     }
     <div className={containerStyle}>

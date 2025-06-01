@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Feed from "../components/Reusables/Feed";
 
 
@@ -30,7 +30,9 @@ export default function Adoption() {
     const { loading, error, data } = useQuery(QUERY_ADOPTIONS);
     const [filteredAdoptions, setFilteredAdoptions] = useState<Adoption[] | null>(null);
 
-  
+    useEffect(() => {
+        localStorage.removeItem("activeAdoptionId");
+    }, [filteredAdoptions])
 
     const adoptionPosts = data?.adoptions;
     console.log('Adoption posts:', adoptionPosts);

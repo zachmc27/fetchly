@@ -90,7 +90,7 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (userType !== "Org" || !orgData?.org?.location) {
+    if (userType !== "Org" ||  !orgData?.org?.location) {
       console.error("Only organizations with a valid location can post.");
       return;
     }
