@@ -105,7 +105,7 @@ const { data: orgData} = useQuery(QUERY_ORG, {
     if (!user) return;
     console.log(userId);
     try {
-      const input: any = {};
+      const input: { username?: string; avatar?: string; about?: string; fullName?: string; location?: Location} = {};
       if (updatedUsername) input.username = updatedUsername;
       if (media?.id) input.avatar = media.id;
       if (updatedAbout) input.about = updatedAbout;

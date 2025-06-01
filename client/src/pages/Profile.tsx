@@ -31,6 +31,50 @@ type Location = {
      country: string;
 }
 
+// Post type
+type PostCard = {
+  _id: string;
+  id: string;
+  poster: {
+    refId: {
+      avatar?: {
+        url?: string;
+      };
+      _id: string;
+      username: string;
+      orgName: string;
+    }
+    refModel: string;
+  };
+  contentText: string;
+  media: [{
+    url: string
+  }];
+  itemType: string;
+  createdAt: Date;
+  likesCount: number;
+  responseCount: number;
+  likes: [{
+    refId: {
+      _id: string
+    }
+  }]
+  responses: [{
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: {
+          url?: string;
+        };
+        _id: string;
+        username: string;
+      }
+      refModel: string;
+    };
+  }],
+}
+
 type UserOrOrg = {
   _id: number | string;
   fullName?: string;
@@ -43,7 +87,7 @@ type UserOrOrg = {
   followingCount?: number;
   followedByCount: number;
   pets?: { _id: number; name: string; avatar: string }[];
-  posts: any[];
+  posts: PostCard[];
 
 }
 
@@ -107,7 +151,7 @@ const mockUser = {
     { _id: 2, name: "Pet 2", avatar: UserPlaceHolder },
     { _id: 3, name: "Pet 3", avatar: UserPlaceHolder },
   ],
-  posts: []
+  posts:[]
 }
 
 
