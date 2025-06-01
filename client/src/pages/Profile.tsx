@@ -1,24 +1,28 @@
 // renders acccount details component with the users information
 // renders feed component with users posts
 // "https://www.flaticon.com/free-icons/ui" Ui icons created by Fantasyou - Flaticon
+import "../SammiReusables.css";
 
 import { useEffect, useState } from "react";
-import "../SammiReusables.css";
-import Feed from "../components/Reusables/Feed";
-import UserPlaceHolder from "../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-import ButtonBubble from "../components/Reusables/Button";
-import AddIcon from "../images/add.png";
-import EditIcon from "../images/edit.png";
-import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { ADD_PET } from '../utils/mutations';
+import { useNavigate } from "react-router-dom";
+
 import AccountDetails from "../components/Profile/AccountDetails";
 import NewPet from "../components/Creators/NewPet";
 import WindowModal from "../components/Reusables/WindowModal";
+import Feed from "../components/Reusables/Feed";
+import ButtonBubble from "../components/Reusables/Button";
+import MeetupDetails from "../components/Profile/MeetupDetails";
+import { mockMeetupData } from "../mockdata/feed-data";
+
+import UserPlaceHolder from "../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import AddIcon from "../images/add.png";
+import EditIcon from "../images/edit.png";
+import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import LogoutIcon from "../images/logout.png";
-import { useNavigate } from "react-router-dom";
+
 
 
 type UploadedMedia = {
@@ -98,7 +102,7 @@ export default function Profile() {
   function handleInfoRender() {
     const newIsEditOpen = !isEditOpen;
       setIsEditOpen(newIsEditOpen)
-       localStorage.setItem("isEditOpen", newIsEditOpen.toString());
+      localStorage.setItem("isEditOpen", newIsEditOpen.toString());
   }
 
   /************* OPEN USER MEETUPS *****************/
@@ -143,7 +147,7 @@ export default function Profile() {
   const { data, error } = useQuery(QUERY_USER, {
     variables: {userId},
   });
-  const meetups = data?.user?.meetUps || [];
+  const rsvpMeetups = data?.user?.meetUps || [];
   console.log(data);
 
   const [user, setUser] = useState(mockUser);
@@ -189,11 +193,7 @@ export default function Profile() {
 
     if (isMeetupsOpen) {
       return (
-        <Feed 
-          initialFeedArray={meetups} 
-          itemStyle="meetup-card" 
-          containerStyle="meetup-feed-container"
-        />
+        <MeetupDetails userMeetups={mockMeetupData} userRSVP={rsvpMeetups}/>
       )
     }
 

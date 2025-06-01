@@ -35,11 +35,14 @@ type UploadedMedia = {
   url: string;
 };
 
-const userId = localStorage.getItem("user_Id");
-const accountType = localStorage.getItem("accountType");
-const userType = accountType === "org" ? "Org" : "User";
+
 
 const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
+
+  const userId = localStorage.getItem("userId");
+  const accountType = localStorage.getItem("accountType");
+  const userType = accountType === "org" ? "Org" : "User";
+
   const [createAdoptionPost] = useMutation(CREATE_ADOPTION);
   const [showError, setShowError] = useState(userType !== "Org");
 
@@ -61,7 +64,7 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
     if (userType === "Org") {
       getPets({ variables: { orgId: userId } });
     }
-  }, [getPets]);
+  }, [getPets, userId, userType]);
 
   useEffect(() => {
     if (petData?.org?.pets) {
@@ -90,8 +93,8 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (userType !== "Org" || !orgData?.org?.location) {
-      console.error("Only organizations with a valid location can post.");
+    if (userType !== "Org") {
+      console.error("Only organizations can post.");
       return;
     }
 
@@ -109,7 +112,7 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
         state: location?.state || "",
         country: location?.country || "",
       },
-      media,
+      media: media ?? [],
     };
 
     try {
