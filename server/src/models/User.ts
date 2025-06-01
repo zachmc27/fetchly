@@ -201,6 +201,11 @@ userSchema.virtual('followedByCount').get(function () {
   return this.followedBy.length;
 });
 
+//virtual to set a defualt avatar based on the first chracter in thier username
+userSchema.virtual('defaultAvatar').get(function () {
+  const firstChar = this.username.charAt(0).toUpperCase();
+  return `https://ui-avatars.com/api/?name=${firstChar}&background=random&color=fff&size=128`;
+});
 //userSchema.plugin(autopopulate);
 
 const User = model<UserDocument>('User', userSchema);

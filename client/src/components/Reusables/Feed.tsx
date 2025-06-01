@@ -147,9 +147,20 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
   }
 }, [feedArray]);
 
-const { data: messageData, loading: messageLoading, error: messageError } = useQuery(GET_CONVERSATION, {
+useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
+  pollInterval: 10000, // Poll every 5 seconds
+});
+
+const {
+  data: messageData,
+  loading: messageLoading,
+  error: messageError,
+} = useQuery(GET_CONVERSATION, {
+  variables: { conversationId: localStorage.getItem("activeConversationId") },
+  fetchPolicy: "network-only",
+  skip: !localStorage.getItem("activeConversationId"),
 });
 
 useEffect(() => {
@@ -166,12 +177,19 @@ useEffect(() => {
       conversationName: messageData.conversation.conversationName,
       conversationUsers: messageData.conversation.conversationUsers,
       messages: messageData.conversation.messages
-        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: string; createdAt: string }) => ({
-          _id: msg._id,
-          textContent: msg.textContent,
-          messageUser: msg.messageUser,
-          createdAt: msg.createdAt,
-        }))
+        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: { _id: string; username: string; avatar?: { url?: string } }; createdAt: string; formattedCreatedAt: string }) => ({
+            _id: msg._id,
+            textContent: msg.textContent,
+            messageUser: {
+              _id: msg.messageUser._id,
+              username: msg.messageUser.username,
+              avatar:{
+                url: msg.messageUser.avatar?.url || `https://ui-avatars.com/api/?name=${msg.messageUser.username}&background=random&color=fff&size=128`,
+              }
+            },
+            createdAt: msg.createdAt,
+            formattedCreatedAt: msg.formattedCreatedAt, // Include formattedCreatedAt
+          }))
         : [],
     });
     setIsChatOpen(true);
@@ -411,6 +429,7 @@ function mapResponseToComment(res: {
             <div className="message-text-content">
               <h1 className="chat-title">{messageItem.chatTitle}</h1>
               <p className="latest-message">{messageItem.latestMessage}</p>
+              <p className="chat-date">{messageItem.formattedCreatedAt}</p>
             </div>
             <p className="chat-date">{messageItem.date}</p>
           </div>

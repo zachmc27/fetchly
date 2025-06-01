@@ -6,7 +6,7 @@ type Message {
     messageUser: User # Make this nullable
     textContent: String
     media: Media
-    readUser: [User]
+    unreadUser: [User]
     conversation: Conversation
     isRead: Boolean
     itemType: String

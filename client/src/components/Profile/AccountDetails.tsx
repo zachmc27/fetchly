@@ -71,15 +71,19 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
 
     console.log(userId);
   try {
+    const input: { username?: string; avatar?: string; about?: string; fullName?: string } = {};
+    if (updatedUsername) input.username = updatedUsername;
+    if (media?.id) input.avatar = media.id;
+    if (updatedAbout) input.about = updatedAbout;
+    if (updatedName) input.fullName = updatedName;
+
+    
     const { data } = await updateUser({
       variables: {
-        userId: userId,
-        input: {
-          username: updatedUsername || user.username,
-          avatar: media?.id || user.avatar, // or user.avatar?.id if avatar is an object
-          about: updatedAbout || user.about,
-          fullName: updatedName || user.fullName,
-        }
+      userId: userId,
+      input: {
+        ...input,
+      }
       }
     });
     

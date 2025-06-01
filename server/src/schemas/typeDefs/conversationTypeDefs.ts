@@ -5,17 +5,12 @@ const conversationTypeDefs = `
 type Conversation {
     _id: ID!
     conversationName: String!
-    conversationUsers: [ConversationUser!]!
+    conversationUsers: [User!]!
     messages: [Message!]
     lastMessage: Message
     formattedCreatedAt: String
 }
 
-type ConversationUser {
-    _id: ID!
-    username: String!
-    profilePicture: String
-}
 
 input ConversationUserInput {
     _id: ID!
