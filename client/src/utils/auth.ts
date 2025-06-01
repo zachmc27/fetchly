@@ -45,7 +45,9 @@ class AuthService {
   // TODO: What is the purpose of this method?
   login(idToken: string, userId: number) {
     localStorage.setItem('id_token', idToken.toString());
+    console.log("Token Saved");
     localStorage.setItem('userId', userId.toString());
+    console.log("Id Saved");
     window.location.assign('/');
 
     // Alert for testing purposes comment out when not needed
