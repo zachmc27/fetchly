@@ -110,7 +110,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
               />
             </div>            
         </WindowModal>
-      )};
+      )}
     </div>
   );
 }
