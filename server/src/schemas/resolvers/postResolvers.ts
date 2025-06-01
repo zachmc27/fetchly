@@ -1,4 +1,4 @@
-import { Post, User, Org } from '../../models/index.js';
+import { Post, User, Org, Pet } from '../../models/index.js';
 import { type Types } from 'mongoose';
 import mongoose from 'mongoose';
 
@@ -11,6 +11,7 @@ interface AddPostArgs {
         };
         contentText?: string;
         media?: string[];
+        taggedPets: string;
     }
 }
 
@@ -70,7 +71,8 @@ const postResolvers = {
           }})
           .populate({
             path: 'likes.refId'
-          });
+          })
+          .populate('taggedPets');
       },
       post: async (_parent: any, { postId }: PostArgs) => {
         return await Post.findById(postId)
@@ -87,7 +89,8 @@ const postResolvers = {
           }})
           .populate({
             path: 'likes.refId'
-          });
+          })
+          .populate('taggedPets');
       },
     },
 
@@ -95,6 +98,12 @@ const postResolvers = {
     Mutation: {
       addPost: async (_parent: any, { input }: AddPostArgs) => {
         const post = await Post.create({ ...input });
+
+        if (input.taggedPets) {
+          await Pet.findByIdAndUpdate(input.taggedPets, {
+            $addToSet: {taggedPosts: post._id }
+          });
+        }
 
         const { refId, refModel } = input.poster;
 
@@ -133,7 +142,7 @@ const postResolvers = {
             $addToSet: {posts: response._id }
           });
         }
-        return response;
+          return response;
       },
       updatePost: async (_parent: any, { postId, input }: UpdatePostArgs) => {
         const post = await Post.findByIdAndUpdate(postId, input, {

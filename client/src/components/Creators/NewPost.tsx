@@ -1,10 +1,11 @@
 //form for creating a free flow post
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaImage } from "react-icons/fa";
 // import { FaCamera, FaAt } from "react-icons/fa";
 import Actionmodal from "../Reusables/ActionModal";
-import { useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { ADD_POST, ADD_POST_RESPONSE, UPLOAD_MEDIA } from "../../utils/mutations";
+import { QUERY_USER, QUERY_ORG } from "../../utils/queries";
 
 interface NewPostProps {
   parentPostId?: string;
@@ -17,17 +18,6 @@ interface NewPostProps {
     media?: string[];
   }) => void
 }
-
-// type UploadedMedia = {
-//   id: string;
-//   filename: string;
-//   contentType: string;
-//   length: number;
-//   uploadDate: string;
-//   gridFsId: string;
-//   tags: string[];
-//   url: string;
-// };
 
 const userId = localStorage.getItem("user_Id");
 const accountType = localStorage.getItem("accountType");
@@ -46,6 +36,42 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
 
   const [content, setContent] = useState('');
   const [media, setMedia] = useState<string[]>([]);
+  const [pet, setPet] = useState<string>("");
+
+  // Pets Dropdown Functionality
+  const queryToUse = userType === "Org" ? QUERY_ORG : QUERY_USER;
+  const [getPets, { data: petData }] = useLazyQuery(queryToUse);
+  const [petOptions, setPetOptions] = useState<{ id: string; name: string }[]>([]);  
+
+  useEffect(() => {
+    if (!userId) return;
+    if (userType === "Org") {
+      getPets({ variables: { orgId: userId } });
+    }
+    if (userType === "User") {
+      getPets({ variables: {userId: userId}})
+    }
+    console.log("Fetching pets for:", userId)
+  }, [getPets, userType, userId]);
+
+  useEffect(() => {
+    if (petData?.org?.pets) {
+      const names = petData.org.pets.map((pet: { _id: string; name: string }) => ({
+        id: pet._id,
+        name: pet.name,
+      }));
+      setPetOptions(names);
+      console.log(names)
+    }
+    else if (petData?.user?.pets) {
+      const names = petData.user.pets.map((pet: { _id: string; name: string }) => ({
+        id: pet._id,
+        name: pet.name,
+      }));
+      setPetOptions(names);
+      console.log(names)
+    }
+  }, [petData]);
 
   // const handleMediaUpload = (media: UploadedMedia) => {
   //   setMedia((prev) => [...prev, media.id]);
@@ -102,6 +128,7 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
       },
       contentText: content,
       media,
+      taggedPets: pet
     };
 
     try {
@@ -119,6 +146,7 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
       onSubmit(postInput);
       setContent('');
       setMedia([]);
+      setPet("");
       setUploadedURL([]);
     } catch (error) {
       console.error("Error adding post:", error);
@@ -134,6 +162,17 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
           placeholder="What's on your mind?"
           className="post-textarea"
         />
+      </div>
+      <div className="adoption-pet-button">
+        <label>Which furry friend is this about?</label>
+        <select value={pet} onChange={(e) => setPet(e.target.value)}>
+          <option value="">Select Pet</option>
+          {petOptions.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="post-toolbar">

@@ -39,12 +39,14 @@ const postTypeDefs = `
     isResponse: Boolean
     createdAt: String    
     itemType: String
+    taggedPets: Pet
   }
 
   input AddPostInput {
     poster: PosterInput!
     contentText: String
     media: [String]
+    taggedPets: ID
   }
 
   input AddPostResponseInput {

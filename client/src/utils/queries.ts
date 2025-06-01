@@ -556,6 +556,10 @@ export const QUERY_PETS = gql`
          refModel         
       }
       followedByCount 
+      taggedPosts {
+        _id
+        contentText
+      }
     }
   }
 `;
@@ -614,6 +618,10 @@ export const QUERY_PET = gql`
          refModel         
       }
       followedByCount 
+      taggedPosts {
+        _id
+        contentText
+      }
     }
   }
 `;
@@ -697,6 +705,11 @@ export const QUERY_POSTS = gql`
       isResponse          
       createdAt
       itemType
+      taggedPets {
+        _id
+        name
+        gender
+      }
     }
   }
 `;
@@ -765,6 +778,11 @@ export const QUERY_POST = gql`
       isResponse          
       createdAt
       itemType
+      taggedPets {
+        _id
+        name
+        gender
+      }
     }
   }
 `;
