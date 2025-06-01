@@ -22,7 +22,7 @@ import {
 } from "../../mockdata/mocktypes/Feed";
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { mockConversations } from "../../mockdata/conversation-data";
+// import { mockConversations } from "../../mockdata/conversation-data";
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation";
 import { mockMeetupPosts } from "../../mockdata/post-data";
 import { mockAdoptionPosts } from "../../mockdata/post-data";
