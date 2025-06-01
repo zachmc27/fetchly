@@ -38,7 +38,14 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
     return <p>Failed to load followers. Please try again later.</p>;
   }
 
-  const followers: Follower[] = followersData?.user?.followedBy?.map((followedProfile) => ({
+  interface FollowedProfile {
+    refId?: {
+      username?: string;
+      _id?: string;
+    };
+  }
+
+  const followers: Follower[] = followersData?.user?.followedBy?.map((followedProfile: FollowedProfile) => ({
     userAvi: "",
     username: followedProfile.refId?.username || "Unknown",
     id: followedProfile.refId?._id || "Unknown ID",
@@ -73,10 +80,7 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
             .filter((follower) => selectedParticipantNames.includes(follower.id))
             .map((follower) => follower.username)
             .join(", ");
-           
-           
-            // Logged in user ID: 683b942c80d8c8d3f0b44251
-            // push this user to the conversationUsers array
+
     if (loggedInUser) {
       conversationUsers.push({ _id: loggedInUser });
     } else {
@@ -84,7 +88,6 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
       alert("Failed to retrieve logged-in user information. Please try again.");
       return;
     }
-
 
     try {
       await createConversation({
@@ -96,9 +99,14 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
         },
       });
       onSubmit();
-    } catch (error: any) {
-      console.error("Error creating conversation:", error);
-      alert(error.message || "Failed to create conversation. Please try again.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error creating conversation:", error);
+        alert(error.message || "Failed to create conversation. Please try again.");
+      } else {
+        console.error("Unexpected error:", error);
+        alert("An unexpected error occurred. Please try again.");
+      }
     }
   }
 
