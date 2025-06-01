@@ -26,20 +26,20 @@ function Login() {
   const initialValues = { email: "", password: "" };
 
   const handleFormSubmit = async (formState: Record<string, string>) => {
-    console.log("handleformSubmit called");
-    console.log(formState);
     try {
       const { data } = await login({
         variables: {  ...formState },
       });
 
-       console.log("Login data:", data);
+       console.log("Login data:", data.loginUser.token);
     const token = data.loginUser.token;
     const userId = data.loginUser.user._id;
+
 
     if (token) {
       Auth.login(token, userId);
       localStorage.setItem('accountType', "user");
+      console.log("Cool")
       return;
     }
   } catch {
@@ -65,22 +65,6 @@ function Login() {
     }
   }
 };
-
-  //     console.log("Login data:", data);
-  //     const token = data.loginUser.token || data.loginOrg.token;
-  //     const userId = data.loginUser.user._id || data.loginOrg.org._id;
-
-  //     if (token) {
-  //       Auth.login(token, userId);
-  //     }
-  //     else {
-  //       console.error("No token received");
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-    
-  // };
 
   return (
     <div>
