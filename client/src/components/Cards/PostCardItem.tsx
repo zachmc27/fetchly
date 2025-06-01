@@ -62,7 +62,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   const openProfile = (e: React.MouseEvent) => {
-    e.stopPropagation(); // prevent post click
+    e.stopPropagation();
     setShowProfileModal(true);
   };
 

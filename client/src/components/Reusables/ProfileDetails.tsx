@@ -1,5 +1,5 @@
 import "../../SammiReusables.css";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { QUERY_USER, QUERY_ORG } from '../../utils/queries';
 import { FOLLOW_AS_USER, UNFOLLOW_AS_USER, FOLLOW_AS_ORG, UNFOLLOW_AS_ORG } from '../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
@@ -21,15 +21,11 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
 
   if (!profileAccountType) return null;
 
-    const queryToUse = useMemo(() => {
-    return profileAccountType === "Org" ? QUERY_ORG : QUERY_USER;
-    }, [profileAccountType]);
+    const queryToUse = profileAccountType === "Org" ? QUERY_ORG : QUERY_USER;
 
-    const variables = useMemo(() => {
-    return profileAccountType === "Org"
+    const variables = profileAccountType === "Org"
         ? { orgId: profileUserId }
         : { userId: profileUserId };
-    }, [profileUserId, profileAccountType]);
 
     const { data, loading, error } = useQuery(queryToUse, {
     variables,
@@ -39,10 +35,10 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
   const [user, setUser] = useState<UserType | undefined>();
   const [isFollowing, setIsFollowing] = useState(false);
 
-//   Set user and follow state when data changes
-useEffect(() => {
-  if (data) {
-    const profileData = data.user || data.org;
+    //   Set user and follow state when data changes
+    useEffect(() => {
+    if (data) {
+        const profileData = data.user || data.org;
 
     setUser(prev => {
       // Only update if data has changed
