@@ -84,10 +84,12 @@
 .search-style {
     border: 1px solid black;
     background-color: white;
-    width: fit-content;
+    width: 90vw;
     margin: 0 auto;
-    margin-top: 20px;
-    padding: 10px
+    margin-bottom: 2px;
+    padding: 10px;
+    margin-top: 14vh;
+    border-radius: 10px;
 }
 
 .search-btn {
@@ -101,7 +103,7 @@
 
 .search-bar {
     background-color: white;
-    border: none
+    border: none;
 }
 
 .search-bar:focus {
@@ -115,7 +117,9 @@
     overflow: hidden;
     overflow-y: auto;
     width: 100vw;
-
+    background-color: #fff;
+    padding-bottom: 20px; 
+    height: 92vh;
 }
 
 .search-style:focus-within {
@@ -141,7 +145,7 @@
     gap: 2vh 5%;
     padding: 10px 0px;
     justify-content: center;
-    height: 82vh;
+    height: 85vh;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -301,18 +305,15 @@
     flex-wrap: wrap;
     padding: 10px 0px;
     justify-content: center;
-    height: 76vh;
+    height: 100%;
     overflow: hidden;
     overflow-y: auto;
-    
 }
 
 .meetup-page-container {
     height: fit-content;
     width: 100vw;
     height: 82vh;
-    overflow: hidden;
-    overflow-y: auto;
 }
 
 .meetup-card {
@@ -439,19 +440,16 @@
 /* inbox page */
 
 .inbox-page-container {
-    height: fit-content;
+    height: 92vh;
     width: 100vw;
-    height: 85vh;
-    overflow: hidden;
-    overflow-y: auto;
-
 }
 
 .inbox-feed-container {
   background-color: #ffffff; 
-  height: 82vh;
+  height: 100%;
   overflow: hidden;
   overflow-y: auto;
+  padding-top: 12vh;
 }
 
 
@@ -541,25 +539,34 @@
   display: flex;
   flex-direction: column;
   width: 100%; /* Takes full width of its parent */
-  height: 92vh; /* Takes full height of its parent, or adjust as needed */
+  height: 100%; /* Takes full height of its parent, or adjust as needed */
   background-color: #ffffff;
+  z-index: 100;
 }
 
 /* Chat Header */
 .chat-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px 15px; /* Adjusted padding */
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #e5e5e5;
-  position: sticky; /* Makes header stick to top when chat messages scroll */
+  justify-content: center;
+  padding: 0 15px;
+  background-color: #ffffff; 
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); 
+  position: sticky;
   top: 0;
-  z-index: 5;
+  left: 0; 
+  width: 100%; 
+  z-index: 999;
+  height: 12vh; 
+  box-sizing: border-box;
+  position: relative
 }
 
 .chat-header h1 {
-  font-size: 0.95rem; /* Approx 15px */
+  font-size: 1.15rem;
+  line-height: 1;
   font-weight: 600;
   margin: 0;
   text-align: center;
@@ -570,25 +577,27 @@
 .chat-header button {
   background: none;
   border: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
   cursor: pointer;
   padding: 5px;
-  color: #007aff; /* Standard iOS blue for "close" */
+  color: #333; 
   font-weight: 400;
 }
 
-.chat-header button:last-child { /* Info button */
+.chat-header button:last-child { 
   font-weight: bold;
   border: 1.5px solid #8e8e93;
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
+  width: 3vh;
+  height: 3vh;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #8e8e93;
   font-size: 0.75rem;
   line-height: 1;
+  position: absolute;
+  right: 8vw
 }
 
 /* Chat Messages Area */
@@ -599,6 +608,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  z-index: 10;
+
 }
 
 /* Common styles for message containers (row with avatar and bubble) */
@@ -697,10 +708,9 @@
   display: flex;
   align-items: center;
   padding: 10px 12px;
-  background-color: #f7f7f7;
-  border-top: 1px solid #e5e5e5;
+  background-color: #fff;
   position: fixed; 
-  bottom: 55px; 
+  bottom: 65px; 
   margin: 0 auto;
   width: 100%; 
   box-sizing: border-box; 
@@ -710,8 +720,9 @@
 .chat-bar input[type="text"] {
   flex-grow: 1;
   padding: 9px 14px;
-  border: 1px solid #dcdcdc;
-  border-radius: 18px;
+  border: 1px solid rgb(0, 0, 0, .6);
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.8); 
+  border-radius: 12px;
   margin-right: 8px;
   font-size: 0.9rem;
   outline: none;
@@ -722,12 +733,11 @@
 
 .chat-bar .send-message-btn {
   background: none;
-  border: 1.5px solid #000;
+  border: 1.5px solid rgb(0, 0, 0, .0);
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   font-size: 1.1rem;
-  color: #000;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -735,6 +745,11 @@
   padding: 0;
   padding-left: 1px;
   padding-bottom: 1px;
+}
+
+.chat-bar .send-message-btn img {
+  width: 32px;
+  height: 32px;
 }
 
 /* MsgInfoPage */
@@ -747,31 +762,65 @@
   width: 100%;
   height: 92vh;
   max-width: 400px;
-  padding: 20px;
   box-sizing: border-box;
 }
 
 .msg-info-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  justify-content: center; /* Center the h1 title */
+  padding: 0 15px; /* Horizontal padding, vertical handled by height */
+  background-color: #ffffff; /* White background */
+  border-bottom-left-radius: 30px; /* Rounded bottom-left corner */
+  border-bottom-right-radius: 30px; /* Rounded bottom-right corner */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Shadow */
+  position: sticky; /* Or static, depending on desired scroll behavior. Sticky is common for sub-page headers. */
+  top: 0; /* Required for sticky positioning */
+  left: 0;
+  width: 100%;
+  z-index: 990; /* Slightly lower than main header if they could overlap, but high enough */
+  height: 12vh; /* Match fetchly-header height */
+  box-sizing: border-box;
 }
 
-.msg-info-header button {
+.msg-info-header h1 { /* Title "Chat" */
+  margin: 0;
+  font-size: 20px; /* Adjust as needed */
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  /* flex-grow: 1; Removed as buttons are absolutely positioned */
+}
+
+.msg-info-header button:first-of-type {
+  position: absolute;
+  left: 4vh; /* Consistent with fetchly-header icon positioning */
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
-  cursor: pointer;
+  font-size: 24px; /* Adjust for arrow size */
+  font-weight: normal; /* Or bold if preferred */
   color: #333;
-  padding: 0;
+  cursor: pointer;
+  padding: 5px 10px; /* Clickable area */
 }
 
-.msg-info-header h1 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin: 0;
+
+.msg-info-header button:last-of-type {
+  position: absolute;
+  right: 4vh; /* Consistent positioning */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px; /* Adjust emoji/icon size */
+  color: #333; /* Or a specific color like red for delete */
+  cursor: pointer;
+  padding: 5px; /* Clickable area */
 }
+
+
 
 .gc-editing-container {
   display: flex;
@@ -1207,18 +1256,18 @@
 /* home page feed */
 
 .post-page-container {
-    height: fit-content;
+    height: 100vh;
     width: 100vw;
-   
-
+    background-color: #fff; 
 }
 
 .post-feed-container {
     display: flex;
     flex-wrap: wrap;
     padding: 10px 0px;
+    padding-top: 12vh;
     justify-content: center;
-    height: 82vh;
+    height: 94vh;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -1571,11 +1620,7 @@
 /* adoption details */
 
 /* Overall Page Styles */
-.adoption-page-container { /* Your containerClass */
-  background-color: #f0f2f5; /* Light grey background for the whole page */
-  color: #1c1e21; /* Default dark text color */
-  padding-bottom: 20px; /* Space at the bottom if content is long */
-}
+
 
 /* Pet Image Container */
 .adoption-pet-image-container {
@@ -1988,3 +2033,45 @@
   background-color: white; 
 }
 
+/* Header */
+
+.fetchly-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  padding: 12px 15px;
+  background-color: #ffffff; 
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+  height: 12vh; /* Example height, adjust as needed */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.fetchly-header a[href="/profile"] { /* Targeting the Link component for the profile icon */
+  position: absolute; /* Position icon relative to the header */
+  left: 4vh; /* Distance from the left edge */
+  top: 50%;
+  transform: translateY(-50%); /* Vertically center the icon */
+  display: flex; /* To ensure the img inside behaves well */
+  align-items: center;
+}
+
+.fetchly-header a[href="/profile"] img {
+  width: 5vh; /* Adjust size of the profile icon as needed */
+  height: 5vh; /* Adjust size of the profile icon as needed */
+  display: block; /* Remove extra space below the image */
+}
+
+.fetchly-header a[href="/"] {
+  margin: 0; /* Remove default h1 margin */
+  font-size: 22px; /* Adjust font size as desired, though you said to ignore font */
+  font-weight: bold; /* Or your desired font weight */
+  color: #333; /* Text color */
+  /* The justify-content: center on .fetchly-header will center this */
+}

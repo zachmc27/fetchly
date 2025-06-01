@@ -1,4 +1,6 @@
 import Feed from "../components/Reusables/Feed";
+
+
 // import NewMessage from "../components/Creators/NewMessage";
 import { QUERY_POSTS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
