@@ -53,7 +53,6 @@ import Header from "../Header";
 
 type FeedItem =
   | MockMessageCard
-  | MockPostCard
   | MeetUpCard
   | AdoptionCard
   | PostCard;
