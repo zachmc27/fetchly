@@ -19,8 +19,6 @@ interface NewPostProps {
   }) => void
 }
 
-
-
 const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
   const userId = localStorage.getItem("userId");
   const accountType = localStorage.getItem("accountType");
@@ -130,7 +128,7 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
       },
       contentText: content,
       media,
-      taggedPets: pet
+      taggedPets: pet || null
     };
 
     try {

@@ -112,7 +112,7 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
         state: location?.state || "",
         country: location?.country || "",
       },
-      media,
+      media: media ?? [],
     };
 
     try {
