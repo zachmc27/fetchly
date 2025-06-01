@@ -6,16 +6,33 @@
 
 import "../ZachTemp.css"
 import Feed from "../components/Reusables/Feed";
-import { mockMeetupData } from "../mockdata/feed-data";
+import { useQuery } from "@apollo/client";
+import { QUERY_MEETUPS } from "../utils/queries";
+
 
 export default function Meetup() {
+
+  const { data, loading, error } = useQuery(QUERY_MEETUPS);
+
+
+  const meetups = data?.meetUps
+  ? [...data.meetUps].sort(
+    (a,b) => Number(b.createdAt) - Number(a.createdAt)
+  )
+  : [];
+
+  console.log("Sorted Meetups", meetups)
+
+  if (loading) return <p>Loading meetups...</p>;
+  if (error) return <p>Error loading meetups.</p>;
+
 
   return (
     <>
     <div className="meetup-page-container">
         
       <Feed 
-      initialFeedArray={mockMeetupData} 
+      initialFeedArray={meetups} 
       itemStyle="meetup-card" 
       containerStyle="meetup-feed-container"/>
     </div>

@@ -5,6 +5,7 @@ import React, { useState } from "react";
 // import ImageUpload from "../Reusables/ImageUpload";
 import { useMutation } from "@apollo/client";
 import { ADD_MEETUP } from "../../utils/mutations";
+// import { div } from "framer-motion/client";
 
 interface NewMeetupPostProps {
   onSubmit: (data: {
@@ -27,13 +28,14 @@ interface NewMeetupPostProps {
   }) => void;
 }
 
-// const userId = localStorage.getItem("user_Id");
-const userId = "682d20019c9002a26585deda"
+const userId = localStorage.getItem("user_Id");
 const accountType = localStorage.getItem("accountType");
 const userType = accountType === "org" ? "Org" : "User";
 
 const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
-  const [addMeetUpPost] = useMutation(ADD_MEETUP);
+  const [addMeetUpPost] = useMutation(ADD_MEETUP, {
+    refetchQueries: ["MeetUps"],
+  });
 
   // const handleImageSelect = (file: { id: string }) => {
   //   setMedia([file.id]);
@@ -84,7 +86,7 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
       console.log("Mutation Success:", data);
       onSubmit(data);
       setSuccessMessage("Your meetup post has been created!");
-
+      //Resets the form to empty values
       setTitle("");
       setDescription("");
       setDate("");
@@ -96,7 +98,6 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
       setCountry("");
       setMedia([]);
       // setPreviewImage("");
-
     } catch (error) {
       console.log("Error adding meet up", error);
       setErrorMessage("There was an error creating meetup. Please try again.");
@@ -105,98 +106,97 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
 
   const handleTimeButtons = (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log('Button has been clicked', e.target)
   };
 
   return (
-    <form onSubmit={handleSubmit} className="new-meetup-form">
-      {/* <ImageUpload
+      <form onSubmit={handleSubmit} className="new-meetup-form">
+        {/* <ImageUpload
         onImageSelect={handleImageSelect}
         previewImage={previewImage}
         setPreviewImage={setPreviewImage}
       /> */}
-      <div>
-        <label>Title</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Puppy Play-date "
-        />
-      </div>
+        <div>
+          <label>Title</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Puppy Play-date "
+          />
+        </div>
 
-      <div>
-        <label>Description</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Say something about your meetup!"
-        />
-      </div>
+        <div>
+          <label>Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Say something about your meetup!"
+          />
+        </div>
 
-      <div>
-        <label>Date</label>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-      </div>
+        <div>
+          <label>Date</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
 
-      <div>
-        <label>Time</label>
-        <input
-          type="text"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          placeholder="What time is the meetup?"
-        />
-        <button onClick={handleTimeButtons}>AM</button>{" "}
-        <button onClick={handleTimeButtons}>PM</button>
-      </div>
+        <div>
+          <label>Time</label>
+          <input
+            type="text"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            placeholder="What time is the meetup?"
+          />
+          <button onClick={handleTimeButtons}>AM</button>{" "}
+          <button onClick={handleTimeButtons}>PM</button>
+        </div>
 
-      <div>
-        <label>Location</label>
-        <input
-          type="text"
-          value={address}
-          placeholder="Address"
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <input
-          type="text"
-          value={zip}
-          onChange={(e) => setZip(e.target.value)}
-          placeholder="Zip code"
-        />
+        <div>
+          <label>Location</label>
+          <input
+            type="text"
+            value={address}
+            placeholder="Address"
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <input
+            type="text"
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
+            placeholder="Zip code"
+          />
 
-        <input
-          type="text"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          placeholder="City"
-        />
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="City"
+          />
 
-        <input
-          type="text"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-          placeholder="State"
-        />
+          <input
+            type="text"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            placeholder="State"
+          />
 
-        <input
-          type="text"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          placeholder="Country"
-        />
-      </div>
+          <input
+            type="text"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            placeholder="Country"
+          />
+        </div>
 
-      <button type="submit">Post My Meet-Up</button>
-      {successMessage && <p>{successMessage}</p>}
-      {errorMessage && <p>{errorMessage}</p>}
-    </form>
+        <button type="submit">Post My Meet-Up</button>
+        {successMessage && <p>{successMessage}</p>}
+        {errorMessage && <p>{errorMessage}</p>}
+      </form>
+    // </>
   );
-
-  };
+};
 export default NewMeetUpPost;
