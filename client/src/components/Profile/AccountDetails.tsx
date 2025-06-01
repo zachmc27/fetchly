@@ -71,7 +71,7 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
 
     console.log(userId);
   try {
-    const input: any = {};
+    const input: { username?: string; avatar?: string; about?: string; fullName?: string } = {};
     if (updatedUsername) input.username = updatedUsername;
     if (media?.id) input.avatar = media.id;
     if (updatedAbout) input.about = updatedAbout;
