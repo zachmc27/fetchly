@@ -7,10 +7,9 @@ import { mockMutualFollowers } from "../../mockdata/post-data";
 
 interface NewMessageProps {
   onSubmit: () => void;
-  onClose: () => void;
 }
 
-export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
+export default function NewMessage({ onSubmit }: NewMessageProps) {
 
   const [selectedParticipantNames, setSelectedParticipantNames] = useState<string[]>([]);
 
@@ -27,10 +26,6 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
     console.log(selectedParticipantNames.length + 1);
   }
 
-  function handleClose() {
-    onClose();
-  }
-
   function queryUser(event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     console.log('query a user that matches the search criteria');
@@ -41,11 +36,6 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
 }
   return (
      <div className="msg-creation-container">
-      <div className="msg-creation-header">
-        <button onClick={handleClose}>{"<"}</button>
-        <h1>New Chat</h1>
-        {/* change this h1 to your dropdown */}
-      </div>
       {selectedParticipantNames.length > 2 && 
       <div className="gc-creating-container">
         {/* add jsx element for change group photo option */}

@@ -331,7 +331,7 @@ function handleCloseAdoptionPostView() {
   const postItem = item as PostCard;
   return (
     <PostCardItem
-      key={postItem._id}
+      key={index}
       post={postItem}
       onOpen={handlePostViewRender}
       itemStyle={itemStyle}

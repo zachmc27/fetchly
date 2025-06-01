@@ -1,5 +1,5 @@
 //form for creating a free flow post
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaImage } from "react-icons/fa";
 // import { FaCamera, FaAt } from "react-icons/fa";
 import Actionmodal from "../Reusables/ActionModal";
@@ -15,7 +15,8 @@ interface NewPostProps {
     };
     contentText: string;
     media?: string[];
-  }) => void
+  }) => void;
+  onClose?: () => void
 }
 
 // type UploadedMedia = {
@@ -33,7 +34,7 @@ const userId = localStorage.getItem("user_Id");
 const accountType = localStorage.getItem("accountType");
 const userType = accountType === "org" ? "Org" : "User";
 
-const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
+const NewFreeFormPost = ({ onSubmit, parentPostId, onClose }: NewPostProps) => {
   const [createPost, { loading: postLoading, error: postError }] = useMutation(ADD_POST);
   const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE);
 
@@ -50,6 +51,14 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
   // const handleMediaUpload = (media: UploadedMedia) => {
   //   setMedia((prev) => [...prev, media.id]);
   // };
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      console.warn("No onClose provided")
+    }
+  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   const file = event.target.files?.[0];

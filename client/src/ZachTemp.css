@@ -1747,9 +1747,11 @@
 .msg-creation-container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
   font-family: sans-serif;
-  background-color: #fff;
+  margin-top: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   color: #333;
   height: 92vh;
   box-sizing: border-box;
@@ -1807,7 +1809,7 @@
 
 .add-user-header {
   font-size: 18px; /* Match "People" style */
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 25px; /* Adjust spacing */
   margin-bottom: 10px; /* Adjust spacing */
   color: #333; /* Match "People" color */
@@ -1816,11 +1818,11 @@
 }
 
 .add-user-list-wrapper {
-  margin: 20px;
+  margin-bottom: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  max-height: 50vh;
+  max-height: 100%;
   display: flex; /* Make it a flex container */
   flex-direction: column;
   overflow: hidden;
@@ -1909,12 +1911,12 @@
   font-weight: 600;
   cursor: pointer;
   width: calc(100% - 40px); /* Adjust width for margin */
-  margin: 20px; /* Add margin */
+  margin: 20px 20px 0px 20px; /* Add margin */
 }
 
 .chat-create-btn:hover {
   opacity: 0.9;
-}
+} 
 
 /* image carousel */
 
@@ -2025,3 +2027,143 @@
   color: #333; /* Text color */
   /* The justify-content: center on .fetchly-header will center this */
 }
+
+/* New meetup form */
+
+.new-meetup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between form sections */
+  max-width: 400px; /* Or your preferred max width */
+  margin: 20px auto; /* Centering the form on the page */
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Styling for the ImageUpload placeholder area */
+.image-upload-placeholder { /* Add this class to a div wrapping your ImageUpload if you want a visual placeholder like the image */
+  width: 100%;
+  height: 200px; /* Adjust as needed */
+  background-color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px; /* Space below the placeholder */
+  text-align: center;
+  color: #757575;
+}
+
+.new-meetup-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between label and input */
+}
+
+.new-meetup-form label {
+  font-weight: bold;
+  margin-bottom: 3px;
+  color: #333;
+}
+
+.new-meetup-form input[type="text"],
+.new-meetup-form input[type="date"],
+.new-meetup-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+  font-size: 1rem;
+}
+
+.new-meetup-form textarea {
+  min-height: 100px; /* Adjust as needed for description */
+  resize: vertical; /* Allows users to resize vertically */
+}
+
+.new-meetup-form input::placeholder,
+.new-meetup-form textarea::placeholder {
+  color: #aaa;
+}
+
+/* Specific styling for the time section if you want AM/PM buttons inline */
+.new-meetup-time {
+  /* No change needed if AM/PM buttons are meant to be on new lines.
+     If they should be somewhat inline with the input, more complex flex/grid would be needed here.
+     For simplicity, this CSS assumes they can be block elements or you handle their layout separately if inline. */
+}
+
+.new-meetup-time input[type="text"] {
+  margin-bottom: 5px; /* Space before AM/PM buttons if they are below */
+}
+
+.new-meetup-time button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px; /* Space between AM and PM buttons */
+  font-size: 0.9rem;
+}
+
+.new-meetup-time button:last-child {
+  margin-right: 0;
+}
+
+.new-meetup-time button:hover {
+  background-color: #e0e0e0;
+}
+
+
+.post-meetup-btn {
+  background-color: #333; /* Dark background like the image */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 100%; /* Make button full width of its container */
+  margin-top: 10px; /* Space above the button */
+}
+
+.post-meetup-btn:hover {
+  background-color: #555; /* Slightly lighter on hover */
+}
+
+/* 
+  To use the .image-upload-placeholder style, you might adjust your TSX:
+
+  <div className="image-upload-placeholder">
+    Image Upload (Button)
+    <ImageUpload
+      onImageSelect={(file) => {
+        console.log('Selected Image', file)
+      }}
+      previewImage={previewImage}
+      setPreviewImage={setPreviewImage}
+    />
+  </div>
+
+  Or, if ImageUpload itself is just a button and you want a visual area above/around it:
+
+  <div className="image-upload-placeholder">
+     Simulated Image Area (Icon would go here)
+  </div>
+  <ImageUpload ... /> /* Your actual button for uploading */
+ 
+  .image-preview {
+    max-width: 30vw;
+    max-height: 30vh;
+    object-fit: cover;
+    margin: 0 auto
+  }
+
+  /* New message form */
