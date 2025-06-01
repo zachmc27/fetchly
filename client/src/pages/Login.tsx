@@ -34,11 +34,13 @@ function Login() {
        console.log("Login data:", data.loginUser.token);
     const token = data.loginUser.token;
     const userId = data.loginUser.user._id;
+    const userAvatar = data.loginUser.user.avatar.url;
 
 
     if (token) {
       Auth.login(token, userId);
       localStorage.setItem('accountType', "user");
+      localStorage.setItem('userAvatar', userAvatar);
       console.log("Cool")
       return;
     }

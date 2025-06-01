@@ -77,6 +77,7 @@ export default function AccountDetails({ onClose }: { onClose: () => void }) {
     if (updatedAbout) input.about = updatedAbout;
     if (updatedName) input.fullName = updatedName;
 
+    
     const { data } = await updateUser({
       variables: {
       userId: userId,
