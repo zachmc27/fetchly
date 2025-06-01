@@ -19,9 +19,6 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
   const accountType = localStorage.getItem('accountType');
   const userType = accountType === "org" ? "Org" : "User";
 
-  // Early return after hooks
-  if (!profileAccountType) return null;
-
   const queryToUse = profileAccountType === "Org" ? QUERY_ORG : QUERY_USER;
   const variables = useMemo(() => {
     return profileAccountType === "Org"
