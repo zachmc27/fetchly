@@ -218,8 +218,7 @@ export const UPDATE_OWNER = gql`
 export const ADD_POST = gql`
   mutation Mutation($input: AddPostInput!) {
     addPost(input: $input) {
-      _id
-      contentText    
+      _id  
     }
   }
 `;
@@ -232,6 +231,8 @@ export const ADD_POST = gql`
 //       "refModel": "User"  // or "Org"
 //     },
 //     "contentText": "This is a test post!",
+//     "media": <mediaId>
+//     "taggedPets": <petId>
 //   }
 // }
 

@@ -24,17 +24,28 @@ export default function Inbox() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading conversations.</div>;
 
-  const initialFeedArray = data?.conversationByUser.map((conversation: MockConversationObject) => {
+  // Check if data is null or conversationByUser is empty
+  if (!data || !data.conversationByUser || data.conversationByUser.length === 0) {
+    return (
+      <div className="message-text-content" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <strong className="latest-message" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+        Please Make a new conversation!
+      </strong>
+      </div>
+    );
+  }
+
+  const initialFeedArray = data.conversationByUser.map((conversation: MockConversationObject) => {
     return {
       id: conversation._id, // Use `_id` from the API data
-      coverImage: "https://img.icons8.com/?size=100&id=111022&format=png&color=000000", // Default cover image
+      coverImage: `https://ui-avatars.com/api/?name=${conversation.conversationName}&background=random&color=fff&size=128`, // Default cover image
       conversationId: conversation._id, // Use `_id` from the API data
       chatTitle: conversation.conversationName !== "null" ? conversation.conversationName : "New Conversation", // Fallback for `conversationName`
       latestMessage: conversation.lastMessage?.textContent || "No messages yet", // Extract `textContent` or fallback
-      Date: "No date available", // No date available in the provided data
+      Date: conversation.formattedCreatedAt ? new Date(conversation.formattedCreatedAt).toLocaleDateString() : new Date().toLocaleDateString(), // Parse `formattedCreatedAt` or fallback
       itemType: "message",
     };
-  }) || [];
+  });
 
   return (
     <div className="inbox-page-container">

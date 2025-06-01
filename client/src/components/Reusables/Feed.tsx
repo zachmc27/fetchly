@@ -61,7 +61,7 @@ export default function Feed({
   const [feedArray, setFeedArray] = useState<FeedItem[]>(initialFeedArray);
 
   // Get user info
-  const userId = localStorage.getItem("user_Id");
+  const userId = localStorage.getItem("userId");
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
 
@@ -136,9 +136,20 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
   }
 }, [feedArray]);
 
-const { data: messageData, loading: messageLoading, error: messageError } = useQuery(GET_CONVERSATION, {
+useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
+  pollInterval: 10000, // Poll every 5 seconds
+});
+
+const {
+  data: messageData,
+  loading: messageLoading,
+  error: messageError,
+} = useQuery(GET_CONVERSATION, {
+  variables: { conversationId: localStorage.getItem("activeConversationId") },
+  fetchPolicy: "network-only",
+  skip: !localStorage.getItem("activeConversationId"),
 });
 
 useEffect(() => {
@@ -155,12 +166,19 @@ useEffect(() => {
       conversationName: messageData.conversation.conversationName,
       conversationUsers: messageData.conversation.conversationUsers,
       messages: messageData.conversation.messages
-        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: string; createdAt: string }) => ({
-          _id: msg._id,
-          textContent: msg.textContent,
-          messageUser: msg.messageUser,
-          createdAt: msg.createdAt,
-        }))
+        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: { _id: string; username: string; avatar?: { url?: string } }; createdAt: string; formattedCreatedAt: string }) => ({
+            _id: msg._id,
+            textContent: msg.textContent,
+            messageUser: {
+              _id: msg.messageUser._id,
+              username: msg.messageUser.username,
+              avatar:{
+                url: msg.messageUser.avatar?.url || `https://ui-avatars.com/api/?name=${msg.messageUser.username}&background=random&color=fff&size=128`,
+              }
+            },
+            createdAt: msg.createdAt,
+            formattedCreatedAt: msg.formattedCreatedAt, // Include formattedCreatedAt
+          }))
         : [],
     });
     setIsChatOpen(true);
@@ -304,28 +322,32 @@ type Comment = {
   likeCount: number;
   postedTime: Date;
   replies?: Comment[];
+  media?: { url: string }[];
 };
 
 function mapResponseToComment(res: {
-  _id: string;
-  contentText: string;
-  poster: {
-    refId: {
-      avatar?: { url?: string };
-      _id: string;
-      username: string;
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: { url?: string };
+        _id: string;
+        username?: string;
+        orgName?: string;
+      };
+      refModel: string;
     };
-    refModel: string;
-  };
+    media?: { url: string }[];
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
-    user: res.poster.refId.username || "Unknown",
+    user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
     likeCount: 0,
-    postedTime: new Date(), // Placeholder since there's no timestamp
-    replies: []
+    postedTime: new Date(),
+    replies: [],
+    media: [],
   };
 }
 
@@ -391,7 +413,7 @@ function handleCloseAdoptionPostView() {
                 <h1 className="chat-title">{messageItem.chatTitle}</h1>
                 <p className="latest-message">{messageItem.latestMessage}</p>
               </div>
-              <p className="chat-date">{messageItem.date}</p>
+              <p className="chat-date">{messageItem.formattedCreatedAt}</p>
             </div>
           );
         }
@@ -488,7 +510,6 @@ if (isChatOpen && activeConversation) {
         onClose={handleCloseMessagePage}/>
       )
 }
-
 
 if (isMeetupPostOpen && activeMeetupPost) {
   return (

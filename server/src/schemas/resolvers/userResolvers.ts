@@ -54,7 +54,13 @@ const userResolvers = {
     // User Queries
     users: async () => {
       return await User.find()
-        .populate('pets')
+          .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
         .populate('posts')
         .populate('avatar')
         .populate('meetUps')
@@ -69,7 +75,13 @@ const userResolvers = {
     },
     user: async (_parent: any, { userId }: UserArgs) => {
       return await User.findById(userId)
-        .populate('pets')
+        .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
         .populate('posts')
         .populate('avatar')
         .populate('meetUps')
@@ -84,7 +96,13 @@ const userResolvers = {
     },
     userByUsername: async (_parent: any, { username }: { username: string }) => {
       return await User.find({ username })
-      .populate('pets')
+        .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+        })
         .populate('posts')
         .populate('avatar')
         .populate('meetUps')
@@ -100,7 +118,13 @@ const userResolvers = {
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id })
-          .populate('pets')
+          .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
           .populate('posts')
           .populate('avatar')
           .populate('location')

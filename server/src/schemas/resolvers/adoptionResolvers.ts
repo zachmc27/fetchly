@@ -59,7 +59,9 @@ const adoptionResolvers = {
                     path: 'pet',
                     populate: [
                         { path: 'type' },
-                        { path: 'profilePhoto' }
+                        { path: 'profilePhoto',
+                            populate: 'media',
+                         }
                     ]
                 })
                 .populate('media')
@@ -79,7 +81,9 @@ const adoptionResolvers = {
                     path: 'pet',
                     populate: [
                         { path: 'type' },
-                        { path: 'profilePhoto' }
+                        { path: 'profilePhoto',
+                            populate: 'media',
+                         }
                     ]
                 })
                 .populate('media')

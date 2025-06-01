@@ -8,6 +8,8 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import UserPlaceHolder from "../../assets/react.svg";
 import { format } from 'date-fns';
 import { PostCard } from '../../types/CardTypes';
+import ProfileDetails from '../Reusables/ProfileDetails'
+import WindowModal from '../Reusables/WindowModal';
 
 type Props = {
   post: PostCard;
@@ -19,7 +21,7 @@ type Props = {
 
 export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel }: Props) {
   const userHasLikedPost = (post: PostCard, userId:string) => {
-    return post.likes.some(like => like.refId._id === userId);
+    return Array.isArray(post.likes) && post.likes.some(like => like?.refId?._id === userId);
   };
 
   const [isLiked, setIsLiked] = useState(() => userHasLikedPost(post, userId));
@@ -56,11 +58,23 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
     }
   };
 
+  //Open poster profile
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
+  const openProfile = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowProfileModal(true);
+  };
+
+  const closeModal = () => setShowProfileModal(false);
+
   return (
     <div key={post._id} className={itemStyle} onClick={() => onOpen(post._id)}>
       <div className="post-user-info">
-        <img src={post.poster.refId.avatar?.url || UserPlaceHolder} alt="profile picture" />
-        <p>{post.poster.refId.username}</p>
+        <div onClick={openProfile} style={{ cursor: 'pointer' }}>
+          <img src={post.poster.refId?.avatar?.url || UserPlaceHolder} alt="profile picture" />
+          <p>{post.poster.refId?.username || post.poster.refId?.orgName}</p>
+        </div>
         <div className="post-date-container">
           <img src={calendar} alt="calendar icon" />
           <p>{format(new Date(Number(post.createdAt)), 'MMM d, yyyy')}</p>
@@ -84,6 +98,19 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
           <p>{post.responseCount}</p>
         </div>
       </div>
+
+      {/* Poster Profile Modal */}
+      {showProfileModal && (
+        <WindowModal cancel={closeModal} confirm={() => {}}>
+            <div onClick={(e) => e.stopPropagation()}>
+              <button onClick={closeModal} className="modal-close-btn">×</button>
+              <ProfileDetails
+                profileUserId={post.poster.refId?._id}
+                profileAccountType={post.poster.refModel}
+              />
+            </div>            
+        </WindowModal>
+      )};
     </div>
   );
 }

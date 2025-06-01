@@ -1,3 +1,4 @@
+
 import { Conversation, User } from '../../models/index.js';
 import { Types, isValidObjectId } from 'mongoose';
 
@@ -19,12 +20,27 @@ const conversationResolvers = {
         conversations: async () => {
             try {
                 return await Conversation.find()
-                    .populate({
-                        path: 'conversationUsers',
-                        select: 'username profilePicture',
-                    })
-                    .populate('messages')
-                    .populate('lastMessage');
+                .populate({
+                    path: 'conversationUsers',
+                    select: 'username avatar', // Fetch avatar for each conversation user
+                    populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                })
+                .populate({
+                    path: 'messages',
+                    populate: {
+                        path: 'messageUser',
+                        select: 'username avatar', // Fetch avatar for each message user
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                    },
+                })
+                .populate({
+                    path: 'lastMessages',
+                    populate: {
+                        path: 'unreadUser',
+                        select: 'username avatar', // Fetch avatar for unread users
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                    },
+                });
             } catch (error) {
                 if (error instanceof Error) {
                     throw new Error(`Failed to fetch conversations: ${error.message}`);
@@ -41,9 +57,17 @@ const conversationResolvers = {
                 return await Conversation.findById(conversationId)
                     .populate({
                         path: 'conversationUsers',
-                        select: 'username profilePicture',
+                        select: 'username avatar', // Fetch avatar for each conversation user
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
                     })
-                    .populate('messages')
+                    .populate({
+                        path: 'messages',
+                        populate: {
+                            path: 'messageUser',
+                            select: 'username avatar', // Fetch avatar for each message user
+                            populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                        },
+                    })
                     .populate('lastMessage');
             } catch (error) {
                 if (error instanceof Error) {
@@ -61,9 +85,17 @@ const conversationResolvers = {
                 return await Conversation.find({ conversationUsers: userId })
                     .populate({
                         path: 'conversationUsers',
-                        select: 'username profilePicture',
+                        select: 'username avatar', // Fetch avatar for each conversation user
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
                     })
-                    .populate('messages')
+                    .populate({
+                        path: 'messages',
+                        populate: {
+                            path: 'messageUser',
+                            select: 'username avatar', // Fetch avatar for each message user
+                            populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                        }
+                    })
                     .populate('lastMessage');
             } catch (error) {
                 if (error instanceof Error) {
@@ -102,7 +134,7 @@ const conversationResolvers = {
 
                 return await newConversation.populate({
                     path: 'conversationUsers',
-                    select: 'username profilePicture',
+                    select: 'username avatar',
                 });
             } catch (error) {
                 if (error instanceof Error) {
@@ -123,7 +155,7 @@ const conversationResolvers = {
                     { new: true }
                 ).populate({
                     path: 'conversationUsers',
-                    select: 'username profilePicture',
+                    select: 'username avatar',
                 });
 
                 if (!conversation) {

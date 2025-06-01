@@ -8,19 +8,24 @@ export type MockLastMessage = {
 export type conversationUsers = {
   _id: string;
   username?: string;
+  avatar?: Avatar;
+}
+export type Avatar = {
+  url: string;
 }
 export type MockMessageObject = {
   _id: string;
   conversation: MockConversationObject;
   messageUser: MockMessageUser;
   textContent: string
-  createdAt?: string;
+  formattedCreatedAt?: string;
 
 }
  
 export type MockMessageUser = {
   _id: string;
   username: string;
+  avatar?: Avatar;
 }
 
 export type MockConversationObject = { 

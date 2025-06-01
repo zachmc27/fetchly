@@ -22,11 +22,11 @@
 .window-modal {
   max-width: 600px;
   width: 90vw;           /* responsive */
-  max-height: 85vh; 
+  max-height: 70vh; 
   overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
+  overflow-y: auto;
   padding: 1.5rem 2rem; 
   box-sizing: border-box;
   background: #fff; 

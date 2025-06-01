@@ -58,7 +58,8 @@ const petResolvers = {
                 .populate('profilePhoto')
                 .populate({
                     path: 'followedBy.refId'
-                });
+                })
+                .populate('taggedPosts');
         },
         pet: async (_parent: any, { petId }: PetArgs) => {
             return Pet.findById(petId)
@@ -67,7 +68,8 @@ const petResolvers = {
                 .populate('profilePhoto')
                 .populate({
                     path: 'followedBy.refId'
-                });
+                })
+                .populate('taggedPosts');
         }
     },
 
