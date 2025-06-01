@@ -311,6 +311,7 @@ function handleCloseMessagePage() {
     localStorage.removeItem("activePostId");
     setActivePost(null);
   }
+  
 // Convert response to comment
 type Comment = {
   id: number;
@@ -347,29 +348,7 @@ function mapResponseToComment(res: {
     replies: [],
     media: [],
   };
-
-  function mapResponseToComment(res: {
-    _id: string;
-    contentText: string;
-    poster: {
-      refId: {
-        avatar?: { url?: string };
-        _id: string;
-        username: string;
-      };
-      refModel: string;
-    };
-  }): Comment {
-    return {
-      id: parseInt(res._id || "0", 10),
-      user: res.poster.refId.username || "Unknown",
-      avatar: res.poster.refId.avatar?.url || undefined,
-      comment: res.contentText || "",
-      likeCount: 0,
-      postedTime: new Date(), // Placeholder since there's no timestamp
-      replies: [],
-    };
-  }
+}
 
   // ----------------------------------------------------------------
   // --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
