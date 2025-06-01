@@ -136,9 +136,20 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
   }
 }, [feedArray]);
 
-const { data: messageData, loading: messageLoading, error: messageError } = useQuery(GET_CONVERSATION, {
+useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
+  pollInterval: 5000, // Poll every 5 seconds
+});
+
+const {
+  data: messageData,
+  loading: messageLoading,
+  error: messageError,
+} = useQuery(GET_CONVERSATION, {
+  variables: { conversationId: localStorage.getItem("activeConversationId") },
+  fetchPolicy: "network-only",
+  skip: !localStorage.getItem("activeConversationId"),
 });
 
 useEffect(() => {
