@@ -22,7 +22,7 @@ export default function Inbox() {
   });
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading conversations.</div>;
+  
 
   // Check if data is null or conversationByUser is empty
   if (!data || !data.conversationByUser || data.conversationByUser.length === 0) {
@@ -34,6 +34,7 @@ export default function Inbox() {
       </div>
     );
   }
+  if (error) return <div>Error loading conversations.</div>;
 
   const initialFeedArray = data.conversationByUser.map((conversation: MockConversationObject) => {
     return {
