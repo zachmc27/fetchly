@@ -17,7 +17,6 @@ import { format } from 'date-fns';
 
 // testing data, can be deleted after integrations implementation
 import {
-  MockPostCard,
   MockMessageCard,
 } from "../../mockdata/mocktypes/Feed";
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
