@@ -324,6 +324,7 @@ query GetFollowers($userId: String!) {
       refId {
         ... on User {
           username
+          _id
         }
       }
     }

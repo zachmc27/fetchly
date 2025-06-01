@@ -12,8 +12,7 @@ import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import MsgInfoPage from "./MsgInfoPage";
 import { useMutation } from "@apollo/client";
 import { CREATE_MESSAGE } from "../../utils/mutations"; // Correct the module path and import CREATE_MESSAGE mutation
-import sendIcon from "../../images/send_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-
+// import sendIcon from "../../images/send_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" // Removed unused import
 
 
 export default function MessagesPage({ conversation, onClose }: { conversation: MockConversationObject, onClose: () => void }) {
@@ -40,8 +39,8 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
   // data is set up to where those ID values are unique to each message. In order to filter the right messages using userID, you will likely
   // have to find the username tied to that ID and filter it like that (or userIDs will need to be added to message data to prevent identical usernames giving the rendering issues)
   const activeConversationId = localStorage.getItem("activeConversationId");
-  // const userID = localStorage.getItem('user_Id');
-  const userID = "6837b59ff2c13eff3aa57c6b"
+  const userID = localStorage.getItem('user_Id');
+  // const userID = "6837b59ff2c13eff3aa57c6b"
   const [addMessage, { loading, error }] = useMutation(CREATE_MESSAGE); // Use the correct mutation name
 
 
@@ -132,11 +131,8 @@ const handleSendMessage = async (
           >
             ↗️
           </button>
-          <input type="text" placeholder="Type a message here..." />
-          <button className="send-message-btn"><img src={sendIcon} alt="" /></button>
         </div>
       </div>
-
     </div>
-  )
+  );
 }

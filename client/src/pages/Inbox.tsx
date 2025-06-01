@@ -9,6 +9,7 @@ import { MockConversationObject } from "../mockdata/mocktypes/Conversation";
 
 
 
+const currentUser = localStorage.getItem('user_Id')
 // this is the graphQL query "GET_CONVERSATIONS" that will return all conversation objects
 // and create an arrary utilizing the data from the query and the Conversation interface above
 
@@ -16,7 +17,7 @@ import { MockConversationObject } from "../mockdata/mocktypes/Conversation";
 
 export default function Inbox() {
   const { data, loading, error } = useQuery(GET_CONVERSATION_BY_USER, {
-    variables: { userId: "6837b59ff2c13eff3aa57c6b" }, // Replace with the actual user ID
+    variables: { userId: currentUser || "defaultUserId" }, // Replace with a fallback user ID if currentUser is null
     fetchPolicy: "network-only", // Ensures fresh data is fetched from the server
   });
 
