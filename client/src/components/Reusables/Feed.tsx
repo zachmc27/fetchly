@@ -136,7 +136,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 50000, // Poll every 0.5 seconds
+  pollInterval: 500, // Poll every 0.5 seconds
 });
 
 const {
