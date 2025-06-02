@@ -136,7 +136,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 500000, // Poll every 0.5 seconds
+  pollInterval: 500, // Poll every 0.5 seconds
 });
 
 const {
@@ -648,7 +648,8 @@ if (isMeetupPostOpen && activeMeetupPost) {
       isMeetupCommentsOpen &&
       <Comments
         comments={(activeMeetupPost.comments || []).map(mapMeetUpCommentToComment)}
-        postId={activeMeetupPost._id}      
+        postId={activeMeetupPost._id}
+        type={"MeetUpComment"}      
       />
         // <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
     }
@@ -672,6 +673,7 @@ if (isPostOpen && activePost) {
   <Comments
     comments={(activePost.responses || []).map(mapResponseToComment)}
     postId={activePost._id}
+    type={"PostComment"}
   />
   </div>
   )

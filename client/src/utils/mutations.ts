@@ -462,20 +462,6 @@ export const ADD_MEETUP_COMMENT = gql`
   mutation CreateMeetUpComment($input: MeetUpCommentInput!) {
     createMeetUpComment(input: $input) {
       _id
-      poster {
-        refId
-        refModel
-      }
-      contentText
-      meetUpId
-      media
-      responses {
-        _id
-      }
-      responseCount
-      parentComment
-      isResponse
-      createdAt
     }
   }
 `;

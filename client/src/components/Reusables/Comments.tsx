@@ -16,7 +16,8 @@ import Replies from "./Replies";
 import ImageCarousel from "./ImageCarousel"
 import { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_POST_RESPONSE } from "../../utils/mutations";
+import { ADD_POST_RESPONSE, ADD_MEETUP_COMMENT } from "../../utils/mutations";
+
 import NewFreeFormPost from "../Creators/NewPost"
 
 import sendIcon from "../../images/send_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
@@ -46,6 +47,7 @@ export type Comment = {
 type CommentsProps = {
   comments: Comment[] | MeetUpComment[];
   postId: string;
+  type: "MeetUpComment" | "PostComment"
 };
 
 interface PostResponse {
@@ -58,7 +60,7 @@ interface PostResponse {
 }
 
 function CommentItem({ comment }: { comment: Comment }) {
-  console.log('Comment pushing: ', comment);
+
   const [isRepliesOpen, setIsRepliesOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -231,10 +233,13 @@ function CommentItem({ comment }: { comment: Comment }) {
     );
 }
 
+export default function Comments({ comments, postId, type }: CommentsProps) {
+  console.log("comments and postid: ", comments, " + ", postId, " + ", type);
 
-export default function Comments({ comments, postId }: CommentsProps) {
-  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE, {
-    refetchQueries: ["Posts"],
+  const mutationToUse = type === "MeetUpComment" ? ADD_MEETUP_COMMENT : ADD_POST_RESPONSE;
+
+  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(mutationToUse, {
+    refetchQueries: ["Posts", "Meetups", "MeetUpComments"],
   });
 
   const [newComment, setNewComment] = useState("");
@@ -248,25 +253,42 @@ export default function Comments({ comments, postId }: CommentsProps) {
       return;
     }
     try {
-      await createPostResponse({
-        variables: {
-          addPostResponseInput: {
-            poster: {
-              refId: userId,
-              refModel: accountType === "org" ? "Org" : "User",
+      if (type === "PostComment") {
+        await createPostResponse({
+          variables: {
+            addPostResponseInput: {
+              poster: {
+                refId: userId,
+                refModel: accountType === "org" ? "Org" : "User",
+              },
+              contentText: newComment.trim(),
             },
-            contentText: newComment.trim(),
-          },
-          addPostResponsePostId: postId.toString(),          
-        },
-      });
-
+            addPostResponsePostId: postId.toString(),          
+          },  
+        });
+      }
+      else if (type === "MeetUpComment") {
+        await createPostResponse({
+          variables: {
+            input: {
+              meetUpId: postId.toString(),         
+              poster: {
+                refId: userId,
+                refModel: accountType === "org" ? "Org" : "User",
+              },
+              contentText: newComment.trim(),
+            },
+          },  
+        });
+      }
       setNewComment("");
       // Optionally: refresh the comments list or push new comment into local state
     } catch (err) {
       console.error("Failed to submit comment", err);
     }
   };
+
+
 
   comments.sort((a, b) => (a as Comment).postedTime.getTime() - (b as Comment).postedTime.getTime());
   console.log(comments);
