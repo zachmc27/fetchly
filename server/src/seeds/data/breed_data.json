@@ -1,10 +1,9 @@
 
 [
-  {
+    {
       "breed": "abyssinian",
       "type": "cat"
     },
-  
     {
       "breed": "american bobtail",
       "type": "cat"
@@ -212,8 +211,227 @@
     {
       "breed": "beagle",
       "type": "dog"
+    },
+    {
+      "breed": "affenpinscher",
+      "type": "dog"
+    },
+    {
+      "breed": "afghan hound",
+      "type": "dog"
+    },
+    {
+      "breed": "airedale terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "akita",
+      "type": "dog"
+    },
+    {
+      "breed": "alaskan malamute",
+      "type": "dog"
+    },
+    {
+      "breed": "american bulldog",
+      "type": "dog"
+    },
+    {
+      "breed": "american cocker spaniel",
+      "type": "dog"
+    },
+    {
+      "breed": "american eskimo dog",
+      "type": "dog"
+    },
+    {
+      "breed": "american foxhound",
+      "type": "dog"
+    },
+    {
+      "breed": "american hairless terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "american staffordshire terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "american water spaniel",
+      "type": "dog"
+    },
+    {
+      "breed": "anatolian shepherd dog",
+      "type": "dog"
+    },
+    {
+      "breed": "appenzeller sennenhund",
+      "type": "dog"
+    },
+    {
+      "breed": "australian cattle dog",
+      "type": "dog"
+    },
+    {
+      "breed": "australian shepherd",
+      "type": "dog"
+    },
+    {
+      "breed": "australian terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "azawakh",
+      "type": "dog"
+    },
+    {
+      "breed": "barbet",
+      "type": "dog"
+    },
+    {
+      "breed": "basenji",
+      "type": "dog"
+    },
+    {
+      "breed": "basset hound",
+      "type": "dog"
+    },
+    {
+      "breed": "bearded collie",
+      "type": "dog"
+    },
+    {
+      "breed": "beauceron",
+      "type": "dog"
+    },
+    {
+      "breed": "bedlington terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "belgian malinois",
+      "type": "dog"
+    },
+    {
+      "breed": "belgian sheepdog",
+      "type": "dog"
+    },
+    {
+      "breed": "belgian tervuren",
+      "type": "dog"
+    },
+    {
+      "breed": "bernese mountain dog",
+      "type": "dog"
+    },
+    {
+      "breed": "bichon frise",
+      "type": "dog"
+    },
+    {
+      "breed": "black and tan coonhound",
+      "type": "dog"
+    },
+    {
+      "breed": "black russian terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "bloodhound",
+      "type": "dog"
+    },
+    {
+      "breed": "border collie",
+      "type": "dog"
+    },
+    {
+      "breed": "border terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "borzoi",
+      "type": "dog"
+    },
+    {
+      "breed": "boston terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "bouvier des flandres",
+      "type": "dog"
+    },
+    {
+      "breed": "boxer",
+      "type": "dog"
+    },
+    {
+      "breed": "boykin spaniel",
+      "type": "dog"
+    },
+    {
+      "breed": "briard",
+      "type": "dog"
+    },
+    {
+      "breed": "brittany",
+      "type": "dog"
+    },
+    {
+      "breed": "brussels griffon",
+      "type": "dog"
+    },
+    {
+      "breed": "bull terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "bulldog",
+      "type": "dog"
+    },
+    {
+      "breed": "bullmastiff",
+      "type": "dog"
+    },
+    {
+      "breed": "cairn terrier",
+      "type": "dog"
+    },
+    {
+      "breed": "canaan dog",
+      "type": "dog"
+    },
+    {
+      "breed": "cane corso",
+      "type": "dog"
+    },
+    {
+      "breed": "cardigan welsh corgi",
+      "type": "dog"
+    },
+    {
+      "breed": "cavalier king charles spaniel",
+      "type": "dog"
+    },
+    {
+      "breed": "chesapeake bay retriever",
+      "type": "dog"
+    },
+    {
+      "breed": "chihuahua",
+      "type": "dog"
+    },
+    {
+      "breed": "chinese crested",
+      "type": "dog"
+    },
+    {
+      "breed": "chinese shar-pei",
+      "type": "dog"
+    },
+    {
+      "breed": "chow chow",
+      "type": "dog"
       }
-      
-    ]
+]
     
     

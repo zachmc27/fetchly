@@ -9,7 +9,7 @@ import { MockConversationObject } from "../mockdata/mocktypes/Conversation";
 
 
 
-const currentUser = localStorage.getItem('user_Id')
+const currentUser = localStorage.getItem('userId')
 // this is the graphQL query "GET_CONVERSATIONS" that will return all conversation objects
 // and create an arrary utilizing the data from the query and the Conversation interface above
 
@@ -22,7 +22,7 @@ export default function Inbox() {
   });
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading conversations.</div>;
+  
 
   // Check if data is null or conversationByUser is empty
   if (!data || !data.conversationByUser || data.conversationByUser.length === 0) {
@@ -34,6 +34,7 @@ export default function Inbox() {
       </div>
     );
   }
+  if (error) return <div>Error loading conversations.</div>;
 
   const initialFeedArray = data.conversationByUser.map((conversation: MockConversationObject) => {
     return {
