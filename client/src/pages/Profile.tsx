@@ -76,40 +76,6 @@ interface NewPetProps {
     about: string;
 }
 
-const UserPlaceHolderMedia: UploadedMedia = {
-  id: "placeholder",
-  filename: "person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg",
-  contentType: "image/svg+xml",
-  length: 0,
-  uploadDate: "",
-  gridFsId: "",
-  tags: [],
-  url: UserPlaceHolder, // this is the imported image URL
-};
-
-const mockUser = {
-  _id: 1,
-  fullName: "Test User",
-  username: "mytestuser",
-  email: "testuser@email.com",
-  avatar: UserPlaceHolderMedia,
-  about: "This is real. This is me. I'm exactly where I'm supposed to be now - Camp Rock",
-     "location": {
-     address: "1007 Mountain Drive",
-     zip: "987432",
-     city: "Gotham",
-     state: "New Jersey",
-     country: "USA"
-   },
-  followingCount: 123,
-  followedByCount: 123,
-  pets: [
-    { _id: 1, name: "Pet 1", profilePhoto: {url: UserPlaceHolder}},
-    { _id: 2, name: "Pet 2", profilePhoto:{url: UserPlaceHolder} },
-    { _id: 3, name: "Pet 3", profilePhoto: {url: UserPlaceHolder} },
-  ],
-  posts:[]
-}
 
 
 export default function Profile() {
