@@ -11,5 +11,18 @@ export type Pet = {
   };
   type?: string;
   vaccination?: string;
+  followedByCount: number;
+  profilePhoto: {
+        url: string;
+  };
+  taggedPosts: {
+    _id: string;
+    contentText: string;
+    createdAt: Date;
+    poster: {
+        username?: string;
+        orgName?: string;
+      };
 
+    }[];
 };
