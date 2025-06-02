@@ -18,7 +18,7 @@ export type Pet = {
   taggedPosts: {
     _id: string;
     contentText: string;
-    createdAt: Date;
+    createdAt?: Date;
     poster: {
         username?: string;
         orgName?: string;

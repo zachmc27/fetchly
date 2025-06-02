@@ -182,7 +182,7 @@ return (
             {!post.createdAt && (
               <div>
                 <img src={calendar} alt="calendar icon" />
-                <p>{format(new Date(Number(post.createdAt)), 'MMM d, yyyy') }</p>
+                <p>{"now"}</p>
               </div>
             )}
             <p>{post.contentText}</p>

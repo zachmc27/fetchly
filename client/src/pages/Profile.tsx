@@ -4,7 +4,8 @@
 import "../SammiReusables.css";
 
 import { useEffect, useState } from "react";
-import { QUERY_USER, QUERY_ORG } from '../utils/queries';
+import { QUERY_USER, QUERY_ORG, QUERY_MEETUPS, QUERY_POSTS } from '../utils/queries';
+
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_PET } from '../utils/mutations';
 import { useNavigate } from "react-router-dom";
@@ -25,13 +26,6 @@ import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRA
 import LogoutIcon from "../images/logout.png";
 
 
-type Pet = {
-  _id: string;
-  name: string;
-  profilePhoto: { url: string };
-};
-
-
 interface NewPetProps {
     name: string;
     petType: "" | "Dog" | "Cat";
@@ -44,6 +38,11 @@ interface NewPetProps {
     about: string;
 }
 
+type Pet = {
+  _id: string;
+  name: string;
+  profilePhoto: { url: string };
+};
 
 
 export default function Profile() {
@@ -147,12 +146,15 @@ export default function Profile() {
     navigate("/login");
   }
 
-  console.log(user?.posts);
+  /************* Getting Meetup Data *****************/
+  const { loading, error, data } = useQuery(QUERY_MEETUPS);
+  const meetups = data?.meetUps
+    ? [...data.meetUps]
+//        .filter(post => !post.isResponse)
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )
+    : [];
 
-// Loop through all posts and log their itemType
-  user?.posts.forEach(post => {
-  console.log(post.itemType);
-  });
 
 
   /************* RENDER PAGE *****************/
@@ -176,7 +178,7 @@ export default function Profile() {
 
     if (isMeetupsOpen && accountType !== "org") {
       return (
-        <MeetupDetails userRSVP={userData.user.meetUps}/>
+       <MeetupDetails userMeetups={meetups} userRSVP={userData.user.meetUps}/>
       )
     }
 
@@ -184,6 +186,9 @@ export default function Profile() {
       return <div>Loading...</div>;
     }
 
+    // Meetup Errors
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;  
 
   return (
     <div>
@@ -244,7 +249,11 @@ export default function Profile() {
         </div>
       </div>
         <div className="profile-feed-bg">
-          
+          <Feed 
+          initialFeedArray={user.posts} 
+          itemStyle="post-card"          
+          containerStyle="profile-feed-container"
+          />
         </div>
     </div>
     </div>
