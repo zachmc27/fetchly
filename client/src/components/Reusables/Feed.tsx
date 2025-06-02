@@ -48,7 +48,7 @@ import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostD
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 
-type FeedItem = MockMessageCard | MockMeetupCard | AdoptionCard | PostCard;
+type FeedItem = MockMessageCard | MeetUpCard | AdoptionCard | PostCard;
 
 export default function Feed({
   initialFeedArray,
