@@ -323,7 +323,7 @@ type Comment = {
   replies?: Comment[];
   media?: { url: string }[];
   parentPost?: string;
-  responses?: [{_id: string}];
+  responses?: {_id: string}[];
 };
 
 function mapResponseToComment(res: {
