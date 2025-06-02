@@ -8,7 +8,7 @@
 // <Form fields={fields} onSubmit={handleSubmit} />
 
 import React from 'react';
-import "../../SammiReusables.css";
+import "../../main.css";
 
 // typing for form fields
 type Field = {

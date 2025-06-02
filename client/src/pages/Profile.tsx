@@ -1,7 +1,7 @@
 // renders acccount details component with the users information
 // renders feed component with users posts
 // "https://www.flaticon.com/free-icons/ui" Ui icons created by Fantasyou - Flaticon
-import "../SammiReusables.css";
+import "../main.css";
 
 import { useEffect, useState } from "react";
 import { QUERY_USER, QUERY_ORG, QUERY_MEETUPS, QUERY_POSTS } from '../utils/queries';

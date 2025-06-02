@@ -1,4 +1,4 @@
-import "../../SammiReusables.css";
+import "../../main.css";
 import { useEffect, useState, useMemo } from "react";
 import { QUERY_USER, QUERY_ORG, QUERY_PET} from '../../utils/queries';
 import { FOLLOW_AS_USER, UNFOLLOW_AS_USER, FOLLOW_AS_ORG, UNFOLLOW_AS_ORG } from '../../utils/mutations';
@@ -94,10 +94,6 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
       console.error("Follow/Unfollow error:", err);
     }
   };
-<<<<<<< HEAD
-  console.log("posts: ", user?.posts)
-  if (loading) return <div className="loading-gif-container"><img src={runningDog} alt="loading gif of a dog running"/></div>;
-=======
   
   const isPet = profileAccountType === "Pet";
   if(isPet){
@@ -107,7 +103,6 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
   }
   
   if (loading) return <p>Loading...</p>;
->>>>>>> d773e335d833c199d6885842792af6e5c7230c72
   if (error) return <p>Error: {error.message}</p>;
   if (!user) return <p>User not found.</p>;
 
