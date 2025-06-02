@@ -26,7 +26,7 @@ type Comment = {
   user: string;
   avatar?: string;
   comment: string;
-  likeCount: number;
+  likeCount?: number;
   postedTime: Date;
   replies?: Comment[];
   media?: {url: string}[];
@@ -127,7 +127,9 @@ const [isRepliesOpen, setIsRepliesOpen] = useState(false)
 }
 
 export default function Comments({ comments, postId }: CommentsProps) {
-  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE);
+  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE, {
+    refetchQueries: ["Posts"],
+  });
 
   const [newComment, setNewComment] = useState("");
 

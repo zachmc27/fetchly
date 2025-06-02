@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useApolloClient } from "@apollo/client";
 import { QUERY_POST } from "../../utils/queries";
 import UserPlaceHolder from "../../assets/react.svg";
+import { format } from 'date-fns';
 
 type Reply = {
   _id?: string;
@@ -72,7 +73,7 @@ export default function Replies({ replyIds }: RepliesProps) {
               </div>
               <div className="reply-content">
                 <div>{reply.poster?.refId?.username || reply.poster?.refId?.orgName || "Unknown User"}</div>
-                <div>{reply.createdAt instanceof Date ? reply.createdAt.toLocaleString() : String(reply.createdAt)}</div>
+                <div>{format(new Date(reply.createdAt), 'MMM d, yyyy') }</div>
                 <div>{reply.contentText}</div>
                 <div className="reply-icon-row">
                   <div className="reply-likes-container">
