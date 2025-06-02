@@ -161,9 +161,9 @@ function CommentItem({ comment }: { comment: Comment }) {
             </div>
             <div className="comment-content">
               <div onClick={handleContainerClick}>
-              <div>{comment.user}</div> 
-              <div>{comment.postedTime ? format(comment.postedTime, 'MMM d, yyyy') : 'Unknown date'}</div>
-              <div>{comment.comment}</div>
+              <div className="profile-md-fnt-bld">{comment.user}</div> 
+              <div className="profile-sm-fnt">{comment.postedTime ? format(comment.postedTime, 'MMM d, yyyy') : 'Unknown date'}</div>
+              <div className="profile-sm-fnt">{comment.comment }</div>
               <div>
                 {
                   comment.media && comment.media.length > 1 &&

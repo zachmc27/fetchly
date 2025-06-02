@@ -1158,7 +1158,7 @@
 }
 
 .comment-content div:first-of-type { 
-  font-weight: bold;
+  /* font-weight: bold; */
   color: #333;
   margin-right: 5px;
   margin-bottom: 5px;
@@ -1166,7 +1166,7 @@
 
 .comment-content div:nth-of-type(2) { 
   color: #555;
-  font-size: 0.95em;
+  /* font-size: 0.95em; */
 }
 
 .comment-icon-row {
@@ -1189,7 +1189,7 @@
   color: #777;
   padding: 0;
   cursor: pointer;
-  font-size: 0.85em;
+  /* font-size: 0.85em; */
   display: inline-flex;
   align-items: center;
 }
@@ -2957,6 +2957,11 @@
 
 .profile-md-fnt, h1{
   font-size: 16px;
+}
+
+.profile-md-fnt-bld{
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .profile-sm-fnt, p{
