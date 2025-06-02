@@ -19,7 +19,6 @@ import { MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-import { mockAdoptionPosts } from "../../mockdata/post-data"
 
 //get mutations and queries
 import { useQuery } from "@apollo/client";
@@ -353,26 +352,61 @@ function mapResponseToComment(res: {
 // ----------------------------------------------------------------
 // --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
-const [activeAdoptionPost, setActiveAdoptionPost] = useState<MockAdoptionItem | null>(null); 
-const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
+// const [activeAdoptionPost, setActiveAdoptionPost] = useState<AdoptionCard | null>(null); 
+// const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
+const { isAdoptionPostOpen, setIsAdoptionPostOpen, activeAdoptionPost, setActiveAdoptionPost } = useAdoptionPost();
 
- function handleAdoptionPostViewRender(adoptionId: string) {
-  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption._id === adoptionId);
+useEffect(() => {
+  const storedAdoptionId = localStorage.getItem("activeAdoptionId");
+  if (storedAdoptionId && location.pathname === '/adoption') {
+    const storedAdoption = initialFeedArray.find(
+      (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === storedAdoptionId
+    ) as AdoptionCard | undefined;
+    if (storedAdoption) {
+      setActiveAdoptionPost(storedAdoption);
+      setIsAdoptionPostOpen(true);
+    }
+  }
+
+  if (location.pathname !== "/adoption") {
+    localStorage.removeItem("activeAdoptionId");
+  }
+}, [location.pathname, initialFeedArray, setActiveAdoptionPost, setIsAdoptionPostOpen]);
+
+// Inside a component that needs to listen directly, e.g., Feed.tsx or Adoption.tsx
+useEffect(() => {
+  const handleStorageChange = (event: StorageEvent) => {
+    if (event.key === "activeAdoptionId" && event.newValue === null) {
+      setActiveAdoptionPost(null);
+      setIsAdoptionPostOpen(false)
+      console.log("activeAdoptionId was removed from localStorage.");
+    }
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}, []);
+
+function handleAdoptionPostViewRender(adoptionId: string) {
+
+  const adoptionToOpen = feedArray.find(
+  (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === adoptionId
+  ) as AdoptionCard | undefined;
   console.log(adoptionToOpen);
 
   if (!adoptionToOpen) {
     console.log('no post found');
     return
   }
-    if (adoptionToOpen) {
-       setActiveAdoptionPost(adoptionToOpen);
-      console.log('active post:', activeAdoptionPost);
-      setIsAdoptionPostOpen(true)
-      localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
-    } else  {
-      console.warn('No post found with ID:', adoptionId);
-    }
-    setIsAdoptionPostOpen(true)
+ 
+  setActiveAdoptionPost(adoptionToOpen);
+  console.log('active post:', activeAdoptionPost);
+  setIsAdoptionPostOpen(true)
+  localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
+  setIsAdoptionPostOpen(true)
 }
 
 function handleCloseAdoptionPostView() {
