@@ -2,7 +2,7 @@
 // a function prop to execute when clicked,
 // a class name
 import React from 'react';
-import '../../TempButton.css';
+import '../../main.css';
 
 interface ButtonBubbleProps {
   icon?: React.ReactNode;

@@ -9,7 +9,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER, LOGIN_ORG, ADD_USER, ADD_ORG } from '../utils/mutations';
 import Form from "../components/Reusables/Form";
 import Auth from '../utils/auth';
-import "../SammiReusables.css";
+import "../main.css";
 import BoneIcon from '../images/BoneIcon';
 
 import { motion } from 'framer-motion';

@@ -1,5 +1,5 @@
 import React from "react";
-import '../../PostModal.css'
+import '../../main.css'
 import PostTypeDropdown from "./Dropdown";
 import type { PostType } from "../../types/Post";
 import { usePostModal } from "./usePostModal";

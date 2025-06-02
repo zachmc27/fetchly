@@ -2,7 +2,7 @@
 // import React from "react"
 
 import { Link, useLocation } from "react-router-dom";
-import '../../NavBar.css'
+import '../../main.css'
 import PawLove from "../../images/PawLove";
 import home from "../../images/home_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import location from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24 (1).svg"
