@@ -145,11 +145,12 @@ export default function PostDetails({
   function handleCallToggle() {
     setIsCallOpen((prev) => !prev);
   }
-
+  
   function renderPost(postData: postData): JSX.Element | null {
     switch (postData.itemType) {
       case "post": {
         const post = postData as PostCard;
+        console.log("ImageCarousel slides:", post.media.map(m => m.url).filter(Boolean));
         if (!post) return null;
 
         return (
@@ -177,15 +178,13 @@ export default function PostDetails({
 
             <p className="post-content">{post.contentText || ""}</p>
 
-            {post.media && Array.isArray(post.media) && post.media.length > 1 && (
-              <div className="img-container">
-                <ImageCarousel
-                  slides={post.media
-                    .map((m) => (typeof m === "string" ? m : m?.url))
-                    .filter(Boolean) as string[]}
-                />
-              </div>
-            )}
+            {
+              post.media && post.media.length > 1 && (
+                <div className="img-container"> 
+                <ImageCarousel slides={post.media.map(m =>m.url).filter(Boolean)}/>
+                </div>
+              )
+            }
 
             {post.media && Array.isArray(post.media) && post.media.length === 1 && (
               <div className="img-container">
