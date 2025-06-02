@@ -2939,7 +2939,9 @@
 }
 
 .profile-user-img{
-  width: 20%;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
 }
 .profile-user-img-a {
     width: 20%;
