@@ -16,7 +16,6 @@ import WindowModal from "../components/Reusables/WindowModal";
 import Feed from "../components/Reusables/Feed";
 import ButtonBubble from "../components/Reusables/Button";
 import MeetupDetails from "../components/Profile/MeetupDetails";
-import { mockMeetupData } from "../mockdata/feed-data";
 
 import UserPlaceHolder from "../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import AddIcon from "../images/add.png";
