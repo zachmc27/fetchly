@@ -1,6 +1,5 @@
 
 [
-  [
     {
       "breed": "abyssinian",
       "type": "cat"
@@ -433,7 +432,6 @@
       "breed": "chow chow",
       "type": "dog"
       }
-      ]
-    ]
+]
     
     
