@@ -136,7 +136,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 500, // Poll every 0.5 seconds
+  pollInterval: 500000, // Poll every 0.5 seconds
 });
 
 const {
@@ -356,13 +356,31 @@ function handleClosePostView() {
 
 // Convert response to comment
 
+type Comment = {
+  id: number;
+  trueId: string;
+  user: string;
+  avatar?: string;
+  comment: string;
+  likes?: {refId?: {_id?: string}}[];
+  likeCount?: number;
+  postedTime: Date;
+  replies?: Comment[];
+  media?: { url: string }[];
+  parentPost?: string;
+  responses?: {_id: string}[];
+};
+
 
 function mapResponseToComment(res: {
     _id: string;
     contentText: string;
+    likes?: {refId?: {_id?: string}}[];
     poster: {
       refId: {
-        avatar?: { url?: string };
+        avatar?: { 
+          url?: string 
+        };
         _id: string;
         username?: string;
         orgName?: string;
@@ -370,8 +388,8 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    likesCount?: number;
     responses?: []
-    
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
@@ -379,7 +397,8 @@ function mapResponseToComment(res: {
     user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
-    likeCount: 0,
+    likes: res.likes || [],
+    likeCount: res.likesCount || 0,
     postedTime: new Date(),
     replies: [],
     media: [],

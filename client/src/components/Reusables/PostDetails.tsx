@@ -42,7 +42,7 @@ export default function PostDetails({
   onClose: () => void;
 }) {
   // Get user info from localStorage safely
-  const userId = typeof window !== "undefined" ? localStorage.getItem("user_Id") : null;
+  const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   const accountType = typeof window !== "undefined" ? localStorage.getItem("accountType") : null;
   const userType = accountType === "org" ? "Org" : "User";
 
@@ -72,8 +72,12 @@ export default function PostDetails({
     return 0;
   });
 
-  const [likePost] = useMutation(LIKE_POST);
-  const [unlikePost] = useMutation(UNLIKE_POST);
+  const [likePost] = useMutation(LIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
+  const [unlikePost] = useMutation(UNLIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,7 +96,10 @@ export default function PostDetails({
   };
 
   const handleLikeToggle = async () => {
-    if (postData.itemType !== "post" || !userId) return;
+    if (postData.itemType !== "post" || !userId) {
+      console.warn("postData.itemType failure");
+      return;
+    }
     const post = postData as PostCard;
 
     if (!post._id) {
@@ -138,11 +145,12 @@ export default function PostDetails({
   function handleCallToggle() {
     setIsCallOpen((prev) => !prev);
   }
-
+  
   function renderPost(postData: postData): JSX.Element | null {
     switch (postData.itemType) {
       case "post": {
         const post = postData as PostCard;
+        console.log("ImageCarousel slides:", post.media.map(m => m.url).filter(Boolean));
         if (!post) return null;
 
         return (
@@ -170,15 +178,13 @@ export default function PostDetails({
 
             <p className="post-content">{post.contentText || ""}</p>
 
-            {post.media && Array.isArray(post.media) && post.media.length > 1 && (
-              <div className="img-container">
-                <ImageCarousel
-                  slides={post.media
-                    .map((m) => (typeof m === "string" ? m : m?.url))
-                    .filter(Boolean) as string[]}
-                />
-              </div>
-            )}
+            {
+              post.media && post.media.length > 1 && (
+                <div className="img-container"> 
+                <ImageCarousel slides={post.media.map(m =>m.url).filter(Boolean)}/>
+                </div>
+              )
+            }
 
             {post.media && Array.isArray(post.media) && post.media.length === 1 && (
               <div className="img-container">

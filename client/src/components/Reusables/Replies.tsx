@@ -1,8 +1,9 @@
-import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+//import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import { useEffect, useState } from "react";
 import { useApolloClient } from "@apollo/client";
 import { QUERY_POST } from "../../utils/queries";
 import UserPlaceHolder from "../../assets/react.svg";
+import { format } from 'date-fns';
 
 type Reply = {
   _id?: string;
@@ -17,7 +18,7 @@ type Reply = {
   }
   contentText: string;
   likesCount: number;
-  createdAt: Date;
+  createdAt: Date | null;
 };
 
 type RepliesProps = {
@@ -43,7 +44,13 @@ export default function Replies({ replyIds }: RepliesProps) {
                 })
             )
             );
-            const repliesData = results.map((r) => r.data.post);
+            const repliesData = results.map((r) => {
+              const post = r.data.post;
+              return {
+                ...post,
+                createdAt: post.createdAt ? new Date(Number(post.createdAt)) : null,
+              };
+            });
             setReplies(repliesData);
         } catch (err: unknown) {
             console.error("Error fetching replies", err);
@@ -72,13 +79,15 @@ export default function Replies({ replyIds }: RepliesProps) {
               </div>
               <div className="reply-content">
                 <div>{reply.poster?.refId?.username || reply.poster?.refId?.orgName || "Unknown User"}</div>
-                <div>{reply.createdAt instanceof Date ? reply.createdAt.toLocaleString() : String(reply.createdAt)}</div>
-                <div>{reply.contentText}</div>
+                <div>
+                  {reply.createdAt ? format(reply.createdAt, 'MMM d, yyyy') : 'Unknown date'}
+                </div>
+                <p>{reply.contentText}</p>
                 <div className="reply-icon-row">
-                  <div className="reply-likes-container">
+                  {/* <div className="reply-likes-container">
                     <img src={heart} alt="heart icon" />
                     <button>{reply.likesCount}</button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

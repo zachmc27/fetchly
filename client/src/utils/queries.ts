@@ -793,10 +793,16 @@ export const QUERY_POST = gql`
              ... on User {
               _id
               username
+              avatar {
+                url
+              }
              }
              ... on Org {
                _id
               orgName
+              avatar {
+                url
+              }
              }
           }
            refModel

@@ -1071,8 +1071,8 @@
   display: flex;
   align-items: center;
   justify-content: center; 
-  width: fit-content;
-  height: fit-content;
+  width: 15em;
+  height: 15em;
   max-width: 80vw;
   max-height: 50vh;
 }

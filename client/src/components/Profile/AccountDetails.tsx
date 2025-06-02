@@ -96,8 +96,12 @@ const { data: orgData} = useQuery(QUERY_ORG, {
     setMedia(media);
   };
 
-  const [updateUser] = useMutation(UPDATE_USER);
-  const [updateOrg] = useMutation(UPDATE_ORG);
+  const [updateUser] = useMutation(UPDATE_USER, {
+    refetchQueries: ["Users"],
+  });
+  const [updateOrg] = useMutation(UPDATE_ORG, {
+    refetchQueries: ["Orgs"],
+  });
 
 
   const handleUpdate = async () => {

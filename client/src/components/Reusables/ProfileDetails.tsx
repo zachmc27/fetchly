@@ -7,6 +7,7 @@ import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0
 import { UserType } from "../../types/UserType";
 import { Pet }  from "../../types/PetTypes";
 import { format } from 'date-fns';
+
 type ProfileDetailsProps = {
   profileUserId: string;
   profileAccountType: string;
@@ -59,10 +60,18 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
   }, [data, userId]);
 
   // Mutations
-  const [followAsUser] = useMutation(FOLLOW_AS_USER);
-  const [unfollowAsUser] = useMutation(UNFOLLOW_AS_USER);
-  const [followAsOrg] = useMutation(FOLLOW_AS_ORG);
-  const [unfollowAsOrg] = useMutation(UNFOLLOW_AS_ORG);
+  const [followAsUser] = useMutation(FOLLOW_AS_USER, {
+    refetchQueries: ["Users"],
+  });
+  const [unfollowAsUser] = useMutation(UNFOLLOW_AS_USER, {
+    refetchQueries: ["Users"],
+  });
+  const [followAsOrg] = useMutation(FOLLOW_AS_ORG, {
+    refetchQueries: ["Orgs"],
+  });
+  const [unfollowAsOrg] = useMutation(UNFOLLOW_AS_ORG, {
+    refetchQueries: ["Orgs"],
+  });
 
   const handleFollowToggle = async () => {
     if (!userId) return;

@@ -6,12 +6,12 @@ import { useQuery} from '@apollo/client';
 import { useEffect, useState } from "react";
 import BoneIcon from "../images/BoneIcon";
 import { motion } from "framer-motion";
-import danceCat from "../images/364.gif"
+//import danceCat from "../images/364.gif"
 //usestate to recall the avatar url when the page is reloaded
 //fallback image is profileIcon
 export default function Header() {
   const [avatarUrl, setAvatarUrl] = useState<string>(profileIcon);
-  const currentUser = localStorage.getItem('user_Id');
+  const currentUser = localStorage.getItem('userId');
   const { data } = useQuery(QUERY_USER, {
     variables: { userId: currentUser },
   });

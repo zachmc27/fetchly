@@ -29,7 +29,7 @@ export default function Home() {
       )
     : [];
 
-  console.log("Sorted Posts:", posts);
+  // console.log("Sorted Posts:", posts);
 
   if (loading) return <div className="loading-gif-container"><img src={danceCat} alt="loading gif of a cat dancing"/></div>;
   if (error) return <p>Error: {error.message}</p>;
