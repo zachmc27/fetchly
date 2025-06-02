@@ -26,7 +26,7 @@ interface Follower {
   id: string;
 }
 
-export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
+export default function NewMessage({ onSubmit }: NewMessageProps) {
   const [selectedParticipantNames, setSelectedParticipantNames] = useState<string[]>([]);
   const [createConversation] = useMutation(CREATE_CONVERSATION);
   const [groupName, setGroupName] = useState<string>("");
