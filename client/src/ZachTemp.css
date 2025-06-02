@@ -927,6 +927,25 @@
   border-bottom: 1px solid #eee; 
 }
 
+.msg-user-photo-container {
+  width: 40px;      /* Match profile photo size */
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee; /* Optional: placeholder bg */
+}
+
+.msg-user-photo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
 .msg-info-user-card:last-child {
   border-bottom: none; /* No border for the last user in the list */
 }

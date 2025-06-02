@@ -86,10 +86,13 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
       <div className="user-list-wrapper">
       {conversation.conversationUsers.map((user) => (
         <div key={user._id} className="msg-info-user-card">
-        <img 
+        <div className="msg-user-photo-container">
+          <img 
           src={user.avatar?.url} 
           className="msg-info-user-photo"
         />
+        </div>
+        
           <p style={{ fontSize: "16px", color: "#555", margin: 0 }}>{user.username || user._id}</p>
         </div>
         //will have to query every user if we want to display their profile photos
