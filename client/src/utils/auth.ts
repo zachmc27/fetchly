@@ -43,7 +43,7 @@ class AuthService {
   }
 
   // TODO: What is the purpose of this method?
-  login(idToken: string, userId: number) {
+  login(idToken: string, userId: string) {
     localStorage.setItem('id_token', idToken.toString());
     console.log("Token Saved");
     localStorage.setItem('userId', userId.toString());

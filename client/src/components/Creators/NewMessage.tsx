@@ -6,12 +6,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_CONVERSATION } from "../../utils/mutations";
 import { GET_FOLLOWERS } from "../../utils/queries";
 
-const loggedInUser = localStorage.getItem("user_Id");
+const loggedInUser = localStorage.getItem("userId");
 console.log("Logged in user ID:", loggedInUser);
 
 interface NewMessageProps {
   onSubmit: () => void;
-  onClose: () => void;
+  onClose: () => void
 }
 
 interface Follower {
@@ -20,7 +20,13 @@ interface Follower {
   id: string;
 }
 
-export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
+interface Follower {
+  userAvi: string;
+  username: string;
+  id: string;
+}
+
+export default function NewMessage({ onSubmit }: NewMessageProps) {
   const [selectedParticipantNames, setSelectedParticipantNames] = useState<string[]>([]);
   const [createConversation] = useMutation(CREATE_CONVERSATION);
   const [groupName, setGroupName] = useState<string>("");
@@ -112,10 +118,7 @@ export default function NewMessage({ onSubmit, onClose }: NewMessageProps) {
 
   return (
     <div className="msg-creation-container">
-      <div className="msg-creation-header">
-        <button onClick={onClose}>{"<"}</button>
-        <h1>New Chat</h1>
-      </div>
+   
       {selectedParticipantNames.length > 2 && (
         <div className="gc-creating-container">
           <input

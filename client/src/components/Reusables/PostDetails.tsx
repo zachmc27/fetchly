@@ -295,7 +295,7 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
               </p>
               <p>
                 <span className="detail-label">Good with pets:</span> 
-                <span className="detail-value">{adoption.goodWithPets}</span>
+                <span className="detail-value">Yes good with all</span>
               </p>
               <p>
                 <span className="detail-label">Vaccinations:</span>

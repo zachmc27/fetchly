@@ -19,7 +19,7 @@ import { MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-
+import { mockAdoptionPosts } from "../../mockdata/post-data"
 
 //get mutations and queries
 import { useQuery } from "@apollo/client";
@@ -135,7 +135,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 10000, // Poll every 5 seconds
+  pollInterval: 8000, // Poll every 8 seconds
 });
 
 const {
@@ -319,6 +319,7 @@ type Comment = {
   postedTime: Date;
   replies?: Comment[];
   media?: { url: string }[];
+  parentPost?: string;
 };
 
 function mapResponseToComment(res: {
@@ -334,6 +335,7 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
@@ -344,62 +346,26 @@ function mapResponseToComment(res: {
     postedTime: new Date(),
     replies: [],
     media: [],
+    // parentPost: res.
   };
 }
 
 // ----------------------------------------------------------------
 // --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
-// const [activeAdoptionPost, setActiveAdoptionPost] = useState<AdoptionCard | null>(null); 
-// const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
-const { isAdoptionPostOpen, setIsAdoptionPostOpen, activeAdoptionPost, setActiveAdoptionPost } = useAdoptionPost();
-useEffect(() => {
-  const storedAdoptionId = localStorage.getItem("activeAdoptionId");
-  if (storedAdoptionId && location.pathname === '/adoption') {
-    const storedAdoption = initialFeedArray.find(
-      (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === storedAdoptionId
-    ) as AdoptionCard | undefined;
-    if (storedAdoption) {
-      setActiveAdoptionPost(storedAdoption);
-      setIsAdoptionPostOpen(true);
-    }
-  }
+const [activeAdoptionPost, setActiveAdoptionPost] = useState<MockAdoptionItem | null>(null); 
+const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
 
-  if (location.pathname !== "/adoption") {
-    localStorage.removeItem("activeAdoptionId");
-  }
-}, [location.pathname, initialFeedArray, setActiveAdoptionPost, setIsAdoptionPostOpen]);
-
-// Inside a component that needs to listen directly, e.g., Feed.tsx or Adoption.tsx
-useEffect(() => {
-  const handleStorageChange = (event: StorageEvent) => {
-    if (event.key === "activeAdoptionId" && event.newValue === null) {
-      setActiveAdoptionPost(null);
-      setIsAdoptionPostOpen(false)
-      console.log("activeAdoptionId was removed from localStorage.");
-    }
-  };
-
-  window.addEventListener("storage", handleStorageChange);
-
-  return () => {
-    window.removeEventListener("storage", handleStorageChange);
-  };
-}, []);
-
-function handleAdoptionPostViewRender(adoptionId: string) {
-
- const adoptionToOpen = feedArray.find(
-    (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === adoptionId
-  ) as AdoptionCard | undefined;
+ function handleAdoptionPostViewRender(adoptionId: string) {
+  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption._id === adoptionId);
   console.log(adoptionToOpen);
 
-  console.log(adoptionToOpen);
   if (!adoptionToOpen) {
-    console.log('no post found')
+    console.log('no post found');
+    return
   }
     if (adoptionToOpen) {
-      setActiveAdoptionPost(adoptionToOpen);
+       setActiveAdoptionPost(adoptionToOpen);
       console.log('active post:', activeAdoptionPost);
       setIsAdoptionPostOpen(true)
       localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
@@ -456,7 +422,7 @@ function handleCloseAdoptionPostView() {
   const postItem = item as PostCard;
   return (
     <PostCardItem
-      key={postItem._id}
+      key={index}
       post={postItem}
       onOpen={handlePostViewRender}
       itemStyle={itemStyle}
@@ -560,7 +526,7 @@ if (isMeetupPostOpen && activeMeetupPost) {
     </div>
     {
       isMeetupCommentsOpen &&
-      <Comments comments={activeMeetupPost.comments}/>
+      <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
     }
     {
       isGoingListOpen &&
@@ -579,7 +545,10 @@ if (isPostOpen && activePost) {
    containerClass="post-details-container"
    onClose={handleClosePostView}
   />
-  <Comments comments={(activePost.responses || []).map(mapResponseToComment)} />
+  <Comments
+    comments={(activePost.responses || []).map(mapResponseToComment)}
+    postId={activePost._id}
+  />
   </div>
   )
 }
@@ -601,7 +570,7 @@ return (
   <>
     <Header />
     {
-      (!isMeetupPostOpen && location.pathname === "/meetup") &&
+      !isMeetupPostOpen && location.pathname === "/meetup" &&
       <SearchBar send={filterBySearch} />
     }
     <div className={containerStyle}>
