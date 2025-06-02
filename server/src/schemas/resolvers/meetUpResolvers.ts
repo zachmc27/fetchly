@@ -70,9 +70,22 @@ const meetUpResolvers = {
                     path: 'comments',
                         populate: {
                         path: 'poster.refId',
+                            populate: 'avatar',
                 }})
                 .populate('location')
-                .populate('poster.refId');
+                .populate({
+                    path: 'attendees',
+                    model: 'User',
+                    populate: {
+                        path: 'avatar',
+                        model: 'Media',
+                    },
+                })
+                .populate({
+                    path: 'poster.refId',
+                    populate: {
+                        path: 'avatar',
+                }})
         },
         meetUp: async (_parent: any, { meetUpId }: MeetUpArgs) => {
             return await MeetUp.findById(meetUpId)
@@ -81,9 +94,22 @@ const meetUpResolvers = {
                     path: 'comments',
                         populate: {
                         path: 'poster.refId',
+                            populate: 'avatar',
                 }})
                 .populate('location')
-                .populate('poster.refId');
+                .populate({
+                    path: 'attendees',
+                    model: 'User',
+                    populate: {
+                        path: 'avatar',
+                        model: 'Media',
+                    },
+                })    
+                .populate({
+                    path: 'poster.refId',
+                        populate: {
+                            path: 'avatar',
+                }})
         },
     },
 

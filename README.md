@@ -11,9 +11,11 @@ Fetchly is a full-stack social networking platform for pet lovers. Users can cre
 - **Chat with Friends** Message users on your friends list through direct or group chats.
 
 ## App Preview
-![Login Page](image.png)
-![Inbox Page](image-1.png)
-![New Post](image-2.png)
+
+![Login Page](./client/src/assets/Home-Page.png)
+![Inbox Page](./client/src/assets/Inbox.png)
+![New Post](./client/src/assets/New-Post.png)
+
 
 
 ## 💻 Technologies Used

@@ -83,3 +83,59 @@ export type PostCard = {
   }
   parentPost: string;
 }
+
+export type MeetUpComment = {
+_id: string;
+poster: {
+    refId: {
+      _id: string;
+      username: string;
+      avatar: {
+        url: string
+      }
+    };
+    refModel: string;
+  };
+contentText: string;
+media: [{url: string}]
+responses: [MeetUpComment]
+responseCount: number;
+parentComment: string;
+isResponse: boolean;      
+createdAt: string;
+itemType: string;
+}
+
+export type MeetUpCard = {
+  _id: string; 
+  id?: string;
+  title: string;
+  poster: {
+    refId: {
+      _id: string;
+      username: string;
+      avatar: {
+        url: string
+      }
+    };
+    refModel: string;
+  }
+  description: string;
+  location: {
+    address: string;
+    zip: string;
+    city: string;
+    state: string;
+    country: string;
+  }
+  date: string;
+  time: string;
+  attendees: string[];
+  numberOfAttendees: number;
+  comments: MeetUpComment[];
+  numberOfComments: number;
+  media: [{
+    url: string;
+  }];
+  itemType: string;
+}

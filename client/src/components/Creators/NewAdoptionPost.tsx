@@ -5,7 +5,7 @@ import WindowModal from "../Reusables/WindowModal"; // assuming this exists
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { CREATE_ADOPTION } from "../../utils/mutations";
 import { QUERY_ORG } from "../../utils/queries";
-import "../../MishaTemp.css"
+import "../../main.css"
 
 interface NewAdoptionPostProps {
   onSubmit: (data: {
@@ -43,7 +43,9 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
 
-  const [createAdoptionPost] = useMutation(CREATE_ADOPTION);
+  const [createAdoptionPost] = useMutation(CREATE_ADOPTION, {
+    refetchQueries: ["Adoptions"],
+  });
   const [showError, setShowError] = useState(userType !== "Org");
 
   const { data: orgData } = useQuery(QUERY_ORG, {

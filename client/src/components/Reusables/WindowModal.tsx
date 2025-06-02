@@ -2,7 +2,7 @@
 // refer to the actionmodal in cinematch, its basically the same
 
 import { motion } from "framer-motion";
-import "../../MishaTemp.css"
+import "../../main.css"
 
 export default function Windowmodal({ children, cancel }: { children: React.ReactNode; cancel: () => void; confirm: () => void}) {
   const stopClick = (e: React.MouseEvent) => e.stopPropagation();

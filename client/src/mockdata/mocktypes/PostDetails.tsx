@@ -4,7 +4,7 @@ export type Comment = {
   orgName?: string,
   avatar?: string,
   comment: string,
-  likeCount: number,
+  likeCount?: number,
   postedTime: Date,
   replies?: Comment[]
   media?: {url: string }[];

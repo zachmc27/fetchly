@@ -12,7 +12,7 @@ import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import MsgInfoPage from "./MsgInfoPage";
 import { useMutation } from "@apollo/client";
 import { CREATE_MESSAGE } from "../../utils/mutations"; // Correct the module path and import CREATE_MESSAGE mutation
-
+import sendIcon from "../../images/send_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 
 export default function MessagesPage({ conversation, onClose }: { conversation: MockConversationObject, onClose: () => void }) {
 
@@ -129,7 +129,7 @@ const handleSendMessage = async (
             type="button" 
             onClick={(event) => handleSendMessage(event, textContent)}
           >
-            ↗️
+            <img src={sendIcon} alt="send message icon" />
           </button>
         </div>
       </div>

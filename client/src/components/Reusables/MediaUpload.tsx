@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { UPLOAD_MEDIA } from '../../utils/mutations';
 import Actionmodal from './ActionModal'; // adjust the path as needed
 import { FaCog } from 'react-icons/fa';
-import '../../SammiReusables.css';
+import '../../main.css';
 
   type UploadedMedia = {
     id: string;
