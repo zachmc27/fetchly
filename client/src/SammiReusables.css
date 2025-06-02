@@ -306,6 +306,20 @@
   color: #333;
 }
 
+.prof-meetup-back-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  /* left: 0;
+  top: 50%; */
+  transform: translateY(-50%);
+  color: #333;
+}
+
 .prof-detail-header h2 {
   flex-grow: 1; /* Pushes the title to the center */
   text-align: center;
