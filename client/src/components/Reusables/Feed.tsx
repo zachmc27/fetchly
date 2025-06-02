@@ -22,8 +22,9 @@ import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
 
 //get mutations and queries
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONVERSATION } from "../../utils/queries";
+import { ATTEND_MEETUP, UNATTEND_MEETUP } from "../../utils/mutations";
 import { useCallback } from "react";
 
 // components
@@ -135,7 +136,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 8000, // Poll every 8 seconds
+  pollInterval: 50000, // Poll every 0.5 seconds
 });
 
 const {
@@ -265,6 +266,40 @@ function handleCloseMessagePage() {
     setIsMeetupCommentsOpen(true)
     setActiveTab('comments')
   }
+
+// ----------------------------------------------------------------
+// --------------- MEETUP PAGE RSVP LOGIC -------------------------
+// ----------------------------------------------------------------
+
+  const [attendMeetup] = useMutation(ATTEND_MEETUP);
+  const [unattendMeetup] = useMutation(UNATTEND_MEETUP);
+
+  const handleAttendMeetupToggle = async (meetupItem: MeetUpCard) => {
+    if (meetupItem.itemType !== "meetup" || !userId || userType !== "User") return;
+
+    if (!meetupItem._id) {
+      console.warn("MeetUp _id is missing, cannot attend/unattend");
+      return;
+    }
+
+    const variables = {
+      meetUpId: meetupItem._id,
+      userId: userId
+    };
+
+    try {
+      if (!meetupItem.attendees) {
+        const { data } = await attendMeetup({ variables });
+        console.log("RSVP'd successfully: ", data);
+      } else {
+        const { data } = await unattendMeetup({ variables });
+        console.log("Un-RSVP'd successfully: ", data);
+      }
+    } catch (error) {
+      console.error("Error toggling RSVP:", error);
+    }
+  };  
+
 // ----------------------------------------------------------------
 // --------------- HOME PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
@@ -530,7 +565,7 @@ case "meetup": {
                   </ul>
                 </div>
               </div>
-              <button className="rsvp-btn">RSVP</button>
+              <button className="rsvp-btn" onClick={() => handleAttendMeetupToggle(meetupItem)}>RSVP</button>
             </div>
             <div className="meetup-details-row">
               <div className="meetup-date">

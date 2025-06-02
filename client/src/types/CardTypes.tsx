@@ -105,6 +105,7 @@ export type MeetUpCard = {
   }
   date: string;
   time: string;
+  attendees: string[];
   numberOfAttendees: number;
   comments: string[];
   numberOfComments: number;
