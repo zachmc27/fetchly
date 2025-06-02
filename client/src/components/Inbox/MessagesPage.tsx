@@ -38,8 +38,7 @@ export default function MessagesPage({ conversation, onClose }: { conversation: 
   // data is set up to where those ID values are unique to each message. In order to filter the right messages using userID, you will likely
   // have to find the username tied to that ID and filter it like that (or userIDs will need to be added to message data to prevent identical usernames giving the rendering issues)
   const activeConversationId = localStorage.getItem("activeConversationId");
-  const userID = localStorage.getItem('user_Id');
-  // const userID = "6837b59ff2c13eff3aa57c6b"
+  const userID = localStorage.getItem('userId');
   const [addMessage, { loading, error }] = useMutation(CREATE_MESSAGE); // Use the correct mutation name
 
 

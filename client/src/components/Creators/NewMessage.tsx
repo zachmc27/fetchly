@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_CONVERSATION } from "../../utils/mutations";
 import { GET_FOLLOWERS } from "../../utils/queries";
 
-const loggedInUser = localStorage.getItem("user_Id");
+const loggedInUser = localStorage.getItem("userId");
 console.log("Logged in user ID:", loggedInUser);
 
 interface NewMessageProps {
