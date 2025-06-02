@@ -253,7 +253,7 @@
 .profile-feed-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content:  flex-start;
     width: 100%;
     margin: 0 auto;
     height: 92vh;
@@ -1325,13 +1325,15 @@
 
 .post-feed-container {
     display: flex;
-    flex-wrap: wrap;
-    padding: 10px 0px;
-    padding-top: 12vh;
-    justify-content: center;
-    height: 94vh;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* padding: 10px 0px;
+    padding-top: 12vh; */
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* height: 94vh;
     overflow: hidden;
-    overflow-y: auto;
+    overflow-y: auto; */
 }
 
 /* Ensure this CSS is loaded by your component */
