@@ -16,26 +16,29 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
   const [updateConversation] = useMutation(UPDATE_CONVERSATION);
 
   async function handleUpdate() {
-    try {
-      const { data } = await updateConversation({
-        variables: {
-          input: {
-            _id: conversation._id,
-            conversationName: conversation.conversationName,
-          },
+    const newName = document.querySelector<HTMLInputElement>('.gc-editing-container input')?.value || conversation.conversationName;
+    console.log(`New group name: ${newName}`);
+
+    const { data } = await updateConversation({
+      variables: {
+        input: {
+          _id: conversation._id,
+          conversationName: newName,
         },
-      });
-      if (data.updateConversation.success) {
-        alert("Chat name updated successfully to " + conversation.conversationName);
-      } else {
-        alert(`Failed to update chat name: ${data.updateConversation.message}`);
-      }
-    } catch (error) {
-      console.error("Error updating conversation:", error);
-      alert("An error occurred while updating the chat name.");
+      },
+    });
+
+    console.log("Mutation response:", data);
+
+    if (data?.updateConversation?.conversation) {
+      alert("Chat name updated successfully to " + data.updateConversation.conversation.conversationName);
+      
+    } else {
+      console.log("Mutation Cathed: ", data);
+      location.reload(); // Refresh the page to reset the state
+      
     }
   }
-
 
   async function handleDelete() {
     try {
@@ -87,10 +90,11 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
       {conversation.conversationUsers.map((user) => (
         <div key={user._id} className="msg-info-user-card">
         <img 
-          src={user.avatar?.url} 
-          className="msg-info-user-photo"
+          src={user.avatar?.url ?? "/default-avatar.png"} 
+          className="default-icon"
+          style={{ marginRight: "10px" }}
         />
-          <p style={{ fontSize: "16px", color: "#555", margin: 0 }}>{user.username || user._id}</p>
+          <p style={{ fontSize: "16px", color: "#555", margin: 0 }}>{user.username ?? "Unknown User"}</p>
         </div>
         //will have to query every user if we want to display their profile photos
       ))}
