@@ -1,54 +1,201 @@
+
 import { Conversation, User } from '../../models/index.js';
-import { Types } from 'mongoose';
+import { Types, isValidObjectId } from 'mongoose';
 
-
-interface ConversationArgs {
-    conversationId: string;
-    conversationName: string;
-    conversationUsers: string[]; // Array of user IDs
-    messages: string[]; // Array of message IDs
-    lastMessage: string; // ID of the last message
-}
-
-interface CreateConversationArgs{
+interface CreateConversationArgs {
     input: {
         conversationName: string;
-        conversationUsers: string[]; // Array of user IDs
+        conversationUsers: string[];
     };
 }
-// Define the resolvers for the Conversation model
+interface UpdateConversationNameArgs {
+    input: {
+        _id: string;
+        conversationName: string;
+    };
+}
+
 const conversationResolvers = {
     Query: {
         conversations: async () => {
-            return await Conversation.find()
-                .populate('conversationUsers')
-                .populate('messages')
-                .populate('lastMessage');
+            try {
+                return await Conversation.find()
+                .populate({
+                    path: 'conversationUsers',
+                    select: 'username avatar', // Fetch avatar for each conversation user
+                    populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                })
+                .populate({
+                    path: 'messages',
+                    populate: {
+                        path: 'messageUser',
+                        select: 'username avatar', // Fetch avatar for each message user
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                    },
+                })
+                .populate({
+                    path: 'lastMessages',
+                    populate: {
+                        path: 'unreadUser',
+                        select: 'username avatar', // Fetch avatar for unread users
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                    },
+                });
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to fetch conversations: ${error.message}`);
+                }
+                throw new Error('Failed to fetch conversations: An unknown error occurred.');
+            }
         },
-        conversation: async (_parent: any, { conversationId }: ConversationArgs) => {
-            return await Conversation.findById(conversationId)
-                .populate('conversationUsers')
-                .populate('messages')
-                .populate('lastMessage');
-        }
+        conversation: async (_parent: any, { conversationId }: { conversationId: string }) => {
+            try {
+                if (!isValidObjectId(conversationId)) {
+                    throw new Error('Invalid conversationId format');
+                }
+
+                return await Conversation.findById(conversationId)
+                    .populate({
+                        path: 'conversationUsers',
+                        select: 'username avatar', // Fetch avatar for each conversation user
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                    })
+                    .populate({
+                        path: 'messages',
+                        populate: {
+                            path: 'messageUser',
+                            select: 'username avatar', // Fetch avatar for each message user
+                            populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                        },
+                    })
+                    .populate('lastMessage');
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to fetch conversation: ${error.message}`);
+                }
+                throw new Error('Failed to fetch conversation: An unknown error occurred.');
+            }
+        },
+        conversationByUser: async (_parent: any, { userId }: { userId: string }) => {
+            try {
+                if (!isValidObjectId(userId)) {
+                    throw new Error('Invalid userId format');
+                }
+
+                return await Conversation.find({ conversationUsers: userId })
+                    .populate({
+                        path: 'conversationUsers',
+                        select: 'username avatar', // Fetch avatar for each conversation user
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                    })
+                    .populate({
+                        path: 'messages',
+                        populate: {
+                            path: 'messageUser',
+                            select: 'username avatar', // Fetch avatar for each message user
+                            populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                        }
+                    })
+                    .populate('lastMessage');
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to fetch conversations for user: ${error.message}`);
+                }
+                throw new Error('Failed to fetch conversations for user: An unknown error occurred.');
+            }
+        },
     },
     Mutation: {
-        CreateConversationInput: async (_parent: any, { input }: CreateConversationArgs) => {
-            const userIds = input.conversationUsers; // Use user IDs directly
-            const newConversation = await Conversation.create({
-                conversationName: input.conversationName,
-                conversationUsers: userIds,
-            });
+        createConversation: async (_parent: any, { input }: CreateConversationArgs) => {
+            try {
+                const userIds = input.conversationUsers;
 
-            // Populate the conversation ID into each user's conversation list
-            const users = await User.find({ _id: { $in: userIds } });
-            for (const user of users) {
-                (user.conversation as Types.ObjectId[]).push(newConversation._id as Types.ObjectId);
-                await user.save();
+                if (!userIds || userIds.length === 0) {
+                    throw new Error('No users provided for the conversation');
+                }
+
+                const newConversation = await Conversation.create({
+                    conversationName: input.conversationName,
+                    conversationUsers: userIds,
+                });
+
+                const users = await User.find({ _id: { $in: userIds } });
+                if (users.length !== userIds.length) {
+                    throw new Error('Some users provided for the conversation do not exist');
+                }
+
+                for (const user of users) {
+                    if (!user.conversation) {
+                        user.conversation = [];
+                    }
+                    (user.conversation as Types.ObjectId[]).push(newConversation._id as Types.ObjectId);
+                    await user.save();
+                }
+
+                return await newConversation.populate({
+                    path: 'conversationUsers',
+                    select: 'username avatar',
+                });
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to create conversation: ${error.message}`);
+                }
+                throw new Error('Failed to create conversation: An unknown error occurred.');
             }
-
-            return newConversation.populate('conversationUsers');
         },
-    }
+        updateConversationName: async (_parent: any, { input }: UpdateConversationNameArgs) => {
+            try{
+                if (!isValidObjectId(input._id)) {
+                    throw new Error('Invalid conversationId format');
+                }
+
+                const conversation = await Conversation.findByIdAndUpdate(
+                    input._id,
+                    { conversationName: input.conversationName },
+                    { new: true }
+                ).populate({
+                    path: 'conversationUsers',
+                    select: 'username avatar',
+                });
+
+                if (!conversation) {
+                    throw new Error('Conversation not found');
+                }
+
+                return conversation;
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to update conversation name: ${error.message}`);
+                }
+                throw new Error('Failed to update conversation name: An unknown error occurred.');
+            }
+        },
+
+        deleteConversation: async (_parent: any, { conversationId }: { conversationId: string }) => {
+            try {
+                if (!isValidObjectId(conversationId)) {
+                    throw new Error('Invalid conversationId format');
+                }
+
+                const conversation = await Conversation.findByIdAndDelete(conversationId);
+                if (!conversation) {
+                    throw new Error('Conversation not found');
+                }
+
+                await User.updateMany(
+                    { conversation: conversationId },
+                    { $pull: { conversation: conversationId } }
+                );
+
+                return true;
+            } catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(`Failed to delete conversation: ${error.message}`);
+                }
+                throw new Error('Failed to delete conversation: An unknown error occurred.');
+            }
+        },
+    },
 };
+
 export default conversationResolvers;

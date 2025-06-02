@@ -59,7 +59,7 @@ const adoptionResolvers = {
                     path: 'pet',
                     populate: [
                         { path: 'type' },
-                        { path: 'profilePhoto' }
+                        { path: 'profilePhoto'}
                     ]
                 })
                 .populate('media')
@@ -73,13 +73,13 @@ const adoptionResolvers = {
                     populate: { path: 'avatar' }
                 });
         },
-        adoption: async (_parent: any, { adoptionId }: AdoptionArgs) => {
+        adoption: async (_parent: any, { adoptionId }: { adoptionId: string }) => {
             return await Adoption.findById(adoptionId)
                 .populate({
                     path: 'pet',
                     populate: [
                         { path: 'type' },
-                        { path: 'profilePhoto' }
+                        { path: 'profilePhoto'}
                     ]
                 })
                 .populate('media')

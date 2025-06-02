@@ -1,18 +1,39 @@
 export type MockLastMessage = {
-  id: number;
+  _id: string;
   textContent: string
+  messageUser: MockMessageUser;
+  formattedCreatedAt: string;
 }
 
+export type conversationUsers = {
+  _id: string;
+  username?: string;
+  avatar?: Avatar;
+}
+export type Avatar = {
+  url: string;
+}
 export type MockMessageObject = {
-  id: number;
-  messageUser: string;
+  _id: string;
+  conversation: MockConversationObject;
+  messageUser: MockMessageUser;
   textContent: string
+  formattedCreatedAt?: string;
+
+}
+ 
+export type MockMessageUser = {
+  _id: string;
+  username: string;
+  avatar?: Avatar;
 }
 
-export type MockConversationObject = {
-  id: number;
+export type MockConversationObject = { 
+  _id: string;
+  coverImage?: string;
   conversationName: string;
-  conversationUsers: string[];
-  lastMessage: MockLastMessage;
-  messages: MockMessageObject[]
+  conversationUsers: conversationUsers[];
+  lastMessage?: MockLastMessage;
+  messages?: MockMessageObject[],
+  formattedCreatedAt?: string;
 }

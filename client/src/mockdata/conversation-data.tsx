@@ -1,309 +1,309 @@
 export const mockConversations = [
     {
-        id: 1,
+        _id: 1,
         conversationName: 'Dream team',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
     {
-        id: 2,
+        _id: 2,
         conversationName: 'Mystery Gang',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
     {
-        id: 3,
+        _id: 3,
         conversationName: 'Family',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
      {
-        id: 4,
+        _id: 4,
         conversationName: 'Ginyu Force',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
      {
-        id: 5,
+        _id: 5,
         conversationName: 'Straw hats',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
      {
-        id: 6,
+        _id: 6,
         conversationName: 'Straw hats',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
      {
-        id: 7,
+        _id: 7,
         conversationName: 'Dudes',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
      {
-        id: 8,
+        _id: 8,
         conversationName: 'Fellas',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
      {
-        id: 9,
+        _id: 9,
         conversationName: 'Girlypops',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }
         ]
     },
      {
-        id: 10,
+        _id: 10,
         conversationName: 'Stop scrolling',
         conversationUsers: ['brett', 'misha', 'kendrick', 'sammi', 'zach'],
         lastMessage: {
-            id: 14,
+            _id: 14,
             textContent: 'Are we done yet?'
         },
         messages: [
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'hello'
             },
             {
-                id: 12,
+                _id: 12,
                 messageUser: 'sammi',
                 textContent: 'hey girl'
             },
             {
-                id: 13,
+                _id: 13,
                 messageUser: 'kendrick',
                 textContent: '...'
             },
             {
-                id: 11,
+                _id: 11,
                 messageUser: 'zach',
                 textContent: 'Are we done yet?'
             }

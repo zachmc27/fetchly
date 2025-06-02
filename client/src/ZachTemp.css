@@ -898,10 +898,18 @@
 }
 
 .msg-info-user-card::before {
-  content: '👤';
+  
   font-size: 20px;
   margin-right: 15px;
   color: #888;
+}
+.msg-info-user-card-photo {
+  width: 36px; /* Optimal size for chat user avatars */
+  height: 36px;
+  border-radius: 50%; /* Ensures a circular shape */
+  object-fit: cover; /* Maintains aspect ratio and fills the container */
+  margin-right: 8px; /* Slightly smaller margin for better spacing */
+  border: 1px solid #e0e0e0; /* Optional: Light border for better visibility */
 }
 
 /* If there's no group chat editing container, adjust margin for the user list */

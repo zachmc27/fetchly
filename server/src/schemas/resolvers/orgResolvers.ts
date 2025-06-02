@@ -61,7 +61,13 @@ const orgResolvers = {
   // Org Queries
     orgs: async () => {
       return await Org.find()
-        .populate('pets')
+          .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
         .populate('employees')
         .populate('posts')
         .populate('avatar')
@@ -75,7 +81,13 @@ const orgResolvers = {
     },
     org: async (_parent: any, { orgId }: OrgArgs) => {
       return Org.findById(orgId)
-        .populate('pets')
+          .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
         .populate('employees')
         .populate('posts')
         .populate('avatar')

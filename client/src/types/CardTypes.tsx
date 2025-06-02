@@ -25,6 +25,7 @@ export type PostCard = {
       };
       _id: string;
       username: string;
+      orgName: string;
     }
     refModel: string;
   };
@@ -55,4 +56,8 @@ export type PostCard = {
       refModel: string;
     };
   }],
+  taggedPets: {
+    name: string;
+  }
+  parentPost: string;
 }

@@ -31,13 +31,11 @@ type UploadedMedia = {
   url: string; // URL to access the media
 };
 
-
-
-const userId = localStorage.getItem('user_Id');
-const accountType = localStorage.getItem('accountType');
-const userType = accountType === "org" ? "Org" : "User";
-
 const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
+
+  const userId = localStorage.getItem('userId');
+  const accountType = localStorage.getItem('accountType');
+  const userType = accountType === "org" ? "Org" : "User";
 
   const [NewPet] = useMutation(ADD_PET);
 
@@ -63,19 +61,19 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
 
   // Property UseStates
   const [about, setAbout] = useState<string>("");
-  const [age, setAge] = useState<number>();
+  const [age, setAge] = useState<string>("");
   const [size, setSize] = useState<"" | "Small" | "Medium" | "Large">("");
   const [neutered, setNeutered] = useState<boolean | null>(null);
   const [gender, setGender] = useState<"" | "Male" | "Female" | "Unsure">("");
   const [name, setName] = useState("");
   const [petType, setPetType] = useState<"" | "Dog" | "Cat">("");
-  const [profilePhoto, setProfilePhoto] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState<UploadedMedia>();
   const [breed, setBreed] = useState("");
   const [vaccines, setVaccines] = useState("");
 
   // Get the media ID from the uploadmedia component
   const handleMediaUpload = (media: UploadedMedia) => {
-    setProfilePhoto(media.id);
+    setProfilePhoto(media);
     setFormErrors([]);
   };
 
@@ -99,11 +97,16 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
       return;
     }
 
+    const ageNumber = parseInt(age, 10);
+    if (isNaN(ageNumber)) {
+      errors.push("Age must be a number.");
+    }    
+
     // If everything is provided, get ready to call mutation
 
     const petInput = {
       about,
-      age,
+      age: ageNumber,
       size,
       neuteredOrSpayed: neutered,
       gender,
@@ -113,7 +116,7 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
         refModel: userType || "",
       },
       type: petTypeId,
-      profilePhoto,
+      profilePhoto: profilePhoto?.id,
       vaccination: vaccines,
     };
 
@@ -135,9 +138,9 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
       setSize("");
       setVaccines("");
       setAbout("");
-      setProfilePhoto("");
+      setProfilePhoto(undefined);
       setNeutered(false);
-      setAge(0);
+      setAge("");
 
     } catch (error) {
       console.error("Error adding pet:", error);
@@ -241,7 +244,7 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
         <input
           type="text"
           value={age}
-          onChange={(e) => setAge(Number(e.target.value))}
+          onChange={(e) => setAge(e.target.value)}
           placeholder="#"
         />
       </div>

@@ -1,4 +1,4 @@
-import { User, Org, Pet } from '../../models/index.js';
+import { User, Org, Pet, Location } from '../../models/index.js';
 import { signToken, AuthenticationError } from '../../utils/auth.js'; 
 import mongoose from 'mongoose';
 
@@ -54,7 +54,13 @@ const userResolvers = {
     // User Queries
     users: async () => {
       return await User.find()
-        .populate('pets')
+          .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
         .populate('posts')
         .populate('avatar')
         .populate('meetUps')
@@ -69,7 +75,13 @@ const userResolvers = {
     },
     user: async (_parent: any, { userId }: UserArgs) => {
       return await User.findById(userId)
-        .populate('pets')
+        .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
         .populate('posts')
         .populate('avatar')
         .populate('meetUps')
@@ -82,10 +94,37 @@ const userResolvers = {
           path: 'followedBy.refId'
         });
     },
+    userByUsername: async (_parent: any, { username }: { username: string }) => {
+      return await User.find({ username })
+        .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+        })
+        .populate('posts')
+        .populate('avatar')
+        .populate('meetUps')
+        .populate('location')
+        .populate('organizations')
+        .populate({
+          path: 'following.refId'
+        })
+        .populate({
+          path: 'followedBy.refId'
+        });
+    },
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id })
-          .populate('pets')
+          .populate({
+              path: 'pets',
+              populate: [
+                  { path: 'type' },
+                  { path: 'profilePhoto'}
+              ]
+          })
           .populate('posts')
           .populate('avatar')
           .populate('location')
@@ -132,33 +171,35 @@ const userResolvers = {
         throw new AuthenticationError('You are not authorized to update this user.');
       }
 
-      // let locationId;
-      // if (input.location) {
-      //   const existingLocation = await Location.findOne({
-      //     address: input.location.address,
-      //     city: input.location.city,
-      //     state: input.location.state,
-      //     country: input.location.country,
-      //     zip: input.location.zip,
-      //   });
+      let locationId;
+      if (input.location) {
+        const existingLocation = await Location.findOne({
+          address: input.location.address,
+          city: input.location.city,
+          state: input.location.state,
+          country: input.location.country,
+          zip: input.location.zip,
+        });
 
-      //   if (existingLocation) {
-      //     locationId = existingLocation._id;
-      //   } else {
-      //     const newLocation = await Location.create(input.location);
-      //     locationId = newLocation._id;
-      //   }
-      // }
+        if (existingLocation) {
+          locationId = existingLocation._id;
+        } else {
+          const newLocation = await Location.create(input.location);
+          locationId = newLocation._id;
+        }
+      }
 
       const updateData = {
         ...input,
         avatar: typeof input.avatar === 'string' && input.avatar.trim() 
-          ? new mongoose.Types.ObjectId(input.avatar) 
-          : undefined, 
+          ? new mongoose.Types.ObjectId(input.avatar) : undefined,
+          location: locationId ?? undefined,
       };
 
       const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true })
-        .populate('avatar').lean();
+        .populate('avatar')
+        .populate('location')
+        .lean();
 
       if (updatedUser?.avatar?._id) {
         updatedUser.avatar._id = updatedUser.avatar._id.toString();

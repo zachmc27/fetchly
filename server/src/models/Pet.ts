@@ -5,6 +5,7 @@ import type { TypeDocument } from './Type.js';
 import type { MediaDocument } from './Media.js';
 import type { OrgDocument } from './Org.js';
 import type { UserDocument } from './User.js';
+import type { PostDocument } from './Post.js'
 
 export interface PetDocument extends Document {
   id: string;
@@ -26,6 +27,7 @@ export interface PetDocument extends Document {
     refModel: 'User' | 'Org';
   }];
   followedByCount: number;
+  taggedPosts:  Types.ObjectId | PostDocument;
 }
 
 const petSchema = new Schema<PetDocument>({
@@ -85,6 +87,10 @@ const petSchema = new Schema<PetDocument>({
           },
       }
   ],  
+  taggedPosts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post',    
+  }]
 },  {
     toJSON: {
       virtuals: true,

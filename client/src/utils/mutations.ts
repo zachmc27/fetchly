@@ -123,7 +123,7 @@ export const UPDATE_ORG = gql`
 //   "input": {
 //     "orgName": "Fetchly 2.0",
 //     "email": "fetchly2@email.com"
-//    "avatar": <mediaId>,
+//     "avatar": <mediaId>,
 //     "about": "We are a pet adoption organization!",
 //     "employees": [
 //       { 
@@ -216,8 +216,7 @@ export const UPDATE_OWNER = gql`
 export const ADD_POST = gql`
   mutation Mutation($input: AddPostInput!) {
     addPost(input: $input) {
-      _id
-      contentText    
+      _id  
     }
   }
 `;
@@ -230,6 +229,8 @@ export const ADD_POST = gql`
 //       "refModel": "User"  // or "Org"
 //     },
 //     "contentText": "This is a test post!",
+//     "media": <mediaId>
+//     "taggedPets": <petId>
 //   }
 // }
 
@@ -841,12 +842,22 @@ export const UNFOLLOW_AS_ORG = gql`
 
 
 export const CREATE_CONVERSATION = gql`
-  mutation CreateConversationInput($input: CreateConversationInput!) {
-  CreateConversationInput(input: $input) {
+mutation CreateConversation($input: CreateConversationInput!) {
+  createConversation(input: $input) {
     _id
     conversationName
     conversationUsers {
       _id
+      username
+    }
+    formattedCreatedAt
+    lastMessage {
+      _id
+      textContent
+      messageUser {
+        _id
+        username
+      }
     }
   }
 }`;
@@ -861,6 +872,37 @@ export const CREATE_CONVERSATION = gql`
 //         ]
 //   }
 // }
+
+
+export const UPDATE_CONVERSATION = gql`
+mutation UpdateConversationName($input: UpdateConversationNameInput!) {
+  updateConversationName(input: $input) {
+    _id
+    conversationName
+    formattedCreatedAt
+    conversationUsers {
+      _id
+      username
+    }
+    lastMessage {
+      _id
+      textContent
+    }
+    messages {
+      _id
+      messageUser {
+        _id
+        username
+      }
+      textContent
+    }
+  }
+}`;
+
+export const DELETE_CONVERSATION = gql`
+mutation DeleteConversation($conversationId: String!) {
+  deleteConversation(conversationId: $conversationId)
+}`;
 
 
 

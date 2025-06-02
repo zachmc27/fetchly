@@ -3,10 +3,10 @@ const messageTypeDefs = `
 
 type Message {
     _id: ID
-    messageUser: User!
+    messageUser: User # Make this nullable
     textContent: String
     media: Media
-    readUser: [User]
+    unreadUser: [User]
     conversation: Conversation
     isRead: Boolean
     itemType: String
@@ -39,6 +39,7 @@ input DeleteMessageInput {
 type Query {
     messages: [Message]
     message(messageId: String!): Message
+    messageByConversation(conversationId: String!): [Message!]!
 }
 
 #--------------Mutation TypeDefs----------------

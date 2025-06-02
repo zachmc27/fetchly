@@ -9,12 +9,15 @@ import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './utils/auth.js';
 import mongoose from 'mongoose';
 import { GridFSBucket, ObjectId } from 'mongodb';
-
+import { fileURLToPath } from 'url';
 
 const server = new ApolloServer({
   typeDefs,
   resolvers
 });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const startApolloServer = async () => {
   await server.start();
@@ -76,10 +79,10 @@ const startApolloServer = async () => {
   ));
 
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
     app.get('*', (_req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
     });
   }
 

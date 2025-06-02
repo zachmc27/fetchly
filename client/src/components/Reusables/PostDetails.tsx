@@ -141,7 +141,7 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
                 <button onClick={onClose}>{"<"}</button>
                 <div className="post-user-info-container">
                   <img src={post.poster.refId.avatar?.url || UserPlaceHolder} alt="users avatar"/>
-                  <p className="post-username">{post.poster.refId.username}</p>
+                  <p className="post-username">{post.poster.refId.username || post.poster.refId.orgName}</p>
                 </div>
                 <p className="post-date-display">{format(new Date(Number(post.createdAt)), 'MMM d, yyyy')}</p>
             </div>

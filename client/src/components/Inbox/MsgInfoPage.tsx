@@ -3,14 +3,61 @@
 // IF GROUP CHAT: render an input bar and bubble button that allows user to change group chat name and save the name
 import { useEffect } from "react";
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation";
+import { useMutation } from "@apollo/client";
+import { DELETE_CONVERSATION, UPDATE_CONVERSATION } from "../../utils/mutations";
+
 export default function MsgInfoPage({ conversation, onClose }: { conversation: MockConversationObject, onClose: () => void }) {
   function handleClose() {
     localStorage.removeItem("isInfoOpen"); // Clear isInfoOpen from localStorage
     onClose(); // Call the onClose prop to close the component
   }
 
-  function handleDelete() {
-    alert('chat deleted')
+  const [deleteConversation] = useMutation(DELETE_CONVERSATION);
+  const [updateConversation] = useMutation(UPDATE_CONVERSATION);
+
+  async function handleUpdate() {
+    try {
+      const { data } = await updateConversation({
+        variables: {
+          input: {
+            _id: conversation._id,
+            conversationName: conversation.conversationName,
+          },
+        },
+      });
+      if (data.updateConversation.success) {
+        alert("Chat name updated successfully to " + conversation.conversationName);
+      } else {
+        alert(`Failed to update chat name: ${data.updateConversation.message}`);
+      }
+    } catch (error) {
+      console.error("Error updating conversation:", error);
+      alert("An error occurred while updating the chat name.");
+    }
+  }
+
+
+  async function handleDelete() {
+    try {
+      const { data } = await deleteConversation({
+        variables: {
+          conversationId: conversation._id,
+        },
+      });
+
+      if (data.deleteConversation) {
+        alert("Chat deleted successfully");
+        onClose(); // Close the component after deletion
+        return true;
+      } else {
+        alert("Failed to delete chat");
+        return false;
+      }
+    } catch (error) {
+      console.error("Error deleting conversation:", error);
+      alert("An error occurred while deleting the chat.");
+      return false;
+    }
   }
   useEffect(() => {
     // This function will be called when the component unmounts
@@ -31,14 +78,20 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
         {/* add jsx element for change group photo option */}
         <div>
         <input type="text" placeholder={conversation.conversationName}/>
-        <button>✏️</button>
+        <button onClick={handleUpdate}>✏️</button> 
         </div>
       </div>
       }
       <p className="user-list-header">Participants</p>
       <div className="user-list-wrapper">
       {conversation.conversationUsers.map((user) => (
-        <p key={user} className="msg-info-user-card">{user}</p>
+        <div key={user._id} className="msg-info-user-card">
+        <img 
+          src={user.avatar?.url} 
+          className="msg-info-user-photo"
+        />
+          <p style={{ fontSize: "16px", color: "#555", margin: 0 }}>{user.username || user._id}</p>
+        </div>
         //will have to query every user if we want to display their profile photos
       ))}
       </div>
