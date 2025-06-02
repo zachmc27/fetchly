@@ -62,12 +62,15 @@ const postResolvers = {
           .populate('media')
           .populate({
             path: 'responses',
-            populate: {
-              path: 'poster.refId',
-              populate: [
-                { path: 'avatar' }
-              ]
-            }
+            populate: [
+              {
+                path: 'poster.refId',
+                populate: { path: 'avatar' }
+              },
+              {
+                path: 'likes.refId'
+              }
+            ]
           })
           .populate({
             path: 'poster.refId',

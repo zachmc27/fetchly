@@ -42,7 +42,7 @@ export default function PostDetails({
   onClose: () => void;
 }) {
   // Get user info from localStorage safely
-  const userId = typeof window !== "undefined" ? localStorage.getItem("user_Id") : null;
+  const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   const accountType = typeof window !== "undefined" ? localStorage.getItem("accountType") : null;
   const userType = accountType === "org" ? "Org" : "User";
 
@@ -96,7 +96,10 @@ export default function PostDetails({
   };
 
   const handleLikeToggle = async () => {
-    if (postData.itemType !== "post" || !userId) return;
+    if (postData.itemType !== "post" || !userId) {
+      console.warn("postData.itemType failure");
+      return;
+    }
     const post = postData as PostCard;
 
     if (!post._id) {
