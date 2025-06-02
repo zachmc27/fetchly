@@ -11,6 +11,7 @@ import Form from "../components/Reusables/Form";
 import Auth from '../utils/auth';
 import "../SammiReusables.css";
 
+
 function Login() {
 
   console.log("Login component rendered");
@@ -78,7 +79,7 @@ function Login() {
   )
 }
 
-function SignupUser() {
+function SignupUser({ setShowLogin }: { setShowLogin: (show: boolean) => void }) {
   const [addUser] = useMutation(ADD_USER);
   const fields = [
     { name: "email", label: "Email", type: "email" },
@@ -88,7 +89,6 @@ function SignupUser() {
   const initialValues = { email: "", username: "", password: "" };
 
   const handleFormSubmit = async (formState: Record<string, string>) => {
-
     try {
       const { data } = await addUser({
         variables: { input: { ...formState } },
@@ -97,6 +97,7 @@ function SignupUser() {
     } catch (e) {
       console.error(e);
     }
+    setShowLogin(true);
   };
 
   return (
@@ -113,7 +114,7 @@ function SignupUser() {
 
 
 
-function SignupOrg() {
+function SignupOrg({ setShowLogin }: { setShowLogin: (show: boolean) => void }) {
   const [addOrg] = useMutation(ADD_ORG);
   const fields = [
     { name: "email", label: "Email", type: "email" },
@@ -131,6 +132,8 @@ function SignupOrg() {
     } catch (e) {
       console.error(e);
     }
+
+    setShowLogin(true);
   };
 
    return (
@@ -145,7 +148,7 @@ function SignupOrg() {
   )
 }
 
-function Signup() {
+function Signup({ setShowLogin }: { setShowLogin: (show: boolean) => void }) {
   const [showSignupUser, setShowSignupUser] = useState(true);
 
   console.log(showSignupUser);
@@ -157,9 +160,9 @@ function Signup() {
         <button className={showSignupUser ? 'btn-line signup-btn main-button' : 'btn-fill signup-btn main-button'} onClick={() => setShowSignupUser(false)}>Organization</button>
       </div>
       {showSignupUser ? (
-        <SignupUser />
+        <SignupUser setShowLogin={setShowLogin}/>
       ) : (
-        <SignupOrg />
+        <SignupOrg setShowLogin={setShowLogin}/>
       )}
     </div>
   )
@@ -174,7 +177,7 @@ export default function AuthForm() {
       {showLogin ? (
         <Login />
       ) : (
-        <Signup />
+        <Signup setShowLogin={setShowLogin}/>
       )}
       <div className='form-switch-ctn'>
         <span >

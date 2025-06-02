@@ -4,7 +4,7 @@
 import "../SammiReusables.css";
 
 import { useEffect, useState } from "react";
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_USER, QUERY_ORG } from '../utils/queries';
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_PET } from '../utils/mutations';
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,29 @@ import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRA
 import LogoutIcon from "../images/logout.png";
 
 
+type Location = {
+     address: string;
+     zip: string;
+     city: string;
+     state: string;
+     country: string;
+}
+
+type UserOrOrg = {
+  _id: number | string;
+  fullName?: string;
+  username?: string;
+  orgName?: string;
+  email?: string;
+  avatar?: UploadedMedia;
+  about?: string;
+  location?: Location;
+  followingCount?: number;
+  followedByCount: number;
+  pets?: { _id: number; name: string; profilePhoto: {url: string} }[];
+  posts: [];
+
+}
 
 type UploadedMedia = {
   id: string;
@@ -53,34 +76,6 @@ interface NewPetProps {
     about: string;
 }
 
-const UserPlaceHolderMedia: UploadedMedia = {
-  id: "placeholder",
-  filename: "person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg",
-  contentType: "image/svg+xml",
-  length: 0,
-  uploadDate: "",
-  gridFsId: "",
-  tags: [],
-  url: UserPlaceHolder, // this is the imported image URL
-};
-
-const mockUser = {
-  _id: 1,
-  fullName: "Test User",
-  username: "mytestuser",
-  email: "testuser@email.com",
-  avatar: UserPlaceHolderMedia,
-  about: "This is real. This is me. I'm exactly where I'm supposed to be now - Camp Rock",
-  location: "Location, ST",
-  followers: 123,
-  following: 123,
-  pets: [
-    { _id: 1, name: "Pet 1", avatar: UserPlaceHolder },
-    { _id: 2, name: "Pet 2", avatar: UserPlaceHolder },
-    { _id: 3, name: "Pet 3", avatar: UserPlaceHolder },
-  ],
-  posts: []
-}
 
 
 export default function Profile() {
@@ -143,27 +138,30 @@ export default function Profile() {
 
   /************* SHOWING CORRECT USER *****************/
   const userId = localStorage.getItem("userId");
-  console.log(userId);
-  const { data, error } = useQuery(QUERY_USER, {
-    variables: {userId},
-  });
-  const rsvpMeetups = data?.user?.meetUps || [];
-  console.log(data);
+  const orgId = localStorage.getItem("userId");
+  const accountType = localStorage.getItem("accountType");
 
-  const [user, setUser] = useState(mockUser);
-  
+  console.log(userId + " and " + accountType);
+
+  const {
+    data: userData,
+  } = useQuery(QUERY_USER, { variables: { userId }, skip: accountType === "org" });
+
+  const {
+    data: orgData,
+  } = useQuery(QUERY_ORG, { variables: { orgId }, skip: accountType !== "org" });
+
+  const [user, setUser] = useState<UserOrOrg | null>(null);
+
   useEffect(() => {
-    console.log("Query data:", data);
-    if (data && data.user) {
-      setUser(data.user);
-      console.log(data.user);
-    } 
-  }, [data]);
-  
-  if (error){
-    console.error("GraphQL error:", error);
-  }
+    if (accountType === "org" && orgData && orgData.org) {
+      setUser(orgData.org);
+    } else if (accountType !== "org" && userData && userData.user) {
+      setUser(userData.user);
+    }
+  }, [accountType, userData, orgData]);
 
+  
   const navigate = useNavigate();
   function handleLogout() {
     localStorage.removeItem("userId");
@@ -191,10 +189,14 @@ export default function Profile() {
       )
     }
 
-    if (isMeetupsOpen) {
+    if (isMeetupsOpen && accountType !== "org") {
       return (
-        <MeetupDetails userMeetups={mockMeetupData} userRSVP={rsvpMeetups}/>
+        <MeetupDetails userMeetups={mockMeetupData} userRSVP={userData.user.meetUps}/>
       )
+    }
+
+    if (!user) {
+      return <div>Loading...</div>;
     }
 
 
@@ -205,8 +207,8 @@ export default function Profile() {
         <div className="profile-item-ctn">
           <img src={user.avatar?.url || UserPlaceHolder} className="profile-user-img" />
           <div className="profile-user-title">
-            <span className="profile-lg-fnt">{user.fullName || "First Last"}</span>
-            <span className="profile-md-fnt">{user.username}</span>
+            <span className="profile-lg-fnt">{user.fullName || user.orgName || "Name"}</span>
+            <span className="profile-md-fnt">{user.username || ""}</span>
           </div>
           <div className="profile-btn-ctn">
             <ButtonBubble imageSrc={CalenderIcon} onClick={handleMeetupRender} className="button-bubble-small"/>
@@ -219,13 +221,16 @@ export default function Profile() {
           <span>{user.about}</span>
         </div>
         <div className="profile-item-ctn profile-sm-fnt">
-          <span>{user.followers || '0'} followers</span>
-          <span>{user.following || '0'} following</span>
+          <span>{user.followedByCount || '0'} followers</span>
+          <span>{user.followingCount || '0'} following</span>
+        </div>
+        <div className="profile-item-ctn profile-sm-fnt">
+          <span>{user.location?.address || 'Add Your Location'}</span>
         </div>
         <div className="profile-item-ctn profile-md-fnt">
-          {user.pets.map((pet) => (
+          {user.pets?.map((pet) => (
             <div className="profile-pet-ctn" key={pet._id}>
-              <img src={pet.avatar} />
+              <img className="profile-pet-img" src={pet.profilePhoto.url} />
               <span>{pet.name}</span>
             </div>
           ))}
