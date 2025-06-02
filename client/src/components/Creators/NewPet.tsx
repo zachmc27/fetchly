@@ -3,7 +3,7 @@ import MediaUpload from "../Reusables/MediaUpload";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { ADD_PET } from "../../utils/mutations";
 import { FILTER_QUERY_TYPE } from "../../utils/queries";
-import "../../MishaTemp.css"
+import "../../main.css"
 
 interface NewPetProps {
   onSubmit: (data: {
@@ -37,7 +37,9 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
   const accountType = localStorage.getItem('accountType');
   const userType = accountType === "org" ? "Org" : "User";
 
-  const [NewPet] = useMutation(ADD_PET);
+  const [NewPet] = useMutation(ADD_PET, {
+    refetchQueries: ["Pets"],
+  });
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
 

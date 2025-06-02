@@ -36,8 +36,12 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
     setLikesCount(post.likesCount || 0);
   }, [post, userId]);
 
-  const [likePost] = useMutation(LIKE_POST);
-  const [unlikePost] = useMutation(UNLIKE_POST);
+  const [likePost] = useMutation(LIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
+  const [unlikePost] = useMutation(UNLIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
 
   const handleLikeToggle = async () => {
     if (!post._id || !userId) {
@@ -102,7 +106,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
             className="post-user-avatar"
             alt="profile picture"
           />
-          <p>{post.poster?.refId?.username || post.poster?.refId?.orgName || "Unknown User"}</p>
+          <p className='feed-user-text'>{post.poster?.refId?.username || post.poster?.refId?.orgName || "Unknown User"}</p>
           {/* Defensive check for taggedPets */}
           {post.taggedPets && typeof post.taggedPets === 'object' && 'name' in post.taggedPets && (
             <p>{post.taggedPets.name}</p>
@@ -160,9 +164,9 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
       {/* Poster Profile Modal */}
       {showProfileModal && (
         <WindowModal cancel={closeModal} confirm={() => {}}>
-          <div onClick={(e) => e.stopPropagation()}>
+          <div onClick={(e) => e.stopPropagation()} className='foreign-profile-container'>
             <button onClick={closeModal} className="modal-close-btn">
-              ×
+              x
             </button>
             <ProfileDetails
               profileUserId={post.poster?.refId?._id || ""}

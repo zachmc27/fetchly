@@ -14,14 +14,14 @@ import UserPlaceHolder from "../../assets/react.svg";
 import NewFreeFormPost from "../Creators/NewPost";
 import call from "../../images/call_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import profile from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import "../../ZachTemp.css"
+import "../../main.css"
 // testing data, can be deleted after integrations implementation
-import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails";
-import { AdoptionCard, PostCard } from "../../types/CardTypes"
+
+import { AdoptionCard, MeetUpCard, PostCard } from "../../types/CardTypes"
 import ImageCarousel from "./ImageCarousel"
 import { LIKE_POST, UNLIKE_POST } from "../../utils/mutations";
 
-type postData = PostCard | MockMeetupItem | AdoptionCard;
+type postData = PostCard | MeetUpCard | AdoptionCard;
 
 interface PostResponse {
   poster: {
@@ -42,7 +42,7 @@ export default function PostDetails({
   onClose: () => void;
 }) {
   // Get user info from localStorage safely
-  const userId = typeof window !== "undefined" ? localStorage.getItem("user_Id") : null;
+  const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   const accountType = typeof window !== "undefined" ? localStorage.getItem("accountType") : null;
   const userType = accountType === "org" ? "Org" : "User";
 
@@ -72,8 +72,12 @@ export default function PostDetails({
     return 0;
   });
 
-  const [likePost] = useMutation(LIKE_POST);
-  const [unlikePost] = useMutation(UNLIKE_POST);
+  const [likePost] = useMutation(LIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
+  const [unlikePost] = useMutation(UNLIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,7 +96,10 @@ export default function PostDetails({
   };
 
   const handleLikeToggle = async () => {
-    if (postData.itemType !== "post" || !userId) return;
+    if (postData.itemType !== "post" || !userId) {
+      console.warn("postData.itemType failure");
+      return;
+    }
     const post = postData as PostCard;
 
     if (!post._id) {
@@ -138,11 +145,12 @@ export default function PostDetails({
   function handleCallToggle() {
     setIsCallOpen((prev) => !prev);
   }
-
+  
   function renderPost(postData: postData): JSX.Element | null {
     switch (postData.itemType) {
       case "post": {
         const post = postData as PostCard;
+        console.log("ImageCarousel slides:", post.media.map(m => m.url).filter(Boolean));
         if (!post) return null;
 
         return (
@@ -170,15 +178,13 @@ export default function PostDetails({
 
             <p className="post-content">{post.contentText || ""}</p>
 
-            {post.media && Array.isArray(post.media) && post.media.length > 1 && (
-              <div className="img-container">
-                <ImageCarousel
-                  slides={post.media
-                    .map((m) => (typeof m === "string" ? m : m?.url))
-                    .filter(Boolean) as string[]}
-                />
-              </div>
-            )}
+            {
+              post.media && post.media.length > 1 && (
+                <div className="img-container"> 
+                <ImageCarousel slides={post.media.map(m =>m.url).filter(Boolean)}/>
+                </div>
+              )
+            }
 
             {post.media && Array.isArray(post.media) && post.media.length === 1 && (
               <div className="img-container">
@@ -262,25 +268,41 @@ export default function PostDetails({
         );
       }
       case "meetup": {
-        const meetup = postData as MockMeetupItem
+        const meetup = postData as MeetUpCard
+        console.log('meetup card triggered, contents: ', meetup);
         return (
-          <div key={meetup.id} className={containerClass}>
+          <div key={meetup._id} className={containerClass}>
              <div className="meetup-user-info-row">
                 <button onClick={onClose}>{"<"}</button>
                 <div className="meetup-user-info-container">
-                  <img src={meetup.userAvi} alt="users avatar"/>
-                  <p className="meetup-post-username">{meetup.username}</p>
+                  <img src={meetup.poster?.refId?.avatar?.url || UserPlaceHolder} alt="users avatar"/>
+                  <p className="meetup-post-username">{meetup.poster.refId.username}</p>
                 </div>
                 <button className="rsvp-btn">RSVP</button>
             </div>
-            
-            <div className="img-container"> 
-            <ImageCarousel slides={meetup.images}/>
-            </div>
+            {meetup.media && meetup.media.length > 1 && (            
+              <div className="img-container"> 
+                <ImageCarousel slides={meetup.media
+                  .map((m) => (typeof m === "string" ? m : m?.url))}/>
+              </div>
+            )}
+            {meetup.media && Array.isArray(meetup.media) && meetup.media.length === 1 && (
+              <div className="img-container">
+                <img
+                  src={typeof meetup.media[0] === "string" ? meetup.media[0] : meetup.media[0]?.url || ""}
+                  alt="Post media"
+                  onError={(e) => ((e.target as HTMLImageElement).src = UserPlaceHolder)}
+                />
+              </div>
+            )}
             <p className="meetup-title">{meetup.title}</p>
-            <p className="meetup-text">{meetup.postText}</p>
-             <p><img src={locationimg} alt="location-icon"/>{meetup.location}</p>
-            <p><img src={calendar} alt="calendar-icon"/>{meetup.date}</p>
+            <p className="meetup-text">{meetup.description}</p>
+            <div><img src={locationimg} alt="location-icon"/>
+              <p>{meetup.location.address}, {meetup.location.city} {meetup.location.state}, {meetup.location.zip}</p>
+            </div>
+            <p><img src={calendar} alt="calendar-icon"/>{meetup.date
+                  ? format(new Date(Number(meetup.date)), "MMM d, yyyy")
+                  : "Unknown date"}</p>
             <p><img src={clock} alt="time-icon"/>{meetup.time}</p>
           </div>
         );

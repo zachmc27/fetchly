@@ -13,13 +13,13 @@ import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { AdoptionCard, PostCard, MeetUpCard } from "../../types/CardTypes";
 import { format } from 'date-fns';
-
+import { Comment }from "./Comments"
 // testing data, can be deleted after integrations implementation
 import { MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
-import { mockMeetupPosts } from "../../mockdata/post-data";
+
 
 //get mutations and queries
 import { useQuery, useMutation } from "@apollo/client";
@@ -40,7 +40,7 @@ import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
 
-import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
+
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 import { useAdoptionPost } from "../../contexts/AdoptionPostContext"
@@ -136,7 +136,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 50000, // Poll every 0.5 seconds
+  pollInterval: 500, // Poll every 0.5 seconds
 });
 
 const {
@@ -207,36 +207,40 @@ function handleCloseMessagePage() {
 // ----------------------------------------------------------------
 // --------------- MEETUP PAGE TO POST VIEW LOGIC -----------------
 // ----------------------------------------------------------------
-  const [activeMeetupPost, setActiveMeetupPost] = useState<MockMeetupItem | null>(null); 
+  const [activeMeetupPost, setActiveMeetupPost] = useState<MeetUpCard | null>(null); 
   const [isMeetupPostOpen, setIsMeetupPostOpen] = useState(false)
   const [isGoingListOpen, setIsGoingListOpen] = useState(false)
   const [isMeetupCommentsOpen, setIsMeetupCommentsOpen] = useState(true)
   const [activeTab, setActiveTab] = useState<'going' | 'comments'>('comments')
 
   useEffect(() => {
-    const storedMeetupId = localStorage.getItem("activeMeetupId");
-    if (storedMeetupId && location.pathname === '/meetup') {
-      const meetupId = parseInt(storedMeetupId, 10); // Parse as integer
-      const storedMeetup = mockMeetupPosts.find((meetup) => meetup.id === meetupId);
-      if (storedMeetup) {
-        setActiveMeetupPost(storedMeetup);
-        setIsMeetupPostOpen(true);
-      }
+  const storedMeetupId = localStorage.getItem("activeMeetupId");
+  if (storedMeetupId && location.pathname === '/meetup') {
+    const storedMeetup = initialFeedArray.find(
+      (post) => post.itemType === "meetup" && (post as MeetUpCard)._id === storedMeetupId
+    ) as MeetUpCard | undefined;
+    if (storedMeetup) {
+      setActiveMeetupPost(storedMeetup);
+      setIsMeetupPostOpen(true);
     }
+  }
 
-    if (location.pathname !== "/meetup") {
-      localStorage.removeItem("activeMeetupId");
-    }
-  }, [location.pathname]);
+  if (location.pathname !== "/") {
+    localStorage.removeItem("activeMeetupId");
+  }
+}, [location.pathname, initialFeedArray]);
 
   function handleMeetupViewRender(meetupId: string) {
-    const meetupToOpen = mockMeetupPosts.find(post => post.id.toString() === meetupId);
+    const meetupToOpen = feedArray.find(
+    (post) => post.itemType === "meetup" && (post as MeetUpCard)._id === meetupId
+  ) as MeetUpCard | undefined;
+  console.log(meetupToOpen);
 
     if (meetupToOpen) {
       console.log('Opening meetup for post:', meetupToOpen.title);
       setActiveMeetupPost(meetupToOpen);
       setIsMeetupPostOpen(true)
-      localStorage.setItem("activeMeetupId", meetupToOpen.id.toString());
+      localStorage.setItem("activeMeetupId", meetupToOpen._id.toString());
     } else  {
       console.warn('No conversation found with ID:', meetupId);
     }
@@ -271,8 +275,12 @@ function handleCloseMessagePage() {
 // --------------- MEETUP PAGE RSVP LOGIC -------------------------
 // ----------------------------------------------------------------
 
-  const [attendMeetup] = useMutation(ATTEND_MEETUP);
-  const [unattendMeetup] = useMutation(UNATTEND_MEETUP);
+  const [attendMeetup] = useMutation(ATTEND_MEETUP, {
+    refetchQueries: ["MeetUps"],
+  });
+  const [unattendMeetup] = useMutation(UNATTEND_MEETUP, {
+    refetchQueries: ["MeetUps"],
+  });
 
   const handleAttendMeetupToggle = async (meetupItem: MeetUpCard) => {
     if (meetupItem.itemType !== "meetup" || !userId || userType !== "User") return;
@@ -288,7 +296,7 @@ function handleCloseMessagePage() {
     };
 
     try {
-      if (!meetupItem.attendees) {
+      if (meetupItem.attendees.includes(userId) === false) {
         const { data } = await attendMeetup({ variables });
         console.log("RSVP'd successfully: ", data);
       } else {
@@ -347,26 +355,16 @@ function handleClosePostView() {
 }
 
 // Convert response to comment
-type Comment = {
-  id: number;
-  trueId: string;
-  user: string;
-  avatar?: string;
-  comment: string;
-  likeCount: number;
-  postedTime: Date;
-  replies?: Comment[];
-  media?: { url: string }[];
-  parentPost?: string;
-  responses?: {_id: string}[];
-};
 
 function mapResponseToComment(res: {
     _id: string;
     contentText: string;
+    likes?: {refId?: {_id?: string}}[];
     poster: {
       refId: {
-        avatar?: { url?: string };
+        avatar?: { 
+          url?: string 
+        };
         _id: string;
         username?: string;
         orgName?: string;
@@ -374,8 +372,8 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    likesCount?: number;
     responses?: []
-    
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
@@ -383,12 +381,39 @@ function mapResponseToComment(res: {
     user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
-    likeCount: 0,
+    likes: res.likes || [],
+    likeCount: res.likesCount || 0,
     postedTime: new Date(),
     replies: [],
     media: [],
     responses: res.responses
     // parentPost: res.
+  };
+}
+
+// Convert response to comment
+
+function mapMeetUpCommentToComment(res: {
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: { 
+          url?: string 
+        };
+        _id: string;
+        username?: string;
+        orgName?: string;
+      };
+      refModel: string;
+    };
+}): Comment {
+  return {
+    id: parseInt(res._id || "0", 10),
+    user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
+    avatar: res.poster.refId.avatar?.url || undefined,
+    comment: res.contentText || "",
+    postedTime: new Date(),
   };
 }
 
@@ -618,13 +643,19 @@ if (isMeetupPostOpen && activeMeetupPost) {
     <button onClick={handleGoingListRender} className={activeTab === 'going' ? 'active' : ''}>Going</button>
     <button onClick={handleCommentsRender} className={activeTab === 'comments' ? 'active' : ''}>Comments</button>
     </div>
+    {console.log("activemeetupcomments: ",activeMeetupPost)}
     {
       isMeetupCommentsOpen &&
-      <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
+      <Comments
+        comments={(activeMeetupPost.comments || []).map(mapMeetUpCommentToComment)}
+        postId={activeMeetupPost._id}
+        type={"MeetUpComment"}      
+      />
+        // <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
     }
     {
       isGoingListOpen &&
-      <Goinglist rsvpList={activeMeetupPost.rsvpList}/>
+      <Goinglist rsvpList={activeMeetupPost.attendees}/>
     }
     </>
   )
@@ -642,6 +673,7 @@ if (isPostOpen && activePost) {
   <Comments
     comments={(activePost.responses || []).map(mapResponseToComment)}
     postId={activePost._id}
+    type={"PostComment"}
   />
   </div>
   )
