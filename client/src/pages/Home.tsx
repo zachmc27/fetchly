@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { QUERY_POSTS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
+import danceCat from  "../images/364.gif"
+
 export default function Home() {
 
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ export default function Home() {
 
   console.log("Sorted Posts:", posts);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="loading-gif-container"><img src={danceCat} alt="loading gif of a cat dancing"/></div>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

@@ -2,7 +2,7 @@
 // refer to the actionmodal in cinematch, its basically the same
 
 import { motion } from "framer-motion";
-import "../../ZachTemp.css"
+import "../../main.css"
 
 export default function Actionmodal({ children, cancel, confirm }: { children: React.ReactNode; cancel: () => void; confirm: () => void}) {
   return (

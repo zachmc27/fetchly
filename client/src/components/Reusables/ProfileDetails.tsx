@@ -8,7 +8,7 @@ import { UserType } from "../../types/UserType";
 import { Pet }  from "../../types/PetTypes";
 import { format } from 'date-fns';
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-
+import runningDog from "../../images/Running dog.gif"
 type ProfileDetailsProps = {
   profileUserId: string;
   profileAccountType: string;
@@ -94,6 +94,10 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
       console.error("Follow/Unfollow error:", err);
     }
   };
+<<<<<<< HEAD
+  console.log("posts: ", user?.posts)
+  if (loading) return <div className="loading-gif-container"><img src={runningDog} alt="loading gif of a dog running"/></div>;
+=======
   
   const isPet = profileAccountType === "Pet";
   if(isPet){
@@ -103,6 +107,7 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
   }
   
   if (loading) return <p>Loading...</p>;
+>>>>>>> d773e335d833c199d6885842792af6e5c7230c72
   if (error) return <p>Error: {error.message}</p>;
   if (!user) return <p>User not found.</p>;
 

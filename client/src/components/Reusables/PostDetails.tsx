@@ -14,7 +14,7 @@ import UserPlaceHolder from "../../assets/react.svg";
 import NewFreeFormPost from "../Creators/NewPost";
 import call from "../../images/call_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import profile from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import "../../ZachTemp.css"
+import "../../main.css"
 // testing data, can be deleted after integrations implementation
 import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails";
 import { AdoptionCard, PostCard } from "../../types/CardTypes"

@@ -269,6 +269,12 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
             placeholder="State"
           />
 
+<<<<<<< HEAD
+      <button type="submit" className="post-meetup-btn">Post My Meet-Up</button>
+      {successMessage && <p>{successMessage}</p>}
+      {errorMessage && <p>{errorMessage}</p>}
+    </form>
+=======
           <input
             type="text"
             value={country}
@@ -282,6 +288,7 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         {errorMessage && <p>{errorMessage}</p>}
       </form>
     // </>
+>>>>>>> d773e335d833c199d6885842792af6e5c7230c72
   );
   };
 export default NewMeetUpPost;
