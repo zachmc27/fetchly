@@ -3304,10 +3304,10 @@
   line-height: 1.5;
 }
 
-.prof-detail-save-btn {
+.prof-detail-save-button {
   width: 100%;
   padding: 15px;
-  background-color: #000000; 
+  background-color:var(--primary-color); 
   color: #ffffff;
   border: none;
   border-radius: 15px; 

@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from '@apollo/client/link/context';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import NavBar from "./components/Navbar/NavBar";
 import { PostModalProvider } from "./components/Reusables/PostModalProvider";
 import { AdoptionPostProvider } from "./contexts/AdoptionPostContext";
@@ -41,11 +41,16 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const location = useLocation().pathname
+
   return (
     <ApolloProvider client={client}>
       <AdoptionPostProvider>
         <PostModalProvider>
+          {location !== '/login' &&
           <NavBar />
+          }
+          
           <Outlet />
         </PostModalProvider>
       </AdoptionPostProvider>
