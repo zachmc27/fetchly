@@ -135,7 +135,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 10000, // Poll every 5 seconds
+  pollInterval: 8000, // Poll every 8 seconds
 });
 
 const {
@@ -319,6 +319,7 @@ type Comment = {
   postedTime: Date;
   replies?: Comment[];
   media?: { url: string }[];
+  parentPost?: string;
 };
 
 function mapResponseToComment(res: {
@@ -334,6 +335,7 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
@@ -344,6 +346,7 @@ function mapResponseToComment(res: {
     postedTime: new Date(),
     replies: [],
     media: [],
+    // parentPost: res.
   };
 }
 
@@ -560,7 +563,7 @@ if (isMeetupPostOpen && activeMeetupPost) {
     </div>
     {
       isMeetupCommentsOpen &&
-      <Comments comments={activeMeetupPost.comments}/>
+      <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
     }
     {
       isGoingListOpen &&
@@ -579,7 +582,10 @@ if (isPostOpen && activePost) {
    containerClass="post-details-container"
    onClose={handleClosePostView}
   />
-  <Comments comments={(activePost.responses || []).map(mapResponseToComment)} />
+  <Comments
+    comments={(activePost.responses || []).map(mapResponseToComment)}
+    postId={activePost._id}
+  />
   </div>
   )
 }

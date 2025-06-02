@@ -54,9 +54,6 @@ export const QUERY_USERS = gql`
         contentText
       }
       postCount
-      conversation {
-        conversationName
-      }
       conversationCount
       likedPosts {
         contentText
@@ -276,7 +273,6 @@ export const QUERY_ME = gql`
       }
       conversation {
         _id
-        conversationName
       }
       conversationCount
       likedPosts {
