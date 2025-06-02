@@ -125,7 +125,7 @@ export const UPDATE_ORG = gql`
 //   "input": {
 //     "orgName": "Fetchly 2.0",
 //     "email": "fetchly2@email.com"
-//    "avatar": <mediaId>,
+//     "avatar": <mediaId>,
 //     "about": "We are a pet adoption organization!",
 //     "employees": [
 //       { 
