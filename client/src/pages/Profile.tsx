@@ -23,56 +23,13 @@ import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import LogoutIcon from "../images/logout.png";
 
+
 type Location = {
      address: string;
      zip: string;
      city: string;
      state: string;
      country: string;
-}
-
-// Post type
-type PostCard = {
-  _id: string;
-  id: string;
-  poster: {
-    refId: {
-      avatar?: {
-        url?: string;
-      };
-      _id: string;
-      username: string;
-      orgName: string;
-    }
-    refModel: string;
-  };
-  contentText: string;
-  media: [{
-    url: string
-  }];
-  itemType: string;
-  createdAt: Date;
-  likesCount: number;
-  responseCount: number;
-  likes: [{
-    refId: {
-      _id: string
-    }
-  }]
-  responses: [{
-    _id: string;
-    contentText: string;
-    poster: {
-      refId: {
-        avatar?: {
-          url?: string;
-        };
-        _id: string;
-        username: string;
-      }
-      refModel: string;
-    };
-  }],
 }
 
 type UserOrOrg = {
@@ -87,7 +44,7 @@ type UserOrOrg = {
   followingCount?: number;
   followedByCount: number;
   pets?: { _id: number; name: string; profilePhoto: {url: string} }[];
-  posts: PostCard[];
+  posts: [];
 
 }
 
@@ -228,7 +185,7 @@ export default function Profile() {
     data: orgData,
   } = useQuery(QUERY_ORG, { variables: { orgId }, skip: accountType !== "org" });
 
-  const [user, setUser] = useState<UserOrOrg>(mockUser);
+  const [user, setUser] = useState<UserOrOrg | null>(null);
 
   useEffect(() => {
     if (accountType === "org" && orgData && orgData.org) {
@@ -270,6 +227,10 @@ export default function Profile() {
       return (
         <MeetupDetails userMeetups={mockMeetupData} userRSVP={userData.user.meetUps}/>
       )
+    }
+
+    if (!user) {
+      return <div>Loading...</div>;
     }
 
 
