@@ -37,7 +37,9 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
   const accountType = localStorage.getItem('accountType');
   const userType = accountType === "org" ? "Org" : "User";
 
-  const [NewPet] = useMutation(ADD_PET);
+  const [NewPet] = useMutation(ADD_PET, {
+    refetchQueries: ["Pets"],
+  });
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
