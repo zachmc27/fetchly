@@ -356,22 +356,6 @@ function handleClosePostView() {
 
 // Convert response to comment
 
-type Comment = {
-  id: number;
-  trueId: string;
-  user: string;
-  avatar?: string;
-  comment: string;
-  likes?: {refId?: {_id?: string}}[];
-  likeCount?: number;
-  postedTime: Date;
-  replies?: Comment[];
-  media?: { url: string }[];
-  parentPost?: string;
-  responses?: {_id: string}[];
-};
-
-
 function mapResponseToComment(res: {
     _id: string;
     contentText: string;
@@ -404,6 +388,32 @@ function mapResponseToComment(res: {
     media: [],
     responses: res.responses
     // parentPost: res.
+  };
+}
+
+// Convert response to comment
+
+function mapMeetUpCommentToComment(res: {
+    _id: string;
+    contentText: string;
+    poster: {
+      refId: {
+        avatar?: { 
+          url?: string 
+        };
+        _id: string;
+        username?: string;
+        orgName?: string;
+      };
+      refModel: string;
+    };
+}): Comment {
+  return {
+    id: parseInt(res._id || "0", 10),
+    user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
+    avatar: res.poster.refId.avatar?.url || undefined,
+    comment: res.contentText || "",
+    postedTime: new Date(),
   };
 }
 
@@ -633,9 +643,14 @@ if (isMeetupPostOpen && activeMeetupPost) {
     <button onClick={handleGoingListRender} className={activeTab === 'going' ? 'active' : ''}>Going</button>
     <button onClick={handleCommentsRender} className={activeTab === 'comments' ? 'active' : ''}>Comments</button>
     </div>
+    {console.log("activemeetupcomments: ",activeMeetupPost)}
     {
       isMeetupCommentsOpen &&
-      <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
+      <Comments
+        comments={(activeMeetupPost.comments || []).map(mapMeetUpCommentToComment)}
+        postId={activeMeetupPost._id}      
+      />
+        // <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
     }
     {
       isGoingListOpen &&

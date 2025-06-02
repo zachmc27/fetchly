@@ -1,45 +1,9 @@
 import Feed from "../Reusables/Feed";
-
-type Meetup = {
-  postImage?: string;
-  postUser: string;
-  postTitle: string;
-  postLocation: string;
-  postRSVPCount: number;
-  postDate: string;
-  meetupTime: string;
-  _id: string; 
-  title: string;
-  poster: {
-    refId: {
-      _id: string;
-      username: string;
-    };
-    refModel: string;
-  }
-  description: string;
-  location: {
-    address: string;
-    zip: string;
-    city: string;
-    state: string;
-    country: string;
-  }
-  date: string;
-  time: string;
-  numberOfAttendees: number;
-  comments: string[];
-  numberOfComments: number;
-  media: [{
-    url: string;
-  }];
-  itemType: string;
-  attendees: string[];
-};
+import { MeetUpCard } from "../../types/CardTypes"
 
 interface MeetupDetailsProps {
-  userMeetups: Meetup[];
-  userRSVP: Meetup[]; 
+  userMeetups: MeetUpCard[];
+  userRSVP: MeetUpCard[]; 
   onClose: () => void;
 }
 

@@ -10,7 +10,7 @@ const meetUpTypeDefs = `
     location: Location
     date: String
     time: String
-    attendees: [ID]
+    attendees: [User]
     numberOfAttendees: Int
     comments: [MeetUpComment]
     numberOfComments: Int

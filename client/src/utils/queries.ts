@@ -883,10 +883,16 @@ export const QUERY_MEETUPS = gql`
           ... on User {
             _id
             username
+            avatar {
+              url
+            }
           }
           ... on Org {
             _id
             orgName
+            avatar {
+              url
+            }
           }
         }
         refModel
@@ -902,7 +908,24 @@ export const QUERY_MEETUPS = gql`
       }
       date
       time
-      attendees
+      attendees {
+        _id
+        username
+        fullName
+        email
+        avatar {
+          url
+        }
+        about
+        location {
+          _id
+          address
+          zip
+          city
+          state
+          country
+        }
+      }
       numberOfAttendees
       comments {
         _id
@@ -911,15 +934,37 @@ export const QUERY_MEETUPS = gql`
             ... on User {
               _id
               username
+              avatar {
+                url
+              }
             }
             ... on Org {
               _id
               orgName
+              avatar {
+                url
+              }
             }
           }
           refModel
         }
         contentText
+        meetUpId
+        media {
+          id
+          filename
+          contentType
+          length
+          uploadDate
+          gridFsId
+          tags
+          url
+        }
+        responseCount
+        parentComment
+        isResponse
+        createdAt
+        itemType
       }
       numberOfComments
       media {
