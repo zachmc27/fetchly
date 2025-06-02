@@ -104,16 +104,21 @@ const { data: orgData} = useQuery(QUERY_ORG, {
     if (!user) return;
     console.log(userId);
     try {
-      const input: { username?: string; avatar?: string; about?: string; fullName?: string; address?: string; zip?: string; city?: string; state?: string;  country?: string;} = {};
+      // Make location optional in input type
+      const input: { username?: string; avatar?: string; about?: string; fullName?: string; location?: {address?: string, zip?: string, city?: string, state?: string,  country?: string} } = {};
       if (updatedUsername) input.username = updatedUsername;
       if (media?.id) input.avatar = media.id;
       if (updatedAbout) input.about = updatedAbout;
       if (updatedName) input.fullName = updatedName;
-      if (updatedAddress) input.address = updatedAddress;
-      if (updatedCity) input.city = updatedCity;
-      if (updatedZip) input.zip = updatedZip;
-      if (updatedState) input.state = updatedState;
-      if (updatedCountry) input.country = updatedCountry;
+      // Only add location if any field is present
+      if (updatedAddress || updatedCity || updatedZip || updatedState || updatedCountry) {
+        input.location = {};
+        if (updatedAddress) input.location.address = updatedAddress;
+        if (updatedCity) input.location.city = updatedCity;
+        if (updatedZip) input.location.zip = updatedZip;
+        if (updatedState) input.location.state = updatedState;
+        if (updatedCountry) input.location.country = updatedCountry;
+      }
 
       let data;
       if (accountType === "org") {
@@ -125,13 +130,16 @@ const { data: orgData} = useQuery(QUERY_ORG, {
               orgName: updatedName || org.orgName,
               avatar: media?.id || org.avatar,
               about: updatedAbout || org.about,
-              location: {
-                address: updatedAddress || org.location?.address,
-                city: updatedCity || org.location?.city,
-                zip: updatedZip || org.location?.zip,
-                state: updatedState || org.location?.state,
-                country: updatedCountry || org.location?.country,
-              },
+              // Only include location if any field is present
+              ...(updatedAddress || updatedCity || updatedZip || updatedState || updatedCountry
+                ? { location: {
+                    address: updatedAddress || org.location?.address,
+                    city: updatedCity || org.location?.city,
+                    zip: updatedZip || org.location?.zip,
+                    state: updatedState || org.location?.state,
+                    country: updatedCountry || org.location?.country,
+                  }}
+                : {})
             },
           },
         });
@@ -145,13 +153,16 @@ const { data: orgData} = useQuery(QUERY_ORG, {
               avatar: media?.id || u.avatar,
               about: updatedAbout || u.about,
               fullName: updatedName || u.fullName,
-              location: {
-                address: updatedAddress || u.location?.address,
-                city: updatedCity || u.location?.city,
-                zip: updatedZip || u.location?.zip,
-                state: updatedState || u.location?.state,
-                country: updatedCountry || u.location?.country,
-              },
+              // Only include location if any field is present
+              ...(updatedAddress || updatedCity || updatedZip || updatedState || updatedCountry
+                ? { location: {
+                    address: updatedAddress || u.location?.address,
+                    city: updatedCity || u.location?.city,
+                    zip: updatedZip || u.location?.zip,
+                    state: updatedState || u.location?.state,
+                    country: updatedCountry || u.location?.country,
+                  }}
+                : {})
             },
           },
         });
