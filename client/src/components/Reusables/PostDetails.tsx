@@ -19,10 +19,11 @@ import vaccine from "../../images/syringe_24dp_000000_FILL0_wght400_GRAD0_opsz24
 import mail from "../../images/mail_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import UserPlaceHolder from "../../assets/react.svg";
 import call from "../../images/call_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import profile from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import "../../ZachTemp.css"
 // testing data, can be deleted after integrations implementation
-import { MockMeetupItem, MockAdoptionItem } from "../../mockdata/mocktypes/PostDetails";
-import { PostCard } from "../../types/CardTypes"
+import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails";
+import { AdoptionCard, PostCard } from "../../types/CardTypes"
 import { useEffect, useState } from "react"
 import ImageCarousel from "./ImageCarousel"
 
@@ -33,7 +34,7 @@ import { LIKE_POST, UNLIKE_POST } from '../../utils/mutations';
 // Components
 import NewFreeFormPost from "../Creators/NewPost"
 
-type postData =  PostCard | MockMeetupItem | MockAdoptionItem;
+type postData =  PostCard | MockMeetupItem | AdoptionCard;
 
 interface PostResponse {
     poster: {
@@ -215,46 +216,51 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
         );
       }
       case "adoption": {
-        const adoption = postData as MockAdoptionItem
+        const adoption = postData as AdoptionCard
+        console.log("media:", adoption.media)
         return (
           <div key={adoption._id} className={containerClass}>
-            <div className="adoption-pet-image-container">
-              <ImageCarousel slides={adoption.images}/>
-            </div>
+            <button onClick={onClose} className="adoption-close-btn">X</button>
+            {adoption.media.length === 1 ? 
+              <img 
+              src={adoption.media[0].url} 
+              alt="image of pet" 
+              className="adoption-pet-image-container"/>
+              :
+              <div className="adoption-pet-image-container">
+              <ImageCarousel slides={adoption.media.map((m) => m.url)}/>
+              </div>
+            }
+            
             <div className="adoption-pet-main-card">
               <div className="main-pet-card-row">
-                <p>{adoption.petName}</p>
-              {adoption.gender === "male" &&
+                <p>{adoption.pet.name}</p>
+              {adoption.pet.gender === "male" &&
               <img src="male-icon" alt="male-icon"/>
               }
-              {adoption.gender === "female" &&
+              {adoption.pet.gender === "female" &&
               <img src="female-icon" alt="female-icon"/>
               }
               </div>
-              <div className="secondary-pet-card-row">
-                <div className="adoption-location">
+              <div className="adoption-location">
                   <img src={locationimg} alt="map pin icon" />
-                  <p>{adoption.location}</p>
+                  <p>{adoption.location.address}, {adoption.location.city} {adoption.location.state}, {adoption.location.zip}</p>
                 </div>
+              <div className="secondary-pet-card-row">
                 <div className="adoption-pet-age">
                   <img src={calendar} alt="calendar icon" />
-                  <p>{adoption.age}</p>
+                  <p>{adoption.pet.age}</p>
                 </div>
                 <div className="vaccinated-icon">
                 <img src={vaccine} alt="" />
-                {adoption.vaccinated === true &&
-                  <p>Yes</p>
-                }
-                {adoption.vaccinated === false &&
-                  <p>No</p>
-                }
+                <p>{adoption.pet.vaccination}</p>
                 </div>
               </div>
             </div>
             <div className="org-info-row">
               <div className="main-org-info">
-                <img src={adoption.orgAvi} alt="organization avatar" />
-                <p>{adoption.orgName}</p>
+                <img src={adoption.poster.avatar?.url || profile} alt="organization avatar" />
+                <p>{adoption.poster.orgName}</p>
               </div>
               <div className="org-contact-info">
                 <button onClick={handleEmailToggle}>
@@ -266,28 +272,34 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
               </div>
             </div>
             {isCallOpen &&
-              <div className="contact-reveal">{adoption.orgNumber}</div>
+              <div className="reveal-container">
+                 <div className="contact-reveal">{adoption.poster.phone || "No number provided."}</div>
+              </div>
             }
             {isEmailOpen &&
-              <div className="contact-reveal">{adoption.orgEmail}</div>
+              <div className="reveal-container">
+              <div className="contact-reveal">{adoption.poster.email}</div>
+              </div>
             }
-            <p>{adoption.description}</p>
+            <div className="adoption-description-container">
+              <p>{adoption.description}</p>
+            </div>
             <div className="more-pet-details-container">
               <p>
                 <span className="detail-label">Breed:</span>
-                <span className="detail-value">{adoption.breed}</span>
+                <span className="detail-value">{adoption.pet.type.breed}</span>
               </p>
               <p>
                 <span className="detail-label">Fixed:</span>
-                <span className="detail-value">{adoption.isFixed ? 'Yes' : 'No'}</span>
+                <span className="detail-value">{adoption.pet.neuteredOrSpayed ? 'Yes' : 'No'}</span>
               </p>
               <p>
                 <span className="detail-label">Good with pets:</span> 
                 <span className="detail-value">{adoption.goodWithPets}</span>
               </p>
               <p>
-                <span className="detail-label">Vaccinated:</span>
-                <span className="detail-value">{adoption.vaccinated}</span>
+                <span className="detail-label">Vaccinations:</span>
+                <span className="detail-value">{adoption.pet.vaccination}</span>
               </p>
             </div>
           </div>

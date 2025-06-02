@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export default function ImageCarousel( { slides }: { slides: string[] }) {
+export default function ImageCarousel( { slides }: { slides: [{url:string}] | string [] }) {
 
   const [current, setCurrent] = useState(0) 
   

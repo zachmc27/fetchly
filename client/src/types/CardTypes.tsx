@@ -1,6 +1,13 @@
 export type AdoptionCard = {
     _id: string;
     id?: string;
+    poster: {
+      orgName: string;
+      avatar: {url:string};
+      phone: string;
+      email: string;
+
+    };
     pet: {
         _id: number;
         name: string;
@@ -9,9 +16,24 @@ export type AdoptionCard = {
             url: string;
         };
         gender: string;
+        vaccination: string;
+        type: {
+          breed: string;
+          type: string
+        };
+        neuteredOrSpayed: boolean;
     };
     itemType: string;
     description: string;
+    media: [{url: string}];
+    location: {
+      address: string;
+      zip: string;
+      city: string;
+      state: string;
+      country: string;
+    };
+    goodWithPets: string;
 };
 
 

@@ -75,8 +75,10 @@
 }
 
 .adoption-details-container {
-    border: 1px solid black;
-    background-color: lightpink;
+  margin-top: 1.5vh;
+  padding-top: 1.5vh;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8); 
 }
 
 /* search bar */
@@ -111,6 +113,37 @@
 }
 
 /* adoption page */
+
+.no-results-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 2vh;
+}
+
+.no-results-img {
+ width: 30vw;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.no-results-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 5px;
+}
+
 
 .adoption-page-container {
     height: 82vh;
@@ -1006,23 +1039,25 @@
 }
 
 .img-container {
-  width: 100%;
-  background-color: #f0f0f0; /* Placeholder background for image */
+  background-color: #f0f0f0;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 15px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 200px; /* Minimum height for the image container */
+  justify-content: center; 
+  width: fit-content;
+  height: fit-content;
+  max-width: 80vw;
+  max-height: 50vh;
 }
 
 .img-container img {
-  width: 100%;
-  height: auto;
   display: block;
-  object-fit: cover;
-  max-height: 350px; /* Limit height of post images */
+  margin: 0;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;     /* Or remove if you want natural aspect ratio */
   border-radius: 8px; /* Apply border-radius to the image itself if not fully contained */
 }
 
@@ -1060,8 +1095,8 @@
 
 .comment-container {
   display: flex;
-  width: 100vw;
-  min-width: 100vw;
+  width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   padding-bottom: 15px;
   border-bottom: 1px solid #eee; 
@@ -1080,7 +1115,7 @@
 
 .comment-img {
   flex-shrink: 0; /* Prevent avatar from shrinking */
-  width: 15%;
+  width: fit-content;
   padding-left: 3%;
 }
 .comment-icon-row {
@@ -1627,9 +1662,6 @@
 
 /* adoption details */
 
-/* Overall Page Styles */
-
-
 /* Pet Image Container */
 .adoption-pet-image-container {
   width: 100%;
@@ -1639,6 +1671,24 @@
   justify-content: center;
   align-items: center;
   overflow: hidden; /* Ensures image conforms to container */
+  position: relative;
+}
+
+.adoption-close-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .adoption-pet-image-container img {
@@ -1665,7 +1715,7 @@
 .main-pet-card-row {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  justify-content: center;
 }
 
 .main-pet-card-row p { /* Pet Name */
@@ -1683,9 +1733,9 @@
 
 .secondary-pet-card-row {
   display: flex;
-  justify-content: space-between; /* Distribute items */
+  justify-content: center; /* Distribute items */
   align-items: center;
-  gap: 10px; /* Gap between items */
+  gap: 30px; /* Gap between items */
 }
 
 .adoption-location,
@@ -1695,6 +1745,18 @@
   align-items: center;
   font-size: 13px;
   color: #555555; /* Slightly lighter text for secondary info */
+}
+
+.adoption-location {
+  justify-content: center;
+  margin-bottom: 1vh;
+  position: relative;
+  left: -4px;
+  text-align: center;
+}
+
+.adoption-location p {
+  margin: 0
 }
 
 .secondary-pet-card-row img { /* Icons in secondary row */
@@ -1758,16 +1820,23 @@
   /* Consider filter for consistent icon color */
 }
 
+.reveal-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
 /* Conditional Contact Info Display */
-.adoption-page-container > div[style] { /* A bit generic, better to wrap isCallOpen/isEmailOpen content in a div with a class */
-  padding: 8px 20px;
+.contact-reveal { /* A bit generic, better to wrap isCallOpen/isEmailOpen content in a div with a class */
   font-size: 14px;
+  padding-right: 2vw;
   background-color: #ffffff; /* Assuming it continues the white block */
   color: #007bff; /* Link-like color for contact info */
 }
 
 /* Pet Description */
-.adoption-page-container > p { /* Targets the main adoption.description paragraph */
+
+
+.adoption-description-container > p { /* Targets the main adoption.description paragraph */
   font-size: 14px;
   line-height: 1.6;
   color: #333333;
