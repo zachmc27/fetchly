@@ -1,11 +1,10 @@
 //form for creating a meet up post
-// import { img, use } from "framer-motion/client";
 import React, { useState } from "react";
-// import { FaImage } from "react-icons/fa";
-// import ImageUpload from "../Reusables/ImageUpload";
+import { FaImage } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { ADD_MEETUP } from "../../utils/mutations";
-// import { div } from "framer-motion/client";
+import { UPLOAD_MEDIA } from "../../utils/mutations";
+import Actionmodal from "../Reusables/ActionModal";
 
 interface NewMeetupPostProps {
   onSubmit: (data: {
@@ -108,15 +107,53 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
     e.preventDefault();
   };
 
+
+  // UploadMedia
+  
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [uploadedURL, setUploadedURL] = useState<string[]>([]);
+  const [uploadMedia, { loading: uploadLoading, error: uploadError }] = useMutation(UPLOAD_MEDIA);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      setShowUploadModal(true);
+      }
+    };
+  
+  const confirmUpload = async () => {
+    if (!selectedFile) return;
+
+    try {
+      const response = await uploadMedia({
+        variables: {
+          input: {
+            file: selectedFile,
+            tags: ['freeform-post'],
+          },
+        },
+      });
+
+      const uploaded = response.data?.uploadMedia;
+      setUploadedURL((prev) => [...prev, uploaded.url]);
+
+      if (uploaded) {
+        setMedia((prev) => [...prev, uploaded.id]);
+      }
+    } catch (err) {
+      console.error("Media upload failed:", err);
+    } finally {
+      setShowUploadModal(false);
+      setSelectedFile(null);
+    }
+  };
+
+
+
   return (
         <form onSubmit={handleSubmit} className="new-meetup-form">
-        {/* <ImageUpload
-        onImageSelect={handleImageSelect}
-        previewImage={previewImage}
-        setPreviewImage={setPreviewImage}
-      />
-      <div className="new-meetup-title">
-      /> */}
       <div>
           <label>Title</label>
           <input
@@ -125,6 +162,52 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Puppy Play-date "
           />
+        </div>
+
+        <div className="media-buttons">
+          <label className="image-button" htmlFor="file-upload">
+            <FaImage className="icon" />
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
+          {showUploadModal && selectedFile && (
+            <Actionmodal
+              cancel={() => {
+                setShowUploadModal(false);
+                setSelectedFile(null);
+              }}
+              confirm={confirmUpload}
+            >
+              <p>
+                Upload <strong>{selectedFile.name}</strong>?
+              </p>
+            </Actionmodal>
+          )}
+          {uploadError && (
+            <div className="error-message">
+              Upload failed: {uploadError.message}
+            </div>
+          )}
+          {uploadLoading && (
+            <div className="loading-message">
+              Upload loading...
+            </div>
+          )}
+          <div className="uploaded-images-preview">
+            {media.map((mediaId, index) => (
+              <img
+                key={mediaId}
+                src={uploadedURL[index]}
+                alt={`Uploaded ${index + 1}`}
+                className="uploaded-image-thumb"
+              />
+            ))}
+          </div>          
         </div>
 
         <div>

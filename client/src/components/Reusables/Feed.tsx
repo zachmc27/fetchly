@@ -515,7 +515,7 @@ case "meetup": {
             <p className="post-user">{meetupItem.poster.refId.username}</p>
             <div className="meetup-info-row">
               <div className="meetup-image-container">
-                {/* <img src={meetupItem.postImage} alt="cover image for the post" /> */}
+                <img src={meetupItem.media[0]?.url || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"} alt="cover image for the post" />
               </div>
               <div className="meetup-main-text">
                 <h1>{meetupItem.title}</h1>

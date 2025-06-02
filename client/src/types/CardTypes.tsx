@@ -108,6 +108,8 @@ export type MeetUpCard = {
   numberOfAttendees: number;
   comments: string[];
   numberOfComments: number;
-  media: [];
+  media: [{
+    url: string;
+  }];
   itemType: string;
 }

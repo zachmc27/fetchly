@@ -13,12 +13,14 @@ export default function Meetup() {
 
   const { loading, error, data } = useQuery(QUERY_MEETUPS, { pollInterval: 20000 });
 
-  const meetups = data?.meetups
-    ? [...data.meetups]
+  const meetups = data?.meetUps
+    ? [...data.meetUps]
         // .filter(post => !post.isResponse)
         .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
       )
     : [];
+
+  console.log("Meetups sorted: ", meetups);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
