@@ -136,7 +136,7 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
         // This is a postResponse, run the correct Mutation
         await createPostResponse ({
           variables: {
-            addPostResponsePostId: parentPostId,
+            addPostResponsePostId: parentPostId.toString(),
             addPostResponseInput: postInput,
           },
         });

@@ -97,19 +97,21 @@ export default function Comments({ comments, postId }: CommentsProps) {
     const userId = localStorage.getItem("userId");
     const accountType = localStorage.getItem("accountType");
 
-    if (!userId || !accountType || !newComment.trim()) return;
-
+    if (!userId || !accountType || !newComment.trim()){
+      alert("You must be logged in to post."); 
+      return;
+    }
     try {
       await createPostResponse({
         variables: {
-          input: {
+          addPostResponseInput: {
             poster: {
               refId: userId,
               refModel: accountType === "org" ? "Org" : "User",
             },
             contentText: newComment.trim(),
-            parentPostId: postId,
           },
+          addPostResponsePostId: postId.toString(),          
         },
       });
 
@@ -134,7 +136,7 @@ export default function Comments({ comments, postId }: CommentsProps) {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Type a message here..."
           />
-          {responseLoading ? "Sending..." : "↗️"}
+          {responseLoading ? "Sending..." : ""}
           <button className="send-message-btn" onClick={handleCommentSubmit}>↗️</button>
           {responseError && <div className="form-errors">Error sending comment.</div>}
         </div>
