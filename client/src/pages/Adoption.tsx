@@ -27,7 +27,7 @@ interface Adoption {
 export default function Adoption() {
 
 
-    const { isAdoptionPostOpen, setIsAdoptionPostOpen, activeAdoptionPost, setActiveAdoptionPost } = useAdoptionPost();
+    const { _isAdoptionPostOpen, setIsAdoptionPostOpen, _activeAdoptionPost, setActiveAdoptionPost } = useAdoptionPost();
     const { loading, error, data } = useQuery(QUERY_ADOPTIONS, { pollInterval: 10000 });
 
     const [filteredAdoptions, setFilteredAdoptions] = useState<Adoption[] | null>(null);
