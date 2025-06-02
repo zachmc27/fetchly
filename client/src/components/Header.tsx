@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 //fallback image is profileIcon
 export default function Header() {
   const [avatarUrl, setAvatarUrl] = useState<string>(profileIcon);
-  const currentUser = localStorage.getItem('user_Id');
+  const currentUser = localStorage.getItem('userId');
   const { data } = useQuery(QUERY_USER, {
     variables: { userId: currentUser },
   });
