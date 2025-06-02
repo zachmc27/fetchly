@@ -19,7 +19,6 @@ import { MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-import { mockAdoptionPosts } from "../../mockdata/post-data"
 
 //get mutations and queries
 import { useQuery } from "@apollo/client";
@@ -39,7 +38,7 @@ import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
 
-import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
+import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 
@@ -280,8 +279,8 @@ useEffect(() => {
     }
   }
 
-  if (location.pathname !== "/meetup") {
-    localStorage.removeItem("activeMeetupId");
+  if (location.pathname !== "/") {
+    localStorage.removeItem("activePostId");
   }
 }, [location.pathname, initialFeedArray]);
 
@@ -352,24 +351,43 @@ function mapResponseToComment(res: {
 // ----------------------------------------------------------------
 // --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
-const [activeAdoptionPost, setActiveAdoptionPost] = useState<MockAdoptionItem | null>(null); 
+const [activeAdoptionPost, setActiveAdoptionPost] = useState<AdoptionCard | null>(null); 
 const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
 
- function handleAdoptionPostViewRender(adoptionId: string) {
-  const adoptionToOpen = mockAdoptionPosts.find(adoption => adoption._id === adoptionId);
-  console.log(adoptionToOpen);
-  if (!adoptionToOpen) {
-    console.log('no post found')
-  }
-    if (adoptionToOpen) {
-       setActiveAdoptionPost(adoptionToOpen);
-      console.log('active post:', activeAdoptionPost);
-      setIsAdoptionPostOpen(true)
-      localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
-    } else  {
-      console.warn('No post found with ID:', adoptionId);
+useEffect(() => {
+  const storedAdoptionId = localStorage.getItem("activeAdoptionId");
+  if (storedAdoptionId && location.pathname === '/adoption') {
+    const storedAdoptionPost = initialFeedArray.find(
+      (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === storedAdoptionId
+    ) as PostCard | undefined;
+    if (storedAdoptionPost) {
+      setActivePost(storedAdoptionPost);
+      setIsPostOpen(true);
     }
-    setIsAdoptionPostOpen(true)
+  }
+
+  if (location.pathname !== "/adoption") {
+    localStorage.removeItem("activePostId");
+  }
+}, [location.pathname, initialFeedArray]);
+
+function handleAdoptionPostViewRender(adoptionId: string) {
+
+  const adoptionToOpen = feedArray.find(
+  (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === adoptionId
+  ) as AdoptionCard | undefined;
+  console.log(adoptionToOpen);
+
+  if (!adoptionToOpen) {
+    console.log('no post found');
+    return
+  }
+ 
+  setActiveAdoptionPost(adoptionToOpen);
+  console.log('active post:', activeAdoptionPost);
+  setIsAdoptionPostOpen(true)
+  localStorage.setItem("activeAdoptionId", adoptionToOpen._id.toString());
+  setIsAdoptionPostOpen(true)
 }
 
 function handleCloseAdoptionPostView() {
@@ -419,7 +437,7 @@ function handleCloseAdoptionPostView() {
   const postItem = item as PostCard;
   return (
     <PostCardItem
-      key={postItem._id}
+      key={index}
       post={postItem}
       onOpen={handlePostViewRender}
       itemStyle={itemStyle}
@@ -552,11 +570,14 @@ if (isPostOpen && activePost) {
 
 if (isAdoptionPostOpen && activeAdoptionPost) {
   return (
+    <>
+    <Header />
     <PostDetails
      postData={activeAdoptionPost}
      containerClass="adoption-details-container"
      onClose={handleCloseAdoptionPostView}
     />
+    </>
   )
 }
 
@@ -564,7 +585,7 @@ return (
   <>
     <Header />
     {
-      (!isMeetupPostOpen && location.pathname === "/meetup") &&
+      !isMeetupPostOpen && location.pathname === "/meetup" &&
       <SearchBar send={filterBySearch} />
     }
     <div className={containerStyle}>

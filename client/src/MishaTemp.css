@@ -45,6 +45,11 @@
   border-top: 1px solid #ddd; /* optional nice separator */
 }
 
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 /* Cancel button */
 .close-button {
   background: transparent;
@@ -117,6 +122,8 @@
 
 .adoption-pet-button {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 }
@@ -136,7 +143,7 @@
 }
 
 .adoption-post-form button[type="submit"] {
-  margin-top: 1rem;
+  margin-top: .5rem;
   padding: 12px;
   font-size: 1.1rem;
   background-color: #4caf50;
@@ -263,8 +270,6 @@
 
 /* Submit button */
 .new-pet-form button[type="submit"] {
-  margin-top: 1.5rem;
-  padding: 14px;
   font-size: 1.1rem;
   background-color: #4caf50;
   color: white;
@@ -452,28 +457,38 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.5);
+  background: rgba(255, 255, 255, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow: hidden;
+
 }
 
 .post-modal-content {
-  background: white;
+  background: rgb(255, 255, 255);
   padding: 20px;
-  border-radius: 8px;
-  max-width: 600px;
-  width: 90%;
+  width: 100vw;
+  height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .post-modal-close-button {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0;
   border: none;
   background: transparent;
   cursor: pointer;
+  z-index: 100;
+}
+
+.post-form-dropdown {
+  margin-top: 6vh;
 }

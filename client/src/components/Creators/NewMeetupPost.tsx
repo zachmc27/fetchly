@@ -114,6 +114,8 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         onImageSelect={handleImageSelect}
         previewImage={previewImage}
         setPreviewImage={setPreviewImage}
+      />
+      <div className="new-meetup-title">
       /> */}
       <div>
         <label>Title</label>
@@ -125,7 +127,7 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         />
       </div>
 
-      <div>
+      <div className="new-meetup-description">
         <label>Description</label>
         <textarea
           value={description}
@@ -134,7 +136,7 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         />
       </div>
 
-      <div>
+      <div className="new-meetup-date">
         <label>Date</label>
         <input
           type="date"
@@ -143,7 +145,7 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         />
       </div>
 
-      <div>
+      <div className="new-meetup-time">
         <label>Time</label>
         <input
           type="text"
@@ -155,7 +157,7 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         <button onClick={handleTimeButtons}>PM</button>
       </div>
 
-      <div>
+      <div className="new-meetup-location">
         <label>Location</label>
         <input
           type="text"

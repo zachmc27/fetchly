@@ -26,8 +26,10 @@ const PostModal = ({ isOpen, onClose, children }: PostModalProps) => {
 return (
     <div className="post-modal-overlay">
       <div className="post-modal-content">
+        <button className="post-modal-close-button" onClick={onClose}>×</button>
+        <div className="post-form-dropdown">
         <PostTypeDropdown onSelect={handleChange}/>
-        <button className="post-modal-close" onClick={onClose}>×</button>
+        </div>
         {children}
       </div>
    </div>

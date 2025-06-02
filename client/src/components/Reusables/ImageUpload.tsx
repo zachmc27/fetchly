@@ -40,6 +40,28 @@
 //         }
 //       };
     
+// ******* WITH ZACHS STYLING ******
+// return (
+//     <div>
+//       <div className='image-preview'>
+//       {preview && (
+//         <img
+//           src={preview}
+//           alt="Preview"
+//         />
+//       )}
+//       </div>
+//       <label>
+//         <FaImage size={20} />
+//         <input
+//           type="file"
+//           accept="image/png, image/jpeg, image/jpg"
+//           onChange={handleChange}
+//           style={{ display: 'none' }}
+//         />
+//       </label>
+//     </div>
+//   );
 
 // return (
 //     <div>
