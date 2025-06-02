@@ -13,13 +13,13 @@ import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { AdoptionCard, PostCard, MeetUpCard } from "../../types/CardTypes";
 import { format } from 'date-fns';
-
+import { Comment }from "./Comments"
 // testing data, can be deleted after integrations implementation
 import { MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
-import { mockMeetupPosts } from "../../mockdata/post-data";
+
 
 //get mutations and queries
 import { useQuery, useMutation } from "@apollo/client";
@@ -40,7 +40,7 @@ import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
 
-import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
+
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 import { useAdoptionPost } from "../../contexts/AdoptionPostContext"
@@ -207,36 +207,40 @@ function handleCloseMessagePage() {
 // ----------------------------------------------------------------
 // --------------- MEETUP PAGE TO POST VIEW LOGIC -----------------
 // ----------------------------------------------------------------
-  const [activeMeetupPost, setActiveMeetupPost] = useState<MockMeetupItem | null>(null); 
+  const [activeMeetupPost, setActiveMeetupPost] = useState<MeetUpCard | null>(null); 
   const [isMeetupPostOpen, setIsMeetupPostOpen] = useState(false)
   const [isGoingListOpen, setIsGoingListOpen] = useState(false)
   const [isMeetupCommentsOpen, setIsMeetupCommentsOpen] = useState(true)
   const [activeTab, setActiveTab] = useState<'going' | 'comments'>('comments')
 
   useEffect(() => {
-    const storedMeetupId = localStorage.getItem("activeMeetupId");
-    if (storedMeetupId && location.pathname === '/meetup') {
-      const meetupId = parseInt(storedMeetupId, 10); // Parse as integer
-      const storedMeetup = mockMeetupPosts.find((meetup) => meetup.id === meetupId);
-      if (storedMeetup) {
-        setActiveMeetupPost(storedMeetup);
-        setIsMeetupPostOpen(true);
-      }
+  const storedMeetupId = localStorage.getItem("activeMeetupId");
+  if (storedMeetupId && location.pathname === '/meetup') {
+    const storedMeetup = initialFeedArray.find(
+      (post) => post.itemType === "meetup" && (post as MeetUpCard)._id === storedMeetupId
+    ) as MeetUpCard | undefined;
+    if (storedMeetup) {
+      setActiveMeetupPost(storedMeetup);
+      setIsMeetupPostOpen(true);
     }
+  }
 
-    if (location.pathname !== "/meetup") {
-      localStorage.removeItem("activeMeetupId");
-    }
-  }, [location.pathname]);
+  if (location.pathname !== "/") {
+    localStorage.removeItem("activeMeetupId");
+  }
+}, [location.pathname, initialFeedArray]);
 
   function handleMeetupViewRender(meetupId: string) {
-    const meetupToOpen = mockMeetupPosts.find(post => post.id.toString() === meetupId);
+    const meetupToOpen = feedArray.find(
+    (post) => post.itemType === "meetup" && (post as MeetUpCard)._id === meetupId
+  ) as MeetUpCard | undefined;
+  console.log(meetupToOpen);
 
     if (meetupToOpen) {
       console.log('Opening meetup for post:', meetupToOpen.title);
       setActiveMeetupPost(meetupToOpen);
       setIsMeetupPostOpen(true)
-      localStorage.setItem("activeMeetupId", meetupToOpen.id.toString());
+      localStorage.setItem("activeMeetupId", meetupToOpen._id.toString());
     } else  {
       console.warn('No conversation found with ID:', meetupId);
     }
@@ -351,6 +355,7 @@ function handleClosePostView() {
 }
 
 // Convert response to comment
+
 type Comment = {
   id: number;
   trueId: string;
@@ -365,6 +370,7 @@ type Comment = {
   parentPost?: string;
   responses?: {_id: string}[];
 };
+
 
 function mapResponseToComment(res: {
     _id: string;
@@ -633,7 +639,7 @@ if (isMeetupPostOpen && activeMeetupPost) {
     }
     {
       isGoingListOpen &&
-      <Goinglist rsvpList={activeMeetupPost.rsvpList}/>
+      <Goinglist rsvpList={activeMeetupPost.attendees}/>
     }
     </>
   )

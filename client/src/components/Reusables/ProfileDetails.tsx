@@ -7,8 +7,7 @@ import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0
 import { UserType } from "../../types/UserType";
 import { Pet }  from "../../types/PetTypes";
 import { format } from 'date-fns';
-import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-//import runningDog from "../../images/Running dog.gif"
+
 type ProfileDetailsProps = {
   profileUserId: string;
   profileAccountType: string;
@@ -117,9 +116,9 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
 
 
 return (
-  <div className="profile-background">
-    <div className="profile-ctn">
-      <div className="profile-item-ctn">
+  <div className="mini-profile-background">
+    <div className="mini-profile-ctn">
+      <div className="mini-profile-item-ctn">
         <img
           src={
             isPet
@@ -127,10 +126,10 @@ return (
               : (user as UserType).avatar?.url || UserPlaceHolder
           }
           alt="Profile"
-          className="profile-user-img"
+          className="mini-profile-user-img"
         />
-        <div className="profile-user-title">
-          <span className="profile-md-fnt">
+        <div className="mini-profile-user-title">
+          <span className="mini-profile-md-fnt">
             {isPet
               ? (user as Pet).name
               : (user as UserType).username || (user as UserType).orgName}
@@ -138,9 +137,9 @@ return (
         </div>
         {/* Only show follow button for user/org */}
         {!isPet && userId !== profileUserId && (
-          <div className="profile-btn-ctn">
+          <div className="mini-profile-btn-ctn">
             <button
-              className={isFollowing ? "unfollow-btn" : "follow-btn"}
+              className={isFollowing ? "mini-unfollow-btn" : "mini-follow-btn"}
               onClick={handleFollowToggle}
             >
               {isFollowing ? "Unfollow" : "Follow"}
@@ -149,13 +148,13 @@ return (
         )}
       </div>
 
-      <div className="profile-bio-ctn profile-sm-fnt">
+      <div className="mini-profile-bio-ctn mini-profile-sm-fnt">
         <span>{user.about}</span>
       </div>
 
       {/* Only show followers/following for user/org */}
       {!isPet && (
-        <div className="profile-item-ctn profile-sm-fnt">
+        <div className="mini-profile-item-ctn mini-profile-sm-fnt">
           <span>{(user as UserType).followingCount || '0'} followers</span>
           <span>{user.followedByCount || '0'} following</span>
         </div>
@@ -163,9 +162,9 @@ return (
 
       {/* Only show pets for user/org */}
       {!isPet && (
-        <div className="profile-item-ctn profile-md-fnt">
+        <div className="mini-profile-item-ctn mini-profile-md-fnt">
           {(user as UserType).pets?.map(pet => (
-            <div className="profile-pet-ctn" key={pet._id}>
+            <div className="mini-profile-pet-ctn" key={pet._id}>
               {/* ...pet rendering... */}
             </div>
           ))}
@@ -174,22 +173,22 @@ return (
     </div>
     {/* Only show posts for user/org */}
     {!isPet ? (
-      <div className="profile-feed-bg">
+      <div className="mini-profile-feed-bg">
         {(user as UserType).posts?.map(post => (
-          <div key={post._id}>
-            <img src={calendar} alt="calendar icon" />
-            <p>{format(new Date(Number(post.createdAt)), 'MMM d, yyyy') }</p>
+          <div key={post._id} className="foreign-post">
+            <div className="foreign-feed-date">
+              <p>{format(new Date(Number(post.createdAt)), 'MMM d, yyyy') }</p>
+            </div>
             <p>{post.contentText}</p>
           </div>
         ))}
       </div>
     ) : (
-      <div className="profile-feed-bg">
+      <div className="mini-profile-feed-bg">
         {(user as Pet).taggedPosts.map(post => (
           <div key={post._id}>
             {!post.createdAt && (
               <div>
-                <img src={calendar} alt="calendar icon" />
                 <p>{"now"}</p>
               </div>
             )}

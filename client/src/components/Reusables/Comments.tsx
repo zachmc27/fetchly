@@ -18,12 +18,17 @@ import { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_POST_RESPONSE } from "../../utils/mutations";
 import NewFreeFormPost from "../Creators/NewPost"
+
+import sendIcon from "../../images/send_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import { MeetUpComment } from "../../types/CardTypes";
+
 import { LIKE_POST, UNLIKE_POST } from "../../utils/mutations";
 import heartFilled from "../../images/heart-fill-svgrepo-com.svg";
 import { format } from 'date-fns';
+
 // import ButtonBubble from "./Button";
 
-type Comment = {
+export type Comment = {
   id: number;
   trueId?: string;
   user: string;
@@ -39,7 +44,7 @@ type Comment = {
 };
 
 type CommentsProps = {
-  comments: Comment[];
+  comments: Comment[] | MeetUpComment[];
   postId: string;
 };
 
@@ -227,6 +232,7 @@ function CommentItem({ comment }: { comment: Comment }) {
     );
 }
 
+
 export default function Comments({ comments, postId }: CommentsProps) {
   const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE, {
     refetchQueries: ["Posts"],
@@ -263,12 +269,12 @@ export default function Comments({ comments, postId }: CommentsProps) {
     }
   };
 
-  comments.sort((a, b) => a.postedTime.getTime() - b.postedTime.getTime());
-
+  comments.sort((a, b) => (a as Comment).postedTime.getTime() - (b as Comment).postedTime.getTime());
+  console.log(comments);
   return (
     <div className="comments-section-wrapper">
       {comments.map((comment, idx) => (
-        <CommentItem key={idx} comment={comment}/>
+        <CommentItem key={idx} comment={(comment as Comment)}/>
       ))}
         <div className="comment-bar">
           <input
@@ -278,7 +284,7 @@ export default function Comments({ comments, postId }: CommentsProps) {
             placeholder="Type a message here..."
           />
           {responseLoading ? "Sending..." : ""}
-          <button className="send-message-btn" onClick={handleCommentSubmit}>↗️</button>
+          <button className="send-message-btn" onClick={handleCommentSubmit}><img src={sendIcon} alt="send message icon" /></button>
           {responseError && <div className="form-errors">Error sending comment.</div>}
         </div>
     </div>

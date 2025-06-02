@@ -16,12 +16,12 @@ import call from "../../images/call_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import profile from "../../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import "../../main.css"
 // testing data, can be deleted after integrations implementation
-import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails";
-import { AdoptionCard, PostCard } from "../../types/CardTypes"
+
+import { AdoptionCard, MeetUpCard, PostCard } from "../../types/CardTypes"
 import ImageCarousel from "./ImageCarousel"
 import { LIKE_POST, UNLIKE_POST } from "../../utils/mutations";
 
-type postData = PostCard | MockMeetupItem | AdoptionCard;
+type postData = PostCard | MeetUpCard | AdoptionCard;
 
 interface PostResponse {
   poster: {
@@ -268,24 +268,25 @@ export default function PostDetails({
         );
       }
       case "meetup": {
-        const meetup = postData as MockMeetupItem
+        const meetup = postData as MeetUpCard
         return (
           <div key={meetup.id} className={containerClass}>
              <div className="meetup-user-info-row">
                 <button onClick={onClose}>{"<"}</button>
                 <div className="meetup-user-info-container">
-                  <img src={meetup.userAvi} alt="users avatar"/>
-                  <p className="meetup-post-username">{meetup.username}</p>
+                  <img src={meetup.poster.refId.avatar.url} alt="users avatar"/>
+                  <p className="meetup-post-username">{meetup.poster.refId.username}</p>
                 </div>
                 <button className="rsvp-btn">RSVP</button>
             </div>
             
             <div className="img-container"> 
-            <ImageCarousel slides={meetup.images}/>
+            <ImageCarousel slides={meetup.media
+                    .map((m) => (typeof m === "string" ? m : m?.url))}/>
             </div>
             <p className="meetup-title">{meetup.title}</p>
-            <p className="meetup-text">{meetup.postText}</p>
-             <p><img src={locationimg} alt="location-icon"/>{meetup.location}</p>
+            <p className="meetup-text">{meetup.description}</p>
+             <p><img src={locationimg} alt="location-icon"/><p>{meetup.location.address}, {meetup.location.city} {meetup.location.state}, {meetup.location.zip}</p></p>
             <p><img src={calendar} alt="calendar-icon"/>{meetup.date}</p>
             <p><img src={clock} alt="time-icon"/>{meetup.time}</p>
           </div>

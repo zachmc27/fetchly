@@ -106,7 +106,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
             className="post-user-avatar"
             alt="profile picture"
           />
-          <p>{post.poster?.refId?.username || post.poster?.refId?.orgName || "Unknown User"}</p>
+          <p className='feed-user-text'>{post.poster?.refId?.username || post.poster?.refId?.orgName || "Unknown User"}</p>
           {/* Defensive check for taggedPets */}
           {post.taggedPets && typeof post.taggedPets === 'object' && 'name' in post.taggedPets && (
             <p>{post.taggedPets.name}</p>
@@ -164,9 +164,9 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
       {/* Poster Profile Modal */}
       {showProfileModal && (
         <WindowModal cancel={closeModal} confirm={() => {}}>
-          <div onClick={(e) => e.stopPropagation()}>
+          <div onClick={(e) => e.stopPropagation()} className='foreign-profile-container'>
             <button onClick={closeModal} className="modal-close-btn">
-              ×
+              x
             </button>
             <ProfileDetails
               profileUserId={post.poster?.refId?._id || ""}

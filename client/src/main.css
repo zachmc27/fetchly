@@ -260,8 +260,10 @@
     margin: 0 auto;
     height: 92vh;
     height: 82vh;
+    background-color: transparent;
+    border-radius: 33px 33px 0px 0px;
     overflow: hidden;
-    overflow-y: auto;
+
 }
 
 .profile-post-item {
@@ -750,6 +752,8 @@
   width: 100%; 
   box-sizing: border-box; 
   z-index: 10;
+  bottom: 15px; 
+  padding-bottom: 10vh;
 }
 
 .chat-bar input[type="text"] {
@@ -768,7 +772,7 @@
 
 .chat-bar .send-message-btn {
   background: none;
-  border: 1.5px solid rgb(0, 0, 0, .0);
+  border: none;
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -1204,11 +1208,12 @@
   background-color: #f7f7f7;
   border-top: 1px solid #e5e5e5;
   position: absolute;
-  bottom: 55px; 
   margin: 0 auto;
   width: 100%; 
   box-sizing: border-box; 
   z-index: 10;
+  bottom: 15px; 
+  padding-bottom: 10vh;
 }
 
 .comment-bar input[type="text"] {
@@ -1226,7 +1231,7 @@
 
 .comment-bar .send-message-btn {
   background: none;
-  border: 1.5px solid #000;
+  border: none;
   border-radius: 50%;
   width: 34px;
   height: 34px;
@@ -1331,6 +1336,7 @@
     /* flex-wrap: wrap; */
     /* padding: 10px 0px;
     padding-top: 12vh; */
+    margin-top: 12vh;
     justify-content: flex-start;
     align-items: flex-start;
     /* height: 94vh;
@@ -1376,6 +1382,9 @@
      if the date wasn't absolutely positioned. Now it just sits next to avatar. */
 }
 
+.feed-user-text {
+  font-weight: bold;
+}
 /* Date Container - Positioned at the top-right of the .post-card */
 .post-date-container {
   position: absolute;
@@ -2327,8 +2336,7 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
-  overflow-y: auto;
-  padding: 1.5rem 2rem; 
+  overflow-y: auto; 
   box-sizing: border-box;
   background: #fff; 
   border-radius: 10px;
@@ -2907,12 +2915,14 @@
   width: 10%;
   flex: 42;
   justify-content: end;
+  align-items: center;
 }
 
 .profile-user-title{
   display: flex;
   flex-direction: column;
   gap: 5%;
+  height: fit-content;
 }
 
 .profile-bio-ctn{
@@ -2959,7 +2969,153 @@
   width: 100%;
   height: 100vh;
   margin-top: 5%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* foreign profile */
+
+/************* MINI PROFILE CSS *****************/
+
+.modal-close-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5em;
+}
+
+.foreign-profile-container {
+  width: 100%;
+  padding: 3vw
+}
+.mini-profile-background {
+  background: #fff;
+  width: 100%;
+  min-height: 100%;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.mini-profile-ctn {
+  width: 100%;
+  padding: 0 0 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+}
+
+.mini-profile-item-ctn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+
+.mini-profile-user-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e0e0e0;
+  border: 2px solid #fff;
+  margin-bottom: 10px;
+}
+
+.mini-profile-user-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.mini-profile-md-fnt {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.mini-profile-user-title .mini-profile-md-fnt {
+  margin-bottom: 2px;
+}
+
+.mini-profile-btn-ctn {
+  margin-top: 8px;
+}
+
+.mini-follow-btn, .mini-unfollow-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 5px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.2s;
+}
+.mini-unfollow-btn {
+  background: #bbb;
+  color: #222;
+}
+
+.mini-profile-bio-ctn {
+  width: 100%;
+  max-width: 95vw;
+  background: none;
+  color: #444;
+  font-size: 0.97rem;
+  text-align: left;
+  margin-bottom: 12px;
+  margin-top: 0;
+  padding: 0 18px;
+}
+
+.mini-profile-sm-fnt {
+  font-size: 0.97rem;
+  color: #666;
+}
+
+.mini-profile-item-ctn.mini-profile-sm-fnt {
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 18px;
+  width: 100%;
+  max-width: 95vw;
+  margin-bottom: 10px;
+  color: #222;
+  font-size: 0.97rem;
+}
+
+.mini-profile-feed-bg {
+  width: 100%;
+  padding: 0 0 16px 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.foreign-post {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 16px;
+    color: #262626;
+    position: relative;
+    width: 100%;
+}
+
+.foreign-feed-date p {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 4px 0;
+}
+
+
 
 /*************** MEETUP POPUP *****************/
 .prof-meet-ctn {
@@ -3171,10 +3327,11 @@
   width: 3vh;
   height: 3vh;
   padding: 0;
+  background-color: transparent;
 }
 .button-bubble-small img {
-  width: 70%;
-  height: 70%;
+  width: 100%;
+  height: 100%;
 }
 
 /* nav bar */
