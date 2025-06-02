@@ -50,6 +50,7 @@ export default function Profile() {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
 
+
   const openProfile = () => {
     console.log("Selected Pet: " + selectedPet?._id);
     setShowProfileModal(true);
@@ -155,6 +156,17 @@ export default function Profile() {
       )
     : [];
 
+  /**************** FEED GOD PLS WORK ******************************/
+  const { data: postData } = useQuery(QUERY_POSTS, { pollInterval: 20000 });
+  const userPosts = postData?.posts
+    ? [...postData.posts]
+        .filter(post => !post.isResponse)
+        .filter(post => post.poster.refId._id === userId)
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )
+    : [];
+
+  console.log("THESE ARE THE POSTS:", userPosts);
 
 
   /************* RENDER PAGE *****************/
@@ -250,7 +262,7 @@ export default function Profile() {
       </div>
         <div className="profile-feed-bg">
           <Feed 
-          initialFeedArray={user.posts} 
+          initialFeedArray={userPosts} 
           itemStyle="post-card"          
           containerStyle="profile-feed-container"
           />
