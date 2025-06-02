@@ -86,7 +86,7 @@ type UserOrOrg = {
   location?: Location;
   followingCount?: number;
   followedByCount: number;
-  pets?: { _id: number; name: string; avatar: string }[];
+  pets?: { _id: number; name: string; profilePhoto: {url: string} }[];
   posts: PostCard[];
 
 }
@@ -147,9 +147,9 @@ const mockUser = {
   followingCount: 123,
   followedByCount: 123,
   pets: [
-    { _id: 1, name: "Pet 1", avatar: UserPlaceHolder },
-    { _id: 2, name: "Pet 2", avatar: UserPlaceHolder },
-    { _id: 3, name: "Pet 3", avatar: UserPlaceHolder },
+    { _id: 1, name: "Pet 1", profilePhoto: {url: UserPlaceHolder}},
+    { _id: 2, name: "Pet 2", profilePhoto:{url: UserPlaceHolder} },
+    { _id: 3, name: "Pet 3", profilePhoto: {url: UserPlaceHolder} },
   ],
   posts:[]
 }
@@ -303,7 +303,7 @@ export default function Profile() {
         <div className="profile-item-ctn profile-md-fnt">
           {user.pets?.map((pet) => (
             <div className="profile-pet-ctn" key={pet._id}>
-              <img src={pet.avatar} />
+              <img className="profile-pet-img" src={pet.profilePhoto.url} />
               <span>{pet.name}</span>
             </div>
           ))}

@@ -149,7 +149,11 @@
     width: 20%;
 }
 .profile-pet-img {
-  width: 90%;
+  width: 36px;  
+  height: 36px;  
+  border-radius: 50%; 
+  object-fit: cover; 
+  background-color: #f0f0f0;
 }
 
 .profile-lg-fnt{

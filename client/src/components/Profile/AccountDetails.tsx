@@ -85,13 +85,12 @@ const { data: orgData} = useQuery(QUERY_ORG, {
   const[media, setMedia] = useState<UploadedMedia>();
   const[updatedAbout, setUpdatedAbout] = useState<string>("");
   const[updatedName, setUpdatedName] = useState<string>("");
-  const [updatedLocation, setUpdatedLocation] = useState<Location>({
-  address: user?.location?.address || "",
-  zip: user?.location?.zip || "",
-  city: user?.location?.city || "",
-  state: user?.location?.state || "",
-  country: user?.location?.country || "",
-});
+  const [updatedAddress, setUpdatedAddress] = useState<string>("");
+  const [updatedZip, setUpdatedZip] = useState<string>("");
+  const [updatedCity, setUpdatedCity] = useState<string>("");
+  const [updatedState, setUpdatedState] = useState<string>("");
+  const [updatedCountry, setUpdatedCountry] = useState<string>("");
+
 
   const handleMediaUpload = (media: UploadedMedia) => {
     setMedia(media);
@@ -105,12 +104,16 @@ const { data: orgData} = useQuery(QUERY_ORG, {
     if (!user) return;
     console.log(userId);
     try {
-      const input: { username?: string; avatar?: string; about?: string; fullName?: string; location?: Location} = {};
+      const input: { username?: string; avatar?: string; about?: string; fullName?: string; address?: string; zip?: string; city?: string; state?: string;  country?: string;} = {};
       if (updatedUsername) input.username = updatedUsername;
       if (media?.id) input.avatar = media.id;
       if (updatedAbout) input.about = updatedAbout;
       if (updatedName) input.fullName = updatedName;
-      if (updatedLocation) input.location = updatedLocation;
+      if (updatedAddress) input.address = updatedAddress;
+      if (updatedCity) input.city = updatedCity;
+      if (updatedZip) input.zip = updatedZip;
+      if (updatedState) input.state = updatedState;
+      if (updatedCountry) input.country = updatedCountry;
 
       let data;
       if (accountType === "org") {
@@ -122,7 +125,13 @@ const { data: orgData} = useQuery(QUERY_ORG, {
               orgName: updatedName || org.orgName,
               avatar: media?.id || org.avatar,
               about: updatedAbout || org.about,
-              location: updatedLocation || org.location,
+              location: {
+                address: updatedAddress || org.location?.address,
+                city: updatedCity || org.location?.city,
+                zip: updatedZip || org.location?.zip,
+                state: updatedState || org.location?.state,
+                country: updatedCountry || org.location?.country,
+              },
             },
           },
         });
@@ -136,7 +145,13 @@ const { data: orgData} = useQuery(QUERY_ORG, {
               avatar: media?.id || u.avatar,
               about: updatedAbout || u.about,
               fullName: updatedName || u.fullName,
-              location: updatedLocation || u.location,
+              location: {
+                address: updatedAddress || u.location?.address,
+                city: updatedCity || u.location?.city,
+                zip: updatedZip || u.location?.zip,
+                state: updatedState || u.location?.state,
+                country: updatedCountry || u.location?.country,
+              },
             },
           },
         });
@@ -190,8 +205,8 @@ const { data: orgData} = useQuery(QUERY_ORG, {
           type="text"
           id="address"
           placeholder={user?.location?.address || "Address"}
-          value={updatedLocation.address}
-          onChange={e => setUpdatedLocation(loc => ({ ...loc, address: e.target.value }))}
+          value={updatedAddress}
+          onChange={e => setUpdatedAddress(e.target.value)}
         />
       </div>
       <div className="prof-detail-form-section">
@@ -200,8 +215,8 @@ const { data: orgData} = useQuery(QUERY_ORG, {
           type="text"
           id="zip"
           placeholder={user?.location?.zip || "Zip"}
-          value={updatedLocation.zip}
-          onChange={e => setUpdatedLocation(loc => ({ ...loc, zip: e.target.value }))}
+          value={updatedZip}
+          onChange={e => setUpdatedZip(e.target.value)}
         />
       </div>
       <div className="prof-detail-form-section">
@@ -210,8 +225,8 @@ const { data: orgData} = useQuery(QUERY_ORG, {
           type="text"
           id="city"
           placeholder={user?.location?.city || "City"}
-          value={updatedLocation.city}
-          onChange={e => setUpdatedLocation(loc => ({ ...loc, city: e.target.value }))}
+          value={updatedCity}
+          onChange={e => setUpdatedCity(e.target.value)}
         />
       </div>
       <div className="prof-detail-form-section">
@@ -220,8 +235,8 @@ const { data: orgData} = useQuery(QUERY_ORG, {
           type="text"
           id="state"
           placeholder={user?.location?.state || "State"}
-          value={updatedLocation.state}
-          onChange={e => setUpdatedLocation(loc => ({ ...loc, state: e.target.value }))}
+          value={updatedState}
+          onChange={e => setUpdatedState(e.target.value)}
         />
       </div>
       <div className="prof-detail-form-section">
@@ -230,8 +245,8 @@ const { data: orgData} = useQuery(QUERY_ORG, {
           type="text"
           id="country"
           placeholder={user?.location?.country || "Country"}
-          value={updatedLocation.country}
-          onChange={e => setUpdatedLocation(loc => ({ ...loc, country: e.target.value }))}
+          value={updatedCountry}
+          onChange={e => setUpdatedCountry(e.target.value)}
         />
       </div>
 
