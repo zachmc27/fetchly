@@ -51,16 +51,18 @@ class AuthService {
     window.location.assign('/');
 
     // Alert for testing purposes comment out when not needed
-    alert("Login successful");
+    //alert("Login successful");
   }
 
   // TODO: What is the purpose of this method?
   logout() {
     localStorage.removeItem('id_token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('accountType');
     window.location.assign('/');
 
     // Alert for testing purposes, comment out when not needed
-    alert("Logout successful");
+    //alert("Logout successful");
   }
 }
 

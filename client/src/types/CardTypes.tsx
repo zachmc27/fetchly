@@ -83,3 +83,34 @@ export type PostCard = {
   }
   parentPost: string;
 }
+
+export type MeetUpCard = {
+  _id: string; 
+  id?: string;
+  title: string;
+  poster: {
+    refId: {
+      _id: string;
+      username: string;
+    };
+    refModel: string;
+  }
+  description: string;
+  location: {
+    address: string;
+    zip: string;
+    city: string;
+    state: string;
+    country: string;
+  }
+  date: string;
+  time: string;
+  attendees: string[];
+  numberOfAttendees: number;
+  comments: string[];
+  numberOfComments: number;
+  media: [{
+    url: string;
+  }];
+  itemType: string;
+}

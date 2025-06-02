@@ -4,7 +4,8 @@
 import "../SammiReusables.css";
 
 import { useEffect, useState } from "react";
-import { QUERY_USER, QUERY_ORG } from '../utils/queries';
+import { QUERY_USER, QUERY_ORG, QUERY_MEETUPS, QUERY_POSTS } from '../utils/queries';
+
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_PET } from '../utils/mutations';
 import { useNavigate } from "react-router-dom";
@@ -15,7 +16,8 @@ import WindowModal from "../components/Reusables/WindowModal";
 import Feed from "../components/Reusables/Feed";
 import ButtonBubble from "../components/Reusables/Button";
 import MeetupDetails from "../components/Profile/MeetupDetails";
-import { mockMeetupData } from "../mockdata/feed-data";
+import ProfileDetails from '../../src/components/Reusables/ProfileDetails';
+import { UserType } from "../types/UserType";
 
 import UserPlaceHolder from "../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import AddIcon from "../images/add.png";
@@ -23,46 +25,6 @@ import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import LogoutIcon from "../images/logout.png";
 import runningDog from "../images/Running dog.gif"
-
-type Location = {
-     address: string;
-     zip: string;
-     city: string;
-     state: string;
-     country: string;
-}
-
-type UserOrOrg = {
-  _id: number | string;
-  fullName?: string;
-  username?: string;
-  orgName?: string;
-  email?: string;
-  avatar?: UploadedMedia;
-  about?: string;
-  location?: Location;
-  followingCount?: number;
-  followedByCount: number;
-  pets?: { _id: number; name: string; profilePhoto: {url: string} }[];
-  posts: [];
-
-}
-
-type UploadedMedia = {
-  id: string;
-  filename: string;
-  contentType: string;
-  length: number;
-  uploadDate: string;
-  gridFsId: string;
-  tags: string[];
-  url: string;
-};
-
-// type OwnerRef = {
-//   refId: string;
-//   refModel: "User" | "Org";
-// };
 
 interface NewPetProps {
     name: string;
@@ -76,9 +38,25 @@ interface NewPetProps {
     about: string;
 }
 
+type Pet = {
+  _id: string;
+  name: string;
+  profilePhoto: { url: string };
+};
 
 
 export default function Profile() {
+
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
+
+
+  const openProfile = () => {
+    console.log("Selected Pet: " + selectedPet?._id);
+    setShowProfileModal(true);
+  };
+
+  const closeProfileModal = () => setShowProfileModal(false);
 
   /************* EDITING PROFILE *****************/
   const [isEditOpen, setIsEditOpen] = useState(false)
@@ -135,7 +113,6 @@ export default function Profile() {
   }
 };
 
-
   /************* SHOWING CORRECT USER *****************/
   const userId = localStorage.getItem("userId");
   const orgId = localStorage.getItem("userId");
@@ -151,7 +128,7 @@ export default function Profile() {
     data: orgData,
   } = useQuery(QUERY_ORG, { variables: { orgId }, skip: accountType !== "org" });
 
-  const [user, setUser] = useState<UserOrOrg | null>(null);
+  const [user, setUser] = useState<UserType>();
 
   useEffect(() => {
     if (accountType === "org" && orgData && orgData.org) {
@@ -168,6 +145,38 @@ export default function Profile() {
     localStorage.removeItem("id_token");
     navigate("/login");
   }
+
+  /************* Getting Meetup Data *****************/
+  const { loading, error, data } = useQuery(QUERY_MEETUPS);
+
+
+  const userMeetups = data?.meetUps
+    ? [...data.meetUps]
+        .filter(meetUps => meetUps.poster.refId._id === userId)
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )
+    : [];
+  
+  const userRSVP = data?.meetUps
+    ? [...data.meetUps]
+        .filter(meetUps => meetUps.attendees.includes(userId))
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )
+    : [];
+
+  /**************** FEED GOD PLS WORK ******************************/
+  const { data: postData } = useQuery(QUERY_POSTS, { pollInterval: 20000 });
+  const userPosts = postData?.posts
+    ? [...postData.posts]
+        .filter(post => !post.isResponse)
+        .filter(post => post.poster.refId._id === userId)
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )
+    : [];
+
+  console.log("THESE ARE THE POSTS:", userPosts);
+
+  
 
 
   /************* RENDER PAGE *****************/
@@ -191,7 +200,14 @@ export default function Profile() {
 
     if (isMeetupsOpen && accountType !== "org") {
       return (
-        <MeetupDetails userMeetups={mockMeetupData} userRSVP={userData.user.meetUps}/>
+
+       <MeetupDetails userMeetups={userMeetups} userRSVP={userRSVP}
+       onClose={() => {
+          setIsMeetupsOpen(false);
+          localStorage.setItem("isMeetupsOpen", "false");
+          window.location.reload(); }}
+       />
+
       )
     }
 
@@ -199,6 +215,9 @@ export default function Profile() {
       return <div className="loading-gif-container"><img src={runningDog} alt="loading gif of a dog running"/></div>;
     }
 
+    // Meetup Errors
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;  
 
   return (
     <div>
@@ -230,16 +249,37 @@ export default function Profile() {
         <div className="profile-item-ctn profile-md-fnt">
           {user.pets?.map((pet) => (
             <div className="profile-pet-ctn" key={pet._id}>
-              <img className="profile-pet-img" src={pet.profilePhoto.url} />
+              <button
+                className="profile-pet-btn"
+                onClick={() => {
+                  setSelectedPet(pet);
+                  openProfile();
+                }}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+              >
+                <img className="profile-pet-img" src={pet.profilePhoto?.url} alt={`${pet.name} profile`} />
+              </button>
               <span>{pet.name}</span>
             </div>
+
           ))}
+          {showProfileModal && selectedPet && (
+            <WindowModal cancel={closeProfileModal} confirm={() => {}}>
+              <div onClick={(e) => e.stopPropagation()}>
+                <button onClick={closeProfileModal} className="modal-close-btn">×</button>
+                <ProfileDetails
+                  profileUserId={selectedPet._id.toString()}
+                  profileAccountType="Pet"
+                />
+              </div>
+            </WindowModal>
+          )}
           <ButtonBubble imageSrc={AddIcon} onClick={handleNewPetRender}/>
         </div>
       </div>
         <div className="profile-feed-bg">
           <Feed 
-          initialFeedArray={user.posts} 
+          initialFeedArray={userPosts} 
           itemStyle="post-card"          
           containerStyle="profile-feed-container"
           />

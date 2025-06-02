@@ -705,6 +705,30 @@ export const QUERY_POSTS = gql`
            refModel
         }
         contentText
+        media {
+          url
+        }
+        likesCount
+        parentPost
+        isResponse  
+        responses {
+          _id
+        }        
+        createdAt
+        itemType
+        likes {
+          refId {
+            ... on User {
+              _id
+              username
+            }
+            ... on Org {
+              _id
+              orgName
+            }
+          }
+          refModel
+        }        
       }
       responseCount
       likes {
@@ -900,6 +924,7 @@ export const QUERY_MEETUPS = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       createdAt
       itemType
@@ -1002,6 +1027,7 @@ export const QUERY_MEETUP_COMMENTS = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       responses {
         _id

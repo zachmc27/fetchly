@@ -11,18 +11,20 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { AdoptionCard, PostCard } from "../../types/CardTypes"
+import { AdoptionCard, PostCard, MeetUpCard } from "../../types/CardTypes";
+import { format } from 'date-fns';
 
 // testing data, can be deleted after integrations implementation
-import { MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import { MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
 
 //get mutations and queries
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONVERSATION } from "../../utils/queries";
+import { ATTEND_MEETUP, UNATTEND_MEETUP } from "../../utils/mutations";
 import { useCallback } from "react";
 
 // components
@@ -43,7 +45,7 @@ import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 import { useAdoptionPost } from "../../contexts/AdoptionPostContext"
 
-type FeedItem = MockMessageCard | MockMeetupCard | AdoptionCard | PostCard;
+type FeedItem = MockMessageCard | MeetUpCard | AdoptionCard | PostCard;
 
 export default function Feed({
   initialFeedArray,
@@ -134,7 +136,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 8000, // Poll every 8 seconds
+  pollInterval: 500, // Poll every 0.5 seconds
 });
 
 const {
@@ -156,26 +158,28 @@ useEffect(() => {
   } else if (messageData?.conversation) {
     console.log("Fetched conversation:", messageData.conversation);
     console.log("Messages:", messageData.conversation.messages); // Log messages
+
+    const validMessages = messageData.conversation.messages?.filter((msg: { _id: string }) => msg && msg._id);
+
     setActiveConversation({
       _id: messageData.conversation._id,
       conversationName: messageData.conversation.conversationName,
       conversationUsers: messageData.conversation.conversationUsers,
-      messages: messageData.conversation.messages
-        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: { _id: string; username: string; avatar?: { url?: string } }; createdAt: string; formattedCreatedAt: string }) => ({
-            _id: msg._id,
-            textContent: msg.textContent,
-            messageUser: {
-              _id: msg.messageUser._id,
-              username: msg.messageUser.username,
-              avatar:{
-                url: msg.messageUser.avatar?.url || `https://ui-avatars.com/api/?name=${msg.messageUser.username}&background=random&color=fff&size=128`,
-              }
-            },
-            createdAt: msg.createdAt,
-            formattedCreatedAt: msg.formattedCreatedAt, // Include formattedCreatedAt
-          }))
-        : [],
+      messages: validMessages?.map((msg: { _id: string; textContent: string; messageUser: { _id: string; username: string; avatar?: { url?: string } }; createdAt: string; formattedCreatedAt: string }) => ({
+        _id: msg._id,
+        textContent: msg.textContent,
+        messageUser: {
+          _id: msg.messageUser._id,
+          username: msg.messageUser.username,
+          avatar: {
+            url: msg.messageUser.avatar?.url || `https://ui-avatars.com/api/?name=${msg.messageUser.username}&background=random&color=fff&size=128`,
+          },
+        },
+        createdAt: msg.createdAt,
+        formattedCreatedAt: msg.formattedCreatedAt,
+      })) || [],
     });
+
     setIsChatOpen(true);
   } else {
     console.warn("No conversation found with ID:", localStorage.getItem("activeConversationId"));
@@ -225,8 +229,8 @@ function handleCloseMessagePage() {
     }
   }, [location.pathname]);
 
-  function handleMeetupViewRender(meetupId: number) {
-    const meetupToOpen = mockMeetupPosts.find(post => post.id === meetupId);
+  function handleMeetupViewRender(meetupId: string) {
+    const meetupToOpen = mockMeetupPosts.find(post => post.id.toString() === meetupId);
 
     if (meetupToOpen) {
       console.log('Opening meetup for post:', meetupToOpen.title);
@@ -262,6 +266,44 @@ function handleCloseMessagePage() {
     setIsMeetupCommentsOpen(true)
     setActiveTab('comments')
   }
+
+// ----------------------------------------------------------------
+// --------------- MEETUP PAGE RSVP LOGIC -------------------------
+// ----------------------------------------------------------------
+
+  const [attendMeetup] = useMutation(ATTEND_MEETUP, {
+    refetchQueries: ["MeetUps"],
+  });
+  const [unattendMeetup] = useMutation(UNATTEND_MEETUP, {
+    refetchQueries: ["MeetUps"],
+  });
+
+  const handleAttendMeetupToggle = async (meetupItem: MeetUpCard) => {
+    if (meetupItem.itemType !== "meetup" || !userId || userType !== "User") return;
+
+    if (!meetupItem._id) {
+      console.warn("MeetUp _id is missing, cannot attend/unattend");
+      return;
+    }
+
+    const variables = {
+      meetUpId: meetupItem._id,
+      userId: userId
+    };
+
+    try {
+      if (meetupItem.attendees.includes(userId) === false) {
+        const { data } = await attendMeetup({ variables });
+        console.log("RSVP'd successfully: ", data);
+      } else {
+        const { data } = await unattendMeetup({ variables });
+        console.log("Un-RSVP'd successfully: ", data);
+      }
+    } catch (error) {
+      console.error("Error toggling RSVP:", error);
+    }
+  };  
+
 // ----------------------------------------------------------------
 // --------------- HOME PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
@@ -311,6 +353,7 @@ function handleClosePostView() {
 // Convert response to comment
 type Comment = {
   id: number;
+  trueId: string;
   user: string;
   avatar?: string;
   comment: string;
@@ -319,6 +362,7 @@ type Comment = {
   replies?: Comment[];
   media?: { url: string }[];
   parentPost?: string;
+  responses?: {_id: string}[];
 };
 
 function mapResponseToComment(res: {
@@ -334,10 +378,12 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    responses?: []
     
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
+    trueId: res._id,
     user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
@@ -345,6 +391,7 @@ function mapResponseToComment(res: {
     postedTime: new Date(),
     replies: [],
     media: [],
+    responses: res.responses
     // parentPost: res.
   };
 }
@@ -496,42 +543,59 @@ function handleCloseAdoptionPostView() {
           </div>
         );
         }
-      case "meetup": {
-        const meetupItem = item as MockMeetupCard
+case "meetup": {
+        const meetupItem = item as MeetUpCard;
         return (
-          <div key={index} className={itemStyle} onClick={() => handleMeetupViewRender(meetupItem.id)}>
-            <p className="post-user">{meetupItem.postUser}</p>
+          <div
+            key={index}
+            className={itemStyle}
+            onClick={() => handleMeetupViewRender(meetupItem._id.toString())}
+          >
+            <p className="post-user">{meetupItem.poster.refId.username}</p>
             <div className="meetup-info-row">
               <div className="meetup-image-container">
-                <img src={meetupItem.postImage} alt="cover image for the post" />
+                <img src={meetupItem.media[0]?.url || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"} alt="cover image for the post" />
               </div>
               <div className="meetup-main-text">
-                <h1>{meetupItem.postTitle}</h1> 
+                <h1>{meetupItem.title}</h1>
                 <div className="meetup-location-container">
                   <img src={locationimg} alt="location pin" />
-                  <p>{meetupItem.postLocation}</p>  
-                </div> 
+                    <p>{meetupItem.location.address}, {meetupItem.location.city} {meetupItem.location.state}, {meetupItem.location.zip}</p> 
+                </div>
               </div>
-              <button className="rsvp-btn">RSVP</button>  
+              <button className="rsvp-btn" onClick={() => handleAttendMeetupToggle(meetupItem)}>RSVP</button>
             </div>
             <div className="meetup-details-row">
               <div className="meetup-date">
-                <img src={calendar} alt="calendar icon" className="meetup-detail-icon"/>
-                <p>{meetupItem.postDate}</p>
+                <img
+                  src={calendar}
+                  alt="calendar icon"
+                  className="meetup-detail-icon"
+                />
+                <p>
+                  {format(new Date(Number(meetupItem.date)), "MMM d, yyyy")}
+                </p>
               </div>
               <div className="meetup-time">
-                <img src={clock} alt="clock icon" className="meetup-detail-icon"/>
-                <p>{meetupItem.meetupTime}</p>
+                <img
+                  src={clock}
+                  alt="clock icon"
+                  className="meetup-detail-icon"
+                />
+                <p>{meetupItem.time}</p>
               </div>
               <div className="rsvp-count">
-                <img src={group} alt="people icon" className="meetup-detail-icon"/>
-                <p>{meetupItem.postRSVPCount}</p>
+                <img
+                  src={group}
+                  alt="people icon"
+                  className="meetup-detail-icon"
+                />
+                <p>{meetupItem.numberOfAttendees}</p>
               </div>
             </div>
-           
           </div>
         );
-        }
+      }
 
       default:
         return null;

@@ -255,7 +255,7 @@
 .profile-feed-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content:  flex-start;
     width: 100%;
     margin: 0 auto;
     height: 92vh;
@@ -1327,13 +1327,15 @@
 
 .post-feed-container {
     display: flex;
-    flex-wrap: wrap;
-    padding: 10px 0px;
-    padding-top: 12vh;
-    justify-content: center;
-    height: 94vh;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* padding: 10px 0px;
+    padding-top: 12vh; */
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* height: 94vh;
     overflow: hidden;
-    overflow-y: auto;
+    overflow-y: auto; */
 }
 
 /* Ensure this CSS is loaded by your component */
@@ -2282,6 +2284,20 @@
 
 
 /* misha temp */
+
+.post-user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-user-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
 /* ----------------------- */
 /* Window Modal CSS Styles */

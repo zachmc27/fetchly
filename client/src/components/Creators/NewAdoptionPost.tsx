@@ -43,7 +43,9 @@ const NewAdoptionPost = ({ onSubmit }: NewAdoptionPostProps) => {
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
 
-  const [createAdoptionPost] = useMutation(CREATE_ADOPTION);
+  const [createAdoptionPost] = useMutation(CREATE_ADOPTION, {
+    refetchQueries: ["Adoptions"],
+  });
   const [showError, setShowError] = useState(userType !== "Org");
 
   const { data: orgData } = useQuery(QUERY_ORG, {

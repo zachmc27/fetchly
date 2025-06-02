@@ -17,10 +17,12 @@ import ImageCarousel from "./ImageCarousel"
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_POST_RESPONSE } from "../../utils/mutations";
+import NewFreeFormPost from "../Creators/NewPost"
 // import ButtonBubble from "./Button";
 
 type Comment = {
   id: number;
+  trueId?: string;
   user: string;
   avatar?: string;
   comment: string;
@@ -29,6 +31,7 @@ type Comment = {
   replies?: Comment[];
   media?: {url: string}[];
   parentPost?: string;
+  responses?: {_id: string}[];
 };
 
 type CommentsProps = {
@@ -36,13 +39,30 @@ type CommentsProps = {
   postId: string;
 };
 
+interface PostResponse {
+    poster: {
+      refId: string;
+      refModel: string;
+    };
+    contentText: string;
+    media?: string[];
+}
+
 function CommentItem({ comment }: { comment: Comment }) {
   //pass back the comment id so it can be opened as main post
 const [isRepliesOpen, setIsRepliesOpen] = useState(false)
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleResponseSubmit = (responseData: PostResponse) => {
+    console.log("New response submitted:", responseData);
+  };
+
   function handleContainerClick() {
+    console.log("container clicked");
     setIsRepliesOpen(!isRepliesOpen)
   }
+  console.log("ID: ", comment.responses)
     return (
       <>
         <div className="comment-container">
@@ -73,16 +93,34 @@ const [isRepliesOpen, setIsRepliesOpen] = useState(false)
                   <img src={heart} alt="heart icon" />
                   <button>{comment.likeCount}</button>
                 </div>
-                <div className="comment-replies-container">
+                <div 
+                  className="comment-replies-container"                
+                  onClick={() => setIsModalOpen(true)}
+                  style={{ cursor: "pointer" }}
+                >
                   <img src={chat} alt="comment icon" />
                   <button>{comment.replies?.length || 0}</button>
                 </div>
               </div>
+              {isModalOpen && (
+                <div className="post-modal-overlay" onClick={() => setIsModalOpen(false)}>
+                  <div className="post-modal-content" onClick={e => e.stopPropagation()}>
+                    <button className="post-modal-close-button" onClick={() => setIsModalOpen(false)}>×</button>
+                    <NewFreeFormPost
+                      parentPostId={comment.trueId}
+                      onSubmit={(responseData) => {
+                        handleResponseSubmit(responseData);
+                        setIsModalOpen(false); // close modal on submit
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
           </div>
           </div>
         </div>
-        {isRepliesOpen && (
-          <Replies comment={comment} />
+        {isRepliesOpen && comment.responses && comment.responses.length > 0 && (
+          <Replies replyIds={comment.responses.map(r => r._id)} />
         )}
         </>
     );

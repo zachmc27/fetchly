@@ -1,6 +1,5 @@
 //form for creating a free flow post
 import { useState, useEffect } from "react";
-
 import { FaImage } from "react-icons/fa";
 // import { FaCamera, FaAt } from "react-icons/fa";
 import Actionmodal from "../Reusables/ActionModal";
@@ -26,8 +25,12 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
 
-  const [createPost, { loading: postLoading, error: postError }] = useMutation(ADD_POST);
-  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE);
+  const [createPost, { loading: postLoading, error: postError }] = useMutation(ADD_POST, {
+    refetchQueries: ["Posts"],
+  });
+  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE, {
+    refetchQueries: ["Posts"],
+  });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -189,7 +192,6 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
         <div className="media-buttons">
           <label className="image-button" htmlFor="file-upload">
             <FaImage className="icon" />
-            {/* <MediaUpload onUpload={handleMediaUpload} /> */}
           </label>
           <input
             id="file-upload"
