@@ -6,6 +6,7 @@ import Feed from "../components/Reusables/Feed"
 import {useQuery} from "@apollo/client";
 import { GET_CONVERSATION_BY_USER } from "../utils/queries";
 import { MockConversationObject } from "../mockdata/mocktypes/Conversation";
+import PostButton from "../components/Navbar/PostButton";
 
 
 
@@ -29,13 +30,13 @@ export default function Inbox() {
     return (
       <div className="message-text-content" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <strong className="latest-message" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-        Please Make a new conversation!
+        Start a new conversation!
       </strong>
+      <PostButton />
       </div>
     );
   }
   if (error) return <div>Error loading conversations.</div>;
-
   const initialFeedArray = data.conversationByUser.map((conversation: MockConversationObject) => {
     return {
       id: conversation._id, // Use `_id` from the API data

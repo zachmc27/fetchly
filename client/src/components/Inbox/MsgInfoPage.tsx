@@ -32,7 +32,7 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
 
     if (data?.updateConversation?.conversation) {
       alert("Chat name updated successfully to " + data.updateConversation.conversation.conversationName);
-      
+
     } else {
       console.log("Mutation Cathed: ", data);
       location.reload(); // Refresh the page to reset the state
@@ -89,11 +89,14 @@ export default function MsgInfoPage({ conversation, onClose }: { conversation: M
       <div className="user-list-wrapper">
       {conversation.conversationUsers.map((user) => (
         <div key={user._id} className="msg-info-user-card">
-        <img 
+        <div className="msg-user-photo-container">
+          <img 
           src={user.avatar?.url ?? "/default-avatar.png"} 
           className="default-icon"
           style={{ marginRight: "10px" }}
         />
+        </div>
+        
           <p style={{ fontSize: "16px", color: "#555", margin: 0 }}>{user.username ?? "Unknown User"}</p>
         </div>
         //will have to query every user if we want to display their profile photos
