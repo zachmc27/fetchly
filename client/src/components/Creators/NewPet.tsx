@@ -3,7 +3,7 @@ import MediaUpload from "../Reusables/MediaUpload";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { ADD_PET } from "../../utils/mutations";
 import { FILTER_QUERY_TYPE } from "../../utils/queries";
-import "../../MishaTemp.css"
+import "../../main.css"
 
 interface NewPetProps {
   onSubmit: (data: {

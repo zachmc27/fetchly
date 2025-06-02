@@ -427,10 +427,7 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #065b83;
-  text-decoration: underline;
-}
+
 
 
 /* HEIGHT / WIDTH UTILS */

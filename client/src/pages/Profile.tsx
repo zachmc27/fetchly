@@ -1,7 +1,7 @@
 // renders acccount details component with the users information
 // renders feed component with users posts
 // "https://www.flaticon.com/free-icons/ui" Ui icons created by Fantasyou - Flaticon
-import "../SammiReusables.css";
+import "../main.css";
 
 import { useEffect, useState } from "react";
 import { QUERY_USER, QUERY_ORG, QUERY_MEETUPS, QUERY_POSTS } from '../utils/queries';
@@ -24,7 +24,7 @@ import AddIcon from "../images/add.png";
 import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import LogoutIcon from "../images/logout.png";
-
+import runningDog from "../images/Running dog.gif"
 
 interface NewPetProps {
     name: string;
@@ -212,7 +212,7 @@ export default function Profile() {
     }
 
     if (!user) {
-      return <div>Loading...</div>;
+      return <div className="loading-gif-container"><img src={runningDog} alt="loading gif of a dog running"/></div>;
     }
 
     // Meetup Errors

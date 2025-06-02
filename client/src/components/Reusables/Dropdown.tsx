@@ -9,7 +9,7 @@
 
 import { useState } from "react";
 import type { PostType } from "../../types/Post"
-import '../../PostDropdown.css'
+import '../../main.css'
 
 const postOptions: PostType[] = ['New Post', 'Meetup Post', 'Adoption Post', 'New Message'];
 

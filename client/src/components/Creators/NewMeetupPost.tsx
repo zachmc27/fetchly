@@ -281,7 +281,6 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         {successMessage && <p>{successMessage}</p>}
         {errorMessage && <p>{errorMessage}</p>}
       </form>
-    // </>
   );
   };
 export default NewMeetUpPost;

@@ -1,3 +1,7 @@
+:root {
+  --primary-color: #d06101;
+  --unselected: #f79d66;
+}
 
 /* action modal */
 .action-modal {
@@ -23,14 +27,6 @@
     margin-top: 10px;
     padding: 5px 10px;
     cursor: pointer;
-}
-
-.yes-button {
-    background-color: beige;
-}
-
-.close-button {
-    background-color: red;
 }
 
 /* feed */
@@ -167,9 +163,15 @@
 }
 
 .filter-button {
-    border-radius: 30px;
+    border-radius: 5px;
     width: 7rem;
     padding: 10px 0px;
+    background-color: var(--unselected);
+    border: 3px solid var(--primary-color)
+}
+
+.filter-button:active {
+  background-color: var(--primary-color);
 }
 
 .adoption-feed-container {
@@ -253,7 +255,7 @@
 .profile-feed-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content:  flex-start;
     width: 100%;
     margin: 0 auto;
     height: 92vh;
@@ -292,7 +294,7 @@
 .user-info {
     display: flex;
     align-items: center; /* Vertically align avatar and username */
-    margin-bottom: 10px; /* Space between user info and post content */
+    margin-bottom: 10px; 
 }
 
 .user-avatar {
@@ -307,14 +309,14 @@
     font-size: 1.1em;
     font-weight: bold;
     color: #333;
-    margin: 0; /* Override default h1 margin */
+    margin: 0; 
 }
 
 .post-content {
     font-size: 1em;
     line-height: 1.4;
     color: #555;
-    margin-top: 0; /* Adjust as per previous element */
+    margin-top: 0; 
     margin-bottom: 10px;
 }
 
@@ -323,11 +325,11 @@
     font-size: 0.8em;
     color: #999;
     margin-top: 0;
-    margin-bottom: 5px; /* Small space between date and comment count */
+    margin-bottom: 5px; 
 }
 
 .comment-count {
-    margin-bottom: 0; /* No margin at the bottom of the last element */
+    margin-bottom: 0; 
 }
 
 
@@ -571,8 +573,8 @@
 .messages-page-container {
   display: flex;
   flex-direction: column;
-  width: 100%; /* Takes full width of its parent */
-  height: 100%; /* Takes full height of its parent, or adjust as needed */
+  width: 100%; 
+  height: 100%; 
   background-color: #ffffff;
   z-index: 100;
 }
@@ -637,7 +639,7 @@
 .chat-messages {
   flex-grow: 1;
   padding: 15px 0px;
-  overflow-y: auto; /* Enables scrolling for messages */
+  overflow-y: auto; 
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -682,29 +684,29 @@
 .message-content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 3px; /* Space between sender name and bubble */
+  gap: 3px; 
 }
 
 /* Sender's name - NOW VISIBLE */
 .msg-user-txt,
 .msg-incoming-user-txt {
-  display: block; /* Make it visible */
-  font-size: 0.7rem; /* Approx 11px */
+  display: block; 
+  font-size: 0.7rem; 
   color: #666;
   line-height: 1;
-  /* Align text based on message type */
+  
 }
 
 .msg-incoming-user-txt {
-  align-self: flex-start; /* Text starts from left */
+  align-self: flex-start; 
   margin-bottom: 1vw;
-  margin-left: 10.5vw; /* Slight indent if needed */
+  margin-left: 10.5vw; 
 }
 
 .msg-user-txt {
-  align-self: flex-end; /* Text starts from right for user's messages */
+  align-self: flex-end; 
   margin-bottom: 1vw;
-  margin-right: 10.5vw; /* Slight indent if needed */
+  margin-right: 10.5vw; 
 }
 
 /* Message Text Content (the bubble itself) */
@@ -726,14 +728,14 @@
 .incoming-message .msg-txt {
   background-color: #f0f0f0;
   color: #000;
-  border-bottom-left-radius: 4px; /* Tail effect */
+  border-bottom-left-radius: 4px; 
 }
 
 /* Specific bubble styling for user's messages */
 .user-message .msg-txt {
   background-color: #000000;
   color: #ffffff;
-  border-bottom-right-radius: 4px; /* Tail effect */
+  border-bottom-right-radius: 4px; 
 }
 
 
@@ -801,56 +803,56 @@
 .msg-info-header {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the h1 title */
-  padding: 0 15px; /* Horizontal padding, vertical handled by height */
-  background-color: #ffffff; /* White background */
-  border-bottom-left-radius: 30px; /* Rounded bottom-left corner */
-  border-bottom-right-radius: 30px; /* Rounded bottom-right corner */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Shadow */
-  position: sticky; /* Or static, depending on desired scroll behavior. Sticky is common for sub-page headers. */
-  top: 0; /* Required for sticky positioning */
+  justify-content: center; 
+  padding: 0 15px; 
+  background-color: #ffffff; 
+  border-bottom-left-radius: 30px; 
+  border-bottom-right-radius: 30px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); 
+  position: sticky; 
+  top: 0; 
   left: 0;
   width: 100%;
-  z-index: 990; /* Slightly lower than main header if they could overlap, but high enough */
-  height: 12vh; /* Match fetchly-header height */
+  z-index: 990; 
+  height: 12vh; 
   box-sizing: border-box;
 }
 
-.msg-info-header h1 { /* Title "Chat" */
+.msg-info-header h1 { 
   margin: 0;
-  font-size: 20px; /* Adjust as needed */
+  font-size: 20px; 
   font-weight: bold;
   color: #333;
   text-align: center;
-  /* flex-grow: 1; Removed as buttons are absolutely positioned */
+  
 }
 
 .msg-info-header button:first-of-type {
   position: absolute;
-  left: 4vh; /* Consistent with fetchly-header icon positioning */
+  left: 4vh; 
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  font-size: 24px; /* Adjust for arrow size */
-  font-weight: normal; /* Or bold if preferred */
+  font-size: 24px; 
+  font-weight: normal; 
   color: #333;
   cursor: pointer;
-  padding: 5px 10px; /* Clickable area */
+  padding: 5px 10px; 
 }
 
 
 .msg-info-header button:last-of-type {
   position: absolute;
-  right: 4vh; /* Consistent positioning */
+  right: 4vh; 
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  font-size: 24px; /* Adjust emoji/icon size */
-  color: #333; /* Or a specific color like red for delete */
+  font-size: 24px; 
+  color: #333; 
   cursor: pointer;
-  padding: 5px; /* Clickable area */
+  padding: 5px; 
 }
 
 
@@ -875,7 +877,7 @@
 }
 
 .gc-editing-container input[type="text"]::placeholder {
-  color: #333; /* Placeholder color same as text */
+  color: #333; 
   opacity: 1; 
 }
 
@@ -928,14 +930,14 @@
 }
 
 .msg-user-photo-container {
-  width: 40px;      /* Match profile photo size */
+  width: 40px;      
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #eee; /* Optional: placeholder bg */
+  background: #eee; 
 }
 
 .msg-user-photo-container img {
@@ -947,7 +949,7 @@
 }
 
 .msg-info-user-card:last-child {
-  border-bottom: none; /* No border for the last user in the list */
+  border-bottom: none; 
 }
 
 .msg-info-user-card::before {
@@ -957,22 +959,22 @@
   color: #888;
 }
 .msg-info-user-card-photo {
-  width: 36px; /* Optimal size for chat user avatars */
+  width: 36px; 
   height: 36px;
-  border-radius: 50%; /* Ensures a circular shape */
-  object-fit: cover; /* Maintains aspect ratio and fills the container */
-  margin-right: 8px; /* Slightly smaller margin for better spacing */
-  border: 1px solid #e0e0e0; /* Optional: Light border for better visibility */
+  border-radius: 50%; 
+  object-fit: cover; 
+  margin-right: 8px; 
+  border: 1px solid #e0e0e0; 
 }
 
-/* If there's no group chat editing container, adjust margin for the user list */
+
 .msg-info-container > .user-list-wrapper:first-child {
-  margin-top: 30px; /* If the group editing section is hidden, give space */
+  margin-top: 30px; 
 }
 
 /* Viewing Meetup Post Page */
 
-.meetup-details-container { /* Assuming this will be the containerClass prop for PostDetails */
+.meetup-details-container { 
   background-color: #fff;
   border-radius: 0px 0px 8px 8px;
   border-color: #eee;
@@ -980,12 +982,12 @@
   padding: 15px;
   margin-bottom: 20px;
   width: 100%;
-  max-width: 500px; /* Adjust as needed for width */
+  max-width: 500px; 
   box-sizing: border-box;
 }
 
-/* User Info (Avatar and Username) */
-.meetup-user-info-row { /* Add this class to a div wrapping user avi and username in PostDetails */
+
+.meetup-user-info-row { 
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1017,7 +1019,7 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 10px;
-  border: 1px solid #eee; /* Light border for avatars */
+  border: 1px solid #eee; 
 }
 
 .meetup-post-username {
@@ -1026,8 +1028,8 @@
 }
 
 /* RSVP Button in PostDetails */
-.rsvp-btn { /* Targeting the RSVP button in meetup */
-  background-color: #007bff; /* Blue button */
+.rsvp-btn { 
+  background-color: var(--primary-color); 
   color: white;
   border: none;
   border-radius: 5px;
@@ -1076,8 +1078,8 @@
   margin: 0;
   max-width: 100%;
   height: auto;
-  object-fit: contain;     /* Or remove if you want natural aspect ratio */
-  border-radius: 8px; /* Apply border-radius to the image itself if not fully contained */
+  object-fit: contain;     
+  border-radius: 8px; 
 }
 
 /* Post Details - Dates, Time, Location */
@@ -1102,7 +1104,7 @@
 
 
 /* --- Comments Component Styles --- */
-.comments-section-wrapper { /* Add a wrapper div around Comments component for full width */
+.comments-section-wrapper { 
   width: 100vw;
   box-sizing: border-box;
   min-height: 70vh;
@@ -1119,7 +1121,7 @@
   box-sizing: border-box;
   padding-bottom: 15px;
   border-bottom: 1px solid #eee; 
-  background-color: #fff; /* Light background for comment bubble */
+  background-color: #fff; 
 }
 
 .comment-container:nth-last-child {
@@ -1133,7 +1135,7 @@
 }
 
 .comment-img {
-  flex-shrink: 0; /* Prevent avatar from shrinking */
+  flex-shrink: 0; 
   width: fit-content;
   padding-left: 3%;
 }
@@ -1145,20 +1147,20 @@
 }
 
 .comment-content {
-  flex-grow: 1; /* Allow content to take available space */
+  flex-grow: 1; 
   padding: 10px 12px;
   position: relative;
-  word-break: break-word; /* Ensure long words wrap */
+  word-break: break-word; 
 }
 
-.comment-content div:first-of-type { /* Username */
+.comment-content div:first-of-type { 
   font-weight: bold;
   color: #333;
   margin-right: 5px;
   margin-bottom: 5px;
 }
 
-.comment-content div:nth-of-type(2) { /* Comment text */
+.comment-content div:nth-of-type(2) { 
   color: #555;
   font-size: 0.95em;
 }
@@ -1166,7 +1168,7 @@
 .comment-icon-row {
   display: flex;
   margin-top: 5px;
-  gap: 20px; /* Space between buttons */
+  gap: 20px; 
 }
 
 .comment-likes-container,
@@ -1177,7 +1179,7 @@
 }
 
 .comment-likes-container button,
-.comment-replies-container button { /* Adjust this selector if ButtonBubble renders something else */
+.comment-replies-container button { 
   background: none;
   border: none;
   color: #777;
@@ -1189,7 +1191,7 @@
 }
 
 .comment-likes-container img,
-.comment-replies-container img { /* Adjust this selector if ButtonBubble renders something else */
+.comment-replies-container img { 
   width: .85em;
   height: .85em;
   margin-right: 5px
@@ -1242,7 +1244,7 @@
 
 /* --- Goinglist Component Styles --- */
 .going-list-container {
-  list-style: none; /* Remove bullet points */
+  list-style: none; 
   padding: 0;
   margin: 0;
   background-color: #fff;
@@ -1257,11 +1259,11 @@
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  border-bottom: 1px solid #eee; /* Separator between users */
+  border-bottom: 1px solid #eee; 
 }
 
 .going-user-card:last-child {
-  border-bottom: none; /* No border for the last item */
+  border-bottom: none; 
 }
 
 .going-user-card img {
@@ -1302,7 +1304,7 @@
 }
 
 .tab-switcher button.active {
-  color: #007bff; /* Active tab color */
+  color: #007bff; 
 }
 
 .tab-switcher button.active::after {
@@ -1312,7 +1314,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: #007bff; /* Active tab underline */
+  background-color: #007bff; 
 }
 
 /* home page feed */
@@ -1325,13 +1327,15 @@
 
 .post-feed-container {
     display: flex;
-    flex-wrap: wrap;
-    padding: 10px 0px;
-    padding-top: 12vh;
-    justify-content: center;
-    height: 94vh;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* padding: 10px 0px;
+    padding-top: 12vh; */
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* height: 94vh;
     overflow: hidden;
-    overflow-y: auto;
+    overflow-y: auto; */
 }
 
 /* Ensure this CSS is loaded by your component */
@@ -1340,9 +1344,9 @@
 .post-card { 
   background-color: #ffffff;
   border-bottom: 1px solid #dbdbdb;
-  padding: 16px; /* Uniform padding around the card */
+  padding: 16px; 
   color: #262626;
-  position: relative; /* ESSENTIAL: For absolute positioning of the date */
+  position: relative; 
   width: 100%;
 }
 
@@ -1355,15 +1359,15 @@
      but it still groups the avatar and username. */
 }
 
-.post-user-info > img { /* User Avatar */
-  width: 36px; /* Slightly larger for visual balance if date is far */
+.post-user-info > img { 
+  width: 36px; 
   height: 36px;
   border-radius: 50%;
   margin-right: 12px;
   object-fit: cover;
 }
 
-.post-user-info > p { /* Username */
+.post-user-info > p { 
   font-weight: 600;
   font-size: 14px;
   color: #262626;
@@ -1375,15 +1379,15 @@
 /* Date Container - Positioned at the top-right of the .post-card */
 .post-date-container {
   position: absolute;
-  top: 16px; /* Should match the .post-card's top padding */
-  right: 16px; /* Should match the .post-card's right padding */
+  top: 16px; 
+  right: 16px; 
   display: flex;
   align-items: center;
   font-size: 12px;
   color: #8e8e8e;
 }
 
-.post-date-container img { /* Calendar icon */
+.post-date-container img { 
   width: 12px;
   height: 12px;
   margin-right: 5px;
@@ -1398,20 +1402,10 @@
   color: #8e8e8e;
 }
 
-/* Post Content Paragraph */
-/* This targets the <p>{postItem.postContent}</p> */
-/* It's the second <p> overall inside .post-card if username is <p> and first child of post-user-info*/
-/* A more robust way is to add a class to this <p> like className="post-body-content" */
-.post-card > p:not(:first-child):not(.post-user-info p):not(.post-date-container p):not(.post-likes-container p):not(.post-comments-container p) {
-  font-size: 14px;
-  line-height: 1.45;
-  color: #262626;
-  margin-top: 8px; /* Space below user info */
-  margin-bottom: 12px; /* Space above images or details row */
-  padding-right: 50px; /* Add some padding so text doesn't overlap with a long date string if the card is narrow */
-}
-/* If you add a class e.g. <p className="post-text-content">{postItem.postContent}</p> use this: */
-/*
+
+
+
+
 .post-text-content {
   font-size: 14px;
   line-height: 1.45;
@@ -1420,27 +1414,25 @@
   margin-bottom: 12px;
   padding-right: 50px;
 }
-*/
 
 
-/* Post Image(s) - Assuming images are direct children of .post-card after the content <p> */
+
+
 .post-card > img:not(.post-user-info img):not(.post-date-container img):not(.post-likes-container img):not(.post-comments-container img) {
   display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 4px; /* Optional: rounded corners for images */
-  margin-top: 8px; /* Space between multiple images or content and image */
-  margin-bottom: 12px; /* Space below image(s) before details row */
+  border-radius: 4px; 
+  margin-top: 8px; 
+  margin-bottom: 12px; 
 }
 
 /* Post Details Row (Likes and Comments) */
 .post-details-row {
   display: flex;
   align-items: center;
-  gap: 20px; /* Space between the "likes" group and "comments" group */
+  gap: 20px; 
   margin-top: 10px;
-  /* If you want this row indented (e.g. to align with text content if text content is indented):
-  padding-left: 48px; /* (Avatar 36px + margin 12px) */
 }
 
 .post-likes-container,
@@ -1449,60 +1441,58 @@
   align-items: center;
 }
 
-.post-likes-container img, /* Heart icon */
-.post-comments-container img { /* Chat icon */
-  width: 18px; /* Adjust icon size as needed */
+.post-likes-container img, 
+.post-comments-container img { 
+  width: 18px; 
   height: 18px;
   margin-right: 6px;
-  /* Example SVG coloring if needed:
-  filter: invert(10%) sepia(0%) saturate(7498%) hue-rotate(26deg) brightness(99%) contrast(90%); for #262626
-  */
+
 }
 
 .post-likes-container p,
 .post-comments-container p {
   margin: 0;
   font-size: 14px;
-  font-weight: 500; /* Slightly bolder for counts */
+  font-weight: 500; 
   color: #262626;
 }
 
-/* post details */
+
 
 .post-details-container {
   padding: 15px;
-  color: #262626; /* Default text color */
-  background-color: #fff; /* Assuming a white background for the post area */
-  border-bottom: 1px solid #efefef; /* Separator if this is part of a list */
+  color: #262626; 
+  background-color: #fff; 
+  border-bottom: 1px solid #efefef; 
 }
 
 /* Top User Info Row */
 .post-user-info-row {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pushes date to the right */
-  padding: 10px 12px; /* Adjust padding as needed */
-  border-bottom: 1px solid #efefef; /* Separator line below the top bar */
+  justify-content: space-between; 
+  padding: 10px 12px; 
+  border-bottom: 1px solid #efefef; 
 }
 
-.post-user-info-row > button { /* Back button styling */
+.post-user-info-row > button { 
   background: none;
   border: none;
-  font-size: 22px; /* Adjust size of "<" */
+  font-size: 22px; 
   font-weight: bold;
   color: #262626;
   cursor: pointer;
-  padding: 5px 8px; /* Clickable area */
+  padding: 5px 8px; 
   margin-right: 8px;
 }
 
 .post-user-info-container {
   display: flex;
   align-items: center;
-  flex-grow: 1; /* Allows username to take available space if needed */
+  flex-grow: 1; 
 }
 
-.post-user-info-container img { /* User Avatar */
+.post-user-info-container img { 
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -1513,15 +1503,15 @@
 .post-user-info-container .post-username {
   font-weight: 600;
   font-size: 14px;
-  margin: 0; /* Remove default p margin */
+  margin: 0; 
 }
 
 .post-user-info-row .post-date-display {
   font-size: 12px;
-  color: #8e8e8e; /* Lighter grey for date */
-  margin: 0; /* Remove default p margin */
-  white-space: nowrap; /* Prevent date from wrapping */
-  margin-left: 10px; /* Ensure some space if username area grows */
+  color: #8e8e8e; 
+  margin: 0; 
+  white-space: nowrap; 
+  margin-left: 10px; 
 }
 
 /* Post Content Paragraph */
@@ -1529,7 +1519,7 @@
   font-size: 14px;
   line-height: 1.5;
   padding: 12px 16px;
-  margin: 0; /* Remove default p margin */
+  margin: 0; 
 }
 
 /* Image Container */
@@ -1540,10 +1530,10 @@
 /* Post Info Container (Comment and Like Counts) */
 .post-info-container {
   display: flex;
-  justify-content: space-between; /* Pushes likes to the right */
+  justify-content: space-between; 
   align-items: center;
   padding: 10px 16px;
-  border-top: 1px solid #efefef; /* Separator line as in image */
+  border-top: 1px solid #efefef; 
 }
 
 .post-comment-container,
@@ -1556,15 +1546,15 @@
 .post-comment-container p,
 .post-likes-container p {
   margin: 0;
-  font-weight: 600; /* Bold counts */
+  font-weight: 600; 
   color: #262626;
 }
 
-/* Styling for comment icon (icon after text, as per your TSX) */
-.post-comment-container img { /* Chat icon */
+
+.post-comment-container img { 
   width: 22px;
   height: 22px;
-  margin-left: 6px; /* Space between count and icon */
+  margin-left: 6px; 
 }
 /* If you move icon before text (like in image):
 .post-comment-container img {
@@ -1572,57 +1562,53 @@
 }
 */
 
-/* Likes container - Image shows a heart icon. You need to add it to your TSX. */
-.post-likes-container .like-icon { /* Add <img src={heartIcon} className="like-icon" /> in TSX */
+
+.post-likes-container .like-icon { 
   width: 22px;
   height: 22px;
-  margin-right: 6px; /* Assuming icon is before the like count */
-  /* You might need to style the heart icon's color, e.g., if it's an SVG or a specific image */
+  margin-right: 6px; 
+  
 }
 
-/* comment and replies page */
 
-/* Overall Page Container */
+
+
 .comment-page-container {
   display: flex;
   flex-direction: column;
-  height: fit-content; /* Or the height of its parent container */
+  height: fit-content; 
   background-color: #ffffff;
-  color: #1c1e21; /* Dark text color */
+  color: #1c1e21; 
 }
 
 
 
-/* Replies Box - This should be scrollable */
+
 .replies-box {
-  flex-grow: 1; /* Takes remaining space */
-  overflow-y: auto; /* Makes this area scrollable */
-  padding: 0 0 10px 0; /* Padding at the bottom of the scrollable list */
+  flex-grow: 1; 
+  overflow-y: auto; 
+  padding: 0 0 10px 0; 
   background-color: #ffffff;
 }
 
 .reply-container {
   padding: 12px 16px;
   padding-left: 40px;
-  border-bottom: 1px solid #efefef; /* Separator for replies */
-  display: flex; /* Using flex to align avatar and content */
-  align-items: flex-start; /* Align items to the top */
+  border-bottom: 1px solid #efefef; 
+  display: flex; 
+  align-items: flex-start; 
 }
 
 .reply-container:last-child {
   border-bottom: none;
 }
 
-/* .comment-row is already inside .reply-container and is also display:flex.
-   The structure is .reply-container -> .comment-row -> (.reply-img, .reply-content)
-   We can simplify by making .reply-container the flex container directly. */
-
 .reply-img {
   margin-right: 10px;
-  flex-shrink: 0; /* Prevent avatar from shrinking */
+  flex-shrink: 0; 
 }
 
-.reply-img img { /* Avatar for replies */
+.reply-img img { 
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -1632,21 +1618,21 @@
 .reply-content {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Takes remaining space */
+  flex-grow: 1; 
 }
 
-.reply-content > div:nth-child(1) { /* Reply username */
+.reply-content > div:nth-child(1) { 
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 2px;
 }
 
-.reply-content > div:nth-child(2) { /* Reply comment text */
+.reply-content > div:nth-child(2) { 
   font-size: 14px;
   line-height: 1.35;
   margin-bottom: 6px;
   color: #333333;
-  /* Ensure text wraps correctly */
+  
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
@@ -1654,42 +1640,42 @@
 .reply-icon-row {
   display: flex;
   align-items: center;
-  /* The image shows likes and comments on the same line here */
+  
 }
 
 .reply-likes-container {
   display: flex;
   align-items: center;
-  margin-right: 15px; /* Space if you add a comment count container next to it */
+  margin-right: 15px; 
 }
 
-.reply-likes-container img { /* Heart icon for replies */
+.reply-likes-container img { 
   width: 16px;
   height: 16px;
   margin-right: 4px;
 }
 
-.reply-likes-container button { /* Like count for replies */
+.reply-likes-container button { 
   background: none;
   border: none;
   padding: 0;
   font-size: 13px;
-  font-weight: normal; /* Image shows counts not as bold as username */
+  font-weight: normal; 
   color: #606770;
   cursor: pointer;
 }
 
 /* adoption details */
 
-/* Pet Image Container */
+
 .adoption-pet-image-container {
   width: 100%;
-  height: 300px; /* Adjust height as needed, or use aspect-ratio */
-  background-color: #e0e0e0; /* Placeholder background if no image */
+  height: 300px; 
+  background-color: #e0e0e0; 
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Ensures image conforms to container */
+  overflow: hidden; 
   position: relative;
 }
 
@@ -1713,22 +1699,17 @@
 .adoption-pet-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cover the area, might crop */
-  /* If you want to show a placeholder icon like in the image:
-  object-fit: scale-down;
-  max-width: 80px;
-  max-height: 80px;
-  opacity: 0.5; */
+  object-fit: cover; 
 }
 
 /* Main Pet Info Card */
 .adoption-pet-main-card {
   background-color: #ffffff;
-  border-radius: 20px; /* Significant rounding */
+  border-radius: 20px; 
   padding: 20px;
-  margin: -40px 16px 16px 16px; /* Negative top margin to overlap image, side margins */
-  position: relative; /* For stacking context if needed */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  margin: -40px 16px 16px 16px; 
+  position: relative; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
 }
 
 .main-pet-card-row {
@@ -1738,23 +1719,23 @@
 }
 
 .main-pet-card-row p { /* Pet Name */
-  font-size: 26px; /* Large font for name */
+  font-size: 26px; 
   font-weight: 700;
   color: #1c1e21;
   margin: 0;
   margin-right: 8px;
 }
 
-.main-pet-card-row img { /* Gender Icon */
-  width: 22px; /* Adjust size */
+.main-pet-card-row img { 
+  width: 22px; 
   height: 22px;
 }
 
 .secondary-pet-card-row {
   display: flex;
-  justify-content: center; /* Distribute items */
+  justify-content: center; 
   align-items: center;
-  gap: 30px; /* Gap between items */
+  gap: 30px; 
 }
 
 .adoption-location,
@@ -1763,7 +1744,7 @@
   display: flex;
   align-items: center;
   font-size: 13px;
-  color: #555555; /* Slightly lighter text for secondary info */
+  color: #555555; 
 }
 
 .adoption-location {
@@ -1778,12 +1759,10 @@
   margin: 0
 }
 
-.secondary-pet-card-row img { /* Icons in secondary row */
+.secondary-pet-card-row img { 
   width: 16px;
   height: 16px;
   margin-right: 6px;
-  /* Consider filter for consistent icon color if they are different
-     e.g., filter: grayscale(50%) opacity(0.7); */
 }
 
 .secondary-pet-card-row p {
@@ -1795,14 +1774,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px; /* Match card horizontal padding */
-  background-color: #ffffff; /* Could be part of a larger white block or a new card */
-  /* If it's a new card that's not .adoption-pet-main-card:
-  margin: 0 16px 16px 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  */
-  border-bottom: 1px solid #f0f2f5; /* Light separator if not the last element in a card */
+  padding: 16px 20px; 
+  background-color: #ffffff; 
+  border-bottom: 1px solid #f0f2f5; 
 }
 
 .main-org-info {
@@ -1810,7 +1784,7 @@
   align-items: center;
 }
 
-.main-org-info img { /* Organization Avatar */
+.main-org-info img { 
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1818,7 +1792,7 @@
   object-fit: cover;
 }
 
-.main-org-info p { /* Organization Name */
+.main-org-info p { 
   font-size: 15px;
   font-weight: 500;
   color: #333333;
@@ -1830,13 +1804,13 @@
   border: none;
   cursor: pointer;
   padding: 6px;
-  margin-left: 8px; /* Space between contact icons */
+  margin-left: 8px; 
 }
 
-.org-contact-info button img { /* Contact Icons (mail, call) */
+.org-contact-info button img { 
   width: 22px;
   height: 22px;
-  /* Consider filter for consistent icon color */
+  
 }
 
 .reveal-container {
@@ -1844,41 +1818,41 @@
   display: flex;
   justify-content: flex-end;
 }
-/* Conditional Contact Info Display */
-.contact-reveal { /* A bit generic, better to wrap isCallOpen/isEmailOpen content in a div with a class */
+
+.contact-reveal { 
   font-size: 14px;
   padding-right: 2vw;
-  background-color: #ffffff; /* Assuming it continues the white block */
-  color: #007bff; /* Link-like color for contact info */
+  background-color: #ffffff; 
+  color: #007bff; 
 }
 
 /* Pet Description */
 
 
-.adoption-description-container > p { /* Targets the main adoption.description paragraph */
+.adoption-description-container > p { 
   font-size: 14px;
   line-height: 1.6;
   color: #333333;
   padding: 16px 20px;
   margin: 0;
-  background-color: #ffffff; /* Assuming it continues the white block */
+  background-color: #ffffff; 
 }
 
 /* More Pet Details Container */
 .more-pet-details-container {
   padding: 10px 20px 20px 20px;
-  background-color: #ffffff; /* Assuming it continues the white block */
-  border-top: 1px solid #f0f2f5; /* Separator if description is above */
+  background-color: #ffffff; 
+  border-top: 1px solid #f0f2f5; 
 }
 
 .more-pet-details-container p {
   font-size: 14px;
   color: #444444;
-  margin: 0 0 8px 0; /* Space between each detail line */
-  display: flex; /* To potentially style label and value differently if TSX changes */
+  margin: 0 0 8px 0; 
+  display: flex; 
 }
 
-/* Example to make "Breed:", "Fixed:" labels slightly distinct if you split them in TSX */
+
 .more-pet-details-container p .detail-label {
   font-weight: 500;
   color: #1c1e21;
@@ -1888,12 +1862,11 @@
   color: #555555;
 }
 
-/* new message form */
+
 
 .msg-creation-container {
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
   margin-top: 20px;
   background: #fafafa;
   border-radius: 8px;
@@ -1931,8 +1904,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px; /* Adjust as needed */
-  margin-bottom: 20px; /* Adjust as needed */
+  margin-top: 20px; 
+  margin-bottom: 20px; 
 }
 
 .gc-creating-container input {
@@ -1941,7 +1914,7 @@
   text-align: center;
   padding: 5px 10px;
   outline: none;
-  width: auto; /* Adjust width as needed */
+  width: auto; 
 }
 
 .gc-creating-container p {
@@ -1954,13 +1927,13 @@
 }
 
 .add-user-header {
-  font-size: 18px; /* Match "People" style */
+  font-size: 18px; 
   font-weight: 600;
-  margin-top: 25px; /* Adjust spacing */
-  margin-bottom: 10px; /* Adjust spacing */
-  color: #333; /* Match "People" color */
-  padding-left: 20px; /* Align with the content inside the white box */
-  align-self: flex-start; /* Align text to the left */
+  margin-top: 25px;
+  margin-bottom: 10px; 
+  color: #333; 
+  padding-left: 20px; 
+  align-self: flex-start; 
 }
 
 .add-user-list-wrapper {
@@ -1969,7 +1942,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   max-height: 100%;
-  display: flex; /* Make it a flex container */
+  display: flex;
   flex-direction: column;
   overflow: hidden;
 }
@@ -1982,7 +1955,7 @@
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  border-bottom: 1px solid #eee; /* Separator line */
+  border-bottom: 1px solid #eee; 
 }
 
 .user-search-bar button {
@@ -1991,8 +1964,8 @@
   padding: 0;
   margin-right: 10px;
   cursor: pointer;
-  color: #888; /* Light gray for the icon */
-  font-size: 20px; /* Adjust icon size */
+  color: #888;
+  font-size: 20px;
 }
 
 .user-search-bar input {
@@ -2005,7 +1978,7 @@
 .mutual-user-row {
   display: flex;
   align-items: center;
-  padding: 12px 20px; /* Adjust padding inside the white box */
+  padding: 12px 20px;
   border-bottom: 1px solid #eee;
 }
 
@@ -2014,11 +1987,11 @@
 }
 
 .mutual-user-row img {
-  width: 30px; /* Adjust avatar size */
-  height: 30px; /* Adjust avatar size */
+  width: 30px;
+  height: 30px; 
   border-radius: 50%;
   margin-right: 15px;
-  background-color: #ddd; /* Placeholder */
+  background-color: #ddd;
 }
 
 .mutual-user-row .msg-create-user-card {
@@ -2042,29 +2015,29 @@
 }
 
 .mutual-user-row button.selected {
-  background-color: #4CAF50;
-  border-color: #4CAF50;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: white;
 }
 
 .chat-create-btn {
-  background-color: black;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 5px;
   padding: 15px 0;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  width: calc(100% - 40px); /* Adjust width for margin */
-  margin: 20px 20px 0px 20px; /* Add margin */
+  width: calc(100% - 40px);
+  margin: 20px 20px 0px 20px;
 }
 
 .chat-create-btn:hover {
   opacity: 0.9;
 } 
 
-/* image carousel */
+
 
 .carousel-container {
   width: 100%; 
@@ -2147,41 +2120,43 @@
   left: 0;
   width: 100%;
   z-index: 1000; 
-  height: 12vh; /* Example height, adjust as needed */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  height: 12vh; 
+  box-sizing: border-box; 
 }
 
-.fetchly-header a[href="/profile"] { /* Targeting the Link component for the profile icon */
-  position: absolute; /* Position icon relative to the header */
-  left: 4vh; /* Distance from the left edge */
+.fetchly-header a[href="/profile"] { 
+  position: absolute; 
+  left: 4vh;
   top: 50%;
-  transform: translateY(-50%); /* Vertically center the icon */
-  display: flex; /* To ensure the img inside behaves well */
+  transform: translateY(-50%);
+  display: flex; 
   align-items: center;
 }
 
 .fetchly-header a[href="/profile"] img {
-  width: 5vh; /* Adjust size of the profile icon as needed */
-  height: 5vh; /* Adjust size of the profile icon as needed */
-  display: block; /* Remove extra space below the image */
+  width: 5vh;
+  height: 5vh; 
+  display: block; 
 }
 
 .fetchly-header a[href="/"] {
-  margin: 0; /* Remove default h1 margin */
-  font-size: 22px; /* Adjust font size as desired, though you said to ignore font */
-  font-weight: bold; /* Or your desired font weight */
-  color: #333; /* Text color */
-  /* The justify-content: center on .fetchly-header will center this */
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold; 
+  color: #333;
+ 
 }
 
 /* New meetup form */
 
+
+
 .new-meetup-form {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Space between form sections */
-  max-width: 400px; /* Or your preferred max width */
-  margin: 20px auto; /* Centering the form on the page */
+  gap: 20px;
+  max-width: 400px;
+  margin: 20px auto;
   padding: 20px;
   background: #fafafa;
   border-radius: 8px;
@@ -2189,16 +2164,16 @@
 }
 
 /* Styling for the ImageUpload placeholder area */
-.image-upload-placeholder { /* Add this class to a div wrapping your ImageUpload if you want a visual placeholder like the image */
+.image-upload-placeholder { 
   width: 100%;
-  height: 200px; /* Adjust as needed */
+  height: 200px; 
   background-color: #eeeeee;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px dashed #ccc;
   border-radius: 4px;
-  margin-bottom: 10px; /* Space below the placeholder */
+  margin-bottom: 10px;
   text-align: center;
   color: #757575;
 }
@@ -2206,7 +2181,7 @@
 .new-meetup-form div {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Space between label and input */
+  gap: 5px; 
 }
 
 .new-meetup-form label {
@@ -2222,13 +2197,13 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+  box-sizing: border-box; 
   font-size: 1rem;
 }
 
 .new-meetup-form textarea {
-  min-height: 100px; /* Adjust as needed for description */
-  resize: vertical; /* Allows users to resize vertically */
+  min-height: 100px;
+  resize: vertical; 
 }
 
 .new-meetup-form input::placeholder,
@@ -2236,25 +2211,20 @@
   color: #aaa;
 }
 
-/* Specific styling for the time section if you want AM/PM buttons inline */
-.new-meetup-time {
-  /* No change needed if AM/PM buttons are meant to be on new lines.
-     If they should be somewhat inline with the input, more complex flex/grid would be needed here.
-     For simplicity, this CSS assumes they can be block elements or you handle their layout separately if inline. */
-}
+
 
 .new-meetup-time input[type="text"] {
-  margin-bottom: 5px; /* Space before AM/PM buttons if they are below */
+  margin-bottom: 5px;
 }
 
 .new-meetup-time button {
+  background-color: #f79d66;
+  color: white;
+  border: none;
   padding: 8px 12px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-right: 5px; /* Space between AM and PM buttons */
-  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
 }
 
 .new-meetup-time button:last-child {
@@ -2262,12 +2232,13 @@
 }
 
 .new-meetup-time button:hover {
-  background-color: #e0e0e0;
+  background-color: var(--primary-color);
 }
 
 
+
 .post-meetup-btn {
-  background-color: #333; /* Dark background like the image */
+  background-color: var(--primary-color);
   color: white;
   padding: 12px 20px;
   border: none;
@@ -2276,34 +2247,13 @@
   font-size: 1.1rem;
   font-weight: bold;
   text-align: center;
-  width: 100%; /* Make button full width of its container */
-  margin-top: 10px; /* Space above the button */
+  width: 100%; 
+  margin-top: 10px;
 }
 
 .post-meetup-btn:hover {
-  background-color: #555; /* Slightly lighter on hover */
+  background-color: #555; 
 }
-
-/* 
-  To use the .image-upload-placeholder style, you might adjust your TSX:
-
-  <div className="image-upload-placeholder">
-    Image Upload (Button)
-    <ImageUpload
-      onImageSelect={(file) => {
-        console.log('Selected Image', file)
-      }}
-      previewImage={previewImage}
-      setPreviewImage={setPreviewImage}
-    />
-  </div>
-
-  Or, if ImageUpload itself is just a button and you want a visual area above/around it:
-
-  <div className="image-upload-placeholder">
-     Simulated Image Area (Icon would go here)
-  </div>
-  <ImageUpload ... /> /* Your actual button for uploading */
  
   .image-preview {
     max-width: 30vw;
@@ -2312,4 +2262,1163 @@
     margin: 0 auto
   }
 
-  /* New message form */
+
+/* svg files */
+.bone-icon {
+  width: 60px;
+  height: 60px;
+  fill: var(--primary-color);
+  transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+.paw-love {
+  fill: black;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+}
+
+.paw-love path {
+  stroke-width: 2;
+}
+
+
+/* misha temp */
+
+.post-user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-user-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ----------------------- */
+/* Window Modal CSS Styles */
+/* ----------------------- */
+
+/* Modal overlay fills viewport and centers modal */
+.window-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;  
+  align-items: center;     
+
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000; 
+}
+
+/* Modal content box */
+.window-modal {
+  max-width: 600px;
+  width: 90vw;
+  max-height: 70vh; 
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 1.5rem 2rem; 
+  box-sizing: border-box;
+  background: #fff; 
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Buttons container */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  position: static; 
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* Cancel button */
+.close-button {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Confirm button */
+.yes-button {
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.yes-button:hover {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color)
+}
+
+/* ---------------------------- */
+/* New Adoption Post CSS Styles */
+/* ---------------------------- */
+
+.adoption-post-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.adoption-post-form label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.adoption-post-form input[type="text"],
+.adoption-post-form select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.adoption-post-form input[type="text"]:focus,
+.adoption-post-form select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.adoption-pet-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.new-pet-toggle {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.new-pet-toggle:hover {
+  background-color: #0056b3;
+}
+
+.adoption-post-form button[type="submit"] {
+  margin-top: .5rem;
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.adoption-post-form button[type="submit"]:hover {
+  background-color: var(--primary-color);
+}
+
+/* ----------------------- */
+/* New Pet Post CSS Styles */
+/* ----------------------- */
+
+/* Container for the entire form */
+.new-pet-form {
+  max-width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 0 auto;
+  padding: 20px 25px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 580px; 
+  min-width: 320px;   
+}
+
+/* Labels */
+.new-pet-form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  color: #333;
+}
+
+/* Text inputs and select */
+.new-pet-form input[type="text"],
+.new-pet-form select,
+.new-pet-form textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.new-pet-form input[type="text"]:focus,
+.new-pet-form select:focus,
+.new-pet-form textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Textarea specifically */
+.new-pet-form textarea {
+  min-height: 100px;
+}
+
+/* Grouped buttons style */
+.new-pet-petType-button,
+.new-pet-gender-button,
+.new-pet-size-button,
+.new-pet-neutered-button {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+/* Buttons inside groups */
+.new-pet-petType-button button,
+.new-pet-gender-button button,
+.new-pet-size-button button,
+.new-pet-neutered-button button {
+  background-color: var(--unselected);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.new-pet-petType-button button:hover,
+.new-pet-gender-button button:hover,
+.new-pet-size-button button:hover,
+.new-pet-neutered-button button:hover {
+  background-color: #ffffff;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color)
+}
+
+/* Active button style */
+.new-pet-petType-button button.active,
+.new-pet-gender-button button.active,
+.new-pet-size-button button.active,
+.new-pet-neutered-button button.active {
+  background-color: var(--primary-color);
+  color: white;
+  border: 1px solid var(--primary-color)
+}
+
+/* Age input specifically: smaller width */
+.new-pet-age-button input[type="text"] {
+  max-width: 100px;
+}
+
+/* Error container */
+.form-errors {
+  background-color: #ffe6e6;
+  border: 1.5px solid #d9534f;
+  border-radius: 6px;
+  padding: 10px 15px;
+  color: #a94442;
+  margin-bottom: 1rem;
+}
+
+.form-errors ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.form-errors li {
+  margin-bottom: 5px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .new-pet-petType-button button,
+  .new-pet-gender-button button,
+  .new-pet-size-button button,
+  .new-pet-neutered-button button {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
+
+/*---------------------------------------*/
+/*-----------New Post CSS -----------*/
+/*---------------------------------------*/
+
+.select-bar:hover {
+  border-color: var(--primary-color);
+}
+
+
+.uploaded-images-preview {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.uploaded-image-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.post-creator-container {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-input-wrapper {
+  margin-bottom: 1rem;
+}
+
+.post-textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.post-textarea:focus {
+  border-color: #007bff;
+}
+
+.post-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.media-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.image-button,
+.camera-button,
+.at-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  border: none;
+
+}
+
+.image-button:hover,
+.camera-button:hover,
+.at-button:hover {
+  background: #e0e0e0;
+}
+
+.submit-post-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+}
+
+.submit-post-button:hover {
+  background: #0056b3;
+}
+
+.error-message,
+.loading-message,
+.upload-success-message {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  color: #d9534f;
+}
+
+.upload-success-message {
+  color: #28a745;
+}
+
+.uploaded-images-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.uploaded-image-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+
+/*------------------Post CSS --------------*/
+.post-image {
+  max-width: 25%;       
+  height: auto;         
+  border-radius: 8px;  
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+  margin: 12px 0;        
+  object-fit: cover;     
+  display: block;         
+}
+
+.post-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+
+}
+
+.post-modal-content {
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.post-modal-close-button {
+  position: absolute;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.post-form-dropdown {
+  margin-top: 6vh;
+}
+
+
+/* sammi temp */
+
+:root {
+  --grey: #EEEEEE;
+}
+
+.main-button {
+  width: 100%;
+  height: 3rem;
+  border-radius: 8px;
+} 
+
+.btn-form{
+  margin-top: 7.5%;
+}
+
+.btn-fill{
+  color: white;
+  background-color: black;
+}
+
+.btn-line {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border-style: solid;
+  border-width: 0.175rem;
+}
+
+/************* FORM CSS *****************/
+.form-ctn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 90%;
+  gap: 1rem; 
+  margin: 0 auto;
+  padding-top: 5%;
+}
+
+.form-input {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 4px;
+} 
+
+.form-switch-ctn {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 auto 30%;
+  padding-top: 10%;
+  gap: 2.5%;
+}
+
+.form-switch-text {
+  color: var(--grey);
+}
+
+.signup-btn-cnt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+  gap: 5%;
+  padding-top: 15%;
+}
+
+.signup-btn {
+  border-radius: 33px;
+  height: 2.25rem;
+}
+
+.form-title-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  margin: 25% auto;
+}
+
+
+/************* COMMENT CSS *****************/
+
+
+
+
+
+
+
+/************* PROFILE CSS *****************/
+.profile-background{
+  background-color: var(--grey);
+}
+
+.profile-ctn{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10% 10%;
+  row-gap: 1rem;
+  margin-top: 70px;
+}
+
+.profile-item-ctn{
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  
+}
+
+.profile-btn-ctn {
+  display: flex;
+  flex-direction: row;
+  width: 10%;
+  flex: 42;
+  justify-content: end;
+}
+
+.profile-user-title{
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+}
+
+.profile-bio-ctn{
+  width: 90%;
+  overflow-wrap: break-word;
+}
+
+.profile-pet-ctn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5%;
+}
+
+.profile-user-img{
+  width: 20%;
+}
+.profile-user-img-a {
+    width: 20%;
+}
+.profile-pet-img {
+  width: 36px;  
+  height: 36px;  
+  border-radius: 50%; 
+  object-fit: cover; 
+  background-color: #f0f0f0;
+}
+
+.profile-lg-fnt{
+  font-size: 20px;
+}
+
+.profile-md-fnt, h1{
+  font-size: 16px;
+}
+
+.profile-sm-fnt, p{
+  font-size: 14px;
+}
+
+.profile-feed-bg {
+  border-radius: 33px 33px 0px 0px;
+  background-color: white;
+  width: 100%;
+  height: 100vh;
+  margin-top: 5%;
+}
+
+/*************** MEETUP POPUP *****************/
+.prof-meet-ctn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 90px auto 0;
+  gap: 20px;
+}
+
+.prof-meet-sec-ctn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.prof-meet-title {
+  margin: 0 0 0 15px;
+}
+
+.prof-meet-warning {
+  justify-content: center;
+  margin: 0 auto;
+}
+
+
+/************* UPLOAD MEDIA CSS *****************/
+
+.upload-media-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border: 2px dashed #ccc;
+  border-radius: 1rem;
+  background-color: #fafafa;
+  transition: background-color 0.3s ease;
+  position: relative;
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.upload-media-container:hover {
+  background-color: #f0f0f0;
+}
+
+.upload-media-input {
+  width: 100%;
+  padding: 3rem;
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.upload-media-loading {
+  z-index: 1;
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.upload-media-image {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.upload-media-image:hover {
+  transform: scale(1.01);
+}
+
+.upload-media-cog {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  border-radius: 20%;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  transition: transform 0.2s ease;
+  width: 2rem;
+  height: 2rem;
+
+}
+
+.upload-media-cog:hover {
+  transform: rotate(90deg);
+}
+
+.upload-media-fail {
+  margin-top: 1rem;
+  color: #d9534f;
+  font-weight: 500;
+}
+
+/************************* PROFILE DETAILS ****************************/
+
+.prof-detail-container {
+  background-color: #ffffff;
+  border-radius: 25px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-bottom: 70px;
+}
+
+.prof-detail-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative; 
+}
+
+.prof-detail-back-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333;
+}
+
+.prof-detail-header h2 {
+  flex-grow: 1; 
+  text-align: center;
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.prof-detail-picture-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.profile-picture-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: #e0e0e0;
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-size: 40px;
+  border: 1px solid #ccc;
+}
+
+.prof-detail-form-section {
+  margin-bottom: 20px;
+}
+
+.prof-detail-form-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.prof-detail-form-section input,
+.prof-detail-form-section textarea {
+  width: calc(100% - 20px);
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.prof-detail-form-section textarea {
+  resize: vertical; 
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+.prof-detail-save-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #000000; 
+  color: #ffffff;
+  border: none;
+  border-radius: 15px; 
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.prof-detail-save-btn:hover {
+  background-color: #333333;
+}
+
+
+.button-bubble-small {
+  width: 3vh;
+  height: 3vh;
+  padding: 0;
+}
+.button-bubble-small img {
+  width: 70%;
+  height: 70%;
+}
+
+/* nav bar */
+
+.nav-bar {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f9fa; 
+  border-top-left-radius: 20px; 
+  border-top-right-radius: 20px; 
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.4); 
+  padding: 10px 0;
+  z-index: 1000; 
+  display: flex;
+  justify-content: center;
+  height: 9vh
+}
+
+.nav-links {
+  list-style: none;
+  display: flex; 
+  justify-content: space-around;
+  align-items: center; 
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.nav-links li {
+  flex-grow: 1; 
+  display: flex;
+  justify-content: center;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: black;
+  opacity: 50%; 
+  padding: 8px 12px; 
+  font-size: 24px; 
+  transition: color 0.3s ease;
+  width: fit-content;
+}
+
+.nav-link:hover {
+    opacity: 100%;
+}
+
+.nav-link.active {
+    opacity: 100%;
+}
+
+
+.nav-link img {
+  width: 28px; 
+  height: 28px;
+  object-fit: cover;
+}
+
+.loading-gif-container {
+  position: fixed;     
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.7);
+  z-index: 2000; 
+}
+
+/* post button css */
+
+.post-icon-button {
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid black;
+  padding: 0px;
+  margin: 5px;
+  cursor: pointer;
+  width: 7vh;
+  height: 7vh;
+  font-size: 3.5vh;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 12vh;
+  right: 5vw;
+  z-index: 100;
+}
+
+.icon-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* post dropdown */
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.dropdown-toggle {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 160px;
+  text-align: center;
+  width: 100%;
+}
+
+.dropdown-arrow {
+  float: right;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 4px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding-left: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px 16px;
+  cursor: pointer;
+  list-style: none;
+  padding-left: 0px;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+/* post modal */
+
+.post-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.post-modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+.post-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: fit-content;
+}
+
+/* temp button */
+
+.circle-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.icon-button {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.icon-button:hover {
+  background-color: #f0f0f0;
+}
+
+.icon-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

@@ -4,7 +4,7 @@
 // import React from "react";
 import { useLocation } from "react-router-dom";
 import { usePostModal } from "../Reusables/usePostModal";
-import "../../PostButton.css";
+import "../../main.css";
 
 
 const PostButton = () => {

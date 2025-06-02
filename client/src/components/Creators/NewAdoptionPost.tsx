@@ -5,7 +5,7 @@ import WindowModal from "../Reusables/WindowModal"; // assuming this exists
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { CREATE_ADOPTION } from "../../utils/mutations";
 import { QUERY_ORG } from "../../utils/queries";
-import "../../MishaTemp.css"
+import "../../main.css"
 
 interface NewAdoptionPostProps {
   onSubmit: (data: {

@@ -1,4 +1,4 @@
-import "../../SammiReusables.css";
+import "../../main.css";
 import { useEffect, useState, useMemo } from "react";
 import { QUERY_USER, QUERY_ORG, QUERY_PET} from '../../utils/queries';
 import { FOLLOW_AS_USER, UNFOLLOW_AS_USER, FOLLOW_AS_ORG, UNFOLLOW_AS_ORG } from '../../utils/mutations';
@@ -8,7 +8,7 @@ import { UserType } from "../../types/UserType";
 import { Pet }  from "../../types/PetTypes";
 import { format } from 'date-fns';
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-
+import runningDog from "../../images/Running dog.gif"
 type ProfileDetailsProps = {
   profileUserId: string;
   profileAccountType: string;
