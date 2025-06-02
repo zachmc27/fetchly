@@ -36,8 +36,12 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
     setLikesCount(post.likesCount || 0);
   }, [post, userId]);
 
-  const [likePost] = useMutation(LIKE_POST);
-  const [unlikePost] = useMutation(UNLIKE_POST);
+  const [likePost] = useMutation(LIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
+  const [unlikePost] = useMutation(UNLIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
 
   const handleLikeToggle = async () => {
     if (!post._id || !userId) {

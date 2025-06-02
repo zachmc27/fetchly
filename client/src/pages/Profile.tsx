@@ -113,7 +113,6 @@ export default function Profile() {
   }
 };
 
-
   /************* SHOWING CORRECT USER *****************/
   const userId = localStorage.getItem("userId");
   const orgId = localStorage.getItem("userId");
@@ -149,9 +148,18 @@ export default function Profile() {
 
   /************* Getting Meetup Data *****************/
   const { loading, error, data } = useQuery(QUERY_MEETUPS);
-  const meetups = data?.meetUps
+
+
+  const userMeetups = data?.meetUps
     ? [...data.meetUps]
-//        .filter(post => !post.isResponse)
+        .filter(meetUps => meetUps.poster.refId._id === userId)
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )
+    : [];
+  
+  const userRSVP = data?.meetUps
+    ? [...data.meetUps]
+        .filter(meetUps => meetUps.attendees.includes(userId))
         .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
       )
     : [];
@@ -167,6 +175,8 @@ export default function Profile() {
     : [];
 
   console.log("THESE ARE THE POSTS:", userPosts);
+
+  
 
 
   /************* RENDER PAGE *****************/
@@ -190,12 +200,14 @@ export default function Profile() {
 
     if (isMeetupsOpen && accountType !== "org") {
       return (
-       <MeetupDetails userMeetups={meetups} userRSVP={userData.user.meetUps}
+
+       <MeetupDetails userMeetups={userMeetups} userRSVP={userRSVP}
        onClose={() => {
           setIsMeetupsOpen(false);
           localStorage.setItem("isMeetupsOpen", "false");
           window.location.reload(); }}
        />
+
       )
     }
 
