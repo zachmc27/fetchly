@@ -556,13 +556,7 @@ case "meetup": {
                 <h1>{meetupItem.title}</h1>
                 <div className="meetup-location-container">
                   <img src={locationimg} alt="location pin" />
-                  <ul>
-                    <li>{meetupItem.location.address}</li>
-                    <li>{meetupItem.location.zip}</li>
-                    <li>{meetupItem.location.city}</li>
-                    <li>{meetupItem.location.state}</li>
-                    <li>{meetupItem.location.country}</li>
-                  </ul>
+                    <p>{meetupItem.location.address}, {meetupItem.location.city} {meetupItem.location.state}, {meetupItem.location.zip}</p> 
                 </div>
               </div>
               <button className="rsvp-btn" onClick={() => handleAttendMeetupToggle(meetupItem)}>RSVP</button>

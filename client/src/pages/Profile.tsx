@@ -172,7 +172,7 @@ export default function Profile() {
   const { loading, error, data } = useQuery(QUERY_MEETUPS);
   const meetups = data?.meetUps
     ? [...data.meetUps]
-        .filter(post => !post.isResponse)
+//        .filter(post => !post.isResponse)
         .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
       )
     : [];
