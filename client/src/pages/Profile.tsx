@@ -190,7 +190,12 @@ export default function Profile() {
 
     if (isMeetupsOpen && accountType !== "org") {
       return (
-       <MeetupDetails userMeetups={meetups} userRSVP={userData.user.meetUps}/>
+       <MeetupDetails userMeetups={meetups} userRSVP={userData.user.meetUps}
+       onClose={() => {
+          setIsMeetupsOpen(false);
+          localStorage.setItem("isMeetupsOpen", "false");
+          window.location.reload(); }}
+       />
       )
     }
 

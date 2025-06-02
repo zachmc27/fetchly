@@ -40,13 +40,24 @@ type Meetup = {
 interface MeetupDetailsProps {
   userMeetups: Meetup[];
   userRSVP: Meetup[]; 
+  onClose: () => void;
 }
 
-export default function MeetupDetails({ userMeetups, userRSVP }: MeetupDetailsProps) {
+export default function MeetupDetails({ userMeetups, userRSVP, onClose }: MeetupDetailsProps) {
+
+  function handleClose() {
+    localStorage.setItem("isMeetupsOpen", "false");
+    if (onClose) onClose();
+  }
 
     return(
         <div className="prof-meet-ctn">
+          <div>
+            <button className="prof-meetup-back-btn" onClick={handleClose}>&lt;</button>
+          </div>
+          
             <div className="prof-meet-sec-ctn">
+              
                 <span className="profile-lg-fnt prof-meet-title ">Hosted Meetups</span>
                 {userMeetups && userMeetups.length > 0 ? (
                     <Feed 
