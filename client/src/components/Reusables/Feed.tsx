@@ -11,10 +11,11 @@ import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD
 import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import group from "../../images/group_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { AdoptionCard, PostCard } from "../../types/CardTypes"
+import { AdoptionCard, PostCard, MeetUpCard } from "../../types/CardTypes";
+import { format } from 'date-fns';
 
 // testing data, can be deleted after integrations implementation
-import { MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
+import { MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
@@ -43,7 +44,7 @@ import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 import { useAdoptionPost } from "../../contexts/AdoptionPostContext"
 
-type FeedItem = MockMessageCard | MockMeetupCard | AdoptionCard | PostCard;
+type FeedItem = MockMessageCard | MeetUpCard | AdoptionCard | PostCard;
 
 export default function Feed({
   initialFeedArray,
@@ -225,8 +226,8 @@ function handleCloseMessagePage() {
     }
   }, [location.pathname]);
 
-  function handleMeetupViewRender(meetupId: number) {
-    const meetupToOpen = mockMeetupPosts.find(post => post.id === meetupId);
+  function handleMeetupViewRender(meetupId: string) {
+    const meetupToOpen = mockMeetupPosts.find(post => post.id.toString() === meetupId);
 
     if (meetupToOpen) {
       console.log('Opening meetup for post:', meetupToOpen.title);
@@ -496,42 +497,65 @@ function handleCloseAdoptionPostView() {
           </div>
         );
         }
-      case "meetup": {
-        const meetupItem = item as MockMeetupCard
+case "meetup": {
+        const meetupItem = item as MeetUpCard;
         return (
-          <div key={index} className={itemStyle} onClick={() => handleMeetupViewRender(meetupItem.id)}>
-            <p className="post-user">{meetupItem.postUser}</p>
+          <div
+            key={index}
+            className={itemStyle}
+            onClick={() => handleMeetupViewRender(meetupItem._id.toString())}
+          >
+            <p className="post-user">{meetupItem.poster.refId.username}</p>
             <div className="meetup-info-row">
               <div className="meetup-image-container">
-                <img src={meetupItem.postImage} alt="cover image for the post" />
+                {/* <img src={meetupItem.postImage} alt="cover image for the post" /> */}
               </div>
               <div className="meetup-main-text">
-                <h1>{meetupItem.postTitle}</h1> 
+                <h1>{meetupItem.title}</h1>
                 <div className="meetup-location-container">
                   <img src={locationimg} alt="location pin" />
-                  <p>{meetupItem.postLocation}</p>  
-                </div> 
+                  <ul>
+                    <li>{meetupItem.location.address}</li>
+                    <li>{meetupItem.location.zip}</li>
+                    <li>{meetupItem.location.city}</li>
+                    <li>{meetupItem.location.state}</li>
+                    <li>{meetupItem.location.country}</li>
+                  </ul>
+                </div>
               </div>
-              <button className="rsvp-btn">RSVP</button>  
+              <button className="rsvp-btn">RSVP</button>
             </div>
             <div className="meetup-details-row">
               <div className="meetup-date">
-                <img src={calendar} alt="calendar icon" className="meetup-detail-icon"/>
-                <p>{meetupItem.postDate}</p>
+                <img
+                  src={calendar}
+                  alt="calendar icon"
+                  className="meetup-detail-icon"
+                />
+                <p>
+                  {format(new Date(Number(meetupItem.date)), "MMM d, yyyy")}
+                </p>
               </div>
               <div className="meetup-time">
-                <img src={clock} alt="clock icon" className="meetup-detail-icon"/>
-                <p>{meetupItem.meetupTime}</p>
+                <img
+                  src={clock}
+                  alt="clock icon"
+                  className="meetup-detail-icon"
+                />
+                <p>{meetupItem.time}</p>
               </div>
               <div className="rsvp-count">
-                <img src={group} alt="people icon" className="meetup-detail-icon"/>
-                <p>{meetupItem.postRSVPCount}</p>
+                <img
+                  src={group}
+                  alt="people icon"
+                  className="meetup-detail-icon"
+                />
+                <p>{meetupItem.numberOfAttendees}</p>
               </div>
             </div>
-           
           </div>
         );
-        }
+      }
 
       default:
         return null;
