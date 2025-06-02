@@ -8,7 +8,7 @@ import { UserType } from "../../types/UserType";
 import { Pet }  from "../../types/PetTypes";
 import { format } from 'date-fns';
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-import runningDog from "../../images/Running dog.gif"
+//import runningDog from "../../images/Running dog.gif"
 type ProfileDetailsProps = {
   profileUserId: string;
   profileAccountType: string;
