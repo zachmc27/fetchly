@@ -357,7 +357,7 @@ type Comment = {
   user: string;
   avatar?: string;
   comment: string;
-  likeCount: number;
+  likeCount?: number;
   postedTime: Date;
   replies?: Comment[];
   media?: { url: string }[];
@@ -370,7 +370,9 @@ function mapResponseToComment(res: {
     contentText: string;
     poster: {
       refId: {
-        avatar?: { url?: string };
+        avatar?: { 
+          url?: string 
+        };
         _id: string;
         username?: string;
         orgName?: string;
@@ -378,8 +380,8 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    likesCount?: number;
     responses?: []
-    
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
@@ -387,7 +389,7 @@ function mapResponseToComment(res: {
     user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
-    likeCount: 0,
+    likeCount: res.likesCount || 0,
     postedTime: new Date(),
     replies: [],
     media: [],

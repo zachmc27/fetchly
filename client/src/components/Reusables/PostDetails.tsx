@@ -72,8 +72,12 @@ export default function PostDetails({
     return 0;
   });
 
-  const [likePost] = useMutation(LIKE_POST);
-  const [unlikePost] = useMutation(UNLIKE_POST);
+  const [likePost] = useMutation(LIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
+  const [unlikePost] = useMutation(UNLIKE_POST, {
+    refetchQueries: ["Posts"],
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);

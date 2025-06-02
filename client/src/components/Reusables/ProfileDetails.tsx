@@ -61,10 +61,18 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
   }, [data, userId]);
 
   // Mutations
-  const [followAsUser] = useMutation(FOLLOW_AS_USER);
-  const [unfollowAsUser] = useMutation(UNFOLLOW_AS_USER);
-  const [followAsOrg] = useMutation(FOLLOW_AS_ORG);
-  const [unfollowAsOrg] = useMutation(UNFOLLOW_AS_ORG);
+  const [followAsUser] = useMutation(FOLLOW_AS_USER, {
+    refetchQueries: ["Users"],
+  });
+  const [unfollowAsUser] = useMutation(UNFOLLOW_AS_USER, {
+    refetchQueries: ["Users"],
+  });
+  const [followAsOrg] = useMutation(FOLLOW_AS_ORG, {
+    refetchQueries: ["Orgs"],
+  });
+  const [unfollowAsOrg] = useMutation(UNFOLLOW_AS_ORG, {
+    refetchQueries: ["Orgs"],
+  });
 
   const handleFollowToggle = async () => {
     if (!userId) return;
