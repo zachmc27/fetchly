@@ -1,6 +1,7 @@
 import Feed from "../Reusables/Feed";
 import { MeetUpCard } from "../../types/CardTypes"
 
+
 interface MeetupDetailsProps {
   userMeetups: MeetUpCard[];
   userRSVP: MeetUpCard[]; 
