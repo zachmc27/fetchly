@@ -41,6 +41,7 @@ import Goinglist from "../Meetup/Goinglist"
 import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
+import { useAdoptionPost } from "../../contexts/AdoptionPostContext"
 
 type FeedItem = MockMessageCard | MockMeetupCard | AdoptionCard | PostCard;
 
@@ -351,25 +352,43 @@ function mapResponseToComment(res: {
 // ----------------------------------------------------------------
 // --------------- ADOPTION PAGE TO POST VIEW LOGIC -------------------
 // ----------------------------------------------------------------
-const [activeAdoptionPost, setActiveAdoptionPost] = useState<AdoptionCard | null>(null); 
-const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
+// const [activeAdoptionPost, setActiveAdoptionPost] = useState<AdoptionCard | null>(null); 
+// const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false)
+const { isAdoptionPostOpen, setIsAdoptionPostOpen, activeAdoptionPost, setActiveAdoptionPost } = useAdoptionPost();
 
 useEffect(() => {
   const storedAdoptionId = localStorage.getItem("activeAdoptionId");
   if (storedAdoptionId && location.pathname === '/adoption') {
-    const storedAdoptionPost = initialFeedArray.find(
+    const storedAdoption = initialFeedArray.find(
       (post) => post.itemType === "adoption" && (post as AdoptionCard)._id === storedAdoptionId
-    ) as PostCard | undefined;
-    if (storedAdoptionPost) {
-      setActivePost(storedAdoptionPost);
-      setIsPostOpen(true);
+    ) as AdoptionCard | undefined;
+    if (storedAdoption) {
+      setActiveAdoptionPost(storedAdoption);
+      setIsAdoptionPostOpen(true);
     }
   }
 
   if (location.pathname !== "/adoption") {
-    localStorage.removeItem("activePostId");
+    localStorage.removeItem("activeAdoptionId");
   }
-}, [location.pathname, initialFeedArray]);
+}, [location.pathname, initialFeedArray, setActiveAdoptionPost, setIsAdoptionPostOpen]);
+
+// Inside a component that needs to listen directly, e.g., Feed.tsx or Adoption.tsx
+useEffect(() => {
+  const handleStorageChange = (event: StorageEvent) => {
+    if (event.key === "activeAdoptionId" && event.newValue === null) {
+      setActiveAdoptionPost(null);
+      setIsAdoptionPostOpen(false)
+      console.log("activeAdoptionId was removed from localStorage.");
+    }
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}, [setActiveAdoptionPost, setIsAdoptionPostOpen]);
 
 function handleAdoptionPostViewRender(adoptionId: string) {
 
