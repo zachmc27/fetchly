@@ -924,6 +924,7 @@ export const QUERY_MEETUPS = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       createdAt
       itemType
@@ -1026,6 +1027,7 @@ export const QUERY_MEETUP_COMMENTS = gql`
         uploadDate
         gridFsId
         tags
+        url
       }
       responses {
         _id

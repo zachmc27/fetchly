@@ -1,7 +1,6 @@
 import Feed from "../Reusables/Feed";
 
 type Meetup = {
-  id: number;
   postImage?: string;
   postUser: string;
   postTitle: string;
@@ -9,8 +8,32 @@ type Meetup = {
   postRSVPCount: number;
   postDate: string;
   meetupTime: string;
+  _id: string; 
+  title: string;
+  poster: {
+    refId: {
+      _id: string;
+      username: string;
+    };
+    refModel: string;
+  }
+  description: string;
+  location: {
+    address: string;
+    zip: string;
+    city: string;
+    state: string;
+    country: string;
+  }
+  date: string;
+  time: string;
+  numberOfAttendees: number;
+  comments: string[];
+  numberOfComments: number;
+  media: [{
+    url: string;
+  }];
   itemType: string;
-
 };
 
 interface MeetupDetailsProps {

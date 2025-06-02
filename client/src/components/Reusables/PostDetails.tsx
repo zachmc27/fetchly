@@ -18,13 +18,8 @@ import "../../ZachTemp.css"
 // testing data, can be deleted after integrations implementation
 import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails";
 import { AdoptionCard, PostCard } from "../../types/CardTypes"
-import { useEffect, useState } from "react"
 import ImageCarousel from "./ImageCarousel"
-
-
 import { LIKE_POST, UNLIKE_POST } from "../../utils/mutations";
-import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails";
-import { PostCard, AdoptionCard } from "../../types/CardTypes";
 
 type postData = PostCard | MockMeetupItem | AdoptionCard;
 

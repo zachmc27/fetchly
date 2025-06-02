@@ -4,7 +4,8 @@
 import "../SammiReusables.css";
 
 import { useEffect, useState } from "react";
-import { QUERY_USER, QUERY_ORG } from '../utils/queries';
+import { QUERY_USER, QUERY_ORG, QUERY_MEETUPS } from '../utils/queries';
+
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_PET } from '../utils/mutations';
 import { useNavigate } from "react-router-dom";
@@ -15,14 +16,12 @@ import WindowModal from "../components/Reusables/WindowModal";
 import Feed from "../components/Reusables/Feed";
 import ButtonBubble from "../components/Reusables/Button";
 import MeetupDetails from "../components/Profile/MeetupDetails";
-import { mockMeetupData } from "../mockdata/feed-data";
 
 import UserPlaceHolder from "../images/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import AddIcon from "../images/add.png";
 import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import LogoutIcon from "../images/logout.png";
-
 
 type Location = {
      address: string;
@@ -169,6 +168,16 @@ export default function Profile() {
     navigate("/login");
   }
 
+  /************* Getting Meetup Data *****************/
+  const { loading, error, data } = useQuery(QUERY_MEETUPS);
+  const meetups = data?.meetUps
+    ? [...data.meetUps]
+//        .filter(post => !post.isResponse)
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )
+    : [];
+
+
 
   /************* RENDER PAGE *****************/
    if (isEditOpen) {
@@ -191,7 +200,7 @@ export default function Profile() {
 
     if (isMeetupsOpen && accountType !== "org") {
       return (
-        <MeetupDetails userMeetups={mockMeetupData} userRSVP={userData.user.meetUps}/>
+       <MeetupDetails userMeetups={meetups} userRSVP={userData.user.meetUps}/>
       )
     }
 
@@ -199,6 +208,9 @@ export default function Profile() {
       return <div>Loading...</div>;
     }
 
+    // Meetup Errors
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;  
 
   return (
     <div>

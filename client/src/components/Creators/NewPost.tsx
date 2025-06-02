@@ -1,6 +1,5 @@
 //form for creating a free flow post
 import { useState, useEffect } from "react";
-
 import { FaImage } from "react-icons/fa";
 // import { FaCamera, FaAt } from "react-icons/fa";
 import Actionmodal from "../Reusables/ActionModal";
