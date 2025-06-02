@@ -288,7 +288,7 @@ const NewPet = ({ onSubmit, onCancel }: NewPetProps) => {
       </div>
       <div className="form-buttons">
         <button type="button" onClick={onCancel} className="close-button">Cancel</button>
-        <button type="submit" className="yes-button">Add your new Pet</button>
+        <button type="submit" className="yes-button">Add new Pet</button>
       </div>  
     </form>
   );

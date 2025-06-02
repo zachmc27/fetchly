@@ -1,5 +1,6 @@
 //form for creating a free flow post
 import { useState, useEffect } from "react";
+
 import { FaImage } from "react-icons/fa";
 // import { FaCamera, FaAt } from "react-icons/fa";
 import Actionmodal from "../Reusables/ActionModal";
@@ -16,7 +17,8 @@ interface NewPostProps {
     };
     contentText: string;
     media?: string[];
-  }) => void
+  }) => void;
+  onClose?: () => void
 }
 
 const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
@@ -76,6 +78,14 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
   // const handleMediaUpload = (media: UploadedMedia) => {
   //   setMedia((prev) => [...prev, media.id]);
   // };
+
+  // const handleClose = () => {
+  //   if (onClose) {
+  //     onClose();
+  //   } else {
+  //     console.warn("No onClose provided")
+  //   }
+  // }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   const file = event.target.files?.[0];
