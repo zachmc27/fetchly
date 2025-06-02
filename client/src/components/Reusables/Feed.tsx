@@ -157,26 +157,28 @@ useEffect(() => {
   } else if (messageData?.conversation) {
     console.log("Fetched conversation:", messageData.conversation);
     console.log("Messages:", messageData.conversation.messages); // Log messages
+
+    const validMessages = messageData.conversation.messages?.filter((msg: { _id: string }) => msg && msg._id);
+
     setActiveConversation({
       _id: messageData.conversation._id,
       conversationName: messageData.conversation.conversationName,
       conversationUsers: messageData.conversation.conversationUsers,
-      messages: messageData.conversation.messages
-        ? messageData.conversation.messages.map((msg: { _id: string; textContent: string; messageUser: { _id: string; username: string; avatar?: { url?: string } }; createdAt: string; formattedCreatedAt: string }) => ({
-            _id: msg._id,
-            textContent: msg.textContent,
-            messageUser: {
-              _id: msg.messageUser._id,
-              username: msg.messageUser.username,
-              avatar:{
-                url: msg.messageUser.avatar?.url || `https://ui-avatars.com/api/?name=${msg.messageUser.username}&background=random&color=fff&size=128`,
-              }
-            },
-            createdAt: msg.createdAt,
-            formattedCreatedAt: msg.formattedCreatedAt, // Include formattedCreatedAt
-          }))
-        : [],
+      messages: validMessages?.map((msg: { _id: string; textContent: string; messageUser: { _id: string; username: string; avatar?: { url?: string } }; createdAt: string; formattedCreatedAt: string }) => ({
+        _id: msg._id,
+        textContent: msg.textContent,
+        messageUser: {
+          _id: msg.messageUser._id,
+          username: msg.messageUser.username,
+          avatar: {
+            url: msg.messageUser.avatar?.url || `https://ui-avatars.com/api/?name=${msg.messageUser.username}&background=random&color=fff&size=128`,
+          },
+        },
+        createdAt: msg.createdAt,
+        formattedCreatedAt: msg.formattedCreatedAt,
+      })) || [],
     });
+
     setIsChatOpen(true);
   } else {
     console.warn("No conversation found with ID:", localStorage.getItem("activeConversationId"));
@@ -312,6 +314,7 @@ function handleClosePostView() {
 // Convert response to comment
 type Comment = {
   id: number;
+  trueId: string;
   user: string;
   avatar?: string;
   comment: string;
@@ -320,6 +323,7 @@ type Comment = {
   replies?: Comment[];
   media?: { url: string }[];
   parentPost?: string;
+  responses?: [{_id: string}];
 };
 
 function mapResponseToComment(res: {
@@ -335,10 +339,12 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    responses?: []
     
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
+    trueId: res._id,
     user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
@@ -346,6 +352,7 @@ function mapResponseToComment(res: {
     postedTime: new Date(),
     replies: [],
     media: [],
+    responses: res.responses
     // parentPost: res.
   };
 }
