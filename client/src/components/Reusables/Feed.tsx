@@ -601,7 +601,7 @@ if (isMeetupPostOpen && activeMeetupPost) {
           </button>
         </div>
         {isMeetupCommentsOpen && (
-          <Comments comments={activeMeetupPost.comments} />
+          <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""} />
         )}
         {isGoingListOpen && <Goinglist rsvpList={activeMeetupPost.rsvpList} />}
       </>
@@ -634,6 +634,7 @@ if (isPostOpen && activePost) {
         />
         <Comments
           comments={(activePost.responses || []).map(mapResponseToComment)}
+          postId={activePost._id}
         />
       </div>
     );
