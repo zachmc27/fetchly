@@ -9,7 +9,7 @@ import { MockConversationObject } from "../mockdata/mocktypes/Conversation";
 
 
 
-const currentUser = localStorage.getItem('user_Id')
+const currentUser = localStorage.getItem('userId')
 // this is the graphQL query "GET_CONVERSATIONS" that will return all conversation objects
 // and create an arrary utilizing the data from the query and the Conversation interface above
 
