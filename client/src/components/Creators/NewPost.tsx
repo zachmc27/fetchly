@@ -25,8 +25,12 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
   const accountType = localStorage.getItem("accountType");
   const userType = accountType === "org" ? "Org" : "User";
 
-  const [createPost, { loading: postLoading, error: postError }] = useMutation(ADD_POST);
-  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE);
+  const [createPost, { loading: postLoading, error: postError }] = useMutation(ADD_POST, {
+    refetchQueries: ["Posts"],
+  });
+  const [createPostResponse, { loading: responseLoading, error: responseError }] = useMutation(ADD_POST_RESPONSE, {
+    refetchQueries: ["Posts"],
+  });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showUploadModal, setShowUploadModal] = useState(false);

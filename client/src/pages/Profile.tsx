@@ -134,7 +134,6 @@ export default function Profile() {
   }
 };
 
-
   /************* SHOWING CORRECT USER *****************/
   const userId = localStorage.getItem("userId");
   const orgId = localStorage.getItem("userId");

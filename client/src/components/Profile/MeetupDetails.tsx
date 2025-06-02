@@ -34,6 +34,7 @@ type Meetup = {
     url: string;
   }];
   itemType: string;
+  attendees: string[];
 };
 
 interface MeetupDetailsProps {

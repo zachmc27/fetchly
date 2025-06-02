@@ -271,8 +271,12 @@ function handleCloseMessagePage() {
 // --------------- MEETUP PAGE RSVP LOGIC -------------------------
 // ----------------------------------------------------------------
 
-  const [attendMeetup] = useMutation(ATTEND_MEETUP);
-  const [unattendMeetup] = useMutation(UNATTEND_MEETUP);
+  const [attendMeetup] = useMutation(ATTEND_MEETUP, {
+    refetchQueries: ["MeetUps"],
+  });
+  const [unattendMeetup] = useMutation(UNATTEND_MEETUP, {
+    refetchQueries: ["MeetUps"],
+  });
 
   const handleAttendMeetupToggle = async (meetupItem: MeetUpCard) => {
     if (meetupItem.itemType !== "meetup" || !userId || userType !== "User") return;
@@ -288,7 +292,7 @@ function handleCloseMessagePage() {
     };
 
     try {
-      if (!meetupItem.attendees) {
+      if (meetupItem.attendees.includes(userId) === false) {
         const { data } = await attendMeetup({ variables });
         console.log("RSVP'd successfully: ", data);
       } else {
