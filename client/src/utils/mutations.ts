@@ -109,12 +109,14 @@ export const ADD_ORG = gql`
 // }
 
 export const UPDATE_ORG = gql`
-  mutation Mutation($orgId: String!, $input: OrgInput!) {
-    updateOrg(orgId: $orgId, input: $input) {
+  mutation UpdateOrg($orgId: String!, $input: UpdateOrgInput!) {
+  updateOrg(orgId: $orgId, input: $input) {
+    org {
       _id
       orgName
     }
   }
+}
 `;
 
 // UPDATE_ORG input should look like this:
