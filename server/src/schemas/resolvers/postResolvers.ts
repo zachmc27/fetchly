@@ -82,6 +82,9 @@ const postResolvers = {
             path: 'responses',
             populate: {
               path: 'poster.refId',
+              populate: {
+                path: 'responses'
+              }
           }})
           .populate({
             path: 'poster.refId',

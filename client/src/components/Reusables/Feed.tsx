@@ -310,6 +310,7 @@ function handleClosePostView() {
 // Convert response to comment
 type Comment = {
   id: number;
+  trueId: string;
   user: string;
   avatar?: string;
   comment: string;
@@ -318,6 +319,7 @@ type Comment = {
   replies?: Comment[];
   media?: { url: string }[];
   parentPost?: string;
+  responses?: [{_id: string}];
 };
 
 function mapResponseToComment(res: {
@@ -333,10 +335,12 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    responses?: []
     
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
+    trueId: res._id,
     user: res.poster.refId.username || res.poster.refId.orgName || "Unknown",
     avatar: res.poster.refId.avatar?.url || undefined,
     comment: res.contentText || "",
@@ -344,6 +348,7 @@ function mapResponseToComment(res: {
     postedTime: new Date(),
     replies: [],
     media: [],
+    responses: res.responses
     // parentPost: res.
   };
 }

@@ -1,99 +1,104 @@
-// this component is meant to be flexibly used for viewing a post, meetup post, or adoption post
-// each post type will require more or less post details
+import { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
+import { format } from "date-fns";
 
-
-
-// Pass back a prop that takes an object containing info about a post and its type (postType = "adoption", postType = "freeflow" etc)
-// conditionally render certain attributes based on if the prop passed back has a certain type
-// example: IF post.postType === "adoption" RENDER <p> Breed: post.breed </p>
-// Pass back a prop identifying the class name of the container
-
-import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import { format } from 'date-fns';
-import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import locationimg from "../../images/location_on_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import clock from "../../images/schedule_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import chat from "../../images/chat_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import heartFilled from "../../images/heart-fill-svgrepo-com.svg";
-import vaccine from "../../images/syringe_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import mail from "../../images/mail_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+import vaccine from "../../images/syringe_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+import mail from "../../images/mail_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import UserPlaceHolder from "../../assets/react.svg";
-import call from "../../images/call_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
-import "../../ZachTemp.css"
-// testing data, can be deleted after integrations implementation
+import call from "../../images/call_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
+
+import ImageCarousel from "./ImageCarousel";
+import NewFreeFormPost from "../Creators/NewPost";
+
+import { LIKE_POST, UNLIKE_POST } from "../../utils/mutations";
+
 import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails";
-import { PostCard, AdoptionCard } from "../../types/CardTypes"
-import { useEffect, useState } from "react"
-import ImageCarousel from "./ImageCarousel"
+import { PostCard, AdoptionCard } from "../../types/CardTypes";
 
-// Mutations
-import { useMutation } from '@apollo/client';
-import { LIKE_POST, UNLIKE_POST } from '../../utils/mutations';
-
-// Components
-import NewFreeFormPost from "../Creators/NewPost"
-
-type postData =  PostCard | MockMeetupItem | AdoptionCard;
+type postData = PostCard | MockMeetupItem | AdoptionCard;
 
 interface PostResponse {
-    poster: {
-      refId: string;
-      refModel: string;
-    };
-    contentText: string;
-    media?: string[];
+  poster: {
+    refId: string;
+    refModel: string;
+  };
+  contentText: string;
+  media?: string[];
 }
 
-
-export default function PostDetails({ postData, containerClass, onClose }: { postData: postData, containerClass: string, onClose: () => void}) {
-
-  // Get user info
-  const userId = localStorage.getItem("user_Id");
-  const accountType = localStorage.getItem("accountType");
+export default function PostDetails({
+  postData,
+  containerClass,
+  onClose,
+}: {
+  postData: postData;
+  containerClass: string;
+  onClose: () => void;
+}) {
+  // Get user info from localStorage safely
+  const userId = typeof window !== "undefined" ? localStorage.getItem("user_Id") : null;
+  const accountType = typeof window !== "undefined" ? localStorage.getItem("accountType") : null;
   const userType = accountType === "org" ? "Org" : "User";
 
-  const userHasLikedPost = (post: PostCard, userId:string) => {
-    return post.likes.some(like => like.refId._id === userId);
+  // Safely check if user liked the post (only for PostCard)
+  const userHasLikedPost = (post: PostCard, userId: string) => {
+    if (!post.likes || !Array.isArray(post.likes)) return false;
+    return post.likes.some(
+      (like) => like?.refId?._id === userId
+    );
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
+  const [isCallOpen, setIsCallOpen] = useState(false);
+
+  const [isLiked, setIsLiked] = useState(() => {
+    if (postData.itemType === "post" && userId) {
+      return userHasLikedPost(postData as PostCard, userId);
+    }
+    return false;
+  });
+
+  const [likesCount, setLikesCount] = useState<number>(() => {
+    if (postData.itemType === "post") {
+      return (postData as PostCard)?.likesCount || 0;
+    }
+    return 0;
+  });
 
   const [likePost] = useMutation(LIKE_POST);
   const [unlikePost] = useMutation(UNLIKE_POST);
-  const [isLiked, setIsLiked] = useState(() => {
-    if (postData.itemType === 'post') {
-          const post = postData as PostCard; 
-        return userHasLikedPost(post, userId || "");
-      }
-    return false;
-  });
-  const [likesCount, setLikesCount] = useState<number>(() => {
-    if (postData.itemType === 'post') {
-        return (postData as PostCard)?.likesCount || 0;
-      }
-    return 0;
-  });    
-    
-  const [isEmailOpen, setIsEmailOpen] = useState(false)  
-  const [isCallOpen, setIsCallOpen] = useState(false)      
-
-  if (postData.itemType === 'post') {
-    // Liking Post Functionality
-
-  }
 
   useEffect(() => {
-    // Scroll to the top of the window when postData changes
     window.scrollTo(0, 0);
-  }, [postData]);
+    // Reset likes and liked state when postData changes (if post)
+    if (postData.itemType === "post" && userId) {
+      setIsLiked(userHasLikedPost(postData as PostCard, userId));
+      setLikesCount((postData as PostCard).likesCount || 0);
+    } else {
+      setIsLiked(false);
+      setLikesCount(0);
+    }
+  }, [postData, userId]);
 
   const handleResponseSubmit = (responseData: PostResponse) => {
     console.log("New response submitted:", responseData);
   };
 
   const handleLikeToggle = async () => {
-    if (postData.itemType !== 'post') return;
+    if (postData.itemType !== "post" || !userId) return;
     const post = postData as PostCard;
+
+    if (!post._id) {
+      console.warn("Post _id is missing, cannot like/unlike");
+      return;
+    }
 
     const variables = {
       postId: post._id,
@@ -108,13 +113,17 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
         const { data } = await likePost({ variables });
         if (data?.likePost?.success) {
           setIsLiked(true);
-          setLikesCount(prev => prev + 1);
+          setLikesCount((prev) => prev + 1);
+        } else {
+          console.warn("Like mutation unsuccessful", data);
         }
       } else {
         const { data } = await unlikePost({ variables });
         if (data?.unlikePost?.success) {
           setIsLiked(false);
-          setLikesCount(prev => Math.max(prev - 1, 0));
+          setLikesCount((prev) => Math.max(prev - 1, 0));
+        } else {
+          console.warn("Unlike mutation unsuccessful", data);
         }
       }
     } catch (error) {
@@ -123,64 +132,126 @@ export default function PostDetails({ postData, containerClass, onClose }: { pos
   };
 
   function handleEmailToggle() {
-    setIsEmailOpen(!isEmailOpen)
+    setIsEmailOpen((prev) => !prev);
   }
 
   function handleCallToggle() {
-    setIsCallOpen(!isCallOpen)
+    setIsCallOpen((prev) => !prev);
   }
 
   function renderPost(postData: postData): JSX.Element | null {
     switch (postData.itemType) {
       case "post": {
         const post = postData as PostCard;
+        if (!post) return null;
 
         return (
-          <div key={post.id} className={containerClass}>
+          <div key={post._id || post.id} className={containerClass}>
             <div className="post-user-info-row">
-                <button onClick={onClose}>{"<"}</button>
-                <div className="post-user-info-container">
-                  <img src={post.poster.refId.avatar?.url || UserPlaceHolder} alt="users avatar"/>
-                  <p className="post-username">{post.poster.refId.username || post.poster.refId.orgName}</p>
-                </div>
-                <p className="post-date-display">{format(new Date(Number(post.createdAt)), 'MMM d, yyyy')}</p>
+              <button onClick={onClose} aria-label="Go back">
+                {"<"}
+              </button>
+              <div className="post-user-info-container">
+                <img
+                  src={post.poster?.refId?.avatar?.url || UserPlaceHolder}
+                  alt="User avatar"
+                  onError={(e) => ((e.target as HTMLImageElement).src = UserPlaceHolder)}
+                />
+                <p className="post-username">
+                  {post.poster?.refId?.username || post.poster?.refId?.orgName || "Unknown User"}
+                </p>
+              </div>
+              <p className="post-date-display">
+                {post.createdAt
+                  ? format(new Date(Number(post.createdAt)), "MMM d, yyyy")
+                  : "Unknown date"}
+              </p>
             </div>
-            <p className="post-content">{post.contentText}</p>
-            {
-              post.media && post.media.length > 1 &&
-              <div className="img-container"> 
-              <ImageCarousel slides={post.media.map(m =>m.url).filter(Boolean)}/>
-              </div>
-            }
-            {
-              post.media && post.media.length === 1 &&
+
+            <p className="post-content">{post.contentText || ""}</p>
+
+            {post.media && Array.isArray(post.media) && post.media.length > 1 && (
               <div className="img-container">
-                <img src={post.media[0].url} alt="first image"/>
+                <ImageCarousel
+                  slides={post.media
+                    .map((m) => (typeof m === "string" ? m : m?.url))
+                    .filter(Boolean) as string[]}
+                />
               </div>
-              
-            }
+            )}
+
+            {post.media && Array.isArray(post.media) && post.media.length === 1 && (
+              <div className="img-container">
+                <img
+                  src={typeof post.media[0] === "string" ? post.media[0] : post.media[0]?.url || ""}
+                  alt="Post media"
+                  onError={(e) => ((e.target as HTMLImageElement).src = UserPlaceHolder)}
+                />
+              </div>
+            )}
+
             <div className="post-info-container">
-              <div className="post-likes-container" onClick={handleLikeToggle} style={{ cursor: "pointer" }}>
+              <div
+                className="post-likes-container"
+                onClick={handleLikeToggle}
+                style={{ cursor: "pointer" }}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isLiked}
+                aria-label={isLiked ? "Unlike post" : "Like post"}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleLikeToggle();
+                  }
+                }}
+              >
                 <p>{likesCount}</p>
-                  <img src={isLiked ? heartFilled : heart} alt="heart icon" />
+                <img src={isLiked ? heartFilled : heart} alt="heart icon" />
               </div>
-              <div 
-                className="post-comment-container" 
+
+              <div
+                className="post-comment-container"
                 onClick={() => setIsModalOpen(true)}
                 style={{ cursor: "pointer" }}
+                role="button"
+                tabIndex={0}
+                aria-label="Open comments"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setIsModalOpen(true);
+                  }
+                }}
               >
-                <p>{post.responseCount}</p>
+                <p>{post.responseCount || 0}</p>
                 <img src={chat} alt="comment icon" />
               </div>
+
               {isModalOpen && (
-                <div className="post-modal-overlay" onClick={() => setIsModalOpen(false)}>
-                  <div className="post-modal-content" onClick={e => e.stopPropagation()}>
-                    <button className="post-modal-close-button" onClick={() => setIsModalOpen(false)}>×</button>
+                <div
+                  className="post-modal-overlay"
+                  onClick={() => setIsModalOpen(false)}
+                  role="dialog"
+                  aria-modal="true"
+                >
+                  <div
+                    className="post-modal-content"
+                    onClick={(e) => e.stopPropagation()}
+                    tabIndex={-1}
+                  >
+                    <button
+                      className="post-modal-close-button"
+                      onClick={() => setIsModalOpen(false)}
+                      aria-label="Close comments modal"
+                    >
+                      ×
+                    </button>
                     <NewFreeFormPost
                       parentPostId={post._id}
                       onSubmit={(responseData) => {
                         handleResponseSubmit(responseData);
-                        setIsModalOpen(false); // close modal on submit
+                        setIsModalOpen(false);
                       }}
                     />
                   </div>
