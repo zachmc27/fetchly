@@ -59,4 +59,5 @@ export type PostCard = {
   taggedPets: {
     name: string;
   }
+  parentPost: string;
 }
