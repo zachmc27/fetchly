@@ -192,7 +192,6 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
         <div className="media-buttons">
           <label className="image-button" htmlFor="file-upload">
             <FaImage className="icon" />
-            {/* <MediaUpload onUpload={handleMediaUpload} /> */}
           </label>
           <input
             id="file-upload"
