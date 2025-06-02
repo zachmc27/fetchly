@@ -7,7 +7,7 @@ interface ExtendedJwt extends JwtPayload {
     email:string,
     id:string
   }
-};
+}
 
 class AuthService {
   // TODO: What is this method supposed to do?
@@ -31,7 +31,7 @@ class AuthService {
       if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
         return true;
       }
-    } catch (err) {
+    } catch {
       return false;
     }
   }
@@ -43,15 +43,24 @@ class AuthService {
   }
 
   // TODO: What is the purpose of this method?
-  login(idToken: string) {
-    localStorage.setItem('id_token', idToken);
+  login(idToken: string, userId: string) {
+    localStorage.setItem('id_token', idToken.toString());
+    console.log("Token Saved");
+    localStorage.setItem('userId', userId.toString());
+    console.log("Id Saved");
     window.location.assign('/');
+
+    // Alert for testing purposes comment out when not needed
+    alert("Login successful");
   }
 
   // TODO: What is the purpose of this method?
   logout() {
     localStorage.removeItem('id_token');
     window.location.assign('/');
+
+    // Alert for testing purposes, comment out when not needed
+    alert("Logout successful");
   }
 }
 

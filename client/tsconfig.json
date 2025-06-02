@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
+    "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -23,7 +24,10 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src", "src/types"
+  ],
+  "exclude": [
+    "src/contexts/AdoptionPostContext.tsx"
   ],
   "references": [
     {

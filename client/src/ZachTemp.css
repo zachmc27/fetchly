@@ -1,0 +1,2315 @@
+
+/* action modal */
+.action-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; 
+    background-color: gray;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    gap: 5px
+}
+
+.modal-overlay {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.yes-button {
+    background-color: beige;
+}
+
+.close-button {
+    background-color: red;
+}
+
+/* feed */
+
+.messages {
+    border: 5px solid blue
+}
+
+.feedItem {
+   border: 1px solid black;
+   background-color: beige; 
+}
+
+.male-icon,
+.female-icon {
+    width: 16px; 
+    height: 16px;
+    vertical-align: middle;
+    fill: #555;
+}
+
+.calendar-icon {
+    width: 14px;
+    height: 14px;
+    fill: #555
+}
+
+/* post details */
+
+.viewing-container {
+  min-height: 92vh;
+}
+
+.post-details-container {
+    background-color: beige;
+    height: 100%
+}
+
+.meetup-details-container {
+    border: 1px solid black;
+    background-color: lightgreen;
+}
+
+.adoption-details-container {
+  margin-top: 1.5vh;
+  padding-top: 1.5vh;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8); 
+}
+
+/* search bar */
+
+.search-style {
+    border: 1px solid black;
+    background-color: white;
+    width: 90vw;
+    margin: 0 auto;
+    margin-bottom: 2px;
+    padding: 10px;
+    margin-top: 14vh;
+    border-radius: 10px;
+}
+
+.search-btn {
+    background-color: white;
+    border: none
+}
+
+.search-btn:hover {
+    background-color: rgb(156, 154, 154);
+}
+
+.search-bar {
+    background-color: white;
+    border: none;
+}
+
+.search-bar:focus {
+    outline: none;
+}
+
+/* adoption page */
+
+.no-results-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 2vh;
+}
+
+.no-results-img {
+ width: 30vw;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.no-results-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 5px;
+}
+
+
+.adoption-page-container {
+    height: 82vh;
+    overflow: hidden;
+    overflow-y: auto;
+    width: 100vw;
+    background-color: #fff;
+    padding-bottom: 20px; 
+    height: 92vh;
+}
+
+.search-style:focus-within {
+    outline: 1px solid blue;
+}
+.filter-buttons-container {
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.filter-button {
+    border-radius: 30px;
+    width: 7rem;
+    padding: 10px 0px;
+}
+
+.adoption-feed-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh 5%;
+    padding: 10px 0px;
+    justify-content: center;
+    height: 85vh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.adoption-card {
+    height: 220px;
+    width: 45%;
+    background-color: white;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e0e0
+}
+
+.adoption-image-container {
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+}
+
+.adoption-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.adoption-feed-info-container {
+    background-color: lightgray;
+    width: 100%;
+    min-height: 30%;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.adoption-feed-info-container h1 {
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 5px 0;
+    line-height: 1.2;
+}
+
+.adoption-feed-details-row {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.age-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+ 
+}
+
+.age-info p {
+    margin: 0;         
+    padding: 0;         
+    line-height: 1;     
+    font-size: 0.85em; 
+    color: #555;
+}
+
+/***************** PROFILE POST FEED *******************/
+.profile-feed-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 92vh;
+    height: 82vh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.profile-post-item {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    width: 45%;
+    background-color: white;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e0e0
+}
+
+.profile-post-item img{
+    width: 35px;
+    height: 35px;
+}
+
+.post-card {
+    background-color: white;
+    margin-top: 10px;
+    padding: 25px;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info {
+    display: flex;
+    align-items: center; /* Vertically align avatar and username */
+    margin-bottom: 10px; /* Space between user info and post content */
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin: 0; /* Override default h1 margin */
+}
+
+.post-content {
+    font-size: 1em;
+    line-height: 1.4;
+    color: #555;
+    margin-top: 0; /* Adjust as per previous element */
+    margin-bottom: 10px;
+}
+
+.post-date,
+.comment-count {
+    font-size: 0.8em;
+    color: #999;
+    margin-top: 0;
+    margin-bottom: 5px; /* Small space between date and comment count */
+}
+
+.comment-count {
+    margin-bottom: 0; /* No margin at the bottom of the last element */
+}
+
+
+/* meetup page */
+
+.meetup-feed-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+    justify-content: center;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.meetup-page-container {
+    height: fit-content;
+    width: 100vw;
+    height: 82vh;
+}
+
+.meetup-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin: 0px;
+    width: 100%;
+}
+
+.meetup-card .post-user { 
+    font-size: 0.85em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.meetup-info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.meetup-image-container {
+    min-width: 130px;
+    max-width: 130px; 
+    height: 100px;
+    background-color: #f0f0f0; 
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+}
+
+.meetup-image-container img { 
+    width: 100%; 
+    object-fit: scale-down;
+}
+
+.meetup-main-text {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.meetup-main-text h1 {
+    font-size: 1em; 
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.meetup-location-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.meetup-location-container img { 
+    width: 14px;
+    height: 14px;
+    fill: #555; 
+}
+.meetup-location-container p {
+    margin: 0;
+    font-size: .8rem;
+}
+
+.rsvp-btn {
+    background-color: #333; 
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-weight: 400;
+    cursor: pointer;
+    align-self: flex-start; 
+}
+
+.rsvp-btn:hover {
+    background-color: #555;
+}
+
+.meetup-details-row {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    font-size: 0.85em;
+    color: #555;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0; 
+}
+
+.meetup-date,
+.meetup-time,
+.rsvp-count {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.meetup-details-row p {
+    margin: 0;
+    font-size: 1em;
+}
+
+.meetup-detail-icon {
+    width: 16px;
+    height: 16px;
+    fill: #555;
+}
+
+.location-pin-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* inbox page */
+
+.inbox-page-container {
+    height: 92vh;
+    width: 100vw;
+}
+
+.inbox-feed-container {
+  background-color: #ffffff; 
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-top: 12vh;
+}
+
+
+.inbox-card {
+  display: flex;
+  align-items: center; 
+  padding: 16px 10px; 
+  border-bottom: 1px solid #e0e0e0; 
+  gap: 10px;
+}
+
+.inbox-card:last-child {
+  border-bottom: none; 
+}
+
+
+.unread-indicator-area {
+  width: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.unread-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #000000; 
+  border-radius: 50%;
+}
+
+.message-icon {
+  width: 48px;  
+  height: 48px;  
+  border-radius: 50%; 
+  object-fit: cover; 
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.default-icon { 
+  width: 36px;  
+  height: 36px;  
+  border-radius: 50%; 
+  object-fit: cover; 
+  background-color: #f0f0f0;
+}
+
+
+.message-text-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 2px;
+}
+
+.chat-title {
+  font-size: 1rem; 
+  font-weight: 500; 
+  color: #222222; 
+  margin: 0;
+  line-height: 1.3;
+}
+
+
+.latest-message { 
+  font-size: 0.875rem; 
+  color: #757575;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.chat-date {
+  font-size: 0.875rem; 
+  color: #555555;
+  margin: 0;
+  white-space: nowrap;
+  margin-left: auto;
+  padding-left: 10px;
+ 
+}
+
+/* MessagesPage */
+
+.messages-page-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Takes full width of its parent */
+  height: 100%; /* Takes full height of its parent, or adjust as needed */
+  background-color: #ffffff;
+  z-index: 100;
+}
+
+/* Chat Header */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  background-color: #ffffff; 
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); 
+  position: sticky;
+  top: 0;
+  left: 0; 
+  width: 100%; 
+  z-index: 999;
+  height: 12vh; 
+  box-sizing: border-box;
+  position: relative
+}
+
+.chat-header h1 {
+  font-size: 1.15rem;
+  line-height: 1;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+  color: #333;
+}
+
+.chat-header button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 5px;
+  color: #333; 
+  font-weight: 400;
+}
+
+.chat-header button:last-child { 
+  font-weight: bold;
+  border: 1.5px solid #8e8e93;
+  border-radius: 50%;
+  width: 3vh;
+  height: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8e8e93;
+  font-size: 0.75rem;
+  line-height: 1;
+  position: absolute;
+  right: 8vw
+}
+
+/* Chat Messages Area */
+.chat-messages {
+  flex-grow: 1;
+  padding: 15px 0px;
+  overflow-y: auto; /* Enables scrolling for messages */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+
+}
+
+/* Common styles for message containers (row with avatar and bubble) */
+.incoming-message,
+.user-message {
+  display: flex;
+  align-items: flex-end;
+  max-width: 80%;
+  gap: 8px;
+}
+
+.incoming-message {
+  align-self: flex-start;
+}
+
+.user-message {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+/* Avatar Placeholder */
+.avatar-placeholder {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%238e8e93"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>');
+  background-size: 65%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.message-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3px; /* Space between sender name and bubble */
+}
+
+/* Sender's name - NOW VISIBLE */
+.msg-user-txt,
+.msg-incoming-user-txt {
+  display: block; /* Make it visible */
+  font-size: 0.7rem; /* Approx 11px */
+  color: #666;
+  line-height: 1;
+  /* Align text based on message type */
+}
+
+.msg-incoming-user-txt {
+  align-self: flex-start; /* Text starts from left */
+  margin-bottom: 1vw;
+  margin-left: 10.5vw; /* Slight indent if needed */
+}
+
+.msg-user-txt {
+  align-self: flex-end; /* Text starts from right for user's messages */
+  margin-bottom: 1vw;
+  margin-right: 10.5vw; /* Slight indent if needed */
+}
+
+/* Message Text Content (the bubble itself) */
+.msg-txt {
+  padding: 7px 12px;
+  border-radius: 16px;
+  line-height: 1.35;
+  font-size: 0.9rem;
+  margin: 0;
+  word-wrap: break-word;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+.user-message .msg-user-txt {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+/* Specific bubble styling for incoming messages */
+.incoming-message .msg-txt {
+  background-color: #f0f0f0;
+  color: #000;
+  border-bottom-left-radius: 4px; /* Tail effect */
+}
+
+/* Specific bubble styling for user's messages */
+.user-message .msg-txt {
+  background-color: #000000;
+  color: #ffffff;
+  border-bottom-right-radius: 4px; /* Tail effect */
+}
+
+
+.chat-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #fff;
+  position: fixed; 
+  bottom: 65px; 
+  margin: 0 auto;
+  width: 100%; 
+  box-sizing: border-box; 
+  z-index: 10;
+}
+
+.chat-bar input[type="text"] {
+  flex-grow: 1;
+  padding: 9px 14px;
+  border: 1px solid rgb(0, 0, 0, .6);
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.8); 
+  border-radius: 12px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+.chat-bar input[type="text"]::placeholder {
+  color: #ababab;
+}
+
+.chat-bar .send-message-btn {
+  background: none;
+  border: 1.5px solid rgb(0, 0, 0, .0);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  padding-left: 1px;
+  padding-bottom: 1px;
+}
+
+.chat-bar .send-message-btn img {
+  width: 32px;
+  height: 32px;
+}
+
+/* MsgInfoPage */
+
+
+.msg-info-container {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 92vh;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.msg-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the h1 title */
+  padding: 0 15px; /* Horizontal padding, vertical handled by height */
+  background-color: #ffffff; /* White background */
+  border-bottom-left-radius: 30px; /* Rounded bottom-left corner */
+  border-bottom-right-radius: 30px; /* Rounded bottom-right corner */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Shadow */
+  position: sticky; /* Or static, depending on desired scroll behavior. Sticky is common for sub-page headers. */
+  top: 0; /* Required for sticky positioning */
+  left: 0;
+  width: 100%;
+  z-index: 990; /* Slightly lower than main header if they could overlap, but high enough */
+  height: 12vh; /* Match fetchly-header height */
+  box-sizing: border-box;
+}
+
+.msg-info-header h1 { /* Title "Chat" */
+  margin: 0;
+  font-size: 20px; /* Adjust as needed */
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  /* flex-grow: 1; Removed as buttons are absolutely positioned */
+}
+
+.msg-info-header button:first-of-type {
+  position: absolute;
+  left: 4vh; /* Consistent with fetchly-header icon positioning */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px; /* Adjust for arrow size */
+  font-weight: normal; /* Or bold if preferred */
+  color: #333;
+  cursor: pointer;
+  padding: 5px 10px; /* Clickable area */
+}
+
+
+.msg-info-header button:last-of-type {
+  position: absolute;
+  right: 4vh; /* Consistent positioning */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px; /* Adjust emoji/icon size */
+  color: #333; /* Or a specific color like red for delete */
+  cursor: pointer;
+  padding: 5px; /* Clickable area */
+}
+
+
+
+.gc-editing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.gc-editing-container input[type="text"] {
+  border: 1px solid rgb(0, 0, 0, .2);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  padding: 5px 10px;
+  outline: none;
+  color: #333;
+  flex-grow: 1; 
+}
+
+.gc-editing-container input[type="text"]::placeholder {
+  color: #333; /* Placeholder color same as text */
+  opacity: 1; 
+}
+
+
+.gc-editing-container button {
+  background: none;
+  border: none;
+  font-size: 18px; 
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+
+.gc-editing-container > div {
+    display: flex;
+    align-items: center;
+}
+
+.user-list-wrapper {
+  background-color: #fcfcfc;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0,0,0,.1);
+  padding: 10px 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  transform: scale(0.9);
+}
+
+.user-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 12px 15px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  width: 80vw;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.msg-info-user-card {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #eee; 
+}
+
+.msg-user-photo-container {
+  width: 40px;      /* Match profile photo size */
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee; /* Optional: placeholder bg */
+}
+
+.msg-user-photo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.msg-info-user-card:last-child {
+  border-bottom: none; /* No border for the last user in the list */
+}
+
+.msg-info-user-card::before {
+  
+  font-size: 20px;
+  margin-right: 15px;
+  color: #888;
+}
+.msg-info-user-card-photo {
+  width: 36px; /* Optimal size for chat user avatars */
+  height: 36px;
+  border-radius: 50%; /* Ensures a circular shape */
+  object-fit: cover; /* Maintains aspect ratio and fills the container */
+  margin-right: 8px; /* Slightly smaller margin for better spacing */
+  border: 1px solid #e0e0e0; /* Optional: Light border for better visibility */
+}
+
+/* If there's no group chat editing container, adjust margin for the user list */
+.msg-info-container > .user-list-wrapper:first-child {
+  margin-top: 30px; /* If the group editing section is hidden, give space */
+}
+
+/* Viewing Meetup Post Page */
+
+.meetup-details-container { /* Assuming this will be the containerClass prop for PostDetails */
+  background-color: #fff;
+  border-radius: 0px 0px 8px 8px;
+  border-color: #eee;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px; /* Adjust as needed for width */
+  box-sizing: border-box;
+}
+
+/* User Info (Avatar and Username) */
+.meetup-user-info-row { /* Add this class to a div wrapping user avi and username in PostDetails */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.meetup-user-info-row button:first-child {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.meetup-user-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.meetup-user-info-container p {
+ margin-bottom: 3px;
+}
+
+.meetup-user-info-row img[alt="users avatar"],
+.comment-img img,
+.going-user-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 1px solid #eee; /* Light border for avatars */
+}
+
+.meetup-post-username {
+  color: #333;
+  font-size: 1.1em;
+}
+
+/* RSVP Button in PostDetails */
+.rsvp-btn { /* Targeting the RSVP button in meetup */
+  background-color: #007bff; /* Blue button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1;
+  margin-top: 5px;
+}
+
+.meetup-details-container button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+
+/* Post Content and Image */
+.post-content, .meetup-title, .meetup-text, .adoption-description {
+  margin-bottom: 10px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.meetup-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #333;
+}
+
+.img-container {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  width: fit-content;
+  height: fit-content;
+  max-width: 80vw;
+  max-height: 50vh;
+}
+
+.img-container img {
+  display: block;
+  margin: 0;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;     /* Or remove if you want natural aspect ratio */
+  border-radius: 8px; /* Apply border-radius to the image itself if not fully contained */
+}
+
+/* Post Details - Dates, Time, Location */
+.meetup-details-container p:has(img[alt="location-icon"]),
+.meetup-details-container p:has(img[alt="calendar-icon"]),
+.meetup-details-container p:has(img[alt="time-icon"]) {
+  display: flex;
+  align-items: center;
+  color: #777;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+/* Adjustments for the icons for location, time, date */
+.meetup-details-container p img {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+
+
+/* --- Comments Component Styles --- */
+.comments-section-wrapper { /* Add a wrapper div around Comments component for full width */
+  width: 100vw;
+  box-sizing: border-box;
+  min-height: 70vh;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.comment-container {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee; 
+  background-color: #fff; /* Light background for comment bubble */
+}
+
+.comment-container:nth-last-child {
+  border-bottom: none;
+}
+
+.comment-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.comment-img {
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+  width: fit-content;
+  padding-left: 3%;
+}
+.comment-icon-row {
+  display: flex;
+  align-items: center;
+  width: 15%;
+  margin-top: 3%;
+}
+
+.comment-content {
+  flex-grow: 1; /* Allow content to take available space */
+  padding: 10px 12px;
+  position: relative;
+  word-break: break-word; /* Ensure long words wrap */
+}
+
+.comment-content div:first-of-type { /* Username */
+  font-weight: bold;
+  color: #333;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.comment-content div:nth-of-type(2) { /* Comment text */
+  color: #555;
+  font-size: 0.95em;
+}
+
+.comment-icon-row {
+  display: flex;
+  margin-top: 5px;
+  gap: 20px; /* Space between buttons */
+}
+
+.comment-likes-container,
+.comment-replies-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.comment-likes-container button,
+.comment-replies-container button { /* Adjust this selector if ButtonBubble renders something else */
+  background: none;
+  border: none;
+  color: #777;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.85em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.comment-likes-container img,
+.comment-replies-container img { /* Adjust this selector if ButtonBubble renders something else */
+  width: .85em;
+  height: .85em;
+  margin-right: 5px
+}
+
+.comment-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #f7f7f7;
+  border-top: 1px solid #e5e5e5;
+  position: absolute;
+  bottom: 55px; 
+  margin: 0 auto;
+  width: 100%; 
+  box-sizing: border-box; 
+  z-index: 10;
+}
+
+.comment-bar input[type="text"] {
+  flex-grow: 1;
+  padding: 9px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 18px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+.comment-bar input[type="text"]::placeholder {
+  color: #ababab;
+}
+
+.comment-bar .send-message-btn {
+  background: none;
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 1.1rem;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  padding-left: 1px;
+  padding-bottom: 1px;
+}
+
+
+/* --- Goinglist Component Styles --- */
+.going-list-container {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.going-user-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee; /* Separator between users */
+}
+
+.going-user-card:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.going-user-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.going-user-card p {
+  font-size: .95em;
+  color: #585757;
+  margin: 0;
+}
+
+/* --- Meetup Post View Tab Switcher --- */
+.tab-switcher {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ddd;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.tab-switcher button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 1.1em;
+  cursor: pointer;
+  color: #777;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+}
+
+.tab-switcher button.active {
+  color: #007bff; /* Active tab color */
+}
+
+.tab-switcher button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #007bff; /* Active tab underline */
+}
+
+/* home page feed */
+
+.post-page-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: #fff; 
+}
+
+.post-feed-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+    padding-top: 12vh;
+    justify-content: center;
+    height: 94vh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* Ensure this CSS is loaded by your component */
+
+/* Main Post Container (your 'itemStyle' class) */
+.post-card { 
+  background-color: #ffffff;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 16px; /* Uniform padding around the card */
+  color: #262626;
+  position: relative; /* ESSENTIAL: For absolute positioning of the date */
+  width: 100%;
+}
+
+/* User Info Section */
+.post-user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  /* This container will no longer directly control the date's final position,
+     but it still groups the avatar and username. */
+}
+
+.post-user-info > img { /* User Avatar */
+  width: 36px; /* Slightly larger for visual balance if date is far */
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.post-user-info > p { /* Username */
+  font-weight: 600;
+  font-size: 14px;
+  color: #262626;
+  margin: 0;
+  /* Username takes up available space until it hits the date area
+     if the date wasn't absolutely positioned. Now it just sits next to avatar. */
+}
+
+/* Date Container - Positioned at the top-right of the .post-card */
+.post-date-container {
+  position: absolute;
+  top: 16px; /* Should match the .post-card's top padding */
+  right: 16px; /* Should match the .post-card's right padding */
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.post-date-container img { /* Calendar icon */
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  /* If using SVG and want to color it:
+  filter: invert(59%) sepia(11%) saturate(0%) hue-rotate(148deg) brightness(93%) contrast(89%); for #8e8e8e
+  */
+}
+
+.post-date-container p {
+  margin: 0;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+/* Post Content Paragraph */
+/* This targets the <p>{postItem.postContent}</p> */
+/* It's the second <p> overall inside .post-card if username is <p> and first child of post-user-info*/
+/* A more robust way is to add a class to this <p> like className="post-body-content" */
+.post-card > p:not(:first-child):not(.post-user-info p):not(.post-date-container p):not(.post-likes-container p):not(.post-comments-container p) {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #262626;
+  margin-top: 8px; /* Space below user info */
+  margin-bottom: 12px; /* Space above images or details row */
+  padding-right: 50px; /* Add some padding so text doesn't overlap with a long date string if the card is narrow */
+}
+/* If you add a class e.g. <p className="post-text-content">{postItem.postContent}</p> use this: */
+/*
+.post-text-content {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #262626;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  padding-right: 50px;
+}
+*/
+
+
+/* Post Image(s) - Assuming images are direct children of .post-card after the content <p> */
+.post-card > img:not(.post-user-info img):not(.post-date-container img):not(.post-likes-container img):not(.post-comments-container img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px; /* Optional: rounded corners for images */
+  margin-top: 8px; /* Space between multiple images or content and image */
+  margin-bottom: 12px; /* Space below image(s) before details row */
+}
+
+/* Post Details Row (Likes and Comments) */
+.post-details-row {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between the "likes" group and "comments" group */
+  margin-top: 10px;
+  /* If you want this row indented (e.g. to align with text content if text content is indented):
+  padding-left: 48px; /* (Avatar 36px + margin 12px) */
+}
+
+.post-likes-container,
+.post-comments-container {
+  display: flex;
+  align-items: center;
+}
+
+.post-likes-container img, /* Heart icon */
+.post-comments-container img { /* Chat icon */
+  width: 18px; /* Adjust icon size as needed */
+  height: 18px;
+  margin-right: 6px;
+  /* Example SVG coloring if needed:
+  filter: invert(10%) sepia(0%) saturate(7498%) hue-rotate(26deg) brightness(99%) contrast(90%); for #262626
+  */
+}
+
+.post-likes-container p,
+.post-comments-container p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500; /* Slightly bolder for counts */
+  color: #262626;
+}
+
+/* post details */
+
+.post-details-container {
+  padding: 15px;
+  color: #262626; /* Default text color */
+  background-color: #fff; /* Assuming a white background for the post area */
+  border-bottom: 1px solid #efefef; /* Separator if this is part of a list */
+}
+
+/* Top User Info Row */
+.post-user-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes date to the right */
+  padding: 10px 12px; /* Adjust padding as needed */
+  border-bottom: 1px solid #efefef; /* Separator line below the top bar */
+}
+
+.post-user-info-row > button { /* Back button styling */
+  background: none;
+  border: none;
+  font-size: 22px; /* Adjust size of "<" */
+  font-weight: bold;
+  color: #262626;
+  cursor: pointer;
+  padding: 5px 8px; /* Clickable area */
+  margin-right: 8px;
+}
+
+.post-user-info-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* Allows username to take available space if needed */
+}
+
+.post-user-info-container img { /* User Avatar */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.post-user-info-container .post-username {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0; /* Remove default p margin */
+}
+
+.post-user-info-row .post-date-display {
+  font-size: 12px;
+  color: #8e8e8e; /* Lighter grey for date */
+  margin: 0; /* Remove default p margin */
+  white-space: nowrap; /* Prevent date from wrapping */
+  margin-left: 10px; /* Ensure some space if username area grows */
+}
+
+/* Post Content Paragraph */
+.post-content {
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px 16px;
+  margin: 0; /* Remove default p margin */
+}
+
+/* Image Container */
+
+
+
+
+/* Post Info Container (Comment and Like Counts) */
+.post-info-container {
+  display: flex;
+  justify-content: space-between; /* Pushes likes to the right */
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid #efefef; /* Separator line as in image */
+}
+
+.post-comment-container,
+.post-likes-container {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.post-comment-container p,
+.post-likes-container p {
+  margin: 0;
+  font-weight: 600; /* Bold counts */
+  color: #262626;
+}
+
+/* Styling for comment icon (icon after text, as per your TSX) */
+.post-comment-container img { /* Chat icon */
+  width: 22px;
+  height: 22px;
+  margin-left: 6px; /* Space between count and icon */
+}
+/* If you move icon before text (like in image):
+.post-comment-container img {
+  margin-right: 6px;
+}
+*/
+
+/* Likes container - Image shows a heart icon. You need to add it to your TSX. */
+.post-likes-container .like-icon { /* Add <img src={heartIcon} className="like-icon" /> in TSX */
+  width: 22px;
+  height: 22px;
+  margin-right: 6px; /* Assuming icon is before the like count */
+  /* You might need to style the heart icon's color, e.g., if it's an SVG or a specific image */
+}
+
+/* comment and replies page */
+
+/* Overall Page Container */
+.comment-page-container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content; /* Or the height of its parent container */
+  background-color: #ffffff;
+  color: #1c1e21; /* Dark text color */
+}
+
+
+
+/* Replies Box - This should be scrollable */
+.replies-box {
+  flex-grow: 1; /* Takes remaining space */
+  overflow-y: auto; /* Makes this area scrollable */
+  padding: 0 0 10px 0; /* Padding at the bottom of the scrollable list */
+  background-color: #ffffff;
+}
+
+.reply-container {
+  padding: 12px 16px;
+  padding-left: 40px;
+  border-bottom: 1px solid #efefef; /* Separator for replies */
+  display: flex; /* Using flex to align avatar and content */
+  align-items: flex-start; /* Align items to the top */
+}
+
+.reply-container:last-child {
+  border-bottom: none;
+}
+
+/* .comment-row is already inside .reply-container and is also display:flex.
+   The structure is .reply-container -> .comment-row -> (.reply-img, .reply-content)
+   We can simplify by making .reply-container the flex container directly. */
+
+.reply-img {
+  margin-right: 10px;
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.reply-img img { /* Avatar for replies */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reply-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Takes remaining space */
+}
+
+.reply-content > div:nth-child(1) { /* Reply username */
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.reply-content > div:nth-child(2) { /* Reply comment text */
+  font-size: 14px;
+  line-height: 1.35;
+  margin-bottom: 6px;
+  color: #333333;
+  /* Ensure text wraps correctly */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.reply-icon-row {
+  display: flex;
+  align-items: center;
+  /* The image shows likes and comments on the same line here */
+}
+
+.reply-likes-container {
+  display: flex;
+  align-items: center;
+  margin-right: 15px; /* Space if you add a comment count container next to it */
+}
+
+.reply-likes-container img { /* Heart icon for replies */
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.reply-likes-container button { /* Like count for replies */
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  font-weight: normal; /* Image shows counts not as bold as username */
+  color: #606770;
+  cursor: pointer;
+}
+
+/* adoption details */
+
+/* Pet Image Container */
+.adoption-pet-image-container {
+  width: 100%;
+  height: 300px; /* Adjust height as needed, or use aspect-ratio */
+  background-color: #e0e0e0; /* Placeholder background if no image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensures image conforms to container */
+  position: relative;
+}
+
+.adoption-close-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.adoption-pet-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area, might crop */
+  /* If you want to show a placeholder icon like in the image:
+  object-fit: scale-down;
+  max-width: 80px;
+  max-height: 80px;
+  opacity: 0.5; */
+}
+
+/* Main Pet Info Card */
+.adoption-pet-main-card {
+  background-color: #ffffff;
+  border-radius: 20px; /* Significant rounding */
+  padding: 20px;
+  margin: -40px 16px 16px 16px; /* Negative top margin to overlap image, side margins */
+  position: relative; /* For stacking context if needed */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+}
+
+.main-pet-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-pet-card-row p { /* Pet Name */
+  font-size: 26px; /* Large font for name */
+  font-weight: 700;
+  color: #1c1e21;
+  margin: 0;
+  margin-right: 8px;
+}
+
+.main-pet-card-row img { /* Gender Icon */
+  width: 22px; /* Adjust size */
+  height: 22px;
+}
+
+.secondary-pet-card-row {
+  display: flex;
+  justify-content: center; /* Distribute items */
+  align-items: center;
+  gap: 30px; /* Gap between items */
+}
+
+.adoption-location,
+.adoption-pet-age,
+.vaccinated-icon {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #555555; /* Slightly lighter text for secondary info */
+}
+
+.adoption-location {
+  justify-content: center;
+  margin-bottom: 1vh;
+  position: relative;
+  left: -4px;
+  text-align: center;
+}
+
+.adoption-location p {
+  margin: 0
+}
+
+.secondary-pet-card-row img { /* Icons in secondary row */
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  /* Consider filter for consistent icon color if they are different
+     e.g., filter: grayscale(50%) opacity(0.7); */
+}
+
+.secondary-pet-card-row p {
+  margin: 0;
+}
+
+/* Organization Info Row */
+.org-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px; /* Match card horizontal padding */
+  background-color: #ffffff; /* Could be part of a larger white block or a new card */
+  /* If it's a new card that's not .adoption-pet-main-card:
+  margin: 0 16px 16px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  */
+  border-bottom: 1px solid #f0f2f5; /* Light separator if not the last element in a card */
+}
+
+.main-org-info {
+  display: flex;
+  align-items: center;
+}
+
+.main-org-info img { /* Organization Avatar */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.main-org-info p { /* Organization Name */
+  font-size: 15px;
+  font-weight: 500;
+  color: #333333;
+  margin: 0;
+}
+
+.org-contact-info button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 8px; /* Space between contact icons */
+}
+
+.org-contact-info button img { /* Contact Icons (mail, call) */
+  width: 22px;
+  height: 22px;
+  /* Consider filter for consistent icon color */
+}
+
+.reveal-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+/* Conditional Contact Info Display */
+.contact-reveal { /* A bit generic, better to wrap isCallOpen/isEmailOpen content in a div with a class */
+  font-size: 14px;
+  padding-right: 2vw;
+  background-color: #ffffff; /* Assuming it continues the white block */
+  color: #007bff; /* Link-like color for contact info */
+}
+
+/* Pet Description */
+
+
+.adoption-description-container > p { /* Targets the main adoption.description paragraph */
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333333;
+  padding: 16px 20px;
+  margin: 0;
+  background-color: #ffffff; /* Assuming it continues the white block */
+}
+
+/* More Pet Details Container */
+.more-pet-details-container {
+  padding: 10px 20px 20px 20px;
+  background-color: #ffffff; /* Assuming it continues the white block */
+  border-top: 1px solid #f0f2f5; /* Separator if description is above */
+}
+
+.more-pet-details-container p {
+  font-size: 14px;
+  color: #444444;
+  margin: 0 0 8px 0; /* Space between each detail line */
+  display: flex; /* To potentially style label and value differently if TSX changes */
+}
+
+/* Example to make "Breed:", "Fixed:" labels slightly distinct if you split them in TSX */
+.more-pet-details-container p .detail-label {
+  font-weight: 500;
+  color: #1c1e21;
+  margin-right: 5px;
+}
+.more-pet-details-container p .detail-value {
+  color: #555555;
+}
+
+/* new message form */
+
+.msg-creation-container {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  margin-top: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  color: #333;
+  height: 92vh;
+  box-sizing: border-box;
+}
+
+.msg-creation-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.msg-creation-header button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #333;
+  padding: 0;
+}
+
+.msg-creation-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+}
+
+.gc-creating-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Adjust as needed */
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.gc-creating-container input {
+  border: none;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px 10px;
+  outline: none;
+  width: auto; /* Adjust width as needed */
+}
+
+.gc-creating-container p {
+  background: none;
+  border: none;
+  font-size: 18px;
+  margin-left: 5px;
+  cursor: pointer;
+  color: #333;
+}
+
+.add-user-header {
+  font-size: 18px; /* Match "People" style */
+  font-weight: 600;
+  margin-top: 25px; /* Adjust spacing */
+  margin-bottom: 10px; /* Adjust spacing */
+  color: #333; /* Match "People" color */
+  padding-left: 20px; /* Align with the content inside the white box */
+  align-self: flex-start; /* Align text to the left */
+}
+
+.add-user-list-wrapper {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-height: 100%;
+  display: flex; /* Make it a flex container */
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.add-user-list-scroll {
+  overflow-y: auto;
+}
+
+.user-search-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee; /* Separator line */
+}
+
+.user-search-bar button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 10px;
+  cursor: pointer;
+  color: #888; /* Light gray for the icon */
+  font-size: 20px; /* Adjust icon size */
+}
+
+.user-search-bar input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.mutual-user-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px; /* Adjust padding inside the white box */
+  border-bottom: 1px solid #eee;
+}
+
+.mutual-user-row:last-child {
+  border-bottom: none;
+}
+
+.mutual-user-row img {
+  width: 30px; /* Adjust avatar size */
+  height: 30px; /* Adjust avatar size */
+  border-radius: 50%;
+  margin-right: 15px;
+  background-color: #ddd; /* Placeholder */
+}
+
+.mutual-user-row .msg-create-user-card {
+  flex-grow: 1;
+  font-size: 16px;
+  margin: 0;
+}
+
+.mutual-user-row button {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+}
+
+.mutual-user-row button.selected {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+}
+
+.chat-create-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  width: calc(100% - 40px); /* Adjust width for margin */
+  margin: 20px 20px 0px 20px; /* Add margin */
+}
+
+.chat-create-btn:hover {
+  opacity: 0.9;
+} 
+
+/* image carousel */
+
+.carousel-container {
+  width: 100%; 
+  aspect-ratio: 1 / 1;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden; 
+  background-color: #f0f0f0;
+}
+
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 10; 
+  border-radius: 50%; 
+  font-size: 18px; 
+  line-height: 1;
+  width: 40px; 
+  height: 40px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px; 
+  z-index: 10; 
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6); 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-dot.active {
+  background-color: white; 
+}
+
+/* Header */
+
+.fetchly-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  padding: 12px 15px;
+  background-color: #ffffff; 
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+  height: 12vh; /* Example height, adjust as needed */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.fetchly-header a[href="/profile"] { /* Targeting the Link component for the profile icon */
+  position: absolute; /* Position icon relative to the header */
+  left: 4vh; /* Distance from the left edge */
+  top: 50%;
+  transform: translateY(-50%); /* Vertically center the icon */
+  display: flex; /* To ensure the img inside behaves well */
+  align-items: center;
+}
+
+.fetchly-header a[href="/profile"] img {
+  width: 5vh; /* Adjust size of the profile icon as needed */
+  height: 5vh; /* Adjust size of the profile icon as needed */
+  display: block; /* Remove extra space below the image */
+}
+
+.fetchly-header a[href="/"] {
+  margin: 0; /* Remove default h1 margin */
+  font-size: 22px; /* Adjust font size as desired, though you said to ignore font */
+  font-weight: bold; /* Or your desired font weight */
+  color: #333; /* Text color */
+  /* The justify-content: center on .fetchly-header will center this */
+}
+
+/* New meetup form */
+
+.new-meetup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between form sections */
+  max-width: 400px; /* Or your preferred max width */
+  margin: 20px auto; /* Centering the form on the page */
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Styling for the ImageUpload placeholder area */
+.image-upload-placeholder { /* Add this class to a div wrapping your ImageUpload if you want a visual placeholder like the image */
+  width: 100%;
+  height: 200px; /* Adjust as needed */
+  background-color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px; /* Space below the placeholder */
+  text-align: center;
+  color: #757575;
+}
+
+.new-meetup-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between label and input */
+}
+
+.new-meetup-form label {
+  font-weight: bold;
+  margin-bottom: 3px;
+  color: #333;
+}
+
+.new-meetup-form input[type="text"],
+.new-meetup-form input[type="date"],
+.new-meetup-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+  font-size: 1rem;
+}
+
+.new-meetup-form textarea {
+  min-height: 100px; /* Adjust as needed for description */
+  resize: vertical; /* Allows users to resize vertically */
+}
+
+.new-meetup-form input::placeholder,
+.new-meetup-form textarea::placeholder {
+  color: #aaa;
+}
+
+/* Specific styling for the time section if you want AM/PM buttons inline */
+.new-meetup-time {
+  /* No change needed if AM/PM buttons are meant to be on new lines.
+     If they should be somewhat inline with the input, more complex flex/grid would be needed here.
+     For simplicity, this CSS assumes they can be block elements or you handle their layout separately if inline. */
+}
+
+.new-meetup-time input[type="text"] {
+  margin-bottom: 5px; /* Space before AM/PM buttons if they are below */
+}
+
+.new-meetup-time button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px; /* Space between AM and PM buttons */
+  font-size: 0.9rem;
+}
+
+.new-meetup-time button:last-child {
+  margin-right: 0;
+}
+
+.new-meetup-time button:hover {
+  background-color: #e0e0e0;
+}
+
+
+.post-meetup-btn {
+  background-color: #333; /* Dark background like the image */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 100%; /* Make button full width of its container */
+  margin-top: 10px; /* Space above the button */
+}
+
+.post-meetup-btn:hover {
+  background-color: #555; /* Slightly lighter on hover */
+}
+
+/* 
+  To use the .image-upload-placeholder style, you might adjust your TSX:
+
+  <div className="image-upload-placeholder">
+    Image Upload (Button)
+    <ImageUpload
+      onImageSelect={(file) => {
+        console.log('Selected Image', file)
+      }}
+      previewImage={previewImage}
+      setPreviewImage={setPreviewImage}
+    />
+  </div>
+
+  Or, if ImageUpload itself is just a button and you want a visual area above/around it:
+
+  <div className="image-upload-placeholder">
+     Simulated Image Area (Icon would go here)
+  </div>
+  <ImageUpload ... /> /* Your actual button for uploading */
+ 
+  .image-preview {
+    max-width: 30vw;
+    max-height: 30vh;
+    object-fit: cover;
+    margin: 0 auto
+  }
+
+  /* New message form */
