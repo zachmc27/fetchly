@@ -155,15 +155,25 @@ const conversationResolvers = {
                     { new: true }
                 ).populate({
                     path: 'conversationUsers',
-                    select: 'username avatar',
-                });
+                    select: 'username avatar', // Fetch avatar for each conversation user
+                    populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                })
+                .populate({
+                    path: 'messages',
+                    populate: {
+                        path: 'messageUser',
+                        select: 'username avatar', // Fetch avatar for each message user
+                        populate: { path: 'avatar', select: 'url' } // Fetch avatar URL
+                    }
+                })
+                .populate('lastMessage');
 
                 if (!conversation) {
                     throw new Error('Conversation not found');
                 }
 
                 return conversation;
-            } catch (error) {
+            } catch (error: unknown) {
                 if (error instanceof Error) {
                     throw new Error(`Failed to update conversation name: ${error.message}`);
                 }

@@ -9,7 +9,7 @@ import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import NavBar from "./components/Navbar/NavBar";
 import { PostModalProvider } from "./components/Reusables/PostModalProvider";
-
+import { AdoptionPostProvider } from "./contexts/AdoptionPostContext";
 
 // Construct our main GraphQL API endpoint
 // const httpLink = createHttpLink({
@@ -43,10 +43,12 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <PostModalProvider>
-        <NavBar />
-        <Outlet />
-      </PostModalProvider>
+      <AdoptionPostProvider>
+        <PostModalProvider>
+          <NavBar />
+          <Outlet />
+        </PostModalProvider>
+      </AdoptionPostProvider>
     </ApolloProvider>
   );
 }

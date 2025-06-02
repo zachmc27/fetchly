@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Feed from "../components/Reusables/Feed";
 
-
 import { QUERY_ADOPTIONS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
 import SearchBar from "../components/Reusables/SearchBar"
 import "../ZachTemp.css"
+import sadCatPic from "../images/Sad cat.jpeg"
+import { useAdoptionPost } from "../contexts/AdoptionPostContext";
+
 
 interface Adoption {
   id: string;
@@ -25,7 +27,8 @@ interface Adoption {
 
 export default function Adoption() {
 
-    const { loading, error, data } = useQuery(QUERY_ADOPTIONS, { pollInterval: 20000 });
+    const { setIsAdoptionPostOpen, setActiveAdoptionPost } = useAdoptionPost();
+    const { loading, error, data } = useQuery(QUERY_ADOPTIONS, { pollInterval: 10000 });
     const [filteredAdoptions, setFilteredAdoptions] = useState<Adoption[] | null>(null);
 
     const adoptionPosts = data?.adoptions;
@@ -33,6 +36,9 @@ export default function Adoption() {
 
     function filterByAll() {
       setFilteredAdoptions(null);
+      localStorage.removeItem("activeAdoptionId");
+      setIsAdoptionPostOpen(false);
+      setActiveAdoptionPost(null)
     }
   
     function filterByDogs() {
@@ -42,6 +48,9 @@ export default function Adoption() {
       );
       console.log("Filtered dogs:", dogs);
       setFilteredAdoptions(dogs);
+      localStorage.removeItem("activeAdoptionId");
+      setIsAdoptionPostOpen(false);
+      setActiveAdoptionPost(null)
     }
   
     function filterByCats() {
@@ -50,6 +59,9 @@ export default function Adoption() {
         (adoption: Adoption) => adoption.pet?.type.type?.toLowerCase() === "cat"
       );
       setFilteredAdoptions(cat);
+      localStorage.removeItem("activeAdoptionId");
+      setIsAdoptionPostOpen(false);
+      setActiveAdoptionPost(null)
     }
   
     function filterBySearch(searchTerm: string) {
@@ -70,6 +82,9 @@ export default function Adoption() {
         );
       });
       setFilteredAdoptions(results);
+      localStorage.removeItem("activeAdoptionId");
+      setIsAdoptionPostOpen(false);
+      setActiveAdoptionPost(null)
     }
 
   if (loading) return <p>Loading...</p>;
@@ -85,15 +100,20 @@ export default function Adoption() {
         <button onClick={filterByCats} className="filter-button">Cats</button>
       </div>
 
+      {(filteredAdoptions?.length === 0) && (
+        <div className="no-results-container">
+          <p className="no-results">No adoptions found for that filter.</p>
+          <div className="no-results-img">
+            <img src={sadCatPic} alt=""/>
+          </div>
+        </div>
+      )}
+      
       <Feed 
         initialFeedArray={filteredAdoptions || data?.adoptions} 
         itemStyle="adoption-card" 
         containerStyle="adoption-feed-container"
       />
-
-      {(filteredAdoptions?.length === 0) && (
-        <p className="no-results">No adoptions found for that filter.</p>
-      )}
     </div>
     </>
   )
