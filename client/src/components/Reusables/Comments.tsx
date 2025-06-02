@@ -36,18 +36,6 @@ type CommentsProps = {
   postId: string;
 };
 
-interface NewCommentProps {
-  parentPostId?: string;
-  onSubmit: (data: {
-    poster: {
-      refId: string;
-      refModel: string;
-    };
-    contentText: string;
-    media?: string[];
-  }) => void
-}
-
 function CommentItem({ comment }: { comment: Comment }) {
   //pass back the comment id so it can be opened as main post
 const [isRepliesOpen, setIsRepliesOpen] = useState(false)
