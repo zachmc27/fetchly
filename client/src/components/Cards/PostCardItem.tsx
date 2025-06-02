@@ -72,7 +72,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
     <div key={post._id} className={itemStyle} onClick={() => onOpen(post._id)}>
       <div className="post-user-info">
         <div onClick={openProfile} style={{ cursor: 'pointer' }}>
-          <img src={post.poster.refId?.avatar?.url || UserPlaceHolder} alt="profile picture" />
+          <img src={post.poster.refId?.avatar?.url || UserPlaceHolder} className="post-user-avatar" alt="profile picture" />
           <p>{post.poster.refId?.username || post.poster.refId?.orgName}</p>
           {post.taggedPets?.name && (          
               <p>{post.taggedPets?.name}</p>
