@@ -15,7 +15,7 @@ type Meetup = {
 
 interface MeetupDetailsProps {
   userMeetups: Meetup[];
-  userRSVP: Meetup[]; // type this as needed
+  userRSVP: Meetup[]; 
 }
 
 export default function MeetupDetails({ userMeetups, userRSVP }: MeetupDetailsProps) {
