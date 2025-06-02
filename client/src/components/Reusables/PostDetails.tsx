@@ -269,25 +269,40 @@ export default function PostDetails({
       }
       case "meetup": {
         const meetup = postData as MeetUpCard
+        console.log('meetup card triggered, contents: ', meetup);
         return (
-          <div key={meetup.id} className={containerClass}>
+          <div key={meetup._id} className={containerClass}>
              <div className="meetup-user-info-row">
                 <button onClick={onClose}>{"<"}</button>
                 <div className="meetup-user-info-container">
-                  <img src={meetup.poster.refId.avatar.url} alt="users avatar"/>
+                  <img src={meetup.poster?.refId?.avatar?.url || UserPlaceHolder} alt="users avatar"/>
                   <p className="meetup-post-username">{meetup.poster.refId.username}</p>
                 </div>
                 <button className="rsvp-btn">RSVP</button>
             </div>
-            
-            <div className="img-container"> 
-            <ImageCarousel slides={meetup.media
-                    .map((m) => (typeof m === "string" ? m : m?.url))}/>
-            </div>
+            {meetup.media && meetup.media.length > 1 && (            
+              <div className="img-container"> 
+                <ImageCarousel slides={meetup.media
+                  .map((m) => (typeof m === "string" ? m : m?.url))}/>
+              </div>
+            )}
+            {meetup.media && Array.isArray(meetup.media) && meetup.media.length === 1 && (
+              <div className="img-container">
+                <img
+                  src={typeof meetup.media[0] === "string" ? meetup.media[0] : meetup.media[0]?.url || ""}
+                  alt="Post media"
+                  onError={(e) => ((e.target as HTMLImageElement).src = UserPlaceHolder)}
+                />
+              </div>
+            )}
             <p className="meetup-title">{meetup.title}</p>
             <p className="meetup-text">{meetup.description}</p>
-             <p><img src={locationimg} alt="location-icon"/><p>{meetup.location.address}, {meetup.location.city} {meetup.location.state}, {meetup.location.zip}</p></p>
-            <p><img src={calendar} alt="calendar-icon"/>{meetup.date}</p>
+            <div><img src={locationimg} alt="location-icon"/>
+              <p>{meetup.location.address}, {meetup.location.city} {meetup.location.state}, {meetup.location.zip}</p>
+            </div>
+            <p><img src={calendar} alt="calendar-icon"/>{meetup.date
+                  ? format(new Date(Number(meetup.date)), "MMM d, yyyy")
+                  : "Unknown date"}</p>
             <p><img src={clock} alt="time-icon"/>{meetup.time}</p>
           </div>
         );

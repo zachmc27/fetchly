@@ -58,7 +58,7 @@ interface PostResponse {
 }
 
 function CommentItem({ comment }: { comment: Comment }) {
-
+  console.log('Comment pushing: ', comment);
   const [isRepliesOpen, setIsRepliesOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -174,7 +174,6 @@ function CommentItem({ comment }: { comment: Comment }) {
                   <div className="img-container">
                     <img src={comment.media[0].url} alt="first image"/>
                   </div>
-                  
                 }
               </div>
               </div>
