@@ -19,7 +19,7 @@ import { MockMeetupCard, MockMessageCard } from "../../mockdata/mocktypes/Feed"
 // import heart from "../../images/favorite_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
 import { MockConversationObject } from "../../mockdata/mocktypes/Conversation"
 import { mockMeetupPosts } from "../../mockdata/post-data";
-import { mockAdoptionPosts } from "../../mockdata/post-data"
+
 
 //get mutations and queries
 import { useQuery } from "@apollo/client";
@@ -39,7 +39,7 @@ import { useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 import Goinglist from "../Meetup/Goinglist"
 
-import { MockAdoptionItem, MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
+import { MockMeetupItem } from "../../mockdata/mocktypes/PostDetails"
 import PostButton from "../Navbar/PostButton"
 import Header from "../Header"
 import { useAdoptionPost } from "../../contexts/AdoptionPostContext"
@@ -368,7 +368,7 @@ useEffect(() => {
   if (location.pathname !== "/adoption") {
     localStorage.removeItem("activeAdoptionId");
   }
-}, [location.pathname, initialFeedArray]);
+}, [location.pathname, initialFeedArray, setActiveAdoptionPost, setIsAdoptionPostOpen]);
 
 // Inside a component that needs to listen directly, e.g., Feed.tsx or Adoption.tsx
 useEffect(() => {

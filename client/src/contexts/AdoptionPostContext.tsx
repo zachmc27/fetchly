@@ -1,20 +1,14 @@
 import React, { createContext, useContext, useState } from "react";
 import { AdoptionCard } from "../types/CardTypes";
 
-type AdoptionPostContextType = {
+export type AdoptionPostContextType = {
   isAdoptionPostOpen: boolean;
   setIsAdoptionPostOpen: React.Dispatch<React.SetStateAction<boolean>>;
   activeAdoptionPost: AdoptionCard | null;
   setActiveAdoptionPost: React.Dispatch<React.SetStateAction<AdoptionCard | null>>;
 };
 
-const AdoptionPostContext = createContext<AdoptionPostContextType | undefined>(undefined);
-
-export const useAdoptionPost = () => {
-  const context = useContext(AdoptionPostContext);
-  if (!context) throw new Error("useAdoptionPost must be used within AdoptionPostProvider");
-  return context;
-};
+export const AdoptionPostContext = createContext<AdoptionPostContextType | undefined>(undefined);
 
 export const AdoptionPostProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAdoptionPostOpen, setIsAdoptionPostOpen] = useState(false);
@@ -30,4 +24,10 @@ export const AdoptionPostProvider: React.FC<{ children: React.ReactNode }> = ({ 
       {children}
     </AdoptionPostContext.Provider>
   );
+};
+
+export const useAdoptionPost = () => {
+  const context = useContext(AdoptionPostContext);
+  if (!context) throw new Error("useAdoptionPost must be used within AdoptionPostProvider");
+  return context;
 };

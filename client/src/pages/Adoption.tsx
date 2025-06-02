@@ -6,8 +6,9 @@ import { useQuery } from "@apollo/client";
 
 import SearchBar from "../components/Reusables/SearchBar"
 import "../ZachTemp.css"
-import { useAdoptionPost } from "../contexts/AdoptionPostContext";
 import sadCatPic from "../images/Sad cat.jpeg"
+import { useAdoptionPost } from "../contexts/AdoptionPostContext";
+
 
 interface Adoption {
   id: string;
@@ -26,7 +27,7 @@ interface Adoption {
 
 export default function Adoption() {
 
-    const { isAdoptionPostOpen, setIsAdoptionPostOpen, activeAdoptionPost, setActiveAdoptionPost } = useAdoptionPost();
+    const { setIsAdoptionPostOpen, setActiveAdoptionPost } = useAdoptionPost();
     const { loading, error, data } = useQuery(QUERY_ADOPTIONS, { pollInterval: 10000 });
     const [filteredAdoptions, setFilteredAdoptions] = useState<Adoption[] | null>(null);
 

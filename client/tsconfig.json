@@ -26,6 +26,9 @@
   "include": [
     "src", "src/types"
   ],
+  "exclude": [
+    "src/contexts/AdoptionPostContext.tsx"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
