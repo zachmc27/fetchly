@@ -28,7 +28,7 @@ interface NewMeetupPostProps {
   }) => void;
 }
 
-const userId = localStorage.getItem("user_id")
+const userId = localStorage.getItem("userId")
 const accountType = localStorage.getItem("accountType");
 const userType = accountType === "org" ? "Org" : "User";
 
