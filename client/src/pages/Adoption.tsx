@@ -5,10 +5,10 @@ import { QUERY_ADOPTIONS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
 import SearchBar from "../components/Reusables/SearchBar"
-import "../ZachTemp.css"
+import "../main.css"
 import sadCatPic from "../images/Sad cat.jpeg"
 import { useAdoptionPost } from "../contexts/AdoptionPostContext";
-
+import runningDog from "../images/Running dog.gif"
 
 interface Adoption {
   id: string;
@@ -87,7 +87,7 @@ export default function Adoption() {
       setActiveAdoptionPost(null)
     }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="loading-gif-container"><img src={runningDog} alt="loading gif of a dog running"/></div>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

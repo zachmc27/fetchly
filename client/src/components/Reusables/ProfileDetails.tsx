@@ -7,7 +7,7 @@ import UserPlaceHolder from "../../images/person_24dp_000000_FILL0_wght400_GRAD0
 import { UserType } from "../../types/UserType";
 import { format } from 'date-fns';
 import calendar from "../../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-
+import runningDog from "../../images/Running dog.gif"
 type ProfileDetailsProps = {
   profileUserId: string;
   profileAccountType: string;
@@ -89,7 +89,7 @@ export default function ProfileDetails({ profileUserId, profileAccountType }: Pr
     }
   };
   console.log("posts: ", user?.posts)
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="loading-gif-container"><img src={runningDog} alt="loading gif of a dog running"/></div>;
   if (error) return <p>Error: {error.message}</p>;
   if (!user) return <p>User not found.</p>;
 

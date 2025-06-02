@@ -7,7 +7,7 @@ import {useQuery} from "@apollo/client";
 import { GET_CONVERSATION_BY_USER } from "../utils/queries";
 import { MockConversationObject } from "../mockdata/mocktypes/Conversation";
 import PostButton from "../components/Navbar/PostButton";
-
+import danceCat from "../images/364.gif"
 
 
 const currentUser = localStorage.getItem('userId')
@@ -22,7 +22,7 @@ export default function Inbox() {
     fetchPolicy: "network-only", // Ensures fresh data is fetched from the server
   });
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="loading-gif-container"><img src={danceCat} alt="loading gif of a dancing cat"/></div>;
   
 
   // Check if data is null or conversationByUser is empty

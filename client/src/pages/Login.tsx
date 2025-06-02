@@ -10,7 +10,9 @@ import { LOGIN_USER, LOGIN_ORG, ADD_USER, ADD_ORG } from '../utils/mutations';
 import Form from "../components/Reusables/Form";
 import Auth from '../utils/auth';
 import "../SammiReusables.css";
+import BoneIcon from '../images/BoneIcon';
 
+import { motion } from 'framer-motion';
 
 function Login() {
 
@@ -173,7 +175,17 @@ export default function AuthForm() {
 
   return (
     <div>
-      <span className='form-title-ctn'> Fetchly </span>
+      <span className='form-title-ctn'> 
+        Fetchly
+        <motion.div
+        animate={{ rotate: [0, -15, 15, -10, 10, 0] }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+        style={{ display: "inline-block" }}
+        >
+        <BoneIcon />
+        </motion.div> 
+       
+       </span>
       {showLogin ? (
         <Login />
       ) : (

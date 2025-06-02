@@ -22,7 +22,7 @@ import AddIcon from "../images/add.png";
 import EditIcon from "../images/edit.png";
 import CalenderIcon from "../images/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import LogoutIcon from "../images/logout.png";
-
+import runningDog from "../images/Running dog.gif"
 
 type Location = {
      address: string;
@@ -196,7 +196,7 @@ export default function Profile() {
     }
 
     if (!user) {
-      return <div>Loading...</div>;
+      return <div className="loading-gif-container"><img src={runningDog} alt="loading gif of a dog running"/></div>;
     }
 
 

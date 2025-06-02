@@ -175,7 +175,7 @@ const NewFreeFormPost = ({ onSubmit, parentPostId }: NewPostProps) => {
       </div>
       <div className="adoption-pet-button">
         <label>Which furry friend is this about?</label>
-        <select value={pet} onChange={(e) => setPet(e.target.value)}>
+        <select value={pet} onChange={(e) => setPet(e.target.value)} className="select-bar">
           <option value="">Select Pet</option>
           {petOptions.map((option) => (
             <option key={option.id} value={option.id}>

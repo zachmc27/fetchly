@@ -4,7 +4,7 @@
 // post details for each post, and 2 buttons that that conditionally render the comments for the post or a Feed component that
 // takes an array of users that are attending the event (Going list)
 
-import "../ZachTemp.css"
+import "../main.css"
 import Feed from "../components/Reusables/Feed";
 import { mockMeetupData } from "../mockdata/feed-data";
 

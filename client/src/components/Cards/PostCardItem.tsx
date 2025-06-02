@@ -83,7 +83,7 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
           <p>{format(new Date(Number(post.createdAt)), 'MMM d, yyyy')}</p>
         </div>
       </div>
-      <p>{post.contentText}</p>
+      <p className='post-text-content'>{post.contentText}</p>
       {post.media && post.media.length > 0 && (
         <div className="img-container">
           {post.media.map((mediaItem, index) => (

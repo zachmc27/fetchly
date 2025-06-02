@@ -194,7 +194,7 @@ const NewMeetUpPost = ({ onSubmit }: NewMeetupPostProps) => {
         />
       </div>
 
-      <button type="submit">Post My Meet-Up</button>
+      <button type="submit" className="post-meetup-btn">Post My Meet-Up</button>
       {successMessage && <p>{successMessage}</p>}
       {errorMessage && <p>{errorMessage}</p>}
     </form>
