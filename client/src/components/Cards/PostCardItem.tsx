@@ -106,6 +106,8 @@ export default function PostCardItem({ post, onOpen, itemStyle, userId, refModel
             className="post-user-avatar"
             alt="profile picture"
           />
+        </div>
+        <div>
           <p className='feed-user-text'>{post.poster?.refId?.username || post.poster?.refId?.orgName || "Unknown User"}</p>
           {/* Defensive check for taggedPets */}
           {post.taggedPets && typeof post.taggedPets === 'object' && 'name' in post.taggedPets && (
