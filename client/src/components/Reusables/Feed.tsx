@@ -140,7 +140,7 @@ const handleMessagePageRender = useCallback((conversationId: string) => {
 useQuery(GET_CONVERSATION, {
   variables: { conversationId: localStorage.getItem("activeConversationId") },
   fetchPolicy: "network-only",
-  pollInterval: 10000, // Poll every 5 seconds
+  pollInterval: 8000, // Poll every 8 seconds
 });
 
 const {
@@ -330,6 +330,7 @@ type Comment = {
   postedTime: Date;
   replies?: Comment[];
   media?: { url: string }[];
+  parentPost?: string;
 };
 
 function mapResponseToComment(res: {
@@ -345,6 +346,7 @@ function mapResponseToComment(res: {
       refModel: string;
     };
     media?: { url: string }[];
+    
 }): Comment {
   return {
     id: parseInt(res._id || "0", 10),
@@ -355,6 +357,7 @@ function mapResponseToComment(res: {
     postedTime: new Date(),
     replies: [],
     media: [],
+    // parentPost: res.
   };
 }
 
@@ -552,6 +555,29 @@ function mapResponseToComment(res: {
     );
   }
 
+if (isMeetupPostOpen && activeMeetupPost) {
+  return (
+    <>
+    <PostDetails 
+     postData={activeMeetupPost} 
+     containerClass="meetup-details-container"
+     onClose={handleCloseMeetupView}
+     />
+    <div className="tab-switcher">
+    <button onClick={handleGoingListRender} className={activeTab === 'going' ? 'active' : ''}>Going</button>
+    <button onClick={handleCommentsRender} className={activeTab === 'comments' ? 'active' : ''}>Comments</button>
+    </div>
+    {
+      isMeetupCommentsOpen &&
+      <Comments comments={activeMeetupPost.comments} postId={activeMeetupPost.id?.toString() || ""}/>
+    }
+    {
+      isGoingListOpen &&
+      <Goinglist rsvpList={activeMeetupPost.rsvpList}/>
+    }
+    </>
+  )
+}
   if (isMeetupPostOpen && activeMeetupPost) {
     return (
       <>
@@ -582,6 +608,22 @@ function mapResponseToComment(res: {
     );
   }
 
+if (isPostOpen && activePost) {
+
+  return (
+  <div className="viewing-container">
+  <PostDetails
+   postData={activePost}
+   containerClass="post-details-container"
+   onClose={handleClosePostView}
+  />
+  <Comments
+    comments={(activePost.responses || []).map(mapResponseToComment)}
+    postId={activePost._id}
+  />
+  </div>
+  )
+}
   if (isPostOpen && activePost) {
     return (
       <div className="viewing-container">
