@@ -13,23 +13,14 @@ import { FeedItem } from "../Reusables/Feed";
 //   itemType: string;
 // };
 interface MeetupDetailsProps {
-  userMeetups: FeedItem[];
+//   userMeetups: FeedItem[];
   userRSVP: FeedItem[];
 }
-export default function MeetupDetails({ userMeetups, userRSVP }: MeetupDetailsProps) {
+export default function MeetupDetails({ userRSVP }: MeetupDetailsProps) {
     return(
         <div className="prof-meet-ctn">
             <div className="prof-meet-sec-ctn">
                 <span className="profile-lg-fnt prof-meet-title ">Hosted Meetups</span>
-                {userMeetups && userMeetups.length > 0 ? (
-                    <Feed 
-                        initialFeedArray={userMeetups} 
-                        itemStyle="meetup-card"
-                        containerStyle="meetup-feed-container"
-                    />
-                ) : (
-                    <span className="prof-meet-warning">No hosted meetups found.</span>
-                )}
             </div>
             <div className="prof-meet-sec-ctn">
                 <span className="profile-lg-fnt prof-meet-title ">Registered Meetups</span>
