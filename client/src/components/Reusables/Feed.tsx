@@ -388,7 +388,7 @@ useEffect(() => {
   return () => {
     window.removeEventListener("storage", handleStorageChange);
   };
-}, []);
+}, [setActiveAdoptionPost, setIsAdoptionPostOpen]);
 
 function handleAdoptionPostViewRender(adoptionId: string) {
 
